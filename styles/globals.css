@@ -1,0 +1,35 @@
+@tailwind base; 
+@tailwind components; 
+@tailwind utilities;
+
+@font-face {
+  font-family: PressStart;
+  src: url('../public/fonts/PressStart2P-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: DaysOne;
+  src: url('../public/fonts/DaysOne-Regular.ttf') format('truetype');
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer base {
+  html {
+    @apply bg-gradient-to-t from-red-400 to-orange-300 bg-red-400 text-gray-200 duration-500;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: PressStart;
+}
+
+
