@@ -8,6 +8,7 @@ const TwitterIcon = dynamic(()=> import("./@icons/TwitterIcon"))
 const DiscordIcon = dynamic(()=> import("./@icons/DiscordIcon"))
 const LogoIcon = dynamic(()=> import("./@icons/LogoIcon"))
 const MenuIcon = dynamic(()=> import("./@icons/MenuIcon"))
+const CloseIcon = dynamic(()=> import("./@icons/CloseIcon"))
 //atoms
 const DropdownButton = dynamic(()=> import("./atoms/DropdownButton"))
 const DropdownItem = dynamic(()=> import("./atoms/DropdownItem"))
@@ -23,12 +24,14 @@ const Logo = dynamic(()=> import("./molecules/Logo"))
 const ThemeChanger = dynamic(()=> import("./molecules/ThemeChanger"))
 const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const ButtonBar = dynamic(()=> import("./molecules/ButtonBar"))
+const Menu = dynamic(() => import("./molecules/Menu") )
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
 const StepContainer = dynamic(()=> import("./organisms/StepContainer"))
 const Form = dynamic(() => import("./organisms/Form") )
 const MobileDisplay = dynamic(() => import("./organisms/MobileDisplay") )
+const MenuController = dynamic(() => import("./organisms/MenuController") )
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
 const DownloadView = dynamic(()=> import("./templates/DownloadView"))
@@ -60,5 +63,8 @@ export {
   LoadCircle,
   ButtonBar,
   LogoIcon,
-  MenuIcon
+  MenuIcon,
+  MenuController,
+  Menu,
+  CloseIcon,
 }

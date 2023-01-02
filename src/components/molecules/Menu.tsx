@@ -1,0 +1,80 @@
+import { Dispatch, FC, SetStateAction } from "react";
+import { motion } from "framer-motion";
+import { midExitAnimation } from "@constants";
+import { CloseIcon } from "@components";
+import Link from "next/link";
+
+interface Props {
+  toggleMenu: Dispatch<SetStateAction<boolean>>;
+}
+
+const menuItemAnimation = {
+  whileHover: { color: "#8BD2B9" },
+  // whileTap: { scale: 0.96 },
+  transition: { duration: 0.35 },
+};
+
+const Menu: FC<Props> = (props: Props) => {
+  const { toggleMenu } = props;
+  return (
+    <motion.div
+      key="main-menu"
+      className="bg-white absolute w-72 top-0 bottom-0 right-0 h-screen z-100 p-8 shadow-xl"
+      onMouseLeave={() => toggleMenu(false)}
+      {...midExitAnimation}
+    >
+      <div onClick={() => toggleMenu(false)} className="cursor-pointer">
+        <CloseIcon />
+      </div>
+      <div className="flex flex-col pt-8 gap-6 text-3xl ">
+        {/* about */}
+        <Link href="/about">
+          <motion.p
+            className="w-min cursor-pointer py-1"
+            {...menuItemAnimation}
+          >
+            about
+          </motion.p>
+        </Link>
+        {/* auctions */}
+        <motion.a
+          className="cursor-pointer py-1"
+          {...menuItemAnimation}
+          href="/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          auctions
+        </motion.a>
+        {/* twitter */}
+        <motion.a
+          className="cursor-pointer py-1"
+          {...menuItemAnimation}
+          href="https://twitter.com/MySlimes_"
+          target="_blank"
+          rel="noreferrer"
+        >
+          twitter
+        </motion.a>
+        {/* design */}
+        <Link href="/design">
+          <motion.p className="cursor-pointer py-1" {...menuItemAnimation}>
+            design{" "}
+          </motion.p>
+        </Link>
+
+        {/* auctions */}
+        <Link href="/holders">
+          <motion.p
+            className="cursor-pointer py-1 whitespace-nowrap"
+            {...menuItemAnimation}
+          >
+            slimes only
+          </motion.p>
+        </Link>
+      </div>
+    </motion.div>
+  );
+};
+
+export default Menu;

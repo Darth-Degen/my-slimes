@@ -1,12 +1,20 @@
-import { FC } from "react";
-import { Logo, MenuIcon } from "@components";
+import { FC, useState } from "react";
+import { MenuIcon, Menu } from "@components";
+import { AnimatePresence, motion } from "framer-motion";
 
 const MenuController: FC = () => {
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
   return (
-    <header className="px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center">
-      <Logo />
-      <MenuIcon />
-    </header>
+    <div className="w-full h-full flex items-end justify-end ">
+      <div key="menu-icon" className="p-2 cursor-pointer">
+        <div onMouseEnter={() => setOpenMenu(true)}>
+          <MenuIcon />
+        </div>
+      </div>
+      <AnimatePresence mode="wait" initial={false}>
+        {openMenu && <Menu toggleMenu={setOpenMenu} />}
+      </AnimatePresence>
+    </div>
   );
 };
 

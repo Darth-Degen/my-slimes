@@ -2,14 +2,15 @@
 @tailwind components; 
 @tailwind utilities;
 
+
 @font-face {
-  font-family: PressStart;
-  src: url('../public/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-family: mk-hell;
+  src: url('../public/fonts/MK-HELL-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: DaysOne;
-  src: url('../public/fonts/DaysOne-Regular.ttf') format('truetype');
+  font-family: pangram-regular;
+  src: url('../public/fonts/Pangram-Regular.ttf') format('truetype');
 }
 
 a {
@@ -23,13 +24,16 @@ a {
 
 @layer base {
   html {
-    @apply  bg-slime-pink;
+    @apply  bg-slime-pink text-slime-dark font-secondary;
+  }
+  h1,h2,a { 
+    @apply font-primary 
   }
 }
 
 html {
   scroll-behavior: smooth;
-  font-family: PressStart;
+  /* font-family: PressStart; */
 }
 
 

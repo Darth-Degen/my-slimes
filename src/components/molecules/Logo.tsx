@@ -8,7 +8,11 @@ const Logo: FC = () => {
 
   const containerAnimation = {
     initial: { opacity: 0 },
-    animate: { opacity: 1, rotate: animate ? -360 : 0 },
+    animate: {
+      opacity: 1,
+      rotate: animate ? -360 : 0,
+      scale: animate ? 1.35 : 1,
+    },
     exit: { opacity: 0 },
     transition: { duration: 0.5, ease: "easeInOut" },
   };

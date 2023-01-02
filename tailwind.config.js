@@ -6,11 +6,17 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ["PressStart", "-apple-system", "system-ui", "monospace"],
+        primary: ["mk-hell", "-apple-system", "system-ui", "monospace"],
+        secondary: [
+          "pangram-regular",
+          "-apple-system",
+          "system-ui",
+          "monospace",
+        ],
       },
       colors: {
         "slime-green": "#8BD2B9",
-        "slime-pink": "#FCE4D8",
+        "slime-pink": "#FCE1D8",
         "slime-light": "#F3F1EA",
         "slime-dark": "#232726",
       },

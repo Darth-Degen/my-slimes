@@ -16,14 +16,12 @@ const PageLayout: FC<Props> = (props: Props) => {
     >
       <PageHead title="My Slimes" description="Welcome to My Slimes" />
 
-      <main className="min-h-screen">
-        <Header />
-        <div className="flex flex-col flex-grow justify-start items-center pt-14 pb-28">
-          {children}
-        </div>
+      <Header />
+      <main className="flex flex-col flex-grow justify-start items-center pt-14 pb-28">
+        {children}
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </motion.div>
   );
 };
