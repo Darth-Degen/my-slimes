@@ -14,10 +14,7 @@ const PageLayout: FC<Props> = (props: Props) => {
       className="flex flex-col justify-between min-h-screen transition-colors ease-in-out duration-500 bg-dark"
       {...enterAnimation}
     >
-      <PageHead
-        title="Hot Heads"
-        description="Welcome to your Hot Heads asset portfolio"
-      />
+      <PageHead title="My Slimes" description="Welcome to My Slimes" />
 
       <main className="min-h-screen">
         <Header />

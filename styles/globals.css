@@ -23,7 +23,7 @@ a {
 
 @layer base {
   html {
-    @apply bg-gradient-to-t from-red-400 to-orange-300 bg-red-400 text-gray-200 duration-500;
+    @apply  bg-slime-pink;
   }
 }
 

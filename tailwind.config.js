@@ -7,17 +7,12 @@ module.exports = {
     extend: {
       fontFamily: {
         primary: ["PressStart", "-apple-system", "system-ui", "monospace"],
-        pressStart: ["PressStart"],
-        daysOne: ["DaysOne"],
       },
       colors: {
-        dark: "#121212",
-        lightRed: "#ff9596",
-        customDarkGray: "#222222",
-        customMidGray: "#303030",
-        customRed: "#cf1714",
-        // orange -> #fdba74
-        // red -> #f87171
+        "slime-green": "#8BD2B9",
+        "slime-pink": "#FCE4D8",
+        "slime-light": "#F3F1EA",
+        "slime-dark": "#232726",
       },
     },
   },
