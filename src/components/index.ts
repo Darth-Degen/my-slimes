@@ -7,6 +7,7 @@ const ArrowIcon = dynamic(()=> import("./@icons/ArrowIcon"))
 const TwitterIcon = dynamic(()=> import("./@icons/TwitterIcon"))
 const DiscordIcon = dynamic(()=> import("./@icons/DiscordIcon"))
 const LogoIcon = dynamic(()=> import("./@icons/LogoIcon"))
+const MenuIcon = dynamic(()=> import("./@icons/MenuIcon"))
 //atoms
 const DropdownButton = dynamic(()=> import("./atoms/DropdownButton"))
 const DropdownItem = dynamic(()=> import("./atoms/DropdownItem"))
@@ -58,5 +59,6 @@ export {
   DiscordIcon,
   LoadCircle,
   ButtonBar,
-  LogoIcon
+  LogoIcon,
+  MenuIcon
 }

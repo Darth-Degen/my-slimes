@@ -1,10 +1,30 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { LogoIcon } from "@components";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Logo: FC = () => {
+  const [animate, setAnimate] = useState<boolean>(false);
+
+  const containerAnimation = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, rotate: animate ? -360 : 0 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.5, ease: "easeInOut" },
+  };
+
   return (
     <div className="my-0 flex items-center gap-2 text-gray-200 transition-colors ease-in-out duration-500 cursor-pointer">
-      <LogoIcon fill={"#FFFFFF"} fillHover={"#8BD2B9"} />
+      <motion.div
+        className="rounded"
+        {...containerAnimation}
+        onMouseEnter={() => setAnimate(true)}
+        onMouseLeave={() => setAnimate(false)}
+      >
+        <Link href="/">
+          <LogoIcon fill={"#FFFFFF"} fillHover={"#FFFFFF"} />
+        </Link>
+      </motion.div>
     </div>
   );
 };
