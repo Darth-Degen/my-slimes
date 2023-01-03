@@ -1,31 +1,31 @@
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { PageHead, Header, PageLoadAnimation } from "@components";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { enterAnimation } from "@constants";
 
 interface Props {
   children: ReactNode;
-  isRendering?: boolean;
+  showLoader?: boolean;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
-  const { children, isRendering = true } = props;
+  const { children, showLoader = false } = props;
 
   const [showPage, setShowPage] = useState<boolean>(false);
   const showRef = useRef<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    console.log(showRef.current, isRendering);
-    if (showRef.current === false && !isRendering) {
-      timeoutRef.current = setTimeout(() => {
-        setShowPage(true);
-      }, 3000);
-      showRef.current = isRendering;
-    }
+    // if (showRef.current === false && !isRendering) {
+    const milliseconds = Math.floor(Math.random() * (4000 - 2000 + 1) + 2000);
+    timeoutRef.current = setTimeout(() => {
+      setShowPage(true);
+    }, milliseconds);
+    // showRef.current = showLoader;
+    // }
 
     return () => clearTimeout(timeoutRef.current);
-  }, [isRendering]);
+  }, [showLoader]);
 
   //set bg based on rendering
   useEffect(() => {
@@ -42,14 +42,15 @@ const PageLayout: FC<Props> = (props: Props) => {
 
       {showPage && <Header />}
       <main className="flex flex-col justify-start items-center h-full z-0">
-        <div
-          className={`${
-            !showPage ? "opacity-0" : "opacity-100"
-          } transition-opacity duration-1000`}
-        >
-          {children}
-        </div>
-        <PageLoadAnimation show={!showPage} />
+        <AnimatePresence mode="wait">
+          {!showPage ? (
+            <PageLoadAnimation show={!showPage} />
+          ) : (
+            <div className={`${!showPage ? "opacity-0" : "opacity-100"} `}>
+              {children}
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* <Footer /> */}
