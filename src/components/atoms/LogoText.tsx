@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 interface Props extends SVGProps<SVGSVGElement> {}
 
 const CloseIcon: FC<Props> = (props: Props) => {
-  const { className, fill = "white", width = "300", height = "200" } = props;
+  const { className, fill = "white", width = "300", height = "185" } = props;
 
   return (
     <svg

@@ -21,7 +21,7 @@ const Home: NextPage = () => {
           <div className="z-10 pb-10">
             <LogoText />
           </div>
-          <div className="hidden md:block px-10 z-0">
+          <div className="hidden md:block px- z-0">
             <Image src={bg.src} height={1151} width={2819} alt="My Slimes" />
           </div>
           <div className="md:hidden px-10 z-0 h-full">
