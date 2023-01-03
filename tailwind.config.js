@@ -15,6 +15,10 @@ module.exports = {
         ],
       },
       colors: {
+        //bg
+        "main-bg": "#FCE4D8",
+        "load-bg": "#8BD2B9",
+        //custom
         "slime-green": "#8BD2B9",
         "slime-pink": "#FCE4D8",
         "slime-light": "#F3F1EA",

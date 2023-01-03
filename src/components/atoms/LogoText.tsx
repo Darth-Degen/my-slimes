@@ -1,17 +1,30 @@
 import { FC, SVGProps } from "react";
 import { motion } from "framer-motion";
+import { useWindowSize } from "@hooks";
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
+const transitionValues = {
+  duration: 0.4,
+  yoyo: Infinity,
+  ease: "easeOut",
+};
+
 const CloseIcon: FC<Props> = (props: Props) => {
-  const { className, fill = "white", width = "300", height = "185" } = props;
+  const [winWidth, winHeight] = useWindowSize();
+  const {
+    className,
+    fill = "white",
+    width = winWidth < 640 ? 200 : 400,
+    height = winWidth < 640 ? 125 : 200,
+  } = props;
 
   return (
     <svg
       id="slimes-test"
       width={width}
       height={height}
-      viewBox="0 0 1980 135"
+      viewBox="0 0 1980 700"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`${className}`}
@@ -40,9 +53,17 @@ const CloseIcon: FC<Props> = (props: Props) => {
         d="M614.006 364.387C614.006 335.4 614.577 306.386 613.806 277.399C613.206 254.839 622.887 241.159 644.191 234.049C671.807 224.853 699.736 217.485 728.551 213.23C750.198 210.031 762.992 218.085 764.848 240.503C770.845 312.697 776.7 384.92 782.526 457.143C783.725 472.107 779.213 482.616 761.792 482.274C721.526 481.503 681.288 480.903 641.021 479.789C619.974 479.189 608.979 469.965 610.379 446.605C612.035 419.303 610.778 391.802 610.778 364.387C611.835 364.387 612.892 364.387 613.977 364.387H614.006Z"
         fill={fill}
       />
-      <path
+      <motion.path
         d="M756.569 96.9695C756.198 144.033 719.101 181.501 673.837 180.53C631.514 179.616 590.676 137.465 590.762 94.7705C590.848 46.422 629.258 8.75422 677.207 9.95365C722.014 11.0674 756.94 49.3921 756.569 96.998V96.9695Z"
         fill={fill}
+        transition={{
+          y: transitionValues,
+          width: transitionValues,
+          height: transitionValues,
+        }}
+        animate={{
+          y: ["0rem", "-3rem"],
+        }}
       />
     </svg>
   );

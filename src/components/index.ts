@@ -25,7 +25,8 @@ const Logo = dynamic(()=> import("./molecules/Logo"))
 const ThemeChanger = dynamic(()=> import("./molecules/ThemeChanger"))
 const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const ButtonBar = dynamic(()=> import("./molecules/ButtonBar"))
-const Menu = dynamic(() => import("./molecules/Menu") )
+const Menu = dynamic(() => import("./molecules/Menu"))
+const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation") )
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
@@ -68,5 +69,6 @@ export {
   MenuController,
   Menu,
   CloseIcon,
-  LogoText
+  LogoText,
+  PageLoadAnimation
 }

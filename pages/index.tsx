@@ -1,14 +1,18 @@
-import { PageLayout, LogoText } from "@components";
+import { PageLayout } from "@components";
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
+import { midExitAnimation } from "@constants";
+import { motion } from "framer-motion";
+
+//assets
 import bg from "public/images/landing-slimes-lg.png";
 import bgMobile from "public/images/landing-slimes-sm.png";
 import slimes from "public/images/slimes-text.png";
 
 const Home: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
-  const [tokenId, setTokenId] = useState<number>(-1);
+  const [isRendering, setIsRendering] = useState<boolean>(true);
 
   useEffect(() => {
     setDidMount(true);
@@ -16,10 +20,13 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <PageLayout>
+    <PageLayout isRendering={isRendering}>
       {didMount && (
-        <div className="flex flex-col-reverse lg:flex-col lg:justify-center items-center">
-          <div className="z-10 lg:pb-10 px-20 lg:px-0 pt-4 md:pt-10 lg:pt-32 ">
+        <motion.div
+          className="flex flex-col-reverse lg:flex-col lg:justify-center items-center"
+          {...midExitAnimation}
+        >
+          <div className="z-10 lg:pb-10 px-20 lg:px-0 pt-8 md:pt-10 lg:pt-28 ">
             {/* <LogoText /> */}
             <Image
               src={slimes.src}
@@ -34,6 +41,7 @@ const Home: NextPage = () => {
               height={766}
               width={2371}
               alt="My Slimes Banner"
+              onLoadingComplete={() => setIsRendering(false)}
             />
           </div>
           <div className="lg:hidden px-0 z-0 md:pt-4">
@@ -56,7 +64,7 @@ const Home: NextPage = () => {
               alt="My Slimes"
             />
           </div> */}
-        </div>
+        </motion.div>
       )}
     </PageLayout>
   );

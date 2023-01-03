@@ -18,13 +18,13 @@ a {
   text-decoration: none;
 }
 
-* {
+* { 
   box-sizing: border-box;
 }
 
 @layer base {
   html {
-    @apply  bg-slime-pink text-slime-dark font-secondary;
+    @apply   text-slime-dark font-secondary;
   }
   h1,h2,a { 
     @apply font-primary 
