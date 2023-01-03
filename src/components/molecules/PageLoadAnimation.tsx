@@ -16,7 +16,7 @@ const PageLoadAnimation: FC<Props> = (props: Props) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.7, ease: "easeInOut" }}
     >
-      <div className="absolute left-1/2 top-[29.8%] transform -translate-y-1/2 -translate-x-1/2">
+      <div className="absolute left-1/2 top-[28.8%] transform -translate-y-1/2 -translate-x-1/2">
         <LogoText />
       </div>
     </motion.div>

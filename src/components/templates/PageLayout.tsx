@@ -17,7 +17,7 @@ const PageLayout: FC<Props> = (props: Props) => {
 
   useEffect(() => {
     // if (showRef.current === false && !isRendering) {
-    const milliseconds = Math.floor(Math.random() * (4000 - 2000 + 1) + 2000);
+    const milliseconds = Math.floor(Math.random() * (2500 - 1500 + 1) + 1500);
     timeoutRef.current = setTimeout(() => {
       setShowPage(true);
     }, milliseconds);
@@ -28,13 +28,13 @@ const PageLayout: FC<Props> = (props: Props) => {
   }, [showLoader]);
 
   //set bg based on rendering
-  useEffect(() => {
-    if (!showPage) {
-      document.body.style.backgroundColor = "#8BD2B9";
-    } else {
-      document.body.style.backgroundColor = "#FCE4D8";
-    }
-  }, [showPage]);
+  // useEffect(() => {
+  //   if (!showPage) {
+  //     document.body.style.backgroundColor = "#8BD2B9";
+  //   } else {
+  //     document.body.style.backgroundColor = "#FCE4D8";
+  //   }
+  // }, [showPage]);
 
   return (
     <motion.div className="flex flex-col" {...enterAnimation}>

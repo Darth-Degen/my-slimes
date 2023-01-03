@@ -24,7 +24,7 @@ a {
 
 @layer base {
   html {
-    @apply   text-slime-dark font-secondary;
+    @apply bg-slime-green  text-slime-dark font-secondary;
   }
   h1,h2,a { 
     @apply font-primary 
