@@ -19,7 +19,7 @@ const Menu: FC<Props> = (props: Props) => {
   return (
     <motion.div
       key="main-menu"
-      className="bg-white absolute w-72 top-0 bottom-0 right-0 h-screen z-100 p-8 shadow-xl"
+      className="bg-white absolute w-96 top-0 bottom-0 right-0 h-screen z-100 p-8 shadow-xl"
       onMouseLeave={() => toggleMenu(false)}
       {...midExitAnimation}
     >
