@@ -12,7 +12,6 @@ import slimes from "public/images/slimes-text.png";
 
 const Home: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
-  const [isRendering, setIsRendering] = useState<boolean>(true);
 
   useEffect(() => {
     setDidMount(true);
@@ -20,7 +19,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <PageLayout showLoader={false}>
+    <PageLayout showLoader={true}>
       {didMount && (
         <motion.div
           className="flex flex-col-reverse lg:flex-col lg:justify-center items-center"
@@ -42,7 +41,6 @@ const Home: NextPage = () => {
               height={766}
               width={2371}
               alt="My Slimes Banner"
-              onLoadingComplete={() => setIsRendering(false)}
             />
           </div>
           <div className="lg:hidden px-0 z-0 md:pt-12">

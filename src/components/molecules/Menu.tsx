@@ -19,14 +19,14 @@ const Menu: FC<Props> = (props: Props) => {
   return (
     <motion.div
       key="main-menu"
-      className="bg-white fixed w-72 sm:w-96 top-0 bottom-0 right-0 h-screen z-100 p-8 shadow-xl"
+      className="bg-white fixed w-72 sm:w-96 top-0  right-0 z-100 p-8 shadow-xl"
       onMouseLeave={() => toggleMenu(false)}
       {...midExitAnimation}
     >
-      <div onClick={() => toggleMenu(false)} className="cursor-pointer">
+      <div onClick={() => toggleMenu(false)} className="cursor-pointer w-min">
         <CloseIcon />
       </div>
-      <div className="flex flex-col pt-16 gap-6 text-3xl ">
+      <div className="flex flex-col pt-16 pb-6 gap-6 text-3xl ">
         {/* about */}
         <Link href="/about">
           <motion.p

@@ -17,14 +17,20 @@ const PageLayout: FC<Props> = (props: Props) => {
 
   useEffect(() => {
     // if (showRef.current === false && !isRendering) {
-    const milliseconds = Math.floor(Math.random() * (2500 - 1500 + 1) + 1500);
-    timeoutRef.current = setTimeout(() => {
+    if (showLoader) {
+      const milliseconds = Math.floor(Math.random() * (2500 - 1500 + 1) + 1500);
+      timeoutRef.current = setTimeout(() => {
+        setShowPage(true);
+      }, milliseconds);
+      // showRef.current = showLoader;
+      // }
+    } else {
       setShowPage(true);
-    }, milliseconds);
-    // showRef.current = showLoader;
-    // }
+    }
 
-    return () => clearTimeout(timeoutRef.current);
+    return () => {
+      if (showLoader) clearTimeout(timeoutRef.current);
+    };
   }, [showLoader]);
 
   //set bg based on rendering
