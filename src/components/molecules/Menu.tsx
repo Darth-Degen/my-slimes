@@ -26,7 +26,7 @@ const Menu: FC<Props> = (props: Props) => {
       <div onClick={() => toggleMenu(false)} className="cursor-pointer">
         <CloseIcon />
       </div>
-      <div className="flex flex-col pt-8 gap-6 text-3xl ">
+      <div className="flex flex-col pt-16 gap-6 text-3xl ">
         {/* about */}
         <Link href="/about">
           <motion.p
@@ -57,14 +57,17 @@ const Menu: FC<Props> = (props: Props) => {
           twitter
         </motion.a>
         {/* design */}
-        <Link href="/design">
-          <motion.p className="cursor-pointer py-1" {...menuItemAnimation}>
-            design{" "}
-          </motion.p>
-        </Link>
+        {/* <Link href="/design"> */}
+        <motion.p
+          className="py-1 whitespace-nowrap text-slimes-dark opacity-50 font-primary"
+          // {...menuItemAnimation}
+        >
+          design notes (soon)
+        </motion.p>
+        {/* </Link> */}
 
-        {/* auctions */}
-        <Link href="/holders">
+        {/* slimes-only */}
+        <Link href="/slimes-only">
           <motion.p
             className="cursor-pointer py-1 whitespace-nowrap"
             {...menuItemAnimation}
