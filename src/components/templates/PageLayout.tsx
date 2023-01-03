@@ -10,7 +10,7 @@ interface Props {
 const PageLayout: FC<Props> = (props: Props) => {
   const { children } = props;
   return (
-    <motion.div className="flex flex-col min-h-screen " {...enterAnimation}>
+    <motion.div className="flex flex-col " {...enterAnimation}>
       <PageHead title="My Slimes" description="Welcome to My Slimes" />
 
       <Header />
