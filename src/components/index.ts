@@ -37,6 +37,7 @@ const MenuController = dynamic(() => import("./organisms/MenuController") )
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
 const DownloadView = dynamic(()=> import("./templates/DownloadView"))
+const LandingPage = dynamic(()=> import("./templates/LandingPage"))
 
 export {
   PageHead,
@@ -70,5 +71,6 @@ export {
   Menu,
   CloseIcon,
   LogoText,
-  PageLoadAnimation
+  PageLoadAnimation,
+  LandingPage
 }
