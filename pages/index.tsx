@@ -19,7 +19,7 @@ const Home: NextPage = () => {
     <PageLayout>
       {didMount && (
         <div className="flex flex-col-reverse lg:flex-col lg:justify-center items-center">
-          <div className="z-10 pt-0 lg:pb-10 px-20 lg:px-0 lg:pt-40">
+          <div className="z-10 lg:pb-10 px-20 lg:px-0 pt-4 md:pt-10 lg:pt-32 ">
             {/* <LogoText /> */}
             <Image
               src={slimes.src}
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
               alt="My Slimes Banner"
             />
           </div>
-          <div className="lg:hidden px-0 z-0">
+          <div className="lg:hidden px-0 z-0 md:pt-4">
             <Image
               src={bgMobile.src}
               height={352.5}
