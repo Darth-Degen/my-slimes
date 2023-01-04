@@ -13,7 +13,6 @@ export const smallClickAnimation = {
   whileHover: { scale: 1.02 },
   whileTap: { scale: 1 },
 };
-
 export const linkClickAnimation = {
   whileHover: { scale: 1.04 },
   whileTap: { scale: 1 },
@@ -49,7 +48,6 @@ export const vFastExitAnimation = {
   exit:{ opacity: 0 },
   transition:{ duration: 0.05, ease: "easeInOut" },
 }
-
 export const enterAnimation = {
   initial:{ opacity: 0 },
   animate:{ opacity: 1 },
@@ -71,7 +69,6 @@ export const arrowVariants: Variants = {
     },
   },
 };
-
 
 //background
 export const backgroundAnimations = {
@@ -106,3 +103,9 @@ export const dropdownItemsAnimations = {
   },
 }
 
+//hover animations
+export const underlineAnimation = {
+  initial: { borderBottom: "none" },
+  whileHover: { borderBottom: "1px solid white" },
+  transition: { duration: 0.5, ease: "easeInOut" },
+};

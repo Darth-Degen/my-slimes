@@ -26,7 +26,7 @@ const Menu: FC<Props> = (props: Props) => {
       <div onClick={() => toggleMenu(false)} className="cursor-pointer w-min">
         <CloseIcon />
       </div>
-      <div className="flex flex-col pt-16 pb-6 gap-6 text-3xl ">
+      <div className="flex flex-col pt-16 pb-6 gap-6 text-3xl font-primary">
         {/* about */}
         <Link href="/about">
           <motion.p
@@ -59,7 +59,7 @@ const Menu: FC<Props> = (props: Props) => {
         {/* design */}
         {/* <Link href="/design"> */}
         <motion.p
-          className="py-1 whitespace-nowrap text-slimes-dark opacity-50 font-primary"
+          className="py-1 whitespace-nowrap text-slimes-dark opacity-50"
           // {...menuItemAnimation}
         >
           design notes (soon)

@@ -1,15 +1,16 @@
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
-import { PageHead, Header, PageLoadAnimation } from "@components";
+import { PageHead, Header, PageLoadAnimation, Footer } from "@components";
 import { AnimatePresence, motion } from "framer-motion";
 import { enterAnimation } from "@constants";
 
 interface Props {
   children: ReactNode;
   showLoader?: boolean;
+  showFooter?: boolean;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
-  const { children, showLoader = false } = props;
+  const { children, showLoader = false, showFooter = false } = props;
 
   const [showPage, setShowPage] = useState<boolean>(false);
   const showRef = useRef<boolean>(false);
@@ -43,11 +44,14 @@ const PageLayout: FC<Props> = (props: Props) => {
   // }, [showPage]);
 
   return (
-    <motion.div className="flex flex-col" {...enterAnimation}>
+    <motion.div
+      className="flex flex-col lg:min-h-screen justify-between"
+      {...enterAnimation}
+    >
       <PageHead title="My Slimes" description="Welcome to My Slimes" />
 
       {showPage && <Header />}
-      <main className="flex flex-col justify-start items-center h-full z-0">
+      <main className="flex flex-col justify-start items-center h-full z-0 ">
         <AnimatePresence mode="wait">
           {!showPage ? (
             <PageLoadAnimation show={!showPage} />
@@ -59,7 +63,7 @@ const PageLayout: FC<Props> = (props: Props) => {
         </AnimatePresence>
       </main>
 
-      {/* <Footer /> */}
+      {showFooter && <Footer />}
     </motion.div>
   );
 };

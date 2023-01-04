@@ -9,11 +9,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     setDidMount(true);
+    document.body.style.backgroundColor = "#FFFFF";
     console.log("We bout it.");
   }, []);
 
   return (
-    <PageLayout showLoader={false}>
+    <PageLayout showLoader={false} showFooter={true}>
       {didMount && (
         <div className="bg-white w-screen h-full flex flex-col items-center py-20 px-10">
           <AboutSection />

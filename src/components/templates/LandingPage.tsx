@@ -11,7 +11,7 @@ import slimes from "public/images/slimes-text.png";
 const LandingPage: NextPage = () => {
   return (
     <motion.div
-      className="flex flex-col-reverse lg:flex-col lg:justify-center items-center"
+      className="flex flex-col-reverse lg:flex-col lg:justify-center items-center bg-custom-primary"
       {...exitAnimation}
       key="landing-page"
     >
