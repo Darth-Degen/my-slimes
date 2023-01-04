@@ -4,7 +4,7 @@ import { exitAnimation } from "@constants";
 import { motion } from "framer-motion";
 
 //assets
-import bg from "public/images/landing-slimes-lg.png";
+import bg from "public/images/landing-slimes-lg-1.png";
 import bgMobile from "public/images/landing-slimes-sm.png";
 import slimes from "public/images/slimes-text.png";
 
