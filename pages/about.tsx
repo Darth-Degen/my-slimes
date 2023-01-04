@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <PageLayout showLoader={false} showFooter={true}>
+    <PageLayout showFooter={true}>
       {didMount && (
         <div className="bg-white w-screen h-full flex flex-col items-center py-20 px-10">
           <AboutSection />

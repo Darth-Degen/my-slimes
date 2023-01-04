@@ -1,6 +1,6 @@
-import { FC, SVGProps, useState } from "react";
+import { FC, SVGProps } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+
 interface Props extends SVGProps<SVGSVGElement> {
   fillHover?: string;
 }
