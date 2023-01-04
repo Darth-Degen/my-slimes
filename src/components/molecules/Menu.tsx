@@ -33,7 +33,6 @@ const disabledItemVariants = {
 };
 const menuItemAnimation = {
   whileHover: { color: "#8BD2B9" },
-  // whileTap: { scale: 0.96 },
   transition: { duration: 0.35 },
 };
 
