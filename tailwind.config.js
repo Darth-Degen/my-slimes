@@ -15,14 +15,18 @@ module.exports = {
         ],
       },
       colors: {
-        //bg
-        "main-bg": "#FCE4D8",
-        "load-bg": "#8BD2B9",
+        //main
+        "custom-primary": "#8BD2B9",
+        "custom-secondary": "#FCE4D8",
         //custom
-        "slime-green": "#8BD2B9",
-        "slime-pink": "#FCE4D8",
-        "slime-light": "#F3F1EA",
-        "slime-dark": "#232726",
+        "custom-green": "#8BD2B9",
+        "custom-pink": "#FCE4D8",
+        "custom-light": "#F3F1EA",
+        "custom-dark": "#232726",
+      },
+      screens: {
+        "3xl": "2160px",
+        "4xl": "3000px",
       },
     },
   },

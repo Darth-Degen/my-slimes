@@ -26,14 +26,17 @@ const ThemeChanger = dynamic(()=> import("./molecules/ThemeChanger"))
 const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const ButtonBar = dynamic(()=> import("./molecules/ButtonBar"))
 const Menu = dynamic(() => import("./molecules/Menu"))
-const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation") )
+const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation"))
+const Paragraph = dynamic(() => import("./molecules/Paragraph"))
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
 const StepContainer = dynamic(()=> import("./organisms/StepContainer"))
-const Form = dynamic(() => import("./organisms/Form") )
-const MobileDisplay = dynamic(() => import("./organisms/MobileDisplay") )
-const MenuController = dynamic(() => import("./organisms/MenuController") )
+const Form = dynamic(() => import("./organisms/Form"))
+const MobileDisplay = dynamic(() => import("./organisms/MobileDisplay"))
+const MenuController = dynamic(() => import("./organisms/MenuController"))
+const AboutSection = dynamic(() => import("./organisms/AboutSection"))
+const ScumSection = dynamic(() => import("./organisms/ScumSection"))
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
 const DownloadView = dynamic(()=> import("./templates/DownloadView"))
@@ -72,5 +75,8 @@ export {
   CloseIcon,
   LogoText,
   PageLoadAnimation,
-  LandingPage
+  LandingPage,
+  AboutSection,
+  ScumSection,
+  Paragraph
 }

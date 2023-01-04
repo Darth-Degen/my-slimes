@@ -24,7 +24,7 @@ a {
 
 @layer base {
   html {
-    @apply bg-slime-green  text-slime-dark font-secondary;
+    @apply bg-custom-primary  text-custom-dark font-secondary;
   }
   h1,h2,a { 
     @apply font-primary 
@@ -35,5 +35,6 @@ html {
   scroll-behavior: smooth;
   /* font-family: PressStart; */
 }
+
 
 
