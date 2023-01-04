@@ -1,6 +1,6 @@
 import { FC, SVGProps, useState } from "react";
 import { motion } from "framer-motion";
-
+import Image from "next/image";
 interface Props extends SVGProps<SVGSVGElement> {
   fillHover?: string;
 }
@@ -13,50 +13,47 @@ const LogoIcon: FC<Props> = (props: Props) => {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
-    whileTap: { scale: 0.9 },
+    // whileTap: { scale: 0.9 },
     transition: { duration: 0.3, ease: "easeInOut" },
   };
 
   return (
-    <motion.svg
-      width="107"
-      height="67"
-      viewBox="0 0 107 67"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`${className} w-10 h-8 cursor-pointer`}
+    <motion.div
+      className="cursor-pointer p-3 hover:shadow hover:shadow-white transition-shadow duration-300"
       {...menuAnimation}
-      id="exit-icon"
     >
-      <g clipPath="url(#clip0_1_51)">
+      <svg
+        width="83"
+        height="52"
+        viewBox="0 0 83 52"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={`${className} w-[41.5px] h-[26px]`}
+        id="exit-icon"
+      >
         <path
-          d="M3.02441 3.02441H103.975"
-          stroke={fill}
-          strokeWidth="10"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
+          d="M2.69633 3.03906H80.302"
+          stroke="#F3F1EA"
+          stroke-width="3"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
         />
         <path
-          d="M3.02441 33.3535H103.975"
-          stroke={fill}
-          strokeWidth="10"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
+          d="M2.69633 26.354H80.302"
+          stroke="#F3F1EA"
+          stroke-width="3"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
         />
         <path
-          d="M3.02441 63.6895H103.975"
-          stroke={fill}
-          strokeWidth="10"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
+          d="M2.69633 49.6748H80.302"
+          stroke="#F3F1EA"
+          stroke-width="3"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
         />
-      </g>
-      <defs>
-        <clipPath id="clip0_1_51">
-          <rect width="107" height="66.7139" fill={fill} />
-        </clipPath>
-      </defs>
-    </motion.svg>
+      </svg>
+    </motion.div>
   );
 };
 

@@ -1,12 +1,36 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { midExitAnimation } from "@constants";
 import { CloseIcon } from "@components";
 import Link from "next/link";
 
-interface Props {
-  toggleMenu: Dispatch<SetStateAction<boolean>>;
-}
+const sideVariants = {
+  closed: {
+    transition: {
+      staggerChildren: 0.15,
+      staggerDirection: -1,
+    },
+  },
+  open: {
+    transition: {
+      delay: 0.4,
+      staggerChildren: 0.15,
+      staggerDirection: 1,
+    },
+  },
+};
+const itemVariants = {
+  closed: {
+    opacity: 0,
+  },
+  open: { opacity: 1 },
+};
+const disabledItemVariants = {
+  closed: {
+    opacity: 0,
+  },
+  open: { opacity: 0.5 },
+};
 
 const menuItemAnimation = {
   whileHover: { color: "#8BD2B9" },
@@ -14,69 +38,102 @@ const menuItemAnimation = {
   transition: { duration: 0.35 },
 };
 
-const Menu: FC<Props> = (props: Props) => {
-  const { toggleMenu } = props;
-  return (
-    <motion.div
-      key="main-menu"
-      className="bg-white fixed w-72 sm:w-96 top-0  right-0 z-100 p-8 shadow-xl"
-      onMouseLeave={() => toggleMenu(false)}
-      {...midExitAnimation}
-    >
-      <div onClick={() => toggleMenu(false)} className="cursor-pointer w-min">
-        <CloseIcon />
-      </div>
-      <div className="flex flex-col pt-16 pb-6 gap-6 text-3xl font-primary">
-        {/* about */}
-        <Link href="/about">
-          <motion.p
-            className="w-min cursor-pointer py-1"
-            {...menuItemAnimation}
-          >
-            about
-          </motion.p>
-        </Link>
-        {/* auctions */}
-        <motion.a
-          className="cursor-pointer py-1"
-          {...menuItemAnimation}
-          href="/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          auctions
-        </motion.a>
-        {/* twitter */}
-        <motion.a
-          className="cursor-pointer py-1"
-          {...menuItemAnimation}
-          href="https://twitter.com/MySlimes_"
-          target="_blank"
-          rel="noreferrer"
-        >
-          twitter
-        </motion.a>
-        {/* design */}
-        {/* <Link href="/design"> */}
-        <motion.p
-          className="py-1 whitespace-nowrap text-slimes-dark opacity-50"
-          // {...menuItemAnimation}
-        >
-          design notes (soon)
-        </motion.p>
-        {/* </Link> */}
+interface Props {
+  toggleMenu: Dispatch<SetStateAction<boolean>>;
+  open: boolean;
+}
 
-        {/* slimes-only */}
-        <Link href="/slimes-only">
-          <motion.p
-            className="cursor-pointer py-1 whitespace-nowrap"
-            {...menuItemAnimation}
+const Menu: FC<Props> = (props: Props) => {
+  const { toggleMenu, open } = props;
+  return (
+    <>
+      <AnimatePresence mode="wait" initial={false}>
+        {open && (
+          <motion.div
+            key="main-menu"
+            className="bg-white fixed top-0 right-0 z-100 p-8 shadow-xl rounded-bl"
+            onMouseLeave={() => toggleMenu(false)}
           >
-            slimes only
-          </motion.p>
-        </Link>
-      </div>
-    </motion.div>
+            <motion.aside
+              initial={{ width: 0 }}
+              animate={{ width: 300 }}
+              exit={{
+                width: 0,
+                transition: { duration: 0.3 },
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.div
+                className="container"
+                initial="closed"
+                animate="open"
+                variants={sideVariants}
+              >
+                <div
+                  onClick={() => toggleMenu(false)}
+                  className="cursor-pointer w-min pt-6 "
+                >
+                  <CloseIcon />
+                </div>
+                <div className="flex flex-col pt-9 py-6 gap-6 text-3xl font-primary ">
+                  {/* about */}
+                  <motion.p
+                    className="w-min cursor-pointer py-1"
+                    {...menuItemAnimation}
+                    variants={itemVariants}
+                  >
+                    <Link href="/about">about</Link>
+                  </motion.p>
+                  {/* auctions */}
+                  <motion.a
+                    className="cursor-pointer py-1"
+                    {...menuItemAnimation}
+                    href="/"
+                    target="_blank"
+                    rel="noreferrer"
+                    variants={itemVariants}
+                  >
+                    auctions
+                  </motion.a>
+                  {/* twitter */}
+                  <motion.a
+                    className="cursor-pointer py-1"
+                    {...menuItemAnimation}
+                    href="https://twitter.com/MySlimes_"
+                    target="_blank"
+                    rel="noreferrer"
+                    variants={itemVariants}
+                  >
+                    twitter
+                  </motion.a>
+                  {/* design */}
+                  {/* <Link href="/design"> */}
+                  <motion.p
+                    className="py-1 whitespace-nowrap text-slimes-dark"
+                    // {...menuItemAnimation}
+                    variants={disabledItemVariants}
+                  >
+                    design notes (soon)
+                  </motion.p>
+                  {/* </Link> */}
+
+                  {/* slimes-only */}
+                  <motion.p
+                    className="py-1 whitespace-nowrap text-slimes-dark"
+                    // {...menuItemAnimation}
+                    variants={disabledItemVariants}
+                  >
+                    {/* <Link href="/slimes-only"> */}
+                    slimes only (soon)
+                    {/* </Link> */}
+                  </motion.p>
+                </div>
+              </motion.div>
+            </motion.aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
