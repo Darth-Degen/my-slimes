@@ -12,7 +12,7 @@ const AboutSection: FC = () => {
         height={439}
         className="hidden lg:block"
       />
-      <div className="flex flex-col gap-20 justify-center max-w-[600px]">
+      <div className="flex flex-col gap-20 justify-center lg:max-w-[600px] md:px-10 lg:px-0">
         <Paragraph
           title="who are my slimes"
           body={[

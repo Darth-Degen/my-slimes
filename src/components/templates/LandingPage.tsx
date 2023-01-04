@@ -15,7 +15,6 @@ const LandingPage: NextPage = () => {
       {...exitAnimation}
       key="landing-page"
     >
-      {/* <div className="z-10 lg:pb-10 px-20 lg:px-0 pt-8 md:pt-10 lg:pt-20 "> */}
       <div className="px-10 pt-6 md:pt-10 lg:pt-0 lg:absolute lg:left-1/2 lg:top-[28.5%] lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2">
         <Image
           src={slimes.src}
