@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { midExitAnimation } from "@constants";
 import { CloseIcon } from "@components";
 import Link from "next/link";
+import { useWindowSize } from "src/hooks";
 
 const sideVariants = {
   closed: {
@@ -29,9 +29,8 @@ const disabledItemVariants = {
   closed: {
     opacity: 0,
   },
-  open: { opacity: 0.5 },
+  open: { opacity: 0.3 },
 };
-
 const menuItemAnimation = {
   whileHover: { color: "#8BD2B9" },
   // whileTap: { scale: 0.96 },
@@ -45,18 +44,21 @@ interface Props {
 
 const Menu: FC<Props> = (props: Props) => {
   const { toggleMenu, open } = props;
+  const [winWidth, winHeight] = useWindowSize();
+  const isMobile: boolean = winWidth < 640;
+
   return (
     <>
       <AnimatePresence mode="wait" initial={false}>
         {open && (
           <motion.div
             key="main-menu"
-            className="bg-white fixed top-0 right-0 z-100 p-8 shadow-xl rounded-bl"
+            className="bg-white fixed top-0 right-0 z-100"
             onMouseLeave={() => toggleMenu(false)}
           >
             <motion.aside
               initial={{ width: 0 }}
-              animate={{ width: 300 }}
+              animate={{ width: isMobile ? winWidth : 400 }}
               exit={{
                 width: 0,
                 transition: { duration: 0.3 },
@@ -64,7 +66,9 @@ const Menu: FC<Props> = (props: Props) => {
               transition={{ duration: 0.5 }}
             >
               <motion.div
-                className="container"
+                className={`p-12 shadow-xl rounded-bl ${
+                  isMobile ? "h-screen" : ""
+                }`}
                 initial="closed"
                 animate="open"
                 variants={sideVariants}
@@ -75,7 +79,7 @@ const Menu: FC<Props> = (props: Props) => {
                 >
                   <CloseIcon />
                 </div>
-                <div className="flex flex-col pt-9 py-6 gap-6 text-3xl font-primary ">
+                <div className="flex flex-col py-16 gap-8 text-3xl font-primary ">
                   {/* about */}
                   <motion.p
                     className="w-min cursor-pointer py-1"
