@@ -5,34 +5,12 @@ import { enterAnimation } from "@constants";
 
 interface Props {
   children: ReactNode;
-  showLoader?: boolean;
   showFooter?: boolean;
+  showPage?: boolean;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
-  const { children, showLoader = false, showFooter = false } = props;
-
-  const [showPage, setShowPage] = useState<boolean>(false);
-  const showRef = useRef<boolean>(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
-
-  useEffect(() => {
-    // if (showRef.current === false && !isRendering) {
-    if (showLoader) {
-      const milliseconds = Math.floor(Math.random() * (2500 - 1500 + 1) + 1500);
-      timeoutRef.current = setTimeout(() => {
-        setShowPage(true);
-      }, milliseconds);
-      // showRef.current = showLoader;
-      // }
-    } else {
-      setShowPage(true);
-    }
-
-    return () => {
-      if (showLoader) clearTimeout(timeoutRef.current);
-    };
-  }, [showLoader]);
+  const { children, showFooter = false, showPage = true } = props;
 
   //set bg based on rendering
   // useEffect(() => {
@@ -52,18 +30,10 @@ const PageLayout: FC<Props> = (props: Props) => {
 
       {showPage && <Header />}
       <main className="flex flex-col justify-start items-center h-full z-0 ">
-        <AnimatePresence mode="wait">
-          {!showPage ? (
-            <PageLoadAnimation show={!showPage} />
-          ) : (
-            <div className={`${!showPage ? "opacity-0" : "opacity-100"} `}>
-              {children}
-            </div>
-          )}
-        </AnimatePresence>
+        {children}
       </main>
 
-      {showFooter && <Footer />}
+      {showFooter && showPage && <Footer />}
     </motion.div>
   );
 };

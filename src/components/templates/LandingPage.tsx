@@ -1,39 +1,69 @@
-import { NextPage } from "next";
 import Image from "next/image";
 import { exitAnimation } from "@constants";
+import { LogoText } from "@components";
 import { motion } from "framer-motion";
 
 //assets
 import bg from "public/images/landing-slimes-lg-1.png";
 import bgMobile from "public/images/landing-slimes-sm.png";
-import slimes from "public/images/slimes-text.png";
+import { FC, useState } from "react";
 
-const LandingPage: NextPage = () => {
+interface Props {
+  showPage: boolean;
+}
+const LandingPage: FC<Props> = (props: Props) => {
+  const { showPage } = props;
+  const [loadingComplete, setLoadingComplete] = useState<boolean>(false);
+
+  const showAnimation = {
+    initial: { opacity: 0 },
+    animate: { opacity: showPage ? 1 : 0 },
+    transition: { duration: 0.7, ease: "easeInOut" },
+  };
+
   return (
     <motion.div
-      className="flex flex-col-reverse lg:flex-col lg:justify-center items-center bg-custom-primary"
+      className="flex flex-col-reverse lg:flex-col justify-center items-center bg-custom-primary"
       {...exitAnimation}
       key="landing-page"
     >
-      <div className="px-10 pt-6 md:pt-10 lg:pt-0 lg:absolute lg:left-1/2 lg:top-[28.5%] lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2">
+      <motion.div
+        className="z-50"
+        key="page-load-animation"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+      >
+        <div className="absolute left-1/2 bottom-[10%] lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
+          <LogoText showAnimation={!showPage} />
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="hidden lg:block px-0 z-0 absolute bottom-0"
+        {...showAnimation}
+      >
         <Image
-          src={slimes.src}
-          height={136.8}
-          width={400}
-          alt="My Slimes Text"
+          src={bg.src}
+          height={766}
+          width={2371}
+          alt="My Slimes Banner"
+          onLoadingComplete={() => setLoadingComplete(true)}
         />
-      </div>
-      <div className="hidden lg:block px-0 z-0 absolute bottom-0">
-        <Image src={bg.src} height={766} width={2371} alt="My Slimes Banner" />
-      </div>
-      <div className="lg:hidden px-0 z-0 md:pt-12">
+      </motion.div>
+
+      <motion.div
+        className="lg:hidden px-0 z-0 pt-6 md:pt-12"
+        {...showAnimation}
+      >
         <Image
           src={bgMobile.src}
           height={352.5}
           width={440.5}
           alt="My Slimes Mobile"
         />
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

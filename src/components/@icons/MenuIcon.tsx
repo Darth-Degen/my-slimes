@@ -19,7 +19,7 @@ const LogoIcon: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="cursor-pointer p-3 hover:shadow hover:shadow-white transition-shadow duration-300"
+      className="cursor-pointer p-3 hover:shadow hover:shadow-white transition-shadow duration-300 rounded"
       {...menuAnimation}
     >
       <svg
@@ -34,23 +34,23 @@ const LogoIcon: FC<Props> = (props: Props) => {
         <path
           d="M2.69633 3.03906H80.302"
           stroke="#F3F1EA"
-          stroke-width="3"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
+          strokeWidth="3"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
         />
         <path
           d="M2.69633 26.354H80.302"
           stroke="#F3F1EA"
-          stroke-width="3"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
+          strokeWidth="3"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
         />
         <path
           d="M2.69633 49.6748H80.302"
           stroke="#F3F1EA"
-          stroke-width="3"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
+          strokeWidth="3"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
         />
       </svg>
     </motion.div>

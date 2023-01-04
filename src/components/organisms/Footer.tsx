@@ -35,7 +35,7 @@ const Footer: FC<Props> = (props: Props) => {
           </motion.a>
           <motion.a
             className="cursor-pointer"
-            href="/"
+            href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
             target="_blank"
             rel="noreferrer"
             {...underlineAnimation}
@@ -47,14 +47,14 @@ const Footer: FC<Props> = (props: Props) => {
               about
             </motion.p>
           </Link>
-          <Link href="/slimes-only">
-            <motion.p
-              className="cursor-pointer whitespace-nowrap"
-              {...underlineAnimation}
-            >
-              slimes only
-            </motion.p>
-          </Link>
+          {/* <Link href="/slimes-only"> */}
+          <motion.p
+            className="cursor-default whitespace-nowrap opacity-50"
+            // {...underlineAnimation}
+          >
+            slimes only
+          </motion.p>
+          {/* </Link> */}
         </div>
         {/* exp */}
         <div className="flex lg:w-1/4 justify-end ">
@@ -66,7 +66,7 @@ const Footer: FC<Props> = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className={`h-14 ${bottomBgColor}`}></div>
+      <div className={`h-10 ${bottomBgColor}`}></div>
     </footer>
   );
 };

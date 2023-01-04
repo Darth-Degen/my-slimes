@@ -92,7 +92,7 @@ const Menu: FC<Props> = (props: Props) => {
                   <motion.a
                     className="cursor-pointer py-1"
                     {...menuItemAnimation}
-                    href="/"
+                    href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%22contractType%22:%5B%22liveAuction%22%5D%7D"
                     target="_blank"
                     rel="noreferrer"
                     variants={itemVariants}
@@ -113,7 +113,7 @@ const Menu: FC<Props> = (props: Props) => {
                   {/* design */}
                   {/* <Link href="/design"> */}
                   <motion.p
-                    className="py-1 whitespace-nowrap text-slimes-dark"
+                    className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
                     // {...menuItemAnimation}
                     variants={disabledItemVariants}
                   >
@@ -123,7 +123,7 @@ const Menu: FC<Props> = (props: Props) => {
 
                   {/* slimes-only */}
                   <motion.p
-                    className="py-1 whitespace-nowrap text-slimes-dark"
+                    className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
                     // {...menuItemAnimation}
                     variants={disabledItemVariants}
                   >

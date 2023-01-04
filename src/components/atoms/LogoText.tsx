@@ -2,23 +2,26 @@ import { FC, SVGProps } from "react";
 import { motion } from "framer-motion";
 import { useWindowSize } from "@hooks";
 
-interface Props extends SVGProps<SVGSVGElement> {}
-
-const transitionValues = {
-  duration: 0.4,
-  yoyo: Infinity,
-  ease: "easeOut",
-};
+interface Props extends SVGProps<SVGSVGElement> {
+  showAnimation?: boolean;
+}
 
 const CloseIcon: FC<Props> = (props: Props) => {
   const [winWidth, winHeight] = useWindowSize();
   const {
+    showAnimation = true,
     className,
     fill = "white",
     width = winWidth < 640 ? 200 : 400,
     height = winWidth < 640 ? 125 : 200,
   } = props;
 
+  const transitionValues = {
+    duration: 0.4,
+    yoyo: showAnimation ? Infinity : 1,
+    ease: "easeOut",
+  };
+  console.log("showAnimation ", showAnimation);
   return (
     <svg
       id="slimes-test"
@@ -62,7 +65,7 @@ const CloseIcon: FC<Props> = (props: Props) => {
           height: transitionValues,
         }}
         animate={{
-          y: ["0rem", "-3rem"],
+          y: ["0rem", showAnimation ? "-3rem" : "0rem"],
         }}
       />
     </svg>
