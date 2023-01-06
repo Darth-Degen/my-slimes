@@ -96,10 +96,10 @@ const Menu: FC<Props> = (props: Props) => {
                   {/* auctions */}
                   <motion.a
                     className="cursor-pointer py-1"
-                    {...menuItemAnimation}
                     href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%22contractType%22:%5B%22liveAuction%22%5D%7D"
                     target="_blank"
                     rel="noreferrer"
+                    {...menuItemAnimation}
                     variants={itemVariants}
                   >
                     auctions
@@ -107,10 +107,10 @@ const Menu: FC<Props> = (props: Props) => {
                   {/* twitter */}
                   <motion.a
                     className="cursor-pointer py-1"
-                    {...menuItemAnimation}
                     href="https://twitter.com/MySlimes_"
                     target="_blank"
                     rel="noreferrer"
+                    {...menuItemAnimation}
                     variants={itemVariants}
                   >
                     twitter
@@ -119,23 +119,23 @@ const Menu: FC<Props> = (props: Props) => {
                   {/* <Link href="/design"> */}
                   <motion.p
                     className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
-                    // {...menuItemAnimation}
+                    {...menuItemAnimation}
                     variants={disabledItemVariants}
                   >
                     design notes (soon)
                   </motion.p>
                   {/* </Link> */}
 
-                  {/* slimes-only */}
-                  <motion.p
-                    className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
-                    // {...menuItemAnimation}
-                    variants={disabledItemVariants}
-                  >
-                    {/* <Link href="/slimes-only"> */}
-                    slimes only (soon)
-                    {/* </Link> */}
-                  </motion.p>
+                  {/* my-slimes */}
+                  <Link href="/my-slimes">
+                    <motion.p
+                      className="cursor-pointer py-1 whitespace-nowrap text-slimes-dark"
+                      {...menuItemAnimation}
+                      variants={itemVariants}
+                    >
+                      my slimes
+                    </motion.p>
+                  </Link>
                 </div>
               </motion.div>
             </motion.aside>

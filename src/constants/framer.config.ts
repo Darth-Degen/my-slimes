@@ -110,7 +110,7 @@ export const dropdownItemsAnimations = {
 //   transition: { duration: 0.5, ease: "easeInOut" },
 // };
 export const underlineAnimation = {
-  initial: { opacity:0, y:1.5 },
+  initial: { opacity:0, y:2 },
   whileHover: { opacity:0.8, y:0  },
   transition: { duration: 0.5, ease: "easeInOut" },
 };

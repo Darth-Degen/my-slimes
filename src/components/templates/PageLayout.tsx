@@ -1,7 +1,8 @@
-import { FC, ReactNode, useEffect, useRef, useState } from "react";
-import { PageHead, Header, PageLoadAnimation, Footer } from "@components";
-import { AnimatePresence, motion } from "framer-motion";
+import { FC, ReactNode, useEffect } from "react";
+import { PageHead, Header, Footer } from "@components";
+import { motion } from "framer-motion";
 import { enterAnimation } from "@constants";
+import { useRouter } from "next/router";
 
 interface Props {
   children: ReactNode;
@@ -11,15 +12,20 @@ interface Props {
 
 const PageLayout: FC<Props> = (props: Props) => {
   const { children, showFooter = false, showPage = true } = props;
+  const router = useRouter();
 
-  //set bg based on rendering
+  //set body bg based on page
   // useEffect(() => {
-  //   if (!showPage) {
-  //     document.body.style.backgroundColor = "#8BD2B9";
-  //   } else {
-  //     document.body.style.backgroundColor = "#FCE4D8";
+  //   if (!router?.pathname) return;
+
+  //   switch (router.pathname) {
+  //     case "/about":
+  //       document.body.style.backgroundColor = "#FFF";
+  //       break;
+  //     default:
+  //       document.body.style.backgroundColor = "#8BD2B9";
   //   }
-  // }, [showPage]);
+  // }, [router.pathname]);
 
   return (
     <motion.div

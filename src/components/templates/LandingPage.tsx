@@ -35,7 +35,7 @@ const LandingPage: FC<Props> = (props: Props) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
       >
-        <div className="absolute left-1/2 bottom-[10%] lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
+        <div className="absolute left-1/2 bottom-[6.9%] lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
           <LogoText showAnimation={!showPage} />
         </div>
       </motion.div>
@@ -53,10 +53,7 @@ const LandingPage: FC<Props> = (props: Props) => {
         />
       </motion.div>
 
-      <motion.div
-        className="lg:hidden px-0 z-0 pt-6 md:pt-12"
-        {...showAnimation}
-      >
+      <motion.div className="lg:hidden px-0 z-0 pt-6 " {...showAnimation}>
         <Image
           src={bgMobile.src}
           height={352.5}

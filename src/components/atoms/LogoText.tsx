@@ -12,7 +12,7 @@ const CloseIcon: FC<Props> = (props: Props) => {
     showAnimation = true,
     className,
     fill = "white",
-    width = winWidth < 640 ? 200 : 400,
+    width = winWidth < 640 ? 269 : 400,
     height = winWidth < 640 ? 125 : 200,
   } = props;
 
@@ -21,7 +21,7 @@ const CloseIcon: FC<Props> = (props: Props) => {
     yoyo: showAnimation ? Infinity : 1,
     ease: "easeOut",
   };
-  console.log("showAnimation ", showAnimation);
+
   return (
     <svg
       id="slimes-test"

@@ -32,36 +32,39 @@ const Footer: FC<Props> = (props: Props) => {
         {/*  links */}
 
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-10 text-white text-center lg:text-left ">
-          <a
-            className="relative cursor-pointer"
-            href="https://twitter.com/MySlimes_"
-            target="_blank"
-            rel="noreferrer"
-          >
-            twitter
+          <div className="relative cursor-pointer">
+            <a
+              className="relative cursor-pointer"
+              href="https://twitter.com/MySlimes_"
+              target="_blank"
+              rel="noreferrer"
+            >
+              twitter
+            </a>
             <UnderlineAnimation />
-          </a>
-          <a
-            className="relative cursor-pointer"
-            href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
-            target="_blank"
-            rel="noreferrer"
-          >
-            buy a slime
+          </div>
+          <div className="relative cursor-pointer">
+            <a
+              href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
+              target="_blank"
+              rel="noreferrer"
+            >
+              buy a slime
+            </a>
             <UnderlineAnimation />
-          </a>
+          </div>
           <Link href="/about">
-            <p className="relative cursor-pointer">
+            <div className="relative cursor-pointer">
               about
               <UnderlineAnimation />
-            </p>
+            </div>
           </Link>
-          {/* <Link href="/slimes-only"> */}
-          <motion.p className="relative cursor-default whitespace-nowrap opacity-50">
-            slimes only
-            {/* <UnderlineAnimation /> */}
-          </motion.p>
-          {/* </Link> */}
+          <Link href="/my-slimes">
+            <motion.div className="relative cursor-pointer whitespace-nowrap">
+              my slimes
+              <UnderlineAnimation />
+            </motion.div>
+          </Link>
         </div>
         {/* exp */}
         <div className="flex lg:w-1/4 justify-end ">

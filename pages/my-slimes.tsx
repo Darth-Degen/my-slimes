@@ -1,6 +1,7 @@
 import { PageLayout, ScumSection } from "@components";
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
+import Image from "next/image";
 import { AboutSection } from "@components";
 
 const Home: NextPage = () => {
