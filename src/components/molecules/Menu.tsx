@@ -53,7 +53,8 @@ const Menu: FC<Props> = (props: Props) => {
           <motion.div
             key="main-menu"
             className="bg-white fixed top-0 right-0 z-100"
-            onMouseLeave={() => toggleMenu(false)}
+            onClick={() => toggleMenu(false)}
+            // onMouseLeave={() => toggleMenu(false)}
           >
             <motion.aside
               initial={{ width: 0 }}
@@ -66,7 +67,7 @@ const Menu: FC<Props> = (props: Props) => {
             >
               <motion.div
                 className={`p-12 shadow-xl rounded-bl ${
-                  isMobile ? "h-screen" : ""
+                  isMobile ? "h-screen" : "h-screen"
                 }`}
                 initial="closed"
                 animate="open"
@@ -78,15 +79,20 @@ const Menu: FC<Props> = (props: Props) => {
                 >
                   <CloseIcon />
                 </div>
-                <div className="flex flex-col py-16 gap-8 text-3xl font-primary ">
+                <div
+                  className="flex flex-col py-16 gap-8 text-3xl font-primary "
+                  onClick={() => toggleMenu(false)}
+                >
                   {/* about */}
-                  <motion.p
-                    className="w-min cursor-pointer py-1"
-                    {...menuItemAnimation}
-                    variants={itemVariants}
-                  >
-                    <Link href="/about">about</Link>
-                  </motion.p>
+                  <Link href="/about">
+                    <motion.p
+                      className=" cursor-pointer py-1"
+                      {...menuItemAnimation}
+                      variants={itemVariants}
+                    >
+                      about
+                    </motion.p>
+                  </Link>
                   {/* auctions */}
                   <motion.a
                     className="cursor-pointer py-1"

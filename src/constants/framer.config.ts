@@ -104,8 +104,13 @@ export const dropdownItemsAnimations = {
 }
 
 //hover animations
+// export const underlineAnimation = {
+//   initial: { borderBottom: "none" },
+//   whileHover: { borderBottom: "1px solid white" },
+//   transition: { duration: 0.5, ease: "easeInOut" },
+// };
 export const underlineAnimation = {
-  initial: { borderBottom: "none" },
-  whileHover: { borderBottom: "1px solid white" },
+  initial: { opacity:0, y:1.5 },
+  whileHover: { opacity:0.8, y:0  },
   transition: { duration: 0.5, ease: "easeInOut" },
 };

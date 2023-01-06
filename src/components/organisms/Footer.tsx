@@ -8,6 +8,13 @@ interface Props {
   bottomBgColor?: string;
 }
 
+const UnderlineAnimation: FC = () => (
+  <motion.div
+    {...underlineAnimation}
+    className="absolute top-0 left-0 h-full w-full bg-transparent border-b border-white"
+  />
+);
+
 const Footer: FC<Props> = (props: Props) => {
   const { bottomBgColor = "bg-white" } = props;
   return (
@@ -23,36 +30,36 @@ const Footer: FC<Props> = (props: Props) => {
           />
         </div>
         {/*  links */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-10 text-white">
-          <motion.a
-            className="cursor-pointer"
+
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-10 text-white text-center lg:text-left ">
+          <a
+            className="relative cursor-pointer"
             href="https://twitter.com/MySlimes_"
             target="_blank"
             rel="noreferrer"
-            {...underlineAnimation}
           >
             twitter
-          </motion.a>
-          <motion.a
-            className="cursor-pointer"
+            <UnderlineAnimation />
+          </a>
+          <a
+            className="relative cursor-pointer"
             href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
             target="_blank"
             rel="noreferrer"
-            {...underlineAnimation}
           >
             buy a slime
-          </motion.a>
+            <UnderlineAnimation />
+          </a>
           <Link href="/about">
-            <motion.p className="w-min cursor-pointer" {...underlineAnimation}>
+            <p className="relative cursor-pointer">
               about
-            </motion.p>
+              <UnderlineAnimation />
+            </p>
           </Link>
           {/* <Link href="/slimes-only"> */}
-          <motion.p
-            className="cursor-default whitespace-nowrap opacity-50"
-            // {...underlineAnimation}
-          >
+          <motion.p className="relative cursor-default whitespace-nowrap opacity-50">
             slimes only
+            {/* <UnderlineAnimation /> */}
           </motion.p>
           {/* </Link> */}
         </div>
