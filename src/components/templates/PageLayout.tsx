@@ -8,7 +8,8 @@ interface Props {
   children: ReactNode;
   showFooter?: boolean;
   showPage?: boolean;
-  scrollHeader?: boolean;
+  staticHeader?: boolean;
+  showHeader?: boolean;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
@@ -16,7 +17,8 @@ const PageLayout: FC<Props> = (props: Props) => {
     children,
     showFooter = false,
     showPage = true,
-    scrollHeader = false,
+    staticHeader = true,
+    showHeader = false,
   } = props;
 
   const router = useRouter();
@@ -41,7 +43,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     >
       <PageHead title="My Slimes" description="Welcome to My Slimes" />
 
-      {showPage && !scrollHeader && <Header />}
+      {showPage && <Header isStatic={staticHeader} showHeader={showHeader} />}
       <main className="flex flex-col justify-start items-center h-full z-0 ">
         {children}
       </main>
