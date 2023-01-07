@@ -52,7 +52,7 @@ const Menu: FC<Props> = (props: Props) => {
         {open && (
           <motion.div
             key="main-menu"
-            className="bg-white fixed top-0 right-0 z-100"
+            className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg"
             onClick={() => toggleMenu(false)}
             // onMouseLeave={() => toggleMenu(false)}
           >
@@ -66,21 +66,23 @@ const Menu: FC<Props> = (props: Props) => {
               transition={{ duration: 0.5 }}
             >
               <motion.div
-                className={`p-12 shadow-xl rounded-bl ${
+                className={`px-4 sm:px-6 lg:px-10 py-6 ${
                   isMobile ? "h-screen" : "h-screen"
                 }`}
                 initial="closed"
                 animate="open"
                 variants={sideVariants}
               >
-                <div
-                  onClick={() => toggleMenu(false)}
-                  className="cursor-pointer w-min pt-6 "
-                >
-                  <CloseIcon />
+                <div className="flex w-full justify-end items-center">
+                  <div
+                    onClick={() => toggleMenu(false)}
+                    className="cursor-pointer"
+                  >
+                    <CloseIcon />
+                  </div>
                 </div>
                 <div
-                  className="flex flex-col py-16 gap-8 text-3xl font-primary "
+                  className="flex flex-col pb-16 gap-8 text-3xl font-primary "
                   onClick={() => toggleMenu(false)}
                 >
                   {/* about */}
@@ -119,7 +121,7 @@ const Menu: FC<Props> = (props: Props) => {
                   {/* <Link href="/design"> */}
                   <motion.p
                     className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
-                    {...menuItemAnimation}
+                    // {...menuItemAnimation}
                     variants={disabledItemVariants}
                   >
                     design notes (soon)

@@ -14,13 +14,16 @@ const LogoIcon: FC<Props> = (props: Props) => {
     animate: { opacity: 1 },
     exit: { opacity: 0 },
     // whileTap: { scale: 0.9 },
+    // whileHover: {
+    //   boxShadow: "0 6px 10px 0 rgba(0, 0, 0, 0.19) ",
+    // },
     transition: { duration: 0.3, ease: "easeInOut" },
   };
 
   return (
     <motion.div
-      className="cursor-pointer p-3 hover:shadow hover:shadow-white transition-shadow duration-300 rounded"
-      {...menuAnimation}
+      className="cursor-pointer p-3 hover:shadow hover:shadow-white transition-all duration-200 rounded"
+      // {...menuAnimation}
     >
       <svg
         width="83"

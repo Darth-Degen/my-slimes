@@ -8,12 +8,7 @@ const MenuController: FC = () => {
       <div key="menu-icon" onClick={() => cycleOpen(true)}>
         <MenuIcon />
       </div>
-      {/* <AnimatePresence mode="wait" initial={false}>
-          {openMenu && <Menu toggleMenu={setOpenMenu} />}
-        </AnimatePresence> */}
-      {/* <motion.aside initial={{ width: 0 }} animate={{ width: 300 }}> */}
       <Menu toggleMenu={cycleOpen} open={open} />
-      {/* </motion.aside> */}
     </div>
   );
 };
