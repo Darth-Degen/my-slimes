@@ -8,10 +8,17 @@ interface Props {
   children: ReactNode;
   showFooter?: boolean;
   showPage?: boolean;
+  scrollHeader?: boolean;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
-  const { children, showFooter = false, showPage = true } = props;
+  const {
+    children,
+    showFooter = false,
+    showPage = true,
+    scrollHeader = false,
+  } = props;
+
   const router = useRouter();
 
   //set body bg based on page
@@ -34,7 +41,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     >
       <PageHead title="My Slimes" description="Welcome to My Slimes" />
 
-      {showPage && <Header />}
+      {showPage && !scrollHeader && <Header />}
       <main className="flex flex-col justify-start items-center h-full z-0 ">
         {children}
       </main>

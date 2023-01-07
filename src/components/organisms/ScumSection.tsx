@@ -6,7 +6,7 @@ const AboutSection: FC = () => {
   return (
     // <div className="relative flex flex-col lg:flex-row items-center justify-start gap-10 md:gap-0 lg:gap-20  bg-custom-pink rounded-t-full rounded-b-md lg:rounded-t-auto lg:rounded-l-full lg:rounded-r-xl p-8 lg:p-14 my-20">
     <div className="relative flex flex-col lg:flex-row items-center justify-start my-20">
-      <div className="bg-custom-pink rounded-t-full lg:rounded-tr-none lg:rounded-l-full lg:h-[500px] flex items-center p-8 lg:p-12 sm:w-[484px] lg:w-auto">
+      <div className="bg-custom-pink rounded-t-full lg:rounded-tr-none lg:rounded-l-full lg:h-[500px] flex items-center p-7 lg:p-12 sm:w-[484px] lg:w-auto">
         <Image
           src="/images/scum.png"
           alt="Weapon"
@@ -15,7 +15,7 @@ const AboutSection: FC = () => {
           className=""
         />
       </div>
-      <div className="flex flex-col gap-20 justify-center max-w-[630px] bg-custom-pink rounded-b-3xl lg:rounded-bl-none lg:rounded-r-3xl lg:h-[500px] px-10 pb-12 lg:py-14 sm:w-[484px] lg:w-auto">
+      <div className="flex flex-col gap-20 justify-center bg-custom-pink rounded-b-3xl lg:rounded-bl-none lg:rounded-r-3xl lg:h-[500px] px-10 pb-12 lg:py-14 max-w-[484px] lg:max-w-[630px]  sm:w-[484px] lg:w-auto">
         <Paragraph
           title="scum"
           body={[
@@ -23,6 +23,7 @@ const AboutSection: FC = () => {
             "Known for working with the team that released Deadgods and y00ts, the two largest collections formerly on Solana. He's spent thousands of hours studying and learning the pfp medium.",
             "Slimes are his opportunity to leave his mark on the space, grow his vision, raise awareness and express himself. ",
           ]}
+          className="text-start"
         />
       </div>
     </div>

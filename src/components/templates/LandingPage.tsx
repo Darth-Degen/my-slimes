@@ -2,11 +2,11 @@ import Image from "next/image";
 import { exitAnimation } from "@constants";
 import { LogoText } from "@components";
 import { motion } from "framer-motion";
+import { FC, useState } from "react";
 
 //assets
 import bg from "public/images/landing-slimes-lg-1.png";
 import bgMobile from "public/images/landing-slimes-sm.png";
-import { FC, useState } from "react";
 
 interface Props {
   showPage: boolean;
