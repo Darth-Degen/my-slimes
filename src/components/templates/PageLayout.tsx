@@ -10,6 +10,9 @@ interface Props {
   showPage?: boolean;
   staticHeader?: boolean;
   showHeader?: boolean;
+  footerAccentColor?: string;
+  footerTextColor?: string;
+  footerHex?: string;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
@@ -19,6 +22,9 @@ const PageLayout: FC<Props> = (props: Props) => {
     showPage = true,
     staticHeader = true,
     showHeader = false,
+    footerAccentColor,
+    footerTextColor,
+    footerHex,
   } = props;
 
   const router = useRouter();
@@ -48,7 +54,13 @@ const PageLayout: FC<Props> = (props: Props) => {
         {children}
       </main>
 
-      {showFooter && showPage && <Footer />}
+      {showFooter && showPage && (
+        <Footer
+          backgroundAccentColor={footerAccentColor}
+          textColor={footerTextColor}
+          hex={footerHex}
+        />
+      )}
     </motion.div>
   );
 };

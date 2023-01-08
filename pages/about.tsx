@@ -113,16 +113,16 @@ const Home: NextPage = () => {
             <AnimatePresence mode="wait">
               {animationEnded && (
                 <motion.div
-                  className="fixed z-50 bottom-3 left-[48%] transform -translate-x-1/2 text-white px-4 pt-1 shadow-xl bg-[#8BD2B9] bg-opacity-60 rounded  flex flex-col items-center justify-center text-lg animate-bounce"
+                  className="cursor-default fixed z-50 bottom-3 left-[48%] transform -translate-x-1/2 border border-white border-opacity-80 text-white px-4 pt-1 bg-[#8BD2B9] bg-opacity-80 rounded  flex flex-col items-center justify-center text-lg animate-bounce"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1, duration: 1.4, ease: "easeInOut" }}
                   key="scroll-arrow"
                 >
                   Scroll
-                  <motion.div className="-mt-1">
+                  <div className="-mt-1">
                     <ArrowIcon color="#fff" />
-                  </motion.div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>

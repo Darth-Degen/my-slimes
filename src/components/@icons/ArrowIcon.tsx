@@ -29,7 +29,7 @@ const ArrowIcon: FC<Props> = (props: Props) => {
       <path d="M18 6L12 12L6 6" stroke={color} /> */}
 
       {/* single arrow */}
-      <path d="M18 9L12 15L6 9" stroke={color} stroke-width="2" />
+      <path d="M18 9L12 15L6 9" stroke={color} strokeWidth="2" />
     </motion.svg>
   );
 };

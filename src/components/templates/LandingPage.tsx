@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FC, useState } from "react";
 
 //assets
-import bg from "public/images/landing-slimes-lg-1.png";
+import bg from "public/images/slimes-gang.png";
 import bgMobile from "public/images/landing-slimes-sm.png";
 
 interface Props {
@@ -41,7 +41,7 @@ const LandingPage: FC<Props> = (props: Props) => {
       </motion.div>
 
       <motion.div
-        className="hidden lg:block px-0 z-0 absolute bottom-0"
+        className="hidden lg:block px-0 z-0 absolute -bottom-0.5"
         {...showAnimation}
       >
         <Image

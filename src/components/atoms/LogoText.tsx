@@ -7,6 +7,8 @@ interface Props extends SVGProps<SVGSVGElement> {
 }
 
 const CloseIcon: FC<Props> = (props: Props) => {
+  const { color = "white" } = props;
+
   const [winWidth, winHeight] = useWindowSize();
   const {
     showAnimation = true,
