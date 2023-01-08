@@ -1,22 +1,33 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { PageLayout, ScumSection, AboutSection, LogoText } from "@components";
+import { useEffect, useRef, useState } from "react";
+import {
+  PageLayout,
+  ScumSection,
+  AboutSection,
+  LogoText,
+  ArrowIcon,
+} from "@components";
 import { NextPage } from "next";
 import Image from "next/image";
 import bg from "public/images/about-splash.png";
-import { motion } from "framer-motion";
+import {
+  useScroll,
+  motion,
+  useTransform,
+  useMotionValue,
+  AnimatePresence,
+} from "framer-motion";
 import { useWindowSize } from "@hooks";
-import { enterAnimation } from "@constants";
 
 const Home: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
   const [loadingComplete, setLoadingComplete] = useState<boolean>(false);
   const [animationEnded, setAnimationEnded] = useState<boolean>(false);
-  // const [delay, setDelay] = useState<number>(5);
 
   const [winWidth, winHeight] = useWindowSize();
+  const { scrollY, scrollYProgress } = useScroll();
 
   const delay = Math.floor(Math.random() * (3 - 2 + 1) + 2);
-  const duration = 2.5;
+  const duration = 2;
   const delayMs = delay * 1000;
   const durationMs = duration * 1000;
 
@@ -38,10 +49,26 @@ const Home: NextPage = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [loadingComplete, delay, delayMs, durationMs]);
+  scrollYProgress;
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      // console.log("Page scroll: ", latest);
+    });
+  }, [scrollY]);
+  useEffect(() => {
+    return scrollYProgress.onChange((latest) => {
+      console.log("Page progress: ", latest);
+    });
+  }, [scrollYProgress]);
+
+  //to do
+  // - on scroll down hide header
+  // - on scroll up show header
+  // - on scroll down show progress bar at top of screen
 
   return (
     <PageLayout
-      showFooter={false}
+      showFooter={animationEnded}
       staticHeader={false}
       showHeader={animationEnded}
     >
@@ -58,7 +85,7 @@ const Home: NextPage = () => {
               }}
             >
               <motion.div className="absolute h-screen w-screen bg-custom-primary">
-                <div className="absolute left-1/2 lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
+                <div className="absolute left-1/2 top-[27%] transform -translate-y-1/2 -translate-x-1/2">
                   <LogoText showAnimation={true} />
                 </div>
               </motion.div>
@@ -82,19 +109,26 @@ const Home: NextPage = () => {
                 />
               </motion.div>
             </motion.aside>
-            {animationEnded && (
-              <motion.div
-                className="cursor-pointer absolute bottom-0 left-1/2 transform -translate-y-1/2 text-white w-28 h-28 border border-white shadow-xl shadow-white rounded-full bg-custom-primary flex items-center justify-center text-xl animate-bounce"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 1.4, ease: "easeInOut" }}
-              >
-                Press Me
-              </motion.div>
-            )}
+            {/* scroll arrow */}
+            <AnimatePresence mode="wait">
+              {animationEnded && (
+                <motion.div
+                  className="fixed z-50 bottom-3 left-[48%] transform -translate-x-1/2 text-white px-4 pt-1 shadow-xl bg-[#8BD2B9] bg-opacity-60 rounded  flex flex-col items-center justify-center text-lg animate-bounce"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1, duration: 1.4, ease: "easeInOut" }}
+                  key="scroll-arrow"
+                >
+                  Scroll
+                  <motion.div className="-mt-1">
+                    <ArrowIcon color="#fff" />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-
-          {false && (
+          {/* page content */}
+          {animationEnded && (
             <div className="bg-white w-screen h-full flex flex-col items-center py-20 px-10">
               <AboutSection />
               <ScumSection />

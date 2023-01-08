@@ -24,7 +24,7 @@ a {
 
 @layer base {
   html {
-    @apply bg-custom-primary  text-custom-dark font-secondary;
+    @apply bg-custom-primary text-custom-dark font-secondary;
   }
   h1,h2 { 
     @apply font-primary 
