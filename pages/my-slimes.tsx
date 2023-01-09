@@ -116,7 +116,7 @@ const MySlimes: NextPage = () => {
                       alt="My Slimes Banner"
                     />
                   </div>
-                  <motion.div className="lg:hidden ">
+                  <motion.div className="lg:hidden mb-32">
                     <Image
                       src={bgMobile.src}
                       height={352.5}
@@ -128,7 +128,7 @@ const MySlimes: NextPage = () => {
               ) : (
                 //selected
                 <motion.div
-                  className="flex flex-col items-center justify-around lg:justify-between w-full h-full pt-10 gap-1 px-4 "
+                  className="flex flex-col items-center justify-between w-full h-full pt-10 gap-1 px-4 "
                   key="selected"
                   {...midExitAnimation}
                 >
@@ -139,12 +139,12 @@ const MySlimes: NextPage = () => {
                   >
                     download wallpaper
                   </Button>
-                  <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-end justify-center">
+                  <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-center lg:items-start justify-center">
                     <AnimatePresence mode="wait">
                       {/* pfp-crop,banner */}
                       {asset?.tag === "pfp-crop,banner" && (
                         <motion.div
-                          className="relative w-full h-full flex items-start justify-center"
+                          className="relative  h-full flex items-start justify-center"
                           key="banner"
                           {...midExitAnimation}
                         >
@@ -164,14 +164,14 @@ const MySlimes: NextPage = () => {
                             height={asset?.height[0]}
                             width={asset?.width[0]}
                             alt={asset?.name}
-                            className="rounded-full border-2 border-white absolute left-20 top-1/3"
+                            className="rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 lg:left-[15%] top-[15%] md:top-[28%] lg:top-[46%] w-3/4 sm:w-1/2 lg:w-1/3 max-w-[200px]"
                           />
                         </motion.div>
                       )}
                       {/* pfp */}
                       {asset?.tag === "pfp" && (
                         <motion.div
-                          className="relative w-full h-full flex items-start justify-center"
+                          className="relative w-full flex items-center lg:items-end justify-center pb-5"
                           key="pfp"
                           {...midExitAnimation}
                         >
@@ -189,7 +189,7 @@ const MySlimes: NextPage = () => {
                       {/* mobile-display */}
                       {asset?.tag === "mobile-display" && (
                         <motion.div
-                          className="relative w-full h-full flex items-start justify-center"
+                          className="relative w-full  flex items-center lg:items-end justify-center"
                           key="mobile"
                           {...midExitAnimation}
                         >
@@ -207,7 +207,7 @@ const MySlimes: NextPage = () => {
                       {/* desktop-display */}
                       {asset?.tag === "desktop-display" && (
                         <motion.div
-                          className="relative w-full h-full flex items-start justify-center"
+                          className="relative w-full flex items-center lg:items-end justify-center"
                           key="desktop"
                           {...midExitAnimation}
                         >
