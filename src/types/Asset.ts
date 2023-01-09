@@ -1,6 +1,6 @@
 
 export interface Asset {
-  id:number
+  id: number;
   tag: string;
   name: string;
 }

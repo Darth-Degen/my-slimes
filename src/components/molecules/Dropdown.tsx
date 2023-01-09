@@ -9,7 +9,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
-  handleSelect: (id: number | string) => void;
+  handleSelect: (id: number) => void;
   setShowDropdown: Dispatch<SetStateAction<boolean>>;
   showDropdown: boolean;
   label: string;
@@ -39,7 +39,7 @@ const Dropdown: FC<Props> = (props: Props) => {
                   items.map((item: Collection | Asset) => (
                     <DropdownItem
                       item={item}
-                      handleClick={handleSelect}
+                      handleSelect={handleSelect}
                       key={item.id}
                       variants={dropdownItemsAnimations}
                     />

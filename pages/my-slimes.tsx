@@ -26,7 +26,7 @@ const MySlimes: NextPage = () => {
   const collectionSelected = (id: number): void => {
     setCollectionLabel(collections[id].name);
   };
-  const assetSelected = (id: string): void => {
+  const assetSelected = (id: number): void => {
     setAssetLabel(assets[id].name);
   };
 
