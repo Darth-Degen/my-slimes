@@ -7,7 +7,6 @@ const Logo: FC = () => {
   const [animate, setAnimate] = useState<boolean>(false);
 
   const containerAnimation = {
-    initial: { opacity: 0 },
     animate: {
       opacity: 1,
       rotate: animate ? -360 : 0,

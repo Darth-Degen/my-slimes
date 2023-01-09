@@ -1,6 +1,10 @@
 
-export interface Data {
+export interface Collection {
   id: number;
   name: string;
-  color: "string";
+  color: string;
+  banner: string;
+  desktop: string;
+  mobile: string;
+  pfp: string;
 }

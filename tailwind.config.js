@@ -23,6 +23,7 @@ module.exports = {
         "custom-pink": "#FCE4D8",
         "custom-light": "#F3F1EA",
         "custom-dark": "#232726",
+        "custom-red": "#CA2D2D",
       },
       screens: {
         "3xl": "2160px",

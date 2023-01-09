@@ -72,20 +72,20 @@ export const arrowVariants: Variants = {
 
 //background
 export const backgroundAnimations = {
-  whileHover: { backgroundColor: "#f87171" },
-  whileTap: { backgroundColor: "#f87171", },
-  transition:{ duration: 0.4, ease: "easeInOut" },
+  whileHover: { backgroundColor: "#FCE4D8" },
+  // whileTap: { backgroundColor: "#FCE4D8", },
+  transition:{ duration: 0.9, ease: "easeInOut" },
 }
 
 //dropdown 
 export const dropdownAnimations: Variants = {
-  hidden: { y: -25, opacity: 0 },
+  hidden: { 
+    y: -25, 
+  },
   show: {
     y: 0,
-    opacity: 1,
     transition: {
       duration: 0.5,
-      // delay: 0.5,
       staggerChildren: 0.1,
       ease: "easeInOut",
     },

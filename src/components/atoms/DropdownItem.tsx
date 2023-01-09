@@ -1,11 +1,10 @@
 import { FC } from "react";
 import { motion, Variants } from "framer-motion";
-import { Collection } from "@types";
-import { backgroundAnimations } from "@constants";
+import { Collection, Asset } from "@types";
 
 interface Props {
-  item: Collection;
-  handleClick: (id: number) => void;
+  item: Collection | Asset;
+  handleClick: (id: number | string) => void;
   variants: Variants;
 }
 
@@ -16,12 +15,12 @@ const DropdownItem: FC<Props> = (props: Props) => {
   return (
     <motion.li
       key={item?.id}
-      className={`${styles} px-2 cursor-pointer flex items-center`}
-      {...backgroundAnimations}
+      className={`${styles} px-2 cursor-pointer flex items-center hover:bg-custom-pink transition-colors duration-300`}
       onClick={() => handleClick(item?.id)}
     >
       <motion.span variants={variants}>
-        {item.id < 10 ? `00${item.id}` : `0${item.id}`}
+        {/* {item.id < 10 ? `00${item.id + 1}` : `0${item.id + 1}`} */}
+        {item.name}
       </motion.span>
     </motion.li>
   );

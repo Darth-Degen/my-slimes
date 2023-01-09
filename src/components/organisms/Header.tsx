@@ -43,14 +43,7 @@ const Header: FC<Props> = (props: Props) => {
         <motion.aside
           variants={headerVariants}
           initial={"hidden"}
-          // initial="hidden"
           animate={showHeader ? "show" : "hidden"}
-          // initial={{ y: 0 }}
-          // animate={{ y: -height }}
-          // transition={{
-          //   duration: 2,
-          //   ease: "easeInOut",
-          // }}
         >
           <Content />
         </motion.aside>

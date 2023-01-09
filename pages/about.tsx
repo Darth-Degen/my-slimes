@@ -18,7 +18,7 @@ import {
 } from "framer-motion";
 import { useWindowSize } from "@hooks";
 
-const Home: NextPage = () => {
+const About: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
   const [loadingComplete, setLoadingComplete] = useState<boolean>(false);
   const [animationEnded, setAnimationEnded] = useState<boolean>(false);
@@ -140,4 +140,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default About;
