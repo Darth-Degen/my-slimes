@@ -13,28 +13,18 @@ const Button: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      whileTap={{ scale: componentProps.disabled ? 1 : 0.97 }}
-      className={`transition-colors duration-200 bg-red-400 p-0.5 rounded ${
-        componentProps.disabled
-          ? "cursor-not-allowed bg-customDarkGray border-customDarkGray"
-          : ""
-      }`}
+      whileHover={{ scale: componentProps.disabled ? 1 : 1.015 }}
+      whileTap={{ scale: componentProps.disabled ? 1 : 0.99 }}
     >
       <button
-        className={`${className} ${styles} transition-colors duration-500 relative flex justify-center items-center rounded text-center text-gray-200 p-2 ${
-          componentProps.disabled
-            ? "cursor-not-allowed  bg-customDarkGray border-customDarkGray"
-            : "hover:bg-red-400  "
+        className={`${styles} transition-colors duration-500 relative flex justify-center items-center rounded text-center bg-custom-green ${className} ${
+          componentProps.disabled ? "cursor-not-allowed  opacity-80" : " "
         }`}
         {...componentProps}
         disabled={componentProps.disabled}
       >
         <AnimatePresence mode="wait">
-          {isLoading ? (
-            <LoadCircle color="#f87171" />
-          ) : (
-            <span id="button-text">{children}</span>
-          )}
+          {isLoading ? <LoadCircle color="white" /> : <p>{children}</p>}
         </AnimatePresence>
       </button>
     </motion.div>

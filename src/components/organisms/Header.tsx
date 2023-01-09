@@ -41,13 +41,24 @@ const Header: FC<Props> = (props: Props) => {
   //hide header on scroll down, show on scroll up
   useEffect(() => {
     return scrollY.onChange((latest) => {
-      console.log(scrollRef.current, latest);
-      if (scrollRef.current === undefined || scrollRef.current < latest) {
+      if (scrollRef.current === undefined) {
+        //first instance
         setHeader(false);
+        scrollRef.current = latest;
+      } else if (scrollRef.current < latest) {
+        console.log("scroll down");
+        //scroll down
+        if (scrollRef.current + 30 < latest) {
+          setHeader(false);
+          scrollRef.current = latest;
+        }
       } else if (scrollRef.current > latest) {
-        setHeader(true);
+        //scroll up
+        if (scrollRef.current > latest + 30) {
+          setHeader(true);
+          scrollRef.current = latest;
+        }
       }
-      scrollRef.current = latest;
     });
   }, [scrollY]);
 

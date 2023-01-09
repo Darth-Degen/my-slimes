@@ -27,9 +27,12 @@ const Dropdown: FC<Props> = (props: Props) => {
       <DropdownButton isActive={showDropdown} label={label} />
       <AnimatePresence mode="wait">
         {showDropdown && (
-          <motion.div {...fastExitAnimation} key="dropdown-list">
+          <motion.div
+            {...fastExitAnimation}
+            key="dropdown-list"
+            className="absolute z-50 pt-2"
+          >
             <motion.div
-              className="absolute z-50 pt-2"
               variants={dropdownAnimations}
               initial="hidden"
               animate="show"

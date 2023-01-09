@@ -13,7 +13,7 @@ const DropdownItem: FC<Props> = (props: Props) => {
   const styles: string = "w-56 h-10 bg-dark text-xs z-50";
 
   return (
-    <motion.li
+    <li
       key={item?.id}
       className={`${styles} px-2 cursor-pointer flex items-center hover:bg-custom-pink  transition-colors duration-300`}
       onClick={() => handleSelect(item?.id)}
@@ -22,7 +22,7 @@ const DropdownItem: FC<Props> = (props: Props) => {
         {/* {item.id < 10 ? `00${item.id + 1}` : `0${item.id + 1}`} */}
         {item.name}
       </motion.span>
-    </motion.li>
+    </li>
   );
 };
 
