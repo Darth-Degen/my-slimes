@@ -34,6 +34,24 @@ const MySlimes: NextPage = () => {
     setAssetDropdown(false);
   };
 
+  const AssetContainer = (key: string) => (
+    <motion.div
+      className="relative w-full h-full flex items-start justify-center"
+      key="mod-one"
+      {...midExitAnimation}
+    >
+      <Image
+        src={`/images/wallpapers/${
+          asset?.tag
+        }/${collection?.name.toLocaleLowerCase()}.png`}
+        height={asset?.height[0]}
+        width={asset?.width[0]}
+        alt={asset?.name ?? "assets"}
+        className="rounded-xl"
+      />
+    </motion.div>
+  );
+
   return (
     <PageLayout
       showHeader={true}
@@ -86,51 +104,129 @@ const MySlimes: NextPage = () => {
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >
-            {hasSelections ? (
-              <motion.div
-                className="flex flex-col items-center justify-around lg:justify-between h-full pt-10 gap-1 px-4 "
-                key="selected"
-                {...midExitAnimation}
-              >
-                <Button
-                  className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-64 h-14 rounded-lg"
-                  isLoading={false}
-                  disabled={false}
-                >
-                  download wallpaper
-                </Button>
-                <div className="rounded-xl pb-4 mt-10 lg:pb-6">
-                  <Image
-                    src={`/images/wallpapers/${
-                      asset?.tag
-                    }/${collection?.name.toLocaleLowerCase()}.png`}
-                    height={asset?.height[0]}
-                    width={asset?.width[0]}
-                    alt={asset?.name}
-                    className="rounded-xl"
-                  />
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div key="unselected" {...midExitAnimation}>
-                <div className="hidden lg:block">
-                  <Image
-                    src={bg.src}
-                    height={766}
-                    width={2371}
-                    alt="My Slimes Banner"
-                  />
-                </div>
-                <motion.div className="lg:hidden ">
-                  <Image
-                    src={bgMobile.src}
-                    height={352.5}
-                    width={440.5}
-                    alt="My Slimes Mobile"
-                  />
+            <AnimatePresence mode="wait">
+              {!hasSelections ? (
+                //unselected
+                <motion.div key="unselected" {...midExitAnimation}>
+                  <div className="hidden lg:block">
+                    <Image
+                      src={bg.src}
+                      height={766}
+                      width={2371}
+                      alt="My Slimes Banner"
+                    />
+                  </div>
+                  <motion.div className="lg:hidden ">
+                    <Image
+                      src={bgMobile.src}
+                      height={352.5}
+                      width={440.5}
+                      alt="My Slimes Mobile"
+                    />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            )}
+              ) : (
+                //selected
+                <motion.div
+                  className="flex flex-col items-center justify-around lg:justify-between w-full h-full pt-10 gap-1 px-4 "
+                  key="selected"
+                  {...midExitAnimation}
+                >
+                  <Button
+                    className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-52 sm:!w-56 md:!w-64 h-14 rounded-lg"
+                    isLoading={false}
+                    disabled={false}
+                  >
+                    download wallpaper
+                  </Button>
+                  <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-end justify-center">
+                    <AnimatePresence mode="wait">
+                      {/* pfp-crop,banner */}
+                      {asset?.tag === "pfp-crop,banner" && (
+                        <motion.div
+                          className="relative w-full h-full flex items-start justify-center"
+                          key="banner"
+                          {...midExitAnimation}
+                        >
+                          <Image
+                            src={`/images/wallpapers/${
+                              asset?.tag.split(",")[1]
+                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            height={asset?.height[1]}
+                            width={asset?.width[1]}
+                            alt={asset?.name}
+                            className="rounded-md"
+                          />
+                          <Image
+                            src={`/images/wallpapers/${
+                              asset?.tag.split(",")[0]
+                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            height={asset?.height[0]}
+                            width={asset?.width[0]}
+                            alt={asset?.name}
+                            className="rounded-full border-2 border-white absolute left-20 top-1/3"
+                          />
+                        </motion.div>
+                      )}
+                      {/* pfp */}
+                      {asset?.tag === "pfp" && (
+                        <motion.div
+                          className="relative w-full h-full flex items-start justify-center"
+                          key="pfp"
+                          {...midExitAnimation}
+                        >
+                          <Image
+                            src={`/images/wallpapers/${
+                              asset?.tag
+                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            height={asset?.height[0]}
+                            width={asset?.width[0]}
+                            alt={asset?.name}
+                            className="rounded-xl"
+                          />
+                        </motion.div>
+                      )}
+                      {/* mobile-display */}
+                      {asset?.tag === "mobile-display" && (
+                        <motion.div
+                          className="relative w-full h-full flex items-start justify-center"
+                          key="mobile"
+                          {...midExitAnimation}
+                        >
+                          <Image
+                            src={`/images/wallpapers/${
+                              asset?.tag
+                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            height={asset?.height[0]}
+                            width={asset?.width[0]}
+                            alt={asset?.name}
+                            className="rounded-xl"
+                          />
+                        </motion.div>
+                      )}
+                      {/* desktop-display */}
+                      {asset?.tag === "desktop-display" && (
+                        <motion.div
+                          className="relative w-full h-full flex items-start justify-center"
+                          key="desktop"
+                          {...midExitAnimation}
+                        >
+                          <Image
+                            src={`/images/wallpapers/${
+                              asset?.tag
+                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            height={asset?.height[0]}
+                            width={asset?.width[0]}
+                            alt={asset?.name}
+                            className="rounded-xl"
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       )}

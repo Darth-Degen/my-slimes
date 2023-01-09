@@ -12,8 +12,8 @@ export const assets: Asset[] = [
     id:1,
     tag: "pfp-crop,banner",
     name:"pfp crop + banner",
-    width: [1191,2211],
-    height: [1191,737]
+    width: [250,794],
+    height: [250,491.33]
   },
   {
     id:2,

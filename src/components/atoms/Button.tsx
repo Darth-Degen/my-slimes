@@ -9,7 +9,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FC<Props> = (props: Props) => {
   const { children, isLoading = false, className, ...componentProps } = props;
-  const styles: string = "w-56 h-10 bg-dark text-white text-sm";
+  const styles: string = "w-48 md:w-56 h-12 bg-dark text-white text-sm";
 
   return (
     <motion.div
