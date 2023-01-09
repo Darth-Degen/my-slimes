@@ -24,7 +24,6 @@ const PageHead = dynamic(()=> import("./molecules/PageHead"))
 const Logo = dynamic(()=> import("./molecules/Logo"))
 const ThemeChanger = dynamic(()=> import("./molecules/ThemeChanger"))
 const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
-const ButtonBar = dynamic(()=> import("./molecules/ButtonBar"))
 const Menu = dynamic(() => import("./molecules/Menu"))
 const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation"))
 const Paragraph = dynamic(() => import("./molecules/Paragraph"))
@@ -32,7 +31,6 @@ const Paragraph = dynamic(() => import("./molecules/Paragraph"))
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
 const StepContainer = dynamic(()=> import("./organisms/StepContainer"))
-const Form = dynamic(() => import("./organisms/Form"))
 const MobileDisplay = dynamic(() => import("./organisms/MobileDisplay"))
 const MenuController = dynamic(() => import("./organisms/MenuController"))
 const AboutSection = dynamic(() => import("./organisms/AboutSection"))
@@ -62,12 +60,10 @@ export {
   Button,
   DownloadView,
   LoadAnimation,
-  Form,
   MobileDisplay,
   TwitterIcon,
   DiscordIcon,
   LoadCircle,
-  ButtonBar,
   LogoIcon,
   MenuIcon,
   MenuController,
