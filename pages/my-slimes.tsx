@@ -4,48 +4,52 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown } from "@components";
 import { collections, assets, midExitAnimation } from "@constants";
+import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
+
+//assets
+import bg from "public/images/slimes-gang.png";
 
 const MySlimes: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
-  const [header, setHeader] = useState<string>("My Slimes");
 
   const [collectionDropdown, setCollectionDropdown] = useState<boolean>(false);
-  const [collection, setCollection] = useState<number>();
-  const [collectionLabel, setCollectionLabel] =
-    useState<string>("select slime");
-
+  const [collection, setCollection] = useState<Collection>();
   const [assetDropdown, setAssetDropdown] = useState<boolean>(false);
-  const [asset, setAsset] = useState<string>();
-  const [assetLabel, setAssetLabel] = useState<string>("select asset");
+  const [asset, setAsset] = useState<Asset>();
+
+  const hasSelections = collection?.id && asset?.id;
 
   useEffect(() => {
     setDidMount(true);
   }, []);
 
   const collectionSelected = (id: number): void => {
-    setCollectionLabel(collections[id].name);
+    setCollection(collections[id]);
   };
   const assetSelected = (id: number): void => {
-    setAssetLabel(assets[id].name);
+    setAsset(assets[id]);
   };
 
   return (
     <PageLayout
+      showHeader={true}
+      staticHeader={false}
       showFooter={true}
       footerAccentColor="bg-custom-light"
       footerTextColor="text-custom-light"
       footerHex="#F3F1EA"
+      mainColor={collection?.color ?? "#8BD2B9"}
     >
       {didMount && (
         <div className="bg-custom-light w-screen h-full flex flex-col items-center pt-[104px] pb-20 px-10">
           {/* header */}
-          <div className="relative my-10">
-            <h2 className="text-[80px] ">{header}</h2>
+          <div className="relative my-3 mb-6">
+            <h2 className="text-[80px] ">{collection?.name ?? "My Slimes"}</h2>
             <AnimatePresence mode="wait">
-              {header !== "My Slimes" && (
+              {collection?.name && (
                 <motion.p
-                  className="text-custom-red absolute -bottom-0 left-1/2 transform -translate-x-1/2 text-xs font-primary"
+                  className="text-custom-red absolute -bottom-1 left-1/2 transform -translate-x-1/2 text-xs font-primary"
                   key="merch-message"
                   {...midExitAnimation}
                 >
@@ -55,27 +59,41 @@ const MySlimes: NextPage = () => {
             </AnimatePresence>
           </div>
           {/* dropdowns */}
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-14 pb-20">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-14 pb-10">
             <Dropdown
               handleSelect={collectionSelected}
               setShowDropdown={setCollectionDropdown}
               showDropdown={collectionDropdown}
-              label={collectionLabel}
+              label={collection?.name ?? "select slime"}
               items={collections}
             />
             <Dropdown
               handleSelect={assetSelected}
               setShowDropdown={setAssetDropdown}
               showDropdown={assetDropdown}
-              label={assetLabel}
+              label={asset?.name ?? "select slime"}
               items={assets}
             />
           </div>
+          {/* container */}
           <div
-            className={`transtion-colors duration-300 h-[600px] w-screen ${
-              header === "My Slimes" ? "bg-custom-secondary" : "bg-white"
+            className={`transtion-colors duration-300 h-[600px] md:w-3/4 rounded-2xl flex items-end ${
+              hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
-          ></div>
+          >
+            {hasSelections ? (
+              <></>
+            ) : (
+              <div className="">
+                <Image
+                  src={bg.src}
+                  height={766}
+                  width={2371}
+                  alt="My Slimes Banner"
+                />
+              </div>
+            )}
+          </div>
         </div>
       )}
     </PageLayout>

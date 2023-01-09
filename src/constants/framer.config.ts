@@ -71,10 +71,15 @@ export const arrowVariants: Variants = {
 };
 
 //background
-export const backgroundAnimations = {
-  whileHover: { backgroundColor: "#FCE4D8" },
-  // whileTap: { backgroundColor: "#FCE4D8", },
-  transition:{ duration: 0.9, ease: "easeInOut" },
+export const backgroundAnimations= (color:string)  => {
+  return (
+    {
+      initial: { backgroundColor: color },
+      // animate: {backgroundColor: color},
+      transition:{ duration: 0.4, ease: "easeInOut" },
+
+    }
+  )
 }
 
 //dropdown 
@@ -114,3 +119,6 @@ export const underlineAnimation = {
   whileHover: { opacity:0.8, y:0  },
   transition: { duration: 0.5, ease: "easeInOut" },
 };
+
+
+//bac

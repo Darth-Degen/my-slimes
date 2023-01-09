@@ -24,7 +24,7 @@ const About: NextPage = () => {
   const [animationEnded, setAnimationEnded] = useState<boolean>(false);
 
   const [winWidth, winHeight] = useWindowSize();
-  const { scrollY, scrollYProgress } = useScroll();
+  // const { scrollY, scrollYProgress } = useScroll();
 
   const delay = Math.floor(Math.random() * (3 - 2 + 1) + 2);
   const duration = 2;
@@ -49,17 +49,17 @@ const About: NextPage = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [loadingComplete, delay, delayMs, durationMs]);
-  scrollYProgress;
-  useEffect(() => {
-    return scrollY.onChange((latest) => {
-      // console.log("Page scroll: ", latest);
-    });
-  }, [scrollY]);
-  useEffect(() => {
-    return scrollYProgress.onChange((latest) => {
-      console.log("Page progress: ", latest);
-    });
-  }, [scrollYProgress]);
+
+  // useEffect(() => {
+  //   return scrollY.onChange((latest) => {
+  //     // console.log("Page scroll: ", latest);
+  //   });
+  // }, [scrollY]);
+  // useEffect(() => {
+  //   return scrollYProgress.onChange((latest) => {
+  //     console.log("Page progress: ", latest);
+  //   });
+  // }, [scrollYProgress]);
 
   //to do
   // - on scroll down hide header
@@ -99,7 +99,7 @@ const About: NextPage = () => {
                 ease: "easeInOut",
               }}
             >
-              <motion.div className="absolute h-screen w-screen top-0 left-0 bg-custom-dark">
+              <motion.div className="absolute h-screen w-screen top-0 left-0 bg-custom-primary">
                 <Image
                   src={bg.src}
                   fill={true}

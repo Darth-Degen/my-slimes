@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Form, MobileDisplay } from "@components";
+import { MobileDisplay } from "@components";
 import { Collection } from "@types";
 // import * as htmlToImage from "html-to-image";
 import download from "downloadjs";
@@ -104,15 +104,6 @@ const DownloadView: FC<Props> = (props: Props) => {
 
   return (
     <div className="flex flex-col md:flex-row gap-8 sm:gap-20 items-start px-5">
-      <Form
-        tokenId={tokenId}
-        isLoading={isLoading || isDownloading}
-        setTokenId={setTokenId}
-        setShowLogo={setShowLogo}
-        setText={setText}
-        handleDownload={handleDownload}
-        isDownloading={isDownloading}
-      />
       <MobileDisplay
         background={background}
         showLogo={showLogo}

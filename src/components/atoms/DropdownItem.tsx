@@ -15,7 +15,7 @@ const DropdownItem: FC<Props> = (props: Props) => {
   return (
     <motion.li
       key={item?.id}
-      className={`${styles} px-2 cursor-pointer flex items-center hover:bg-custom-pink transition-colors duration-300`}
+      className={`${styles} px-2 cursor-pointer flex items-center hover:bg-custom-pink  transition-colors duration-300`}
       onClick={() => handleSelect(item?.id)}
     >
       <motion.span variants={variants}>

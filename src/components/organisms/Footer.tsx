@@ -1,40 +1,60 @@
 import { FC } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { underlineAnimation } from "@constants";
-import LogoIcon from "../@icons/LogoIcon";
-import { LogoText } from "..";
+import { LogoText } from "@components";
+import Link from "next/link";
 
 interface Props {
   backgroundAccentColor?: string;
   textColor?: string;
   hex?: string;
+  mainColor?: string;
 }
-
-const UnderlineAnimation: FC = (props: Props) => {
-  const { hex = "#FFFFFF" } = props;
-
-  const getBorder = () => {
-    return `bg-${hex}`;
-  };
-  return (
-    <motion.div
-      {...underlineAnimation}
-      className={`absolute bottom-0 left-0 h-full w-full bg-transparent border-b ${getBorder()}`}
-    />
-  );
-};
 
 const Footer: FC<Props> = (props: Props) => {
   const {
     backgroundAccentColor = "bg-white",
     textColor = "text-white",
     hex = "#FFFFFF",
+    mainColor = "#8BD2B9",
   } = props;
+
+  const UnderlineAnimation = () => {
+    return (
+      <motion.div
+        {...underlineAnimation}
+        className={`absolute bottom-0 left-0 h-full w-full bg-transparent border-b`}
+      />
+    );
+  };
+
+  const text = () => {
+    switch (mainColor) {
+      case "#356551":
+        return "text-[#356551]";
+      case "#FE6B2F":
+        return "text-[#FE6B2F]";
+      case "#90CFBC":
+        return "text-[#90CFBC]";
+      case "#5A4E42":
+        return "text-[#5A4E42]";
+      case "#81a2e8":
+        return "text-[#81a2e8]";
+      case "#2A4F43":
+        return "text-[#2A4F43]";
+      default:
+        return "text-custom-primary";
+    }
+  };
+
   return (
     <footer className="relative">
-      <div className="flex flex-col md:flex-row items-center justify-around gap-10 lg:gap-6 px-10 py-8 md:py-12 3xl:py-20 bg-custom-primary">
+      <motion.div
+        className="flex flex-col md:flex-row items-center justify-around gap-10 lg:gap-6 px-10 py-8 md:py-12 3xl:py-20 "
+        initial={{ backgroundColor: mainColor }}
+        animate={{ backgroundColor: mainColor }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
         {/* logo */}
         <div className="lg:w-1/4">
           <LogoText
@@ -89,14 +109,14 @@ const Footer: FC<Props> = (props: Props) => {
         <div className="flex lg:w-1/4 justify-end ">
           <div className=" flex flex-col items-center gap-0.5">
             <div
-              className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl text-custom-primary w-min px-5 py-0.5`}
+              className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5 py-0.5`}
             >
               EXP
             </div>
             <p className={`${textColor}`}>powered by EXP</p>
           </div>
         </div>
-      </div>
+      </motion.div>
       <div className={`h-10 ${backgroundAccentColor}`}></div>
     </footer>
   );
