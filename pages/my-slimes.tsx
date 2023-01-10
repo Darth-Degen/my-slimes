@@ -1,11 +1,12 @@
 import { Button, PageLayout, ScumSection } from "@components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown } from "@components";
 import { collections, assets, midExitAnimation } from "@constants";
 import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
+import download from "downloadjs";
 
 //assets
 import bg from "public/images/slimes-gang.png";
@@ -13,16 +14,23 @@ import bgMobile from "public/images/landing-slimes-sm.png";
 
 const MySlimes: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
-
   const [collectionDropdown, setCollectionDropdown] = useState<boolean>(false);
   const [collection, setCollection] = useState<Collection>();
   const [assetDropdown, setAssetDropdown] = useState<boolean>(false);
   const [asset, setAsset] = useState<Asset>();
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const hasSelections = collection?.name && asset?.name;
 
   useEffect(() => {
     setDidMount(true);
+    return () => {
+      if (timeoutRef?.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   const collectionSelected = (id: number): void => {
@@ -34,23 +42,26 @@ const MySlimes: NextPage = () => {
     setAssetDropdown(false);
   };
 
-  const AssetContainer = (key: string) => (
-    <motion.div
-      className="relative w-full h-full flex items-start justify-center"
-      key="mod-one"
-      {...midExitAnimation}
-    >
-      <Image
-        src={`/images/wallpapers/${
-          asset?.tag
-        }/${collection?.name.toLocaleLowerCase()}.png`}
-        height={asset?.height[0]}
-        width={asset?.width[0]}
-        alt={asset?.name ?? "assets"}
-        className="rounded-xl"
-      />
-    </motion.div>
-  );
+  const downloadAsset = (path: string): void => {
+    setIsDownloading(true);
+    timeoutRef.current = setTimeout(() => {
+      if (asset?.tag === "pfp-crop,banner") {
+        download(
+          `/images/wallpapers/${asset?.tag.split(",")[1]}/${
+            collection?.tag
+          }.png`
+        );
+        download(
+          `/images/wallpapers/${asset?.tag.split(",")[0]}/${
+            collection?.tag
+          }.png`
+        );
+      } else {
+        download(path.replace("-display", ""));
+      }
+      setIsDownloading(false);
+    }, 690);
+  };
 
   return (
     <PageLayout
@@ -134,8 +145,13 @@ const MySlimes: NextPage = () => {
                 >
                   <Button
                     className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-52 sm:!w-56 md:!w-64 h-14 rounded-lg"
-                    isLoading={false}
+                    isLoading={isDownloading}
                     disabled={false}
+                    onClick={() =>
+                      downloadAsset(
+                        `/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
+                      )
+                    }
                   >
                     download wallpaper
                   </Button>
@@ -151,7 +167,7 @@ const MySlimes: NextPage = () => {
                           <Image
                             src={`/images/wallpapers/${
                               asset?.tag.split(",")[1]
-                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            }/${collection?.tag}.png`}
                             height={asset?.height[1]}
                             width={asset?.width[1]}
                             alt={asset?.name}
@@ -160,7 +176,7 @@ const MySlimes: NextPage = () => {
                           <Image
                             src={`/images/wallpapers/${
                               asset?.tag.split(",")[0]
-                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            }/${collection?.tag}.png`}
                             height={asset?.height[0]}
                             width={asset?.width[0]}
                             alt={asset?.name}
@@ -176,9 +192,7 @@ const MySlimes: NextPage = () => {
                           {...midExitAnimation}
                         >
                           <Image
-                            src={`/images/wallpapers/${
-                              asset?.tag
-                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
                             height={asset?.height[0]}
                             width={asset?.width[0]}
                             alt={asset?.name}
@@ -194,9 +208,7 @@ const MySlimes: NextPage = () => {
                           {...midExitAnimation}
                         >
                           <Image
-                            src={`/images/wallpapers/${
-                              asset?.tag
-                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
                             height={asset?.height[0]}
                             width={asset?.width[0]}
                             alt={asset?.name}
@@ -212,9 +224,7 @@ const MySlimes: NextPage = () => {
                           {...midExitAnimation}
                         >
                           <Image
-                            src={`/images/wallpapers/${
-                              asset?.tag
-                            }/${collection?.name.toLocaleLowerCase()}.png`}
+                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
                             height={asset?.height[0]}
                             width={asset?.width[0]}
                             alt={asset?.name}
