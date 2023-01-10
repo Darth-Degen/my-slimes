@@ -65,8 +65,8 @@ const MySlimes: NextPage = () => {
 
   return (
     <PageLayout
-      // showHeader={true}
-      // staticHeader={false}
+      showHeader={true}
+      headerType={"absolute"}
       showFooter={true}
       footerAccentColor="bg-custom-light"
       footerTextColor="text-custom-light"

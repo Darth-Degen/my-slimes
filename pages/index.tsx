@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <PageLayout showPage={showPage}>
+    <PageLayout showPage={showPage} headerType="fixed">
       {didMount && <LandingPage showPage={showPage} />}
     </PageLayout>
   );

@@ -8,7 +8,7 @@ interface Props {
   children: ReactNode;
   showFooter?: boolean;
   showPage?: boolean;
-  staticHeader?: boolean;
+  headerType?: string;
   showHeader?: boolean;
   footerAccentColor?: string;
   footerTextColor?: string;
@@ -21,7 +21,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     children,
     showFooter = false,
     showPage = true,
-    staticHeader = true,
+    headerType = "absolute",
     showHeader = false,
     footerAccentColor,
     footerTextColor,
@@ -55,7 +55,7 @@ const PageLayout: FC<Props> = (props: Props) => {
 
       {showPage && (
         <Header
-          isStatic={staticHeader}
+          headerType={headerType}
           showHeader={showHeader}
           mainColor={mainColor}
         />

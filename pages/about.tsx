@@ -76,7 +76,7 @@ const About: NextPage = () => {
   return (
     <PageLayout
       showFooter={animationEnded}
-      staticHeader={false}
+      headerType={"scroll"}
       showHeader={animationEnded}
     >
       {didMount && (
