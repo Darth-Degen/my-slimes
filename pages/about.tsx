@@ -22,6 +22,7 @@ const About: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
   const [loadingComplete, setLoadingComplete] = useState<boolean>(false);
   const [animationEnded, setAnimationEnded] = useState<boolean>(false);
+  const [showScrollArrow, setShowScrollArrow] = useState<boolean>(true);
 
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress } = useScroll();
@@ -32,6 +33,7 @@ const About: NextPage = () => {
   const durationMs = duration * 1000;
 
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const scrollRef = useRef<number>();
 
   useEffect(() => {
     setDidMount(true);
@@ -55,11 +57,16 @@ const About: NextPage = () => {
   //     // console.log("Page scroll: ", latest);
   //   });
   // }, [scrollY]);
-  // useEffect(() => {
-  //   return scrollYProgress.onChange((latest) => {
-  //     console.log("Page progress: ", latest);
-  //   });
-  // }, [scrollYProgress]);
+  useEffect(() => {
+    return scrollYProgress.onChange((latest) => {
+      console.log("Page progress: ", scrollRef.current, latest);
+      if (scrollRef.current) {
+        if (latest > 0.9) setShowScrollArrow(false);
+        else setShowScrollArrow(true);
+      }
+      scrollRef.current = latest;
+    });
+  }, [scrollYProgress]);
 
   //to do
   // - on scroll down hide header
@@ -111,7 +118,7 @@ const About: NextPage = () => {
             </motion.aside>
             {/* scroll arrow */}
             <AnimatePresence mode="wait">
-              {animationEnded && (
+              {animationEnded && showScrollArrow && (
                 <motion.div
                   className="animate-bounce cursor-default fixed z-50 bottom-3 left-[40%] sm:left-[45%] md:left-[47%] lg:left-[47.5%] 2xl:left-[48.5%] transform -translate-x-1/2 border border-white border-opacity-80 text-white px-4 pt-1 bg-[#8BD2B9] bg-opacity-80 rounded  flex flex-col items-center justify-center text-lg"
                   initial={{ opacity: 0 }}
