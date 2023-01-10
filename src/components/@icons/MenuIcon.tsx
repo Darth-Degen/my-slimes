@@ -22,7 +22,7 @@ const LogoIcon: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="cursor-pointer p-3 hover:shadow hover:shadow-white transition-all duration-200 rounded"
+      className="cursor-pointer p-3 transition-all duration-200 rounded"
       // {...menuAnimation}
     >
       <svg

@@ -83,7 +83,7 @@ const MySlimes: NextPage = () => {
             <AnimatePresence mode="wait">
               {collection?.name && (
                 <motion.p
-                  className="text-custom-red absolute  lg:-bottom-1 left-1/2 transform -translate-x-1/2 text-xs font-primary whitespace-nowrap"
+                  className="text-custom-red absolute lg:-bottom-1 left-1/2 transform -translate-x-1/2 text-xs font-primary whitespace-nowrap"
                   key="merch-message"
                   {...midExitAnimation}
                 >
@@ -180,7 +180,7 @@ const MySlimes: NextPage = () => {
                             height={asset?.height[0]}
                             width={asset?.width[0]}
                             alt={asset?.name}
-                            className="rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 lg:left-[15%] top-[15%] md:top-[28%] lg:top-[46%] w-3/4 sm:w-1/2 lg:w-1/3 max-w-[200px]"
+                            className="rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 lg:left-[15%] top-[15%] md:top-[28%] lg:top-[51%] w-3/4 sm:w-1/2 lg:w-1/3 max-w-[200px]"
                           />
                         </motion.div>
                       )}

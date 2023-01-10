@@ -98,13 +98,13 @@ const Menu: FC<Props> = (props: Props) => {
                   {/* auctions */}
                   <motion.a
                     className="cursor-pointer py-1"
-                    href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%22contractType%22:%5B%22liveAuction%22%5D%7D"
+                    href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
                     target="_blank"
                     rel="noreferrer"
                     {...menuItemAnimation}
                     variants={itemVariants}
                   >
-                    auctions
+                    buy a slime
                   </motion.a>
                   {/* twitter */}
                   <motion.a
@@ -116,6 +116,16 @@ const Menu: FC<Props> = (props: Props) => {
                     variants={itemVariants}
                   >
                     twitter
+                  </motion.a>
+                  <motion.a
+                    className="cursor-pointer py-1"
+                    href="https://discord.gg/DQBgFmTU"
+                    target="_blank"
+                    rel="noreferrer"
+                    {...menuItemAnimation}
+                    variants={itemVariants}
+                  >
+                    discord
                   </motion.a>
                   {/* design */}
                   {/* <Link href="/design"> */}

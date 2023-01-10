@@ -50,13 +50,13 @@ const Footer: FC<Props> = (props: Props) => {
   return (
     <footer className="relative">
       <motion.div
-        className="flex flex-col md:flex-row items-center justify-around gap-10 lg:gap-6 px-10 py-8 md:py-12 3xl:py-20 "
+        className="flex flex-col md:flex-row items-center justify-around gap-10 lg:gap-6 px-10 py-8  "
         initial={{ backgroundColor: mainColor }}
         animate={{ backgroundColor: mainColor }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         {/* logo */}
-        <div className="lg:w-1/4">
+        <div className="xl:w-1/4">
           <LogoText
             fill={hex}
             height={68.44}
@@ -80,7 +80,17 @@ const Footer: FC<Props> = (props: Props) => {
               <UnderlineAnimation />
             </div>
           </a>
-
+          <a
+            className="cursor-pointer"
+            href="https://discord.gg/DQBgFmTU"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <div className="relative cursor-pointer">
+              discord
+              <UnderlineAnimation />
+            </div>
+          </a>
           <a
             href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
             target="_blank"
@@ -106,7 +116,7 @@ const Footer: FC<Props> = (props: Props) => {
           </Link>
         </div>
         {/* exp */}
-        <div className="flex lg:w-1/4 justify-end ">
+        <div className="flex xl:w-1/4 justify-end ">
           <a
             className="relative cursor-pointer whitespace-nowrap"
             href="https://twitter.com/sol_exp"
