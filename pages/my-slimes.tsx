@@ -111,7 +111,7 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`transtion-colors duration-300 h-[600px] md:w-3/4 rounded-2xl flex justify-center items-end ${
+            className={`transtion-colors duration-300 h-[600px] md:w-1/2 rounded-2xl flex justify-center items-end ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >

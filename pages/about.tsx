@@ -24,7 +24,7 @@ const About: NextPage = () => {
   const [animationEnded, setAnimationEnded] = useState<boolean>(false);
 
   const [winWidth, winHeight] = useWindowSize();
-  // const { scrollY, scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll();
 
   const delay = Math.floor(Math.random() * (3 - 2 + 1) + 2);
   const duration = 2;
