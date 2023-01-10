@@ -41,7 +41,7 @@ const LandingPage: FC<Props> = (props: Props) => {
       </motion.div>
 
       <motion.div
-        className="hidden lg:block px-0 z-0 absolute -bottom-0.5"
+        className="hidden lg:block px-0 z-0 fixed -bottom-0.5"
         {...showAnimation}
       >
         <Image
@@ -53,7 +53,7 @@ const LandingPage: FC<Props> = (props: Props) => {
         />
       </motion.div>
 
-      <motion.div className="lg:hidden px-0 z-0 pt-6 " {...showAnimation}>
+      <motion.div className="lg:hidden px-0 z-0 pt-32 " {...showAnimation}>
         <Image
           src={bgMobile.src}
           height={352.5}
