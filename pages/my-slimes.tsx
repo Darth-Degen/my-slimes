@@ -65,8 +65,8 @@ const MySlimes: NextPage = () => {
 
   return (
     <PageLayout
-      showHeader={true}
-      staticHeader={false}
+      // showHeader={true}
+      // staticHeader={false}
       showFooter={true}
       footerAccentColor="bg-custom-light"
       footerTextColor="text-custom-light"
@@ -74,10 +74,10 @@ const MySlimes: NextPage = () => {
       mainColor={collection?.color ?? "#8BD2B9"}
     >
       {didMount && (
-        <div className="bg-custom-light w-screen h-full flex flex-col items-center pt-[104px] pb-20 px-10">
+        <div className="bg-custom-light w-screen h-full flex flex-col items-center pt-[90px] pb-10 px-10">
           {/* header */}
           <div className="relative my-3 mb-6">
-            <h2 className="text-[50px] lg:text-[80px] text-center">
+            <h2 className="text-[50px] lg:text-[70px] text-center">
               {collection?.name ?? "My Slimes"}
             </h2>
             <AnimatePresence mode="wait">
@@ -111,7 +111,7 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`transtion-colors duration-300 h-[600px] md:w-1/2 rounded-2xl flex justify-center items-end ${
+            className={`transtion-colors duration-300 h-[550px] md:w-[60%] rounded-2xl flex justify-center items-end ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >

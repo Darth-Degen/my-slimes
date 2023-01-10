@@ -19,8 +19,8 @@ export const assets: Asset[] = [
     id:2,
     tag: "mobile-display",
     name:"mobile wallpaper",
-    width: [300],
-    height: [500]
+    width: [280],
+    height: [400]
   },
   {
     id:3,
