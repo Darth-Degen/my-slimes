@@ -107,14 +107,21 @@ const Footer: FC<Props> = (props: Props) => {
         </div>
         {/* exp */}
         <div className="flex lg:w-1/4 justify-end ">
-          <div className=" flex flex-col items-center gap-0.5">
-            <div
-              className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5 py-0.5`}
-            >
-              EXP
+          <a
+            className="relative cursor-pointer whitespace-nowrap"
+            href="https://twitter.com/sol_exp"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <div className=" flex flex-col items-center gap-0.5">
+              <div
+                className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5 py-0.5`}
+              >
+                EXP
+              </div>
+              <p className={`${textColor}`}>powered by EXP</p>
             </div>
-            <p className={`${textColor}`}>powered by EXP</p>
-          </div>
+          </a>
         </div>
       </motion.div>
       <div className={`h-10 ${backgroundAccentColor}`}></div>
