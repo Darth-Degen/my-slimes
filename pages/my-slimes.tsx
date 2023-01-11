@@ -93,7 +93,7 @@ const MySlimes: NextPage = () => {
             </AnimatePresence>
           </div>
           {/* dropdowns */}
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-14 pb-10">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-14 pb-8">
             <Dropdown
               handleSelect={collectionSelected}
               setShowDropdown={setCollectionDropdown}
@@ -111,7 +111,7 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`transtion-colors duration-300 h-[550px] md:w-[60%] rounded-2xl flex justify-center items-end ${
+            className={`transtion-colors duration-300 h-[450px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-end ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >
@@ -127,7 +127,7 @@ const MySlimes: NextPage = () => {
                       alt="My Slimes Banner"
                     />
                   </div>
-                  <motion.div className="lg:hidden mb-32">
+                  <motion.div className="lg:hidden py-10">
                     <Image
                       src={bgMobile.src}
                       height={352.5}
@@ -144,7 +144,7 @@ const MySlimes: NextPage = () => {
                   {...midExitAnimation}
                 >
                   <Button
-                    className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-52 sm:!w-56 md:!w-64 h-14 rounded-lg"
+                    className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-48 sm:!w-56 md:!w-64 h-14 rounded-lg"
                     isLoading={isDownloading}
                     disabled={false}
                     onClick={() =>
@@ -153,12 +153,12 @@ const MySlimes: NextPage = () => {
                       )
                     }
                   >
-                    download wallpaper
+                    {asset?.actionLabel ?? "download wallpaper"}
                   </Button>
                   <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-center lg:items-start justify-center">
                     <AnimatePresence mode="wait">
                       {/* pfp-crop,banner */}
-                      {asset?.tag === "pfp-crop,banner" && (
+                      {/* {asset?.tag === "pfp-crop,banner" && (
                         <motion.div
                           className="relative  h-full flex items-start justify-center"
                           key="banner"
@@ -183,12 +183,44 @@ const MySlimes: NextPage = () => {
                             className="rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 lg:left-[15%] top-[15%] md:top-[28%] lg:top-[51%] w-3/4 sm:w-1/2 lg:w-1/3 max-w-[200px]"
                           />
                         </motion.div>
-                      )}
+                      )} */}
                       {/* pfp */}
                       {asset?.tag === "pfp" && (
                         <motion.div
-                          className="relative w-full flex items-center lg:items-end justify-center pb-5"
+                          className="relative w-full h-full flex items-center justify-center py-5 px-10"
                           key="pfp"
+                          {...midExitAnimation}
+                        >
+                          <Image
+                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
+                            height={asset?.height[0]}
+                            width={asset?.width[0]}
+                            alt={asset?.name}
+                            className="rounded-xl"
+                          />
+                        </motion.div>
+                      )}
+                      {/* pfp crop */}
+                      {asset?.tag === "pfp-crop" && (
+                        <motion.div
+                          className="relative w-full h-full flex items-center justify-center py-5 px-10"
+                          key="pfp-crop"
+                          {...midExitAnimation}
+                        >
+                          <Image
+                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
+                            height={asset?.height[0]}
+                            width={asset?.width[0]}
+                            alt={asset?.name}
+                            className="rounded-xl"
+                          />
+                        </motion.div>
+                      )}
+                      {/* banner */}
+                      {asset?.tag === "banner" && (
+                        <motion.div
+                          className="relative w-full h-full flex items-center justify-center pb-5"
+                          key="banner"
                           {...midExitAnimation}
                         >
                           <Image
@@ -203,7 +235,7 @@ const MySlimes: NextPage = () => {
                       {/* mobile-display */}
                       {asset?.tag === "mobile-display" && (
                         <motion.div
-                          className="relative w-full  flex items-center lg:items-end justify-center"
+                          className="relative w-full h-full flex items-center justify-center"
                           key="mobile"
                           {...midExitAnimation}
                         >
@@ -219,7 +251,7 @@ const MySlimes: NextPage = () => {
                       {/* desktop-display */}
                       {asset?.tag === "desktop-display" && (
                         <motion.div
-                          className="relative w-full flex items-center lg:items-end justify-center"
+                          className="relative w-full h-full flex items-center justify-center"
                           key="desktop"
                           {...midExitAnimation}
                         >

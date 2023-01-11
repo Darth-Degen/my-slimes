@@ -4,29 +4,41 @@ export const assets: Asset[] = [
   {
     id:0,
     tag: "pfp",
-    name:"full pfp",
-    width: [400],
-    height: [400]
+    name:"full image",
+    width: [300],
+    height: [300],
+    actionLabel: "download hi-res image"
   },
   {
     id:1,
-    tag: "pfp-crop,banner",
-    name:"pfp crop + banner",
-    width: [250,794],
-    height: [250,491.33]
+    tag: "pfp-crop",
+    name:"pfp crop",
+    width: [300],
+    height: [300],
+    actionLabel: "download pfp"
   },
   {
     id:2,
-    tag: "mobile-display",
-    name:"mobile wallpaper",
-    width: [280],
-    height: [400]
+    tag: "banner",
+    name:"banner",
+    width: [794],
+    height: [491.33],
+    actionLabel: "download banner"
   },
   {
     id:3,
+    tag: "mobile-display",
+    name:"mobile wallpaper",
+    width: [220],
+    height: [366],
+    actionLabel: "download wallpaper"
+  },
+  {
+    id:4,
     tag: "desktop-display",
     name:"desktop wallpaper",
-    width: [705.5],
-    height: [423.33]
+    width: [600],
+    height: [423.33],
+    actionLabel: "download wallpaper"
   },
 ];

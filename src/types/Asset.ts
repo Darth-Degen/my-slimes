@@ -5,4 +5,5 @@ export interface Asset {
   name: string;
   width: number[];
   height: number[];
+  actionLabel: string;
 }

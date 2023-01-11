@@ -106,7 +106,29 @@ const Menu: FC<Props> = (props: Props) => {
                   >
                     buy a slime
                   </motion.a>
-                  {/* twitter */}
+                  {/* design */}
+                  {/* <Link href="/design"> */}
+                  <motion.p
+                    className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
+                    // {...menuItemAnimation}
+                    variants={disabledItemVariants}
+                  >
+                    design notes (soon)
+                  </motion.p>
+                  {/* </Link> */}
+
+                  {/* my slimes */}
+                  <Link href="/my-slimes">
+                    <motion.p
+                      className="cursor-pointer py-1 whitespace-nowrap text-slimes-dark"
+                      {...menuItemAnimation}
+                      variants={itemVariants}
+                    >
+                      my slimes
+                    </motion.p>
+                  </Link>
+
+                  {/* socials */}
                   <motion.a
                     className="cursor-pointer py-1"
                     href="https://twitter.com/MySlimes_"
@@ -127,27 +149,6 @@ const Menu: FC<Props> = (props: Props) => {
                   >
                     discord
                   </motion.a>
-                  {/* design */}
-                  {/* <Link href="/design"> */}
-                  <motion.p
-                    className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
-                    // {...menuItemAnimation}
-                    variants={disabledItemVariants}
-                  >
-                    design notes (soon)
-                  </motion.p>
-                  {/* </Link> */}
-
-                  {/* my-slimes */}
-                  <Link href="/my-slimes">
-                    <motion.p
-                      className="cursor-pointer py-1 whitespace-nowrap text-slimes-dark"
-                      {...menuItemAnimation}
-                      variants={itemVariants}
-                    >
-                      my slimes
-                    </motion.p>
-                  </Link>
                 </div>
               </motion.div>
             </motion.aside>

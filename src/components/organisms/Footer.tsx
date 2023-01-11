@@ -69,6 +69,30 @@ const Footer: FC<Props> = (props: Props) => {
         <div
           className={`flex flex-col lg:flex-row gap-4 lg:gap-10 ${textColor} text-center lg:text-left `}
         >
+          <Link href="/about">
+            <div className="relative cursor-pointer">
+              about
+              <UnderlineAnimation />
+            </div>
+          </Link>
+          <a
+            href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
+            target="_blank"
+            rel="noreferrer"
+            className="cursor-pointer"
+          >
+            <div className="relative cursor-pointer">
+              buy a slime
+              <UnderlineAnimation />
+            </div>
+          </a>
+          <Link href="/my-slimes">
+            <motion.div className="relative cursor-pointer whitespace-nowrap">
+              my slimes
+              <UnderlineAnimation />
+            </motion.div>
+          </Link>
+
           <a
             className="relative cursor-pointer"
             href="https://twitter.com/MySlimes_"
@@ -91,29 +115,6 @@ const Footer: FC<Props> = (props: Props) => {
               <UnderlineAnimation />
             </div>
           </a>
-          <a
-            href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
-            target="_blank"
-            rel="noreferrer"
-            className="cursor-pointer"
-          >
-            <div className="relative cursor-pointer">
-              buy a slime
-              <UnderlineAnimation />
-            </div>
-          </a>
-          <Link href="/about">
-            <div className="relative cursor-pointer">
-              about
-              <UnderlineAnimation />
-            </div>
-          </Link>
-          <Link href="/my-slimes">
-            <motion.div className="relative cursor-pointer whitespace-nowrap">
-              my slimes
-              <UnderlineAnimation />
-            </motion.div>
-          </Link>
         </div>
         {/* exp */}
         <div className="flex xl:w-1/4 justify-end ">
