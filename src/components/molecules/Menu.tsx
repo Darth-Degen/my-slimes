@@ -76,7 +76,7 @@ const Menu: FC<Props> = (props: Props) => {
                 <div className="flex w-full justify-end items-center">
                   <div
                     onClick={() => toggleMenu(false)}
-                    className="cursor-pointer border-2 border-custom-green rounded border-opacity-50"
+                    className="cursor-pointer"
                   >
                     <CloseIcon />
                   </div>
