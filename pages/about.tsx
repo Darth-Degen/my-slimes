@@ -9,14 +9,19 @@ import {
 import { NextPage } from "next";
 import Image from "next/image";
 import bg from "public/images/about-splash.png";
-import {
-  useScroll,
-  motion,
-  useTransform,
-  useMotionValue,
-  AnimatePresence,
-} from "framer-motion";
+import { useScroll, motion, AnimatePresence } from "framer-motion";
 import { useWindowSize } from "@hooks";
+
+const indicatorVariants = {
+  show: {
+    opacity: 1,
+    transition: { delay: 1.2, duration: 1, ease: "easeInOut" },
+  },
+  hide: {
+    opacity: 0,
+    transition: { delay: 0, duration: 0.5, ease: "easeInOut" },
+  },
+};
 
 const About: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
@@ -52,26 +57,15 @@ const About: NextPage = () => {
     };
   }, [loadingComplete, delay, delayMs, durationMs]);
 
-  // useEffect(() => {
-  //   return scrollY.onChange((latest) => {
-  //     // console.log("Page scroll: ", latest);
-  //   });
-  // }, [scrollY]);
   useEffect(() => {
     return scrollYProgress.onChange((latest) => {
-      console.log("Page progress: ", scrollRef.current, latest);
       if (scrollRef.current) {
-        if (latest > 0.9) setShowScrollArrow(false);
+        if (latest > 0.1) setShowScrollArrow(false);
         else setShowScrollArrow(true);
       }
       scrollRef.current = latest;
     });
   }, [scrollYProgress]);
-
-  //to do
-  // - on scroll down hide header
-  // - on scroll up show header
-  // - on scroll down show progress bar at top of screen
 
   return (
     <PageLayout
@@ -121,9 +115,14 @@ const About: NextPage = () => {
               {animationEnded && showScrollArrow && (
                 <motion.div
                   className="animate-bounce cursor-default fixed z-50 bottom-3 left-[40%] sm:left-[45%] md:left-[47%] lg:left-[47.5%] 2xl:left-[48.5%] transform -translate-x-1/2 border border-white border-opacity-80 text-white px-4 pt-1 bg-[#8BD2B9] bg-opacity-80 rounded  flex flex-col items-center justify-center text-lg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1, duration: 1.4, ease: "easeInOut" }}
+                  // initial={{ opacity: 0 }}
+                  // animate={{ opacity: 1 }}
+                  // exit={{ opacity: 0}}
+                  // transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
+                  variants={indicatorVariants}
+                  initial="hide"
+                  animate="show"
+                  exit="hide"
                   key="scroll-arrow"
                 >
                   Scroll
