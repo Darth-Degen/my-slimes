@@ -75,6 +75,13 @@ const Footer: FC<Props> = (props: Props) => {
               <UnderlineAnimation />
             </div>
           </Link>
+          <Link href="/my-slimes">
+            <motion.div className="relative cursor-pointer whitespace-nowrap">
+              my slimes
+              <UnderlineAnimation />
+            </motion.div>
+          </Link>
+
           <a
             href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
             target="_blank"
@@ -86,13 +93,6 @@ const Footer: FC<Props> = (props: Props) => {
               <UnderlineAnimation />
             </div>
           </a>
-          <Link href="/my-slimes">
-            <motion.div className="relative cursor-pointer whitespace-nowrap">
-              my slimes
-              <UnderlineAnimation />
-            </motion.div>
-          </Link>
-
           <a
             className="relative cursor-pointer"
             href="https://twitter.com/MySlimes_"

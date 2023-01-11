@@ -95,17 +95,16 @@ const Menu: FC<Props> = (props: Props) => {
                       about
                     </motion.p>
                   </Link>
-                  {/* auctions */}
-                  <motion.a
-                    className="cursor-pointer py-1"
-                    href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
-                    target="_blank"
-                    rel="noreferrer"
-                    {...menuItemAnimation}
-                    variants={itemVariants}
-                  >
-                    buy a slime
-                  </motion.a>
+                  {/* my slimes */}
+                  <Link href="/my-slimes">
+                    <motion.p
+                      className="cursor-pointer py-1 whitespace-nowrap text-slimes-dark"
+                      {...menuItemAnimation}
+                      variants={itemVariants}
+                    >
+                      my slimes
+                    </motion.p>
+                  </Link>
                   {/* design */}
                   {/* <Link href="/design"> */}
                   <motion.p
@@ -117,16 +116,17 @@ const Menu: FC<Props> = (props: Props) => {
                   </motion.p>
                   {/* </Link> */}
 
-                  {/* my slimes */}
-                  <Link href="/my-slimes">
-                    <motion.p
-                      className="cursor-pointer py-1 whitespace-nowrap text-slimes-dark"
-                      {...menuItemAnimation}
-                      variants={itemVariants}
-                    >
-                      my slimes
-                    </motion.p>
-                  </Link>
+                  {/* auctions */}
+                  <motion.a
+                    className="cursor-pointer py-1"
+                    href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
+                    target="_blank"
+                    rel="noreferrer"
+                    {...menuItemAnimation}
+                    variants={itemVariants}
+                  >
+                    buy a slime
+                  </motion.a>
 
                   {/* socials */}
                   <motion.a
