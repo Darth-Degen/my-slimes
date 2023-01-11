@@ -135,7 +135,7 @@ const Footer: FC<Props> = (props: Props) => {
           </a>
         </div>
       </motion.div>
-      <div className={`h-10 ${backgroundAccentColor}`}></div>
+      <div className={`h-6 ${backgroundAccentColor}`}></div>
     </footer>
   );
 };
