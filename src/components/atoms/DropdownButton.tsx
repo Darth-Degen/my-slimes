@@ -15,7 +15,7 @@ const DropdownButton: FC<Props> = (props: Props) => {
 
   return (
     <motion.button
-      className={`relative flex justify-between ${styles} border-2 border-custom-dark rounded-xl items-center px-3 cursor-pointer hover:bg-[#e0ded7] transition-colors duration-300`}
+      className={`relative flex justify-between ${styles} border-2 border-custom-dark rounded-xl items-center px-3 cursor-pointer hover:bg-[#cfcdc6] transition-colors duration-300`}
       // whileTap={{ scale: 0.97 }}
       // {...backgroundAnimations}
     >

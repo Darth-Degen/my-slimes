@@ -101,7 +101,7 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`transtion-colors duration-300 min-h-[500px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
+            className={`relative transtion-colors duration-300   lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >
@@ -109,7 +109,7 @@ const MySlimes: NextPage = () => {
               {!hasSelections ? (
                 //unselected
                 <motion.div key="unselected" {...midExitAnimation}>
-                  <div className="hidden lg:block">
+                  <div className="hidden lg:block absolute bottom-0 left-0 right-0">
                     <Image
                       src={bg.src}
                       height={766}
@@ -117,7 +117,7 @@ const MySlimes: NextPage = () => {
                       alt="My Slimes Banner"
                     />
                   </div>
-                  <motion.div className="lg:hidden py-10">
+                  <motion.div className="lg:hidden py-10 ">
                     <Image
                       src={bgMobile.src}
                       height={352.5}
