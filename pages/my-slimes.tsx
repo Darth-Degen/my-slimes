@@ -267,7 +267,7 @@ const AssetDisplay: FC<Props> = (props: Props) => {
           height={asset?.height[0]}
           width={asset?.width[0]}
           alt={asset?.name}
-          className="rounded-xl cursor-pointer"
+          className="rounded-xl"
         />
       </motion.div>
     </motion.div>

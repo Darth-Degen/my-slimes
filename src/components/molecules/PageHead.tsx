@@ -15,11 +15,6 @@ const PageHead: FC<Props> = (props: Props) => {
       <meta name="description" content={description} />
       <link rel="icon" href="/favicon.ico" />
       {/* twitter */}
-      {/* <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={`https://slimes.xyz`} />
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={`/meta.png`} /> */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@MySlimes_" />
       <meta name="twitter:title" content={title} />
