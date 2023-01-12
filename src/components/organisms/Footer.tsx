@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { underlineAnimation } from "@constants";
-import { LogoText } from "@components";
+import { LogoText, ExpIcon } from "@components";
 import Link from "next/link";
-
+import Image from "next/image";
 interface Props {
   backgroundAccentColor?: string;
   textColor?: string;
@@ -124,13 +124,19 @@ const Footer: FC<Props> = (props: Props) => {
             target="_blank"
             rel="noreferrer"
           >
-            <div className=" flex flex-col items-center gap-0.5">
+            <div className=" flex flex-col items-center">
               <div
-                className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5 py-0.5`}
+                className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5`}
               >
-                EXP
+                <ExpIcon color="#8BD2B9" />
+                {/* <Image
+                src="/images/exp/logo-white.png"
+                height={50}
+                width={50}
+                alt="EXP"
+              /> */}
               </div>
-              <p className={`${textColor}`}>powered by EXP</p>
+              <p className={`${textColor} `}>powered by EXP</p>
             </div>
           </a>
         </div>

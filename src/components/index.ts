@@ -9,6 +9,7 @@ const DiscordIcon = dynamic(()=> import("./@icons/DiscordIcon"))
 const LogoIcon = dynamic(()=> import("./@icons/LogoIcon"))
 const MenuIcon = dynamic(()=> import("./@icons/MenuIcon"))
 const CloseIcon = dynamic(()=> import("./@icons/CloseIcon"))
+const ExpIcon = dynamic(()=> import("./@icons/ExpIcon"))
 //atoms
 const DropdownButton = dynamic(()=> import("./atoms/DropdownButton"))
 const DropdownItem = dynamic(()=> import("./atoms/DropdownItem"))
@@ -74,5 +75,6 @@ export {
   LandingPage,
   AboutSection,
   ScumSection,
-  Paragraph
+  Paragraph,
+  ExpIcon
 }

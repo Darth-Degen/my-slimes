@@ -19,9 +19,9 @@ const AboutSection: FC = () => {
         <Paragraph
           title="scum"
           body={[
-            "scum started his career as an artist doing design and photography, not publicly sharing or selling his art until he discovered web3 and the Solana community. he has now released several successful 1:1 collections, worked with DAA, Famous Foxes, DeLabs, Solana Foundation and more. He participates in a weekly Twitter Spaces with his friends Hyblinxx and Scuba Steve drawing crowd prompts with members of the community.",
-            "Known for working with the team that released Deadgods and y00ts, the two largest collections formerly on Solana. He's spent thousands of hours studying and learning the pfp medium.",
-            "Slimes are his opportunity to leave his mark on the space, grow his vision, raise awareness and express himself. ",
+            "scum started his career as an artist in graphic design, building brands. While always an illustrator at heart, he didn't share his work until January of 2022.",
+            "In that time he has worked with the largest NFT projects on Solana, including creating concepts and assets for y00ts and Deadgods. ",
+            "scum created slimes to build characters for the universe being built within his Maquina Muertes Collection. A series planned to precede a much larger body of work. Slimes will be the squad that builds the future. ",
           ]}
           className="text-start"
         />

@@ -23,9 +23,9 @@ const LandingPage: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
+      key="landing-page"
       className="flex flex-col-reverse lg:flex-col justify-center items-center bg-custom-primary"
       {...exitAnimation}
-      key="landing-page"
     >
       <motion.div
         className="z-50"

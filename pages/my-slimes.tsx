@@ -68,10 +68,10 @@ const MySlimes: NextPage = () => {
       showHeader={true}
       headerType={"absolute"}
       showFooter={true}
-      footerAccentColor="bg-custom-light"
-      footerTextColor="text-custom-light"
-      footerHex="#F3F1EA"
-      mainColor={collection?.color ?? "#8BD2B9"}
+      // footerAccentColor="bg-custom-light"
+      // footerTextColor="text-custom-light"
+      // footerHex="#F3F1EA"
+      // mainColor={collection?.color ?? "#8BD2B9"}
     >
       {didMount && (
         <div className="bg-custom-light w-screen h-full flex flex-col items-center pt-[90px] pb-10 px-10">
@@ -105,7 +105,7 @@ const MySlimes: NextPage = () => {
               handleSelect={assetSelected}
               setShowDropdown={setAssetDropdown}
               showDropdown={assetDropdown}
-              label={asset?.name ?? "select slime"}
+              label={asset?.name ?? "select asset"}
               items={assets}
             />
           </div>
