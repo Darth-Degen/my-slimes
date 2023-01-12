@@ -6,7 +6,7 @@ import { PageHead } from "@components";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <PageHead title={"Slimes"} description="An art project by scum." />
+      {/* <PageHead title={"Slimes"} description="An art project by scum." /> */}
       <Component {...pageProps} />;
     </>
   );
