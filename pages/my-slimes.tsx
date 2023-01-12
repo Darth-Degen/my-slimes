@@ -45,20 +45,7 @@ const MySlimes: NextPage = () => {
   const downloadAsset = (path: string): void => {
     setIsDownloading(true);
     timeoutRef.current = setTimeout(() => {
-      if (asset?.tag === "pfp-crop,banner") {
-        download(
-          `/images/wallpapers/${asset?.tag.split(",")[1]}/${
-            collection?.tag
-          }.png`
-        );
-        download(
-          `/images/wallpapers/${asset?.tag.split(",")[0]}/${
-            collection?.tag
-          }.png`
-        );
-      } else {
-        download(path.replace("-display", ""));
-      }
+      download(path.replace("-display", ""));
       setIsDownloading(false);
     }, 690);
   };
@@ -186,7 +173,7 @@ const MySlimes: NextPage = () => {
                         </motion.div>
                       )} */}
                       {/* pfp */}
-                      {asset?.tag === "pfp" && (
+                      {asset?.tag === "image-display" && (
                         <motion.div
                           className="relative w-full h-full flex items-center justify-center py-5 px-10"
                           key="pfp"
