@@ -1,5 +1,12 @@
 import { Button, PageLayout, ScumSection } from "@components";
-import { FC, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown } from "@components";
@@ -19,6 +26,7 @@ const MySlimes: NextPage = () => {
   const [assetDropdown, setAssetDropdown] = useState<boolean>(false);
   const [asset, setAsset] = useState<Asset>();
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [imageModal, setImageModal] = useState<string>("");
 
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -152,6 +160,7 @@ const MySlimes: NextPage = () => {
                         <AssetDisplay
                           asset={asset}
                           collection={collection}
+                          handleClick={setImageModal}
                           key="image-display"
                         />
                       )}
@@ -163,11 +172,13 @@ const MySlimes: NextPage = () => {
                               <AssetDisplay
                                 asset={asset}
                                 collection={collection}
+                                handleClick={setImageModal}
                                 key="pfp-crop"
                               />
                               <AssetDisplay
                                 asset={asset}
                                 collection={collection}
+                                handleClick={setImageModal}
                                 key="pfp-crop"
                                 isExtra={true}
                               />
@@ -176,6 +187,7 @@ const MySlimes: NextPage = () => {
                             <AssetDisplay
                               asset={asset}
                               collection={collection}
+                              handleClick={setImageModal}
                               key="pfp-crop"
                             />
                           )}
@@ -186,6 +198,7 @@ const MySlimes: NextPage = () => {
                         <AssetDisplay
                           asset={asset}
                           collection={collection}
+                          handleClick={setImageModal}
                           key="banner"
                         />
                       )}
@@ -194,6 +207,7 @@ const MySlimes: NextPage = () => {
                         <AssetDisplay
                           asset={asset}
                           collection={collection}
+                          handleClick={setImageModal}
                           key="mobile-display"
                         />
                       )}
@@ -202,6 +216,7 @@ const MySlimes: NextPage = () => {
                         <AssetDisplay
                           asset={asset}
                           collection={collection}
+                          handleClick={setImageModal}
                           key="desktop-display"
                         />
                       )}
@@ -213,6 +228,11 @@ const MySlimes: NextPage = () => {
           </div>
         </div>
       )}
+      {/* <AnimatePresence mode="wait">
+        {imageModal.length > 0 && (
+          <motion.div className="w-screen h-screen backdrop-blur-3xl" onClick={() =>}></motion.div>
+        )}
+      </AnimatePresence> */}
     </PageLayout>
   );
 };
@@ -222,24 +242,31 @@ interface Props {
   collection: Collection;
   key: string;
   isExtra?: boolean;
+  handleClick: Dispatch<SetStateAction<string>>;
 }
+
 const AssetDisplay: FC<Props> = (props: Props) => {
-  const { asset, collection, key, isExtra = false } = props;
+  const { asset, collection, key, isExtra = false, handleClick } = props;
+
+  const src = `/images/wallpapers/${asset?.tag}/${collection?.tag}${
+    isExtra ? "-1" : ""
+  }.png`;
+
   return (
     <motion.div
       className="relative w-full h-full flex items-center justify-center"
       key={key}
       {...midExitAnimation}
     >
-      <Image
-        src={`/images/wallpapers/${asset?.tag}/${collection?.tag}${
-          isExtra ? "-1" : ""
-        }.png`}
-        height={asset?.height[0]}
-        width={asset?.width[0]}
-        alt={asset?.name}
-        className="rounded-xl cursor-pointer"
-      />
+      <motion.div whileHover={{ scale: 1.02 }} onClick={() => handleClick(src)}>
+        <Image
+          src={src}
+          height={asset?.height[0]}
+          width={asset?.width[0]}
+          alt={asset?.name}
+          className="rounded-xl cursor-pointer"
+        />
+      </motion.div>
     </motion.div>
   );
 };
