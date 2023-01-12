@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   children: ReactNode;
+  pageTitle?: string;
   showFooter?: boolean;
   showPage?: boolean;
   headerType?: string;
@@ -19,6 +20,7 @@ interface Props {
 const PageLayout: FC<Props> = (props: Props) => {
   const {
     children,
+    pageTitle = "Slimes",
     showFooter = false,
     showPage = true,
     headerType = "absolute",
@@ -51,7 +53,7 @@ const PageLayout: FC<Props> = (props: Props) => {
       className="flex flex-col lg:min-h-screen justify-between"
       {...enterAnimation}
     >
-      <PageHead title="My Slimes" description="Welcome to My Slimes" />
+      <PageHead title={pageTitle} description="An art project by scum" />
 
       {showPage && (
         <Header

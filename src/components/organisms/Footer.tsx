@@ -136,7 +136,7 @@ const Footer: FC<Props> = (props: Props) => {
                 alt="EXP"
               /> */}
               </div>
-              <p className={`${textColor} `}>powered by EXP</p>
+              <p className={`${textColor} mt-1.5`}>powered by EXP</p>
             </div>
           </a>
         </div>

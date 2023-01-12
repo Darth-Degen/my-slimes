@@ -69,6 +69,7 @@ const About: NextPage = () => {
 
   return (
     <PageLayout
+      pageTitle="About"
       showFooter={animationEnded}
       headerType={"scroll"}
       showHeader={animationEnded}

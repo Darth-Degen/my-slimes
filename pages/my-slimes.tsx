@@ -65,6 +65,7 @@ const MySlimes: NextPage = () => {
 
   return (
     <PageLayout
+      pageTitle={"My Slimes"}
       showHeader={true}
       headerType={"absolute"}
       showFooter={true}
