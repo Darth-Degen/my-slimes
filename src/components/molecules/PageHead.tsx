@@ -13,20 +13,25 @@ const PageHead: FC<Props> = (props: Props) => {
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
-      {/* twitter */}
       <link rel="icon" href="/favicon.ico" />
+      {/* twitter */}
+      {/* <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content="https://www.slimes.xyz/" />
+      <meta property="twitter:title" content="Slimes" />
+      <meta property="twitter:description" content="An art project by scum" />
+      <meta property="twitter:image" content="/meta.png" /> */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@MySlimes_" />
+      {/* <meta name="twitter:site" content="@MySlimes_" /> */}
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content="/meta.png" />
       <meta property="twitter:url" content={`https://www.slimes.xyz/`} />
-      {/* <!-- Facebook --> */}
+      {/* <!-- Open Graph / Facebook --> */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={`https://www.slimes.xyz/`} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={`/meta.png`} />
+      <meta property="og:url" content="https://www.slimes.xyz/" />
+      <meta property="og:title" content="Slimes" />
+      <meta property="og:description" content="An art project by scum" />
+      <meta property="og:image" content="/meta.png" />
     </Head>
   );
 };
