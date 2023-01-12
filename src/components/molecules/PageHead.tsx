@@ -19,14 +19,14 @@ const PageHead: FC<Props> = (props: Props) => {
       <meta name="twitter:site" content="@MySlimes_" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="meta.png" />
+      <meta name="twitter:image" content="/meta.png" />
       <meta property="twitter:url" content={`https://slimes.xyz/`} />
       {/* <!-- Facebook --> */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={`https://slimes.xyz/`} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={`meta.png`} />
+      <meta property="og:image" content={`/meta.png`} />
     </Head>
   );
 };
