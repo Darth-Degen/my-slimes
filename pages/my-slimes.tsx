@@ -53,7 +53,7 @@ const MySlimes: NextPage = () => {
   const downloadAsset = (path: string): void => {
     setIsDownloading(true);
     timeoutRef.current = setTimeout(() => {
-      if (collection?.doublePfp) {
+      if (collection?.doublePfp && asset?.tag === "pfp-crop") {
         download(path);
         download(path.replace(".png", "-1.png"));
       } else {
