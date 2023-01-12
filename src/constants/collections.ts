@@ -37,4 +37,16 @@ export const collections: Collection[] = [
     tag: "thumper",
     color: "#2A4F43",
   },
+  {
+    id:6,
+    name: "Junior",
+    tag: "junior",
+    color: "#333333",
+  },
+  {
+    id:7,
+    name: "Temper",
+    tag: "temper",
+    color: "#FBC6B0",
+  },
 ];
