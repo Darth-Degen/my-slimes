@@ -37,7 +37,7 @@ const Dropdown: FC<Props> = (props: Props) => {
               initial="hidden"
               animate="show"
             >
-              <motion.ul className="rounded-xl divide-y divide-custom-dark border-2 border-custom-dark shadow max-h-[200px] overflow-y-auto z-50 bg-custom-light">
+              <motion.ul className="rounded-xl divide-y divide-custom-dark border-2 border-custom-dark shadow max-h-[240px] overflow-y-auto z-50 bg-custom-light">
                 {items &&
                   items.map((item: Collection | Asset) => (
                     <DropdownItem

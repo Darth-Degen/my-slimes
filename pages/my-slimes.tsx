@@ -1,5 +1,5 @@
 import { Button, PageLayout, ScumSection } from "@components";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown } from "@components";
@@ -45,7 +45,12 @@ const MySlimes: NextPage = () => {
   const downloadAsset = (path: string): void => {
     setIsDownloading(true);
     timeoutRef.current = setTimeout(() => {
-      download(path.replace("-display", ""));
+      if (collection?.doublePfp) {
+        download(path);
+        download(path.replace(".png", "-1.png"));
+      } else {
+        download(path.replace("-display", ""));
+      }
       setIsDownloading(false);
     }, 690);
   };
@@ -56,9 +61,6 @@ const MySlimes: NextPage = () => {
       showHeader={true}
       headerType={"absolute"}
       showFooter={true}
-      // footerAccentColor="bg-custom-light"
-      // footerTextColor="text-custom-light"
-      // footerHex="#F3F1EA"
       mainColor={collection?.color ?? "#8BD2B9"}
     >
       {didMount && (
@@ -99,7 +101,7 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`transtion-colors duration-300 h-[450px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-end ${
+            className={`transtion-colors duration-300 min-h-[500px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >
@@ -127,7 +129,7 @@ const MySlimes: NextPage = () => {
               ) : (
                 //selected
                 <motion.div
-                  className="flex flex-col items-center justify-between w-full h-full pt-10 gap-1 px-4 "
+                  className="flex flex-col items-center justify-between w-full h-full pb-10 lg:pb-5 pt-10 gap-1 px-4 "
                   key="selected"
                   {...midExitAnimation}
                 >
@@ -147,83 +149,61 @@ const MySlimes: NextPage = () => {
                     <AnimatePresence mode="wait">
                       {/* pfp */}
                       {asset?.tag === "image-display" && (
-                        <motion.div
-                          className="relative w-full h-full flex items-center justify-center py-5 px-10"
-                          key="pfp"
-                          {...midExitAnimation}
-                        >
-                          <Image
-                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
-                            height={asset?.height[0]}
-                            width={asset?.width[0]}
-                            alt={asset?.name}
-                            className="rounded-xl"
-                          />
-                        </motion.div>
+                        <AssetDisplay
+                          asset={asset}
+                          collection={collection}
+                          key="image-display"
+                        />
                       )}
                       {/* pfp crop */}
                       {asset?.tag === "pfp-crop" && (
-                        <motion.div
-                          className="relative w-full h-full flex items-center justify-center py-5 px-10"
-                          key="pfp-crop"
-                          {...midExitAnimation}
-                        >
-                          <Image
-                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
-                            height={asset?.height[0]}
-                            width={asset?.width[0]}
-                            alt={asset?.name}
-                            className="rounded-xl"
-                          />
-                        </motion.div>
+                        <>
+                          {collection?.doublePfp ? (
+                            <div className="flex flex-col lg:flex-row gap-10">
+                              <AssetDisplay
+                                asset={asset}
+                                collection={collection}
+                                key="pfp-crop"
+                              />
+                              <AssetDisplay
+                                asset={asset}
+                                collection={collection}
+                                key="pfp-crop"
+                                isExtra={true}
+                              />
+                            </div>
+                          ) : (
+                            <AssetDisplay
+                              asset={asset}
+                              collection={collection}
+                              key="pfp-crop"
+                            />
+                          )}
+                        </>
                       )}
                       {/* banner */}
                       {asset?.tag === "banner" && (
-                        <motion.div
-                          className="relative w-full h-full flex items-center justify-center pb-5"
+                        <AssetDisplay
+                          asset={asset}
+                          collection={collection}
                           key="banner"
-                          {...midExitAnimation}
-                        >
-                          <Image
-                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
-                            height={asset?.height[0]}
-                            width={asset?.width[0]}
-                            alt={asset?.name}
-                            className="rounded-xl"
-                          />
-                        </motion.div>
+                        />
                       )}
                       {/* mobile-display */}
                       {asset?.tag === "mobile-display" && (
-                        <motion.div
-                          className="relative w-full h-full flex items-center justify-center"
-                          key="mobile"
-                          {...midExitAnimation}
-                        >
-                          <Image
-                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
-                            height={asset?.height[0]}
-                            width={asset?.width[0]}
-                            alt={asset?.name}
-                            className="rounded-xl"
-                          />
-                        </motion.div>
+                        <AssetDisplay
+                          asset={asset}
+                          collection={collection}
+                          key="mobile-display"
+                        />
                       )}
                       {/* desktop-display */}
                       {asset?.tag === "desktop-display" && (
-                        <motion.div
-                          className="relative w-full h-full flex items-center justify-center"
-                          key="desktop"
-                          {...midExitAnimation}
-                        >
-                          <Image
-                            src={`/images/wallpapers/${asset?.tag}/${collection?.tag}.png`}
-                            height={asset?.height[0]}
-                            width={asset?.width[0]}
-                            alt={asset?.name}
-                            className="rounded-xl"
-                          />
-                        </motion.div>
+                        <AssetDisplay
+                          asset={asset}
+                          collection={collection}
+                          key="desktop-display"
+                        />
                       )}
                     </AnimatePresence>
                   </div>
@@ -234,6 +214,33 @@ const MySlimes: NextPage = () => {
         </div>
       )}
     </PageLayout>
+  );
+};
+
+interface Props {
+  asset: Asset;
+  collection: Collection;
+  key: string;
+  isExtra?: boolean;
+}
+const AssetDisplay: FC<Props> = (props: Props) => {
+  const { asset, collection, key, isExtra = false } = props;
+  return (
+    <motion.div
+      className="relative w-full h-full flex items-center justify-center"
+      key={key}
+      {...midExitAnimation}
+    >
+      <Image
+        src={`/images/wallpapers/${asset?.tag}/${collection?.tag}${
+          isExtra ? "-1" : ""
+        }.png`}
+        height={asset?.height[0]}
+        width={asset?.width[0]}
+        alt={asset?.name}
+        className="rounded-xl cursor-pointer"
+      />
+    </motion.div>
   );
 };
 
