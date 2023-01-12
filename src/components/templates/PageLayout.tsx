@@ -53,8 +53,6 @@ const PageLayout: FC<Props> = (props: Props) => {
       className="flex flex-col lg:min-h-screen justify-between"
       {...enterAnimation}
     >
-      <PageHead title={pageTitle} description="An art project by scum" />
-
       {showPage && (
         <Header
           headerType={headerType}
@@ -63,6 +61,7 @@ const PageLayout: FC<Props> = (props: Props) => {
         />
       )}
       <main className="flex flex-col justify-start items-center h-full z-0 ">
+        <PageHead title={pageTitle} description="An art project by scum" />
         {children}
       </main>
 
