@@ -4,4 +4,5 @@ export interface Collection {
   tag:string;
   name: string;
   color: string;
+  doublePfp?: boolean
 }

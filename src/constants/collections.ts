@@ -42,6 +42,7 @@ export const collections: Collection[] = [
     name: "Junior",
     tag: "junior",
     color: "#333333",
+    doublePfp: true
   },
   {
     id:7,

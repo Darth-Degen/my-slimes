@@ -128,7 +128,7 @@ const Footer: FC<Props> = (props: Props) => {
               <div
                 className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5`}
               >
-                <ExpIcon color="#8BD2B9" />
+                <ExpIcon color={mainColor} />
                 {/* <Image
                 src="/images/exp/logo-white.png"
                 height={50}

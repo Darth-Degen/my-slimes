@@ -59,7 +59,7 @@ const MySlimes: NextPage = () => {
       // footerAccentColor="bg-custom-light"
       // footerTextColor="text-custom-light"
       // footerHex="#F3F1EA"
-      // mainColor={collection?.color ?? "#8BD2B9"}
+      mainColor={collection?.color ?? "#8BD2B9"}
     >
       {didMount && (
         <div className="bg-custom-light w-screen h-full flex flex-col items-center pt-[90px] pb-10 px-10">
@@ -145,33 +145,6 @@ const MySlimes: NextPage = () => {
                   </Button>
                   <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-center lg:items-start justify-center">
                     <AnimatePresence mode="wait">
-                      {/* pfp-crop,banner */}
-                      {/* {asset?.tag === "pfp-crop,banner" && (
-                        <motion.div
-                          className="relative  h-full flex items-start justify-center"
-                          key="banner"
-                          {...midExitAnimation}
-                        >
-                          <Image
-                            src={`/images/wallpapers/${
-                              asset?.tag.split(",")[1]
-                            }/${collection?.tag}.png`}
-                            height={asset?.height[1]}
-                            width={asset?.width[1]}
-                            alt={asset?.name}
-                            className="rounded-md"
-                          />
-                          <Image
-                            src={`/images/wallpapers/${
-                              asset?.tag.split(",")[0]
-                            }/${collection?.tag}.png`}
-                            height={asset?.height[0]}
-                            width={asset?.width[0]}
-                            alt={asset?.name}
-                            className="rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2 lg:left-[15%] top-[15%] md:top-[28%] lg:top-[51%] w-3/4 sm:w-1/2 lg:w-1/3 max-w-[200px]"
-                          />
-                        </motion.div>
-                      )} */}
                       {/* pfp */}
                       {asset?.tag === "image-display" && (
                         <motion.div
