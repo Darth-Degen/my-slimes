@@ -258,7 +258,10 @@ const AssetDisplay: FC<Props> = (props: Props) => {
       key={key}
       {...midExitAnimation}
     >
-      <motion.div whileHover={{ scale: 1.02 }} onClick={() => handleClick(src)}>
+      <motion.div
+      // whileHover={{ scale: 1.02 }}
+      //  onClick={() => handleClick(src)}
+      >
         <Image
           src={src}
           height={asset?.height[0]}
