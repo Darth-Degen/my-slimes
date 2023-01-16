@@ -1,15 +1,8 @@
-import { Button, PageLayout, ScumSection } from "@components";
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Button, PageLayout } from "@components";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
-import { Dropdown } from "@components";
+import { Dropdown, AssetDisplay } from "@components";
 import { collections, assets, midExitAnimation } from "@constants";
 import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,6 +20,7 @@ const MySlimes: NextPage = () => {
   const [asset, setAsset] = useState<Asset>();
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [imageModal, setImageModal] = useState<string>("");
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -228,49 +222,56 @@ const MySlimes: NextPage = () => {
           </div>
         </div>
       )}
-      {/* <AnimatePresence mode="wait">
-        {imageModal.length > 0 && (
-          <motion.div className="w-screen h-screen backdrop-blur-3xl" onClick={() =>}></motion.div>
-        )}
-      </AnimatePresence> */}
+      <Modal show={imageModal.length > 0} close={setImageModal}>
+        <Image
+          src={imageModal}
+          fill={true}
+          alt="Image"
+          objectFit="contain"
+          className={`rounded-3xl px-4 md:px-0`}
+          onLoadingComplete={() => setImageLoaded(true)}
+        />
+      </Modal>
     </PageLayout>
   );
 };
 
+import { SetStateAction, Dispatch, FC } from "react";
 interface Props {
-  asset: Asset;
-  collection: Collection;
-  key: string;
-  isExtra?: boolean;
-  handleClick: Dispatch<SetStateAction<string>>;
+  show: boolean;
+  close: Dispatch<SetStateAction<string>>;
+  children: ReactNode;
 }
-
-const AssetDisplay: FC<Props> = (props: Props) => {
-  const { asset, collection, key, isExtra = false, handleClick } = props;
-
-  const src = `/images/wallpapers/${asset?.tag}/${collection?.tag}${
-    isExtra ? "-1" : ""
-  }.png`;
+const Modal: FC<Props> = (props: Props) => {
+  const { show, close, children } = props;
 
   return (
-    <motion.div
-      className="relative w-full h-full flex items-center justify-center"
-      key={key}
-      {...midExitAnimation}
-    >
-      <motion.div
-      // whileHover={{ scale: 1.02 }}
-      //  onClick={() => handleClick(src)}
-      >
-        <Image
-          src={src}
-          height={asset?.height[0]}
-          width={asset?.width[0]}
-          alt={asset?.name}
-          className="rounded-xl"
-        />
-      </motion.div>
-    </motion.div>
+    <AnimatePresence mode="wait">
+      {show && (
+        <motion.div
+          key="image-modal"
+          className="fixed inset-0 backdrop-blur-xl z-50"
+          onClick={() => close("")}
+          {...midExitAnimation}
+        >
+          <div
+            className={`h-screen w-screen md:h-[600px] md:w-[600px] lg:h-[600px] lg:w-[600px] x-2
+              rounded-lg absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-200 opacity-100 `}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <motion.div
+              className="cursor-pointer absolute top-2 right-2 md:-top-5 md:-right-5 z-50 border border-custom-dark rounded-full h-14 w-14 
+              text-3xl bg-stone-100 flex items-center justify-center pb-1 transition-colors duration-300 hover:bg-white"
+              onClick={() => close("")}
+              whileTap={{ scale: 0.96 }}
+            >
+              x
+            </motion.div>
+            <div className="">{children}</div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

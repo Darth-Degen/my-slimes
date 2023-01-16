@@ -15,6 +15,7 @@ const Button: FC<Props> = (props: Props) => {
     <motion.div
       whileHover={{ scale: componentProps.disabled ? 1 : 1.015 }}
       whileTap={{ scale: componentProps.disabled ? 1 : 0.99 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
     >
       <button
         className={`${styles} transition-colors duration-500 relative flex justify-center items-center rounded text-center bg-custom-green ${className} ${

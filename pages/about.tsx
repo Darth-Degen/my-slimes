@@ -32,7 +32,7 @@ const About: NextPage = () => {
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress } = useScroll();
 
-  const delay = Math.floor(Math.random() * (3 - 2 + 1) + 2);
+  const delay = Math.floor(Math.random() * (2 - 1.5) + 1.5);
   const duration = 2;
   const delayMs = delay * 1000;
   const durationMs = duration * 1000;

@@ -50,7 +50,7 @@ const PageLayout: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="flex flex-col lg:min-h-screen justify-between"
+      className="flex flex-col lg:min-h-screen justify-between relative"
       {...enterAnimation}
     >
       <PageHead title={pageTitle} description="An art project by scum" />
@@ -62,7 +62,7 @@ const PageLayout: FC<Props> = (props: Props) => {
           mainColor={mainColor}
         />
       )}
-      <main className="flex flex-col justify-start items-center h-full z-0 ">
+      <main className="flex flex-col justify-start items-center h-full overflow-x-clip">
         {children}
       </main>
 
