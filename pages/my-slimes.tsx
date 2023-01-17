@@ -3,7 +3,12 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown, AssetDisplay } from "@components";
-import { collections, assets, midExitAnimation } from "@constants";
+import {
+  collections,
+  assets,
+  midExitAnimation,
+  exitAnimation,
+} from "@constants";
 import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
@@ -103,7 +108,7 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`relative transtion-colors duration-300   lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
+            className={`relative transtion-colors duration-300  min-h-[330px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >
@@ -224,11 +229,11 @@ const MySlimes: NextPage = () => {
       )}
       <Modal show={imageModal.length > 0} close={setImageModal}>
         <Image
-          src={imageModal}
+          src={imageModal.replace("-display", "")}
           fill={true}
           alt="Image"
           objectFit="contain"
-          className={`rounded-3xl px-4 md:px-0`}
+          className={`rounded-3xl p-4 `}
           onLoadingComplete={() => setImageLoaded(true)}
         />
       </Modal>
@@ -245,6 +250,11 @@ interface Props {
 const Modal: FC<Props> = (props: Props) => {
   const { show, close, children } = props;
 
+  useEffect(() => {
+    if (show) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [show]);
+
   return (
     <AnimatePresence mode="wait">
       {show && (
@@ -252,11 +262,11 @@ const Modal: FC<Props> = (props: Props) => {
           key="image-modal"
           className="fixed inset-0 backdrop-blur-xl z-50"
           onClick={() => close("")}
-          {...midExitAnimation}
+          {...exitAnimation}
         >
           <div
-            className={`h-screen w-screen md:h-[600px] md:w-[600px] lg:h-[600px] lg:w-[600px] x-2
-              rounded-lg absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-200 opacity-100 `}
+            className={`h-screen w-screen md:w-4/5 md:h-4/5 bg-opacity-50 md:bg-opacity-90
+              md:rounded-lg absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-200 opacity-100 `}
             onClick={(e) => e.stopPropagation()}
           >
             <motion.div
@@ -267,7 +277,7 @@ const Modal: FC<Props> = (props: Props) => {
             >
               x
             </motion.div>
-            <div className="">{children}</div>
+            <div className="rounded-3xl">{children}</div>
           </div>
         </motion.div>
       )}
