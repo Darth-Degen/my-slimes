@@ -50,4 +50,16 @@ export const collections: Collection[] = [
     tag: "temper",
     color: "#FBC6B0",
   },
+  {
+    id:8,
+    name: "Zeke",
+    tag: "zeke",
+    color: "#8D9FC3",
+  },
+  {
+    id:9,
+    name: "Rabbit",
+    tag: "rabbit",
+    color: "#D5738F",
+  },
 ];
