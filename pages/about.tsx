@@ -15,7 +15,7 @@ import { useWindowSize } from "@hooks";
 const indicatorVariants = {
   show: {
     opacity: 1,
-    transition: { delay: 1.2, duration: 1, ease: "easeInOut" },
+    transition: { delay: 0.5, duration: 1, ease: "easeInOut" },
   },
   hide: {
     opacity: 0,
@@ -34,8 +34,8 @@ const About: NextPage = () => {
 
   const delay = Math.floor(Math.random() * (2 - 1.5) + 1.5);
   const duration = 2;
-  const delayMs = delay * 1000;
-  const durationMs = duration * 1000;
+  const delayMs = delay * 750;
+  const durationMs = duration * 750;
 
   const timeoutRef = useRef<NodeJS.Timeout>();
   const scrollRef = useRef<number>();
@@ -116,10 +116,6 @@ const About: NextPage = () => {
               {animationEnded && showScrollArrow && (
                 <motion.div
                   className="animate-bounce cursor-default fixed z-50 bottom-3 left-[40%] sm:left-[45%] md:left-[47%] lg:left-[47.5%] 2xl:left-[48.5%] transform -translate-x-1/2 border border-white border-opacity-80 text-white px-4 pt-1 bg-[#8BD2B9] bg-opacity-80 rounded  flex flex-col items-center justify-center text-lg"
-                  // initial={{ opacity: 0 }}
-                  // animate={{ opacity: 1 }}
-                  // exit={{ opacity: 0}}
-                  // transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
                   variants={indicatorVariants}
                   initial="hide"
                   animate="show"
