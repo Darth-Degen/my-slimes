@@ -102,7 +102,7 @@ const Header: FC<Props> = (props: Props) => {
   // };
 
   const Content = () => (
-    <div className={`w-screen z-50  `}>
+    <div className={`w-screen`}>
       <motion.div
         className={`h-full w-full px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center`}
         initial={{ backgroundColor: mainColor }}
@@ -117,7 +117,7 @@ const Header: FC<Props> = (props: Props) => {
 
   return (
     <header
-      className={`top-0 z-50 transition-all duration-500 ${
+      className={`top-0 z-20 transition-all duration-500 ${
         headerType === "scroll" ? "fixed" : headerType
       } ${headerType === "absolute" ? " opacity-100" : " opacity-90"} `}
     >

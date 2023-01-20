@@ -28,10 +28,10 @@ const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const Menu = dynamic(() => import("./molecules/Menu"))
 const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation"))
 const Paragraph = dynamic(() => import("./molecules/Paragraph"))
+const AssetDisplay = dynamic(() => import("./molecules/AssetDisplay"))
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
-const StepContainer = dynamic(()=> import("./organisms/StepContainer"))
 const MobileDisplay = dynamic(() => import("./organisms/MobileDisplay"))
 const MenuController = dynamic(() => import("./organisms/MenuController"))
 const AboutSection = dynamic(() => import("./organisms/AboutSection"))
@@ -50,7 +50,6 @@ export {
   SunIcon,
   MoonIcon,
   ThemeChanger,
-  StepContainer,
   Dropdown,
   DropdownButton,
   ArrowIcon,
@@ -76,5 +75,6 @@ export {
   AboutSection,
   ScumSection,
   Paragraph,
-  ExpIcon
+  ExpIcon,
+  AssetDisplay
 }
