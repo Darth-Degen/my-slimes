@@ -1,4 +1,5 @@
 import { Variants } from "framer-motion"
+import { opacity } from "html2canvas/dist/types/css/property-descriptors/opacity";
 
 //click animations
 export const largeClickAnimation = {
@@ -86,9 +87,11 @@ export const backgroundAnimations= (color:string)  => {
 export const dropdownAnimations: Variants = {
   hidden: { 
     y: -25, 
+    scale: 0.96,
   },
   show: {
     y: 0,
+    scale: 1,
     transition: {
       duration: 0.5,
       staggerChildren: 0.1,
@@ -121,4 +124,10 @@ export const underlineAnimation = {
 };
 
 
-//bac
+//modal
+export const modalAnimation = {
+  initial:{ scale: 0.9 },
+  animate:{ scale: 1 },
+  exit:{ scale: 0.9 },
+  transition:{ duration: 0.7, ease: "easeInOut" },
+}
