@@ -74,33 +74,6 @@ const Header: FC<Props> = (props: Props) => {
     setHeader(showHeader);
   }, [showHeader]);
 
-  // useEffect(() => {
-  //   console.log("1. mainColor ", mainColor);
-  //   return () => {
-  //     initialColorRef.current = mainColor;
-  //     console.log("2. initialColorRef.current", initialColorRef.current);
-  //   };
-  // }, [mainColor]);
-
-  // const getBackground = () => {
-  //   switch (mainColor) {
-  //     case "#356551":
-  //       return "bg-[#356551]";
-  //     case "#FE6B2F":
-  //       return "bg-[#FE6B2F]";
-  //     case "#90CFBC":
-  //       return "bg-[#90CFBC]";
-  //     case "#5A4E42":
-  //       return "bg-[#5A4E42]";
-  //     case "#81a2e8":
-  //       return "bg-[#81a2e8]";
-  //     case "#2A4F43":
-  //       return "bg-[#2A4F43]";
-  //     default:
-  //       return "bg-custom-primary";
-  //   }
-  // };
-
   const Content = () => (
     <div className={`w-screen`}>
       <motion.div
