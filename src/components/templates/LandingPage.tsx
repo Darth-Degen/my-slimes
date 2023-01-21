@@ -24,24 +24,26 @@ const LandingPage: FC<Props> = (props: Props) => {
   return (
     <motion.div
       key="landing-page"
-      className="flex flex-col-reverse lg:flex-col justify-center items-center bg-custom-primary"
+      className="flex flex-col-reverse lg:flex-col justify-center items-center h-[90vh]"
       {...exitAnimation}
     >
+      {/* slimes logo */}
       <motion.div
-        className="z-50"
+        className=""
         key="page-load-animation"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
       >
-        <div className="absolute left-1/2 -bottom-4 lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
+        <div className="absolute left-1/2 -bottom-10 lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
           <LogoText showAnimation={!showPage} />
         </div>
       </motion.div>
 
+      {/* desktop image */}
       <motion.div
-        className="hidden lg:block px-0 z-0 fixed -bottom-0.5"
+        className="hidden lg:block fixed -bottom-0.5"
         {...showAnimation}
       >
         <Image
@@ -53,7 +55,8 @@ const LandingPage: FC<Props> = (props: Props) => {
         />
       </motion.div>
 
-      <motion.div className="lg:hidden px-0 z-0 pt-32 " {...showAnimation}>
+      {/* mobile image */}
+      <motion.div className="lg:hidden mb-10" {...showAnimation}>
         <Image
           src={bgMobile.src}
           height={374}
