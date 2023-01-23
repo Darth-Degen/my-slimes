@@ -74,7 +74,7 @@ const Menu: FC<Props> = (props: Props) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 pb-8 md:pl-auto overflow-y-auto">
+                <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 pb-20 md:pb-8 md:pl-auto overflow-y-auto">
                   {menuData.map((group, index) => (
                     <MenuGroup key={index} group={group} />
                   ))}
