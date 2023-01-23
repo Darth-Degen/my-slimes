@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { PageHead, Header, Footer } from "@components";
 import { motion } from "framer-motion";
 import { enterAnimation } from "@constants";
@@ -15,6 +15,7 @@ interface Props {
   footerTextColor?: string;
   footerHex?: string;
   mainColor?: string;
+  stopScroll?: boolean;
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
@@ -29,7 +30,10 @@ const PageLayout: FC<Props> = (props: Props) => {
     footerTextColor,
     footerHex,
     mainColor = "#8BD2B9",
+    stopScroll = false,
   } = props;
+
+  const [_stopScroll, setStopScroll] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -39,14 +43,13 @@ const PageLayout: FC<Props> = (props: Props) => {
     if (mainColor) {
       document.body.style.backgroundColor = mainColor;
     }
-    // switch (router.pathname) {
-    //   case "/about":
-    //     document.body.style.backgroundColor = "#FFF";
-    //     break;
-    //   default:
-    //     document.body.style.backgroundColor = "#8BD2B9";
-    // }
   }, [router.pathname, mainColor]);
+
+  //stop page scroll (when modal or menu open)
+  useEffect(() => {
+    if (stopScroll || _stopScroll) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [stopScroll, _stopScroll]);
 
   return (
     <motion.div
@@ -60,6 +63,7 @@ const PageLayout: FC<Props> = (props: Props) => {
           headerType={headerType}
           showHeader={showHeader}
           mainColor={mainColor}
+          setStopScroll={setStopScroll}
         />
       )}
       <main className="flex flex-col justify-start items-center h-full overflow-x-clip">

@@ -69,6 +69,7 @@ const MySlimes: NextPage = () => {
       headerType={"absolute"}
       showFooter={true}
       mainColor={collection?.color ?? "#8BD2B9"}
+      stopScroll={imageModal.length > 0}
     >
       {didMount && (
         <div className="bg-custom-light w-screen h-full flex flex-col items-center pt-[90px] pb-10 px-10">

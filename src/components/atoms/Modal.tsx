@@ -10,11 +10,6 @@ interface Props {
 const Modal: FC<Props> = (props: Props) => {
   const { show, close, children } = props;
 
-  useEffect(() => {
-    if (show) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
-  }, [show]);
-
   return (
     <AnimatePresence mode="wait">
       {show && (

@@ -1,4 +1,11 @@
-import { FC, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Logo, MenuController } from "@components";
 import { motion, useScroll, Variants } from "framer-motion";
 
@@ -6,13 +13,19 @@ interface Props {
   showHeader?: boolean; //used to show header if isStatic is false
   headerType?: string;
   mainColor?: string;
+  setStopScroll: Dispatch<SetStateAction<boolean>>;
 }
 
 const Header: FC<Props> = (props: Props) => {
-  const { headerType = "absolute", showHeader = false, mainColor } = props;
+  const {
+    headerType = "absolute",
+    showHeader = false,
+    mainColor,
+    setStopScroll,
+  } = props;
 
   const [header, setHeader] = useState<boolean>();
-  const [showOnScroll, setShowOnScroll] = useState<boolean>();
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const scrollRef = useRef<number>();
 
@@ -74,6 +87,11 @@ const Header: FC<Props> = (props: Props) => {
     setHeader(showHeader);
   }, [showHeader]);
 
+  //stop bg scroll when menu open
+  useEffect(() => {
+    setStopScroll(openMenu);
+  }, [openMenu, setStopScroll]);
+
   const Content = () => (
     <div className={`w-screen`}>
       <motion.div
@@ -83,7 +101,7 @@ const Header: FC<Props> = (props: Props) => {
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         <Logo />
-        <MenuController />
+        <MenuController openMenu={openMenu} setOpenMenu={setOpenMenu} />
       </motion.div>
     </div>
   );
