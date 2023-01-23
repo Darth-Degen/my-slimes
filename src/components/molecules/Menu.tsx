@@ -2,7 +2,8 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CloseIcon } from "@components";
 import Link from "next/link";
-import { useWindowSize } from "src/hooks";
+import { useWindowSize } from "@hooks";
+import { midExitAnimation } from "@constants";
 
 const sideVariants = {
   closed: {
@@ -42,9 +43,9 @@ const Menu: FC<Props> = (props: Props) => {
       <AnimatePresence mode="wait" initial={false}>
         {open && (
           <motion.div
+            className="min-h-screen w-screen absolute inset-0 bg-black bg-opacity-10 duration-500"
             key="main-menu"
-            className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg"
-            onClick={() => toggleMenu(false)}
+            {...midExitAnimation}
           >
             <motion.aside
               initial={{ width: 0, opacity: 0 }}
@@ -55,6 +56,8 @@ const Menu: FC<Props> = (props: Props) => {
                 opacity: 1,
               }}
               transition={{ duration: 0.5 }}
+              className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg overflow-y-auto"
+              onClick={() => toggleMenu(false)}
             >
               <motion.div
                 className={`px-4 sm:px-6 lg:px-10 py-6 h-screen `}
@@ -71,7 +74,7 @@ const Menu: FC<Props> = (props: Props) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 md:pl-auto">
+                <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 pb-8 md:pl-auto overflow-y-auto">
                   {menuData.map((group, index) => (
                     <MenuGroup key={index} group={group} />
                   ))}

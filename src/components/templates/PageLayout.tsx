@@ -46,10 +46,10 @@ const PageLayout: FC<Props> = (props: Props) => {
   }, [router.pathname, mainColor]);
 
   //stop page scroll (when modal or menu open)
-  useEffect(() => {
-    if (stopScroll || _stopScroll) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
-  }, [stopScroll, _stopScroll]);
+  // useEffect(() => {
+  //   if (stopScroll || _stopScroll) document.body.style.overflow = "hidden";
+  //   else document.body.style.overflow = "auto";
+  // }, [stopScroll, _stopScroll]);
 
   return (
     <motion.div
