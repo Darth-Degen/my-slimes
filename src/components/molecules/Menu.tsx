@@ -25,16 +25,6 @@ const itemVariants = {
   },
   open: { opacity: 1 },
 };
-const disabledItemVariants = {
-  closed: {
-    opacity: 0,
-  },
-  open: { opacity: 0.3 },
-};
-const menuItemAnimation = {
-  whileHover: { color: "#8BD2B9" },
-  transition: { duration: 0.35 },
-};
 
 interface Props {
   toggleMenu: Dispatch<SetStateAction<boolean>>;
@@ -44,8 +34,8 @@ interface Props {
 const Menu: FC<Props> = (props: Props) => {
   const { toggleMenu, open } = props;
   const [winWidth, winHeight] = useWindowSize();
-  const isMobile: boolean = winWidth < 640;
-  const isTablet: boolean = winWidth < 640;
+
+  const isTablet: boolean = winWidth < 800;
 
   return (
     <>
@@ -67,9 +57,7 @@ const Menu: FC<Props> = (props: Props) => {
               transition={{ duration: 0.5 }}
             >
               <motion.div
-                className={`px-4 sm:px-6 lg:px-10 py-6 ${
-                  isMobile ? "h-screen" : "h-screen"
-                }`}
+                className={`px-4 sm:px-6 lg:px-10 py-6 h-screen `}
                 initial="closed"
                 animate="open"
                 variants={sideVariants}
