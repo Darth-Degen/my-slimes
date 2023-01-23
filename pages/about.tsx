@@ -115,7 +115,7 @@ const About: NextPage = () => {
             <AnimatePresence mode="wait">
               {animationEnded && showScrollArrow && (
                 <motion.div
-                  className="animate-bounce cursor-default fixed z-50 bottom-3 left-[40%] sm:left-[45%] md:left-[47%] lg:left-[47.5%] 2xl:left-[48.5%] transform -translate-x-1/2 border border-white border-opacity-80 text-white px-4 pt-1 bg-[#8BD2B9] bg-opacity-80 rounded  flex flex-col items-center justify-center text-lg"
+                  className="animate-bounce cursor-default fixed z-0 bottom-3 left-[40%] sm:left-[45%] md:left-[47%] lg:left-[47.5%] 2xl:left-[48.5%] transform -translate-x-1/2 border border-white border-opacity-80 text-white px-4 pt-1 bg-[#8BD2B9] bg-opacity-80 rounded  flex flex-col items-center justify-center text-lg"
                   variants={indicatorVariants}
                   initial="hide"
                   animate="show"
