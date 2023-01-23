@@ -45,6 +45,7 @@ const Menu: FC<Props> = (props: Props) => {
   const { toggleMenu, open } = props;
   const [winWidth, winHeight] = useWindowSize();
   const isMobile: boolean = winWidth < 640;
+  const isTablet: boolean = winWidth < 640;
 
   return (
     <>
@@ -54,14 +55,14 @@ const Menu: FC<Props> = (props: Props) => {
             key="main-menu"
             className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg"
             onClick={() => toggleMenu(false)}
-            // onMouseLeave={() => toggleMenu(false)}
           >
             <motion.aside
-              initial={{ width: 0 }}
-              animate={{ width: isMobile ? winWidth : 400 }}
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: isTablet ? winWidth : 768, opacity: 1 }}
               exit={{
                 width: 0,
                 transition: { duration: 0.3 },
+                opacity: 1,
               }}
               transition={{ duration: 0.5 }}
             >
@@ -81,74 +82,11 @@ const Menu: FC<Props> = (props: Props) => {
                     <CloseIcon />
                   </div>
                 </div>
-                <div
-                  className="flex flex-col pb-16 gap-8 text-3xl font-primary "
-                  onClick={() => toggleMenu(false)}
-                >
-                  {/* about */}
-                  <Link href="/about">
-                    <motion.p
-                      className=" cursor-pointer py-1"
-                      {...menuItemAnimation}
-                      variants={itemVariants}
-                    >
-                      about
-                    </motion.p>
-                  </Link>
-                  {/* my slimes */}
-                  <Link href="/my-slimes">
-                    <motion.p
-                      className="cursor-pointer py-1 whitespace-nowrap text-slimes-dark"
-                      {...menuItemAnimation}
-                      variants={itemVariants}
-                    >
-                      my slimes
-                    </motion.p>
-                  </Link>
-                  {/* design */}
-                  {/* <Link href="/design"> */}
-                  <motion.p
-                    className="cursor-default py-1 whitespace-nowrap text-slimes-dark"
-                    // {...menuItemAnimation}
-                    variants={disabledItemVariants}
-                  >
-                    design notes (soon)
-                  </motion.p>
-                  {/* </Link> */}
 
-                  {/* auctions */}
-                  <motion.a
-                    className="cursor-pointer py-1"
-                    href="https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D"
-                    target="_blank"
-                    rel="noreferrer"
-                    {...menuItemAnimation}
-                    variants={itemVariants}
-                  >
-                    buy a slime
-                  </motion.a>
-
-                  {/* socials */}
-                  <motion.a
-                    className="cursor-pointer py-1"
-                    href="https://twitter.com/MySlimes_"
-                    target="_blank"
-                    rel="noreferrer"
-                    {...menuItemAnimation}
-                    variants={itemVariants}
-                  >
-                    twitter
-                  </motion.a>
-                  <motion.a
-                    className="cursor-pointer py-1"
-                    href="https://discord.gg/DQBgFmTU"
-                    target="_blank"
-                    rel="noreferrer"
-                    {...menuItemAnimation}
-                    variants={itemVariants}
-                  >
-                    discord
-                  </motion.a>
+                <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 md:pl-auto">
+                  {menuData.map((group, index) => (
+                    <MenuGroup key={index} group={group} />
+                  ))}
                 </div>
               </motion.div>
             </motion.aside>
@@ -156,6 +94,126 @@ const Menu: FC<Props> = (props: Props) => {
         )}
       </AnimatePresence>
     </>
+  );
+};
+
+const menuData = [
+  {
+    name: "For my Slimes",
+    data: [
+      {
+        title: "My Slimes",
+        description: "Wallpapers, PFPs, and more",
+        src: "/my-slimes",
+        isInternal: true,
+      },
+      {
+        title: "About",
+        description: "Information about Scum and the project",
+        src: "/about",
+        isInternal: true,
+      },
+    ],
+  },
+  {
+    name: "Socials",
+    data: [
+      {
+        title: "Discord",
+        description: "The home of all Slimes",
+        src: "https://discord.gg/DQBgFmTU",
+        isInternal: false,
+      },
+      {
+        title: "Twitter",
+        description: "Slimes can be social too, right?",
+        src: "https://twitter.com/MySlimes_",
+        isInternal: false,
+      },
+    ],
+  },
+  {
+    name: "Secondary",
+    data: [
+      {
+        title: "Exchange Art",
+        description: "Buy a Slime on our primary marketplace",
+        src: "https://exchange.art/series/Slimes/nfts?sort=contract-type&filters=%7B%7D",
+        isInternal: false,
+      },
+    ],
+  },
+  {
+    name: "Collab",
+    data: [
+      {
+        title: "Collaboration Form",
+        description: "We use Subber, check out our form",
+        src: "https://www.subber.xyz/slimes/giveaways/collab-request",
+        isInternal: false,
+      },
+    ],
+  },
+];
+
+interface MenuItems {
+  title: string;
+  description: string;
+  src: string;
+  isInternal: boolean;
+}
+interface MenuGroup {
+  name: string;
+  data: MenuItems[];
+}
+interface mgProps {
+  group: MenuGroup;
+}
+
+const MenuGroup: FC<mgProps> = (props: mgProps) => {
+  const { group } = props;
+  return (
+    <motion.div
+      className="font-primary flex flex-col gap-3 min-w-[200px]"
+      variants={itemVariants}
+    >
+      <h3 className=" text-3xl  ">{group.name}</h3>
+      {group.data.map((item, index) => {
+        if (item.isInternal) {
+          return (
+            <Link href={item.src} key={index}>
+              <MenuItem item={item} />
+            </Link>
+          );
+        }
+        return (
+          <motion.a
+            className="cursor-pointer py-1"
+            href={item.src}
+            target="_blank"
+            rel="noreferrer"
+            key={index}
+          >
+            <MenuItem item={item} />
+          </motion.a>
+        );
+      })}
+    </motion.div>
+  );
+};
+
+interface miProps {
+  item: MenuItems;
+}
+const MenuItem: FC<miProps> = (props: miProps) => {
+  const { item } = props;
+  return (
+    <div className="flex flex-col cursor-pointer">
+      <div className="text-custom-primary text-xl relative hover:underline">
+        {item.title}
+      </div>
+      <p className="text-custom-gray ">{item.description}</p>
+    </div>
   );
 };
 

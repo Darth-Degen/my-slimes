@@ -51,6 +51,7 @@ const LandingPage: FC<Props> = (props: Props) => {
           height={766}
           width={2371}
           alt="My Slimes Banner"
+          priority
           onLoadingComplete={() => setLoadingComplete(true)}
         />
       </motion.div>

@@ -24,6 +24,7 @@ module.exports = {
         "custom-light": "#F3F1EA",
         "custom-dark": "#232726",
         "custom-red": "#CA2D2D",
+        "custom-gray": "#969696",
       },
       screens: {
         "3xl": "2160px",
