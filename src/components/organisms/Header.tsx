@@ -13,19 +13,12 @@ interface Props {
   showHeader?: boolean; //used to show header if isStatic is false
   headerType?: string;
   mainColor?: string;
-  setStopScroll: Dispatch<SetStateAction<boolean>>;
 }
 
 const Header: FC<Props> = (props: Props) => {
-  const {
-    headerType = "absolute",
-    showHeader = false,
-    mainColor,
-    setStopScroll,
-  } = props;
+  const { headerType = "absolute", showHeader = false, mainColor } = props;
 
   const [header, setHeader] = useState<boolean>();
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const scrollRef = useRef<number>();
 
@@ -87,21 +80,16 @@ const Header: FC<Props> = (props: Props) => {
     setHeader(showHeader);
   }, [showHeader]);
 
-  //stop bg scroll when menu open
-  useEffect(() => {
-    setStopScroll(openMenu);
-  }, [openMenu, setStopScroll]);
-
   const Content = () => (
     <div className={`w-screen`}>
       <motion.div
-        className={`h-full w-full px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center`}
+        className={`h-full w-full px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center opacity-95`}
         initial={{ backgroundColor: mainColor }}
         animate={{ backgroundColor: mainColor }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         <Logo />
-        <MenuController openMenu={openMenu} setOpenMenu={setOpenMenu} />
+        <MenuController />
       </motion.div>
     </div>
   );
@@ -110,7 +98,8 @@ const Header: FC<Props> = (props: Props) => {
     <header
       className={`top-0 z-20 transition-all duration-500 ${
         headerType === "scroll" ? "fixed" : headerType
-      } ${headerType === "absolute" ? " opacity-100" : " opacity-90"} `}
+      } `}
+      // ${headerType === "absolute" ? " opacity-100" : " opacity-90"} `}
     >
       {headerType !== "scroll" ? (
         <Content />
