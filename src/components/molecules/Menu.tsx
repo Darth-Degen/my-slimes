@@ -5,28 +5,29 @@ import Link from "next/link";
 import { useWindowSize } from "@hooks";
 import { midExitAnimation } from "@constants";
 
-const sideVariants = {
-  closed: {
-    opacity: 0,
-    transition: {
-      // staggerChildren: 0.15,
-      // staggerDirection: -1,
-    },
-  },
-  open: {
-    opacity: 1,
-    transition: {
-      delay: 1.4,
-      // staggerChildren: 0.15,
-      // staggerDirection: 1,
-    },
-  },
-};
+// const sideVariants = {
+//   closed: {
+//     opacity: 0,
+//     transition: {
+//       // staggerChildren: 0.15,
+//       // staggerDirection: -1,
+//     },
+//   },
+//   open: {
+//     opacity: 1,
+//     transition: {
+//       delay: 1.4,
+//       // staggerChildren: 0.15,
+//       // staggerDirection: 1,
+//     },
+//   },
+// };
 const itemVariants = {
   closed: {
     opacity: 0,
+    transition: { duration: 0.2 },
   },
-  open: { opacity: 1 },
+  open: { opacity: 1, transition: { delay: 0.5, duration: 0.5 } },
 };
 
 interface Props {
@@ -44,12 +45,6 @@ const Menu: FC<Props> = (props: Props) => {
     <>
       <AnimatePresence mode="wait" initial={false}>
         {open && (
-          // <motion.div
-          //   className="min-h-screen w-screen absolute inset-0 bg-black bg-opacity-10 duration-500"
-          //   key="main-menu"
-          //   {...midExitAnimation}
-          //   onMouseLeave={() => toggleMenu(false)}
-          // >
           <motion.aside
             key="main-menu"
             onMouseLeave={() => toggleMenu(false)}
@@ -61,15 +56,10 @@ const Menu: FC<Props> = (props: Props) => {
               opacity: 1,
             }}
             transition={{ duration: 0.7 }}
-            className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg overflow-y-auto bg-opacity-95"
+            className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg overflow-y-auto "
             onClick={() => toggleMenu(false)}
           >
-            <motion.div
-              className={`px-4 sm:px-6 lg:px-10 py-6 h-screen `}
-              // initial="closed"
-              // animate="open"
-              // variants={sideVariants}
-            >
+            <motion.div className={`px-4 sm:px-6 lg:px-10 py-6 h-screen `}>
               <div className="flex w-full justify-end items-center">
                 <div
                   onClick={() => toggleMenu(false)}
@@ -86,7 +76,6 @@ const Menu: FC<Props> = (props: Props) => {
               </div>
             </motion.div>
           </motion.aside>
-          // </motion.div>
         )}
       </AnimatePresence>
     </>
@@ -172,6 +161,13 @@ const MenuGroup: FC<mgProps> = (props: mgProps) => {
     <motion.div
       className="font-primary flex flex-col gap-3 min-w-[200px]"
       variants={itemVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
+      // initial={{ width: 0, opacity: 0 }}
+      // animate={{ opacity: 1 }}
+      // transition={{ delay: 0.5, duration: 0.7 }}
+      // variants={itemVariants}
     >
       <h3 className=" text-3xl  ">{group.name}</h3>
       {group.data.map((item, index) => {
