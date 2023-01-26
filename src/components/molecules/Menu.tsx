@@ -41,7 +41,7 @@ const Menu: FC<Props> = (props: Props) => {
             key="main-menu"
             onMouseLeave={() => toggleMenu(false)}
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: isTablet ? winWidth : 768, opacity: 1 }}
+            animate={{ width: isTablet ? winWidth - 15 : 768, opacity: 1 }}
             exit={{
               width: 0,
               transition: { duration: 0.5 },
@@ -61,7 +61,7 @@ const Menu: FC<Props> = (props: Props) => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 pb-20 md:pb-8 md:pl-auto overflow-y-auto">
+              <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-8 lg:gap-10 lg:gap-y-14 pl-7 pt-6 pb-20 md:pb-8 md:pl-auto overflow-y-auto">
                 {menuData.map((group, index) => (
                   <MenuGroup key={index} group={group} />
                 ))}
