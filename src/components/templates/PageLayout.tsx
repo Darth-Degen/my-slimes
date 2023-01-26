@@ -33,8 +33,6 @@ const PageLayout: FC<Props> = (props: Props) => {
     stopScroll = false,
   } = props;
 
-  const [_stopScroll, setStopScroll] = useState<boolean>(false);
-
   const router = useRouter();
 
   //set body bg based on page
@@ -47,9 +45,9 @@ const PageLayout: FC<Props> = (props: Props) => {
 
   //stop page scroll (when modal or menu open)
   useEffect(() => {
-    if (stopScroll || _stopScroll) document.body.style.overflow = "hidden";
+    if (stopScroll) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "auto";
-  }, [stopScroll, _stopScroll]);
+  }, [stopScroll]);
 
   return (
     <motion.div
@@ -63,7 +61,6 @@ const PageLayout: FC<Props> = (props: Props) => {
           headerType={headerType}
           showHeader={showHeader}
           mainColor={mainColor}
-          setStopScroll={setStopScroll}
         />
       )}
       <main className="flex flex-col justify-start items-center h-full overflow-x-clip">

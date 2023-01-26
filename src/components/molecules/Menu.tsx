@@ -3,30 +3,25 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CloseIcon } from "@components";
 import Link from "next/link";
 import { useWindowSize } from "@hooks";
-import { midExitAnimation } from "@constants";
+import { fadeVariants } from "@constants";
 
-const sideVariants = {
-  closed: {
-    transition: {
-      staggerChildren: 0.15,
-      staggerDirection: -1,
-    },
-  },
-  open: {
-    transition: {
-      delay: 0.4,
-      staggerChildren: 0.15,
-      staggerDirection: 1,
-    },
-  },
-};
-const itemVariants = {
-  closed: {
-    opacity: 0,
-  },
-  open: { opacity: 1 },
-};
-
+// const sideVariants = {
+//   closed: {
+//     opacity: 0,
+//     transition: {
+//       // staggerChildren: 0.15,
+//       // staggerDirection: -1,
+//     },
+//   },
+//   open: {
+//     opacity: 1,
+//     transition: {
+//       delay: 1.4,
+//       // staggerChildren: 0.15,
+//       // staggerDirection: 1,
+//     },
+//   },
+// };
 interface Props {
   toggleMenu: Dispatch<SetStateAction<boolean>>;
   open: boolean;
@@ -42,46 +37,37 @@ const Menu: FC<Props> = (props: Props) => {
     <>
       <AnimatePresence mode="wait" initial={false}>
         {open && (
-          <motion.div
-            className="min-h-screen w-screen absolute inset-0 bg-black bg-opacity-10 duration-500"
+          <motion.aside
             key="main-menu"
-            {...midExitAnimation}
+            onMouseLeave={() => toggleMenu(false)}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: isTablet ? winWidth - 15 : 768, opacity: 1 }}
+            exit={{
+              width: 0,
+              transition: { duration: 0.5 },
+              opacity: 1,
+            }}
+            transition={{ duration: 0.7 }}
+            className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg overflow-y-auto "
+            onClick={() => toggleMenu(false)}
           >
-            <motion.aside
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: isTablet ? winWidth : 768, opacity: 1 }}
-              exit={{
-                width: 0,
-                transition: { duration: 0.3 },
-                opacity: 1,
-              }}
-              transition={{ duration: 0.5 }}
-              className="bg-white fixed top-0 right-0 z-100 shadow-xl rounded-l-lg overflow-y-auto"
-              onClick={() => toggleMenu(false)}
-            >
-              <motion.div
-                className={`px-4 sm:px-6 lg:px-10 py-6 h-screen `}
-                initial="closed"
-                animate="open"
-                variants={sideVariants}
-              >
-                <div className="flex w-full justify-end items-center">
-                  <div
-                    onClick={() => toggleMenu(false)}
-                    className="cursor-pointer"
-                  >
-                    <CloseIcon />
-                  </div>
+            <motion.div className={`px-4 sm:px-6 lg:px-10 py-6 h-screen `}>
+              <div className="flex w-full justify-end items-center">
+                <div
+                  onClick={() => toggleMenu(false)}
+                  className="cursor-pointer"
+                >
+                  <CloseIcon />
                 </div>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-10 gap-y-14 pl-7 pt-6 pb-20 md:pb-8 md:pl-auto overflow-y-auto">
-                  {menuData.map((group, index) => (
-                    <MenuGroup key={index} group={group} />
-                  ))}
-                </div>
-              </motion.div>
-            </motion.aside>
-          </motion.div>
+              <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-8 lg:gap-10 lg:gap-y-14 pl-7 pt-6 pb-20 md:pb-8 md:pl-auto overflow-y-auto">
+                {menuData.map((group, index) => (
+                  <MenuGroup key={index} group={group} />
+                ))}
+              </div>
+            </motion.div>
+          </motion.aside>
         )}
       </AnimatePresence>
     </>
@@ -166,7 +152,10 @@ const MenuGroup: FC<mgProps> = (props: mgProps) => {
   return (
     <motion.div
       className="font-primary flex flex-col gap-3 min-w-[200px]"
-      variants={itemVariants}
+      variants={fadeVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
     >
       <h3 className=" text-3xl  ">{group.name}</h3>
       {group.data.map((item, index) => {
