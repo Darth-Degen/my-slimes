@@ -36,14 +36,14 @@ const LandingPage: FC<Props> = (props: Props) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
       >
-        <div className="absolute left-1/2 -bottom-10 lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
+        <div className=" z-10 absolute left-1/2 -bottom-10 lg:bottom-auto lg:top-[27%] transform -translate-y-1/2 -translate-x-1/2">
           <LogoText showAnimation={!showPage} />
         </div>
       </motion.div>
 
       {/* desktop image */}
       <motion.div
-        className="hidden lg:block fixed -bottom-0.5"
+        className="hidden lg:flex fixed -bottom-0.5 w-3/4 4xl:w-auto"
         {...showAnimation}
       >
         <Image
