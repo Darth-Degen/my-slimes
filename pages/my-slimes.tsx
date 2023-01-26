@@ -117,14 +117,18 @@ const MySlimes: NextPage = () => {
               {!hasSelections ? (
                 //unselected
                 <motion.div key="unselected" {...midExitAnimation}>
-                  <div className="hidden lg:block absolute bottom-0 left-0 right-0">
-                    <Image
-                      src={bg.src}
-                      height={766}
-                      width={2371}
-                      alt="My Slimes Banner"
-                    />
-                  </div>
+                  {/* <div className="hidden lg:block absolute bottom-0 left-0 right-0"> */}
+                  {/* <div className="hidden lg:block absolute bottom-0 left-0 right-0"> */}
+                  <Image
+                    src={bg.src}
+                    // height={766}
+                    // width={2371}
+                    fill={true}
+                    objectFit="cover"
+                    alt="My Slimes Banner"
+                    className=""
+                  />
+                  {/* </div> */}
                   <motion.div className="lg:hidden py-10 ">
                     <Image
                       src={bgMobile.src}
