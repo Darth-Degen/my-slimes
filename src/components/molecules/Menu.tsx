@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CloseIcon } from "@components";
 import Link from "next/link";
 import { useWindowSize } from "@hooks";
-import { midExitAnimation } from "@constants";
+import { fadeVariants } from "@constants";
 
 // const sideVariants = {
 //   closed: {
@@ -22,14 +22,6 @@ import { midExitAnimation } from "@constants";
 //     },
 //   },
 // };
-const itemVariants = {
-  closed: {
-    opacity: 0,
-    transition: { duration: 0.2 },
-  },
-  open: { opacity: 1, transition: { delay: 0.5, duration: 0.5 } },
-};
-
 interface Props {
   toggleMenu: Dispatch<SetStateAction<boolean>>;
   open: boolean;
@@ -160,14 +152,10 @@ const MenuGroup: FC<mgProps> = (props: mgProps) => {
   return (
     <motion.div
       className="font-primary flex flex-col gap-3 min-w-[200px]"
-      variants={itemVariants}
+      variants={fadeVariants}
       initial="closed"
       animate="open"
       exit="closed"
-      // initial={{ width: 0, opacity: 0 }}
-      // animate={{ opacity: 1 }}
-      // transition={{ delay: 0.5, duration: 0.7 }}
-      // variants={itemVariants}
     >
       <h3 className=" text-3xl  ">{group.name}</h3>
       {group.data.map((item, index) => {
