@@ -98,7 +98,7 @@ const menuData = [
       {
         title: "Discord",
         description: "The home of all Slimes",
-        src: "https://discord.gg/DQBgFmTU",
+        src: "https://discord.gg/HXQ23Djjvw",
         isInternal: false,
       },
       {
