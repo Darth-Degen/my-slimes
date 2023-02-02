@@ -87,7 +87,7 @@ export const collections: Collection[] = [
     color: "#FFB969",
   },
   {
-    id:11,
+    id:14,
     name: "El Santo",
     tag: "el-santo",
     color: "#3969A2",
