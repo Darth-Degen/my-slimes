@@ -3,7 +3,7 @@ import { Asset } from "@types";
 export const assets: Asset[] = [
   {
     id:0,
-    tag: "image-display",
+    tag: "image",
     name:"full image",
     width: [300],
     height: [300],

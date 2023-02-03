@@ -160,12 +160,12 @@ const MySlimes: NextPage = () => {
                   <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-center lg:items-start justify-center">
                     <AnimatePresence mode="wait">
                       {/* pfp */}
-                      {asset?.tag === "image-display" && (
+                      {asset?.tag === "image" && (
                         <AssetDisplay
                           asset={asset}
                           collection={collection}
                           handleClick={setImageModal}
-                          key="image-display"
+                          key="image"
                         />
                       )}
                       {/* pfp crop */}
