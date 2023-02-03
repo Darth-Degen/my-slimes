@@ -43,7 +43,8 @@ const LandingPage: FC<Props> = (props: Props) => {
 
       {/* desktop image */}
       <motion.div
-        className="hidden lg:flex fixed -bottom-0.5 w-3/4 4xl:w-auto"
+        // className="hidden lg:flex fixed -bottom-0.5 "
+        className="hidden lg:flex fixed -bottom-20 "
         {...showAnimation}
       >
         <Image
