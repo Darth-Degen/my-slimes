@@ -1,14 +1,9 @@
-import { Button, PageLayout } from "@components";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { Button, PageLayout, LogoIcon } from "@components";
+import { useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown, AssetDisplay, Modal } from "@components";
-import {
-  collections,
-  assets,
-  midExitAnimation,
-  exitAnimation,
-} from "@constants";
+import { collections, assets, midExitAnimation } from "@constants";
 import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
@@ -109,34 +104,19 @@ const MySlimes: NextPage = () => {
           </div>
           {/* download container */}
           <div
-            className={`relative transtion-colors duration-300  min-h-[330px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
+            className={`relative transtion-colors duration-300 min-h-[330px] lg:h-[500px] w-full md:w-[60%] rounded-2xl flex justify-center items-start ${
               hasSelections ? "bg-white" : "bg-custom-secondary"
             }`}
           >
             <AnimatePresence mode="wait">
               {!hasSelections ? (
                 //unselected
-                <motion.div key="unselected" {...midExitAnimation}>
-                  {/* <div className="hidden lg:block absolute bottom-0 left-0 right-0"> */}
-                  {/* <div className="hidden lg:block absolute bottom-0 left-0 right-0"> */}
-                  <Image
-                    src={bg.src}
-                    // height={766}
-                    // width={2371}
-                    fill={true}
-                    objectFit="cover"
-                    alt="My Slimes Banner"
-                    className=""
-                  />
-                  {/* </div> */}
-                  <motion.div className="lg:hidden py-10 ">
-                    <Image
-                      src={bgMobile.src}
-                      height={352.5}
-                      width={440.5}
-                      alt="My Slimes Mobile"
-                    />
-                  </motion.div>
+                <motion.div
+                  key="unselected"
+                  {...midExitAnimation}
+                  className="flex h-[330px] lg:h-full w-full items-center justify-center"
+                >
+                  <LogoIcon size={250} />
                 </motion.div>
               ) : (
                 //selected

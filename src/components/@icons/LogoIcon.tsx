@@ -8,7 +8,7 @@ interface Props extends SVGProps<SVGSVGElement> {
 }
 
 const LogoIcon: FC<Props> = (props: Props) => {
-  const { fillHover = "#121212", className, fill = "white", size = 56 } = props;
+  const { fillHover = "white", className, fill = "white", size = 56 } = props;
 
   const logoAnimation = {
     initial: { fill: fill },

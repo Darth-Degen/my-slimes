@@ -5,7 +5,7 @@ interface Props extends SVGProps<SVGSVGElement> {
   fillHover?: string;
 }
 
-const LogoIcon: FC<Props> = (props: Props) => {
+const MenuIcon: FC<Props> = (props: Props) => {
   const { fillHover = "#121212", className, fill = "white" } = props;
 
   const menuAnimation = {
@@ -60,4 +60,4 @@ const LogoIcon: FC<Props> = (props: Props) => {
   );
 };
 
-export default LogoIcon;
+export default MenuIcon;
