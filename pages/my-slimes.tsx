@@ -8,10 +8,6 @@ import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
 
-//assets
-import bg from "public/images/slimes-gang.png";
-import bgMobile from "public/images/landing-slimes-sm.png";
-
 const MySlimes: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
   const [collectionDropdown, setCollectionDropdown] = useState<boolean>(false);
@@ -38,6 +34,9 @@ const MySlimes: NextPage = () => {
   const collectionSelected = (id: number): void => {
     setCollection(collections[id]);
     setCollectionDropdown(false);
+    if (!asset) {
+      setAsset(assets[0]);
+    }
   };
   const assetSelected = (id: number): void => {
     setAsset(assets[id]);
