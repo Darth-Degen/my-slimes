@@ -8,7 +8,7 @@ import {
 } from "@components";
 import { NextPage } from "next";
 import Image from "next/image";
-import bg from "public/images/about-splash.png";
+import bg from "public/images/slime-time.png";
 import { useScroll, motion, AnimatePresence } from "framer-motion";
 import { useWindowSize } from "@hooks";
 
