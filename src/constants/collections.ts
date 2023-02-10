@@ -92,4 +92,16 @@ export const collections: Collection[] = [
     tag: "el-santo",
     color: "#3969A2",
   },
+  {
+    id:15,
+    name: "Lobo",
+    tag: "lobo",
+    color: "#FFB969",
+  },
+  {
+    id:16,
+    name: "Sonny",
+    tag: "sonny",
+    color: "#243250",
+  },
 ];
