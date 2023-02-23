@@ -110,4 +110,10 @@ export const collections: Collection[] = [
     tag: "chido",
     color: "#251C18",
   },
+  {
+    id:18,
+    name: "Flaco",
+    tag: "flaco",
+    color: "#FFCC00",
+  },
 ];
