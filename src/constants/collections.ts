@@ -123,4 +123,10 @@ export const collections: Collection[] = [
     tag: "pablo",
     color: "#1E2738",
   },
+  {
+    id:20,
+    name: "Kahlo",
+    tag: "kahlo",
+    color: "#B7765B",
+  },
 ];
