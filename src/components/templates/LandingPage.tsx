@@ -58,14 +58,14 @@ const LandingPage: FC<Props> = (props: Props) => {
       </motion.div>
 
       {/* mobile image */}
-      {/* <motion.div className="lg:hidden mb-10" {...showAnimation}>
+      <motion.div className="lg:hidden mb-10" {...showAnimation}>
         <Image
           src={bgMobile.src}
           height={374}
           width={350}
           alt="My Slimes Mobile"
         />
-      </motion.div> */}
+      </motion.div>
     </motion.div>
   );
 };
