@@ -40,6 +40,7 @@ const MySlimes: NextPage = () => {
   };
   const assetSelected = (id: number): void => {
     setAsset(assets[id]);
+    //test comment
     setAssetDropdown(false);
   };
 
