@@ -141,4 +141,16 @@ export const collections: Collection[] = [
     tag: "xolo",
     color: "#552433",
   },
+  {
+    id:23,
+    name: "Kai",
+    tag: "kai",
+    color: "#58C1BF",
+  },
+  // {
+  //   id:24,
+  //   name: "Dark Kai",
+  //   tag: "dark-kai",
+  //   color: "#242424",
+  // },
 ];

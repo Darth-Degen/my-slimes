@@ -1,5 +1,5 @@
 import { Button, PageLayout, LogoIcon } from "@components";
-import { useEffect, useRef, useState } from "react";
+import { FC, HTMLAttributes, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown, AssetDisplay, Modal } from "@components";
@@ -7,6 +7,13 @@ import { collections, assets, midExitAnimation } from "@constants";
 import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
+
+const darkKai: Collection = {
+  id: 23,
+  name: "Dark Kai",
+  tag: "dark-kai",
+  color: "#242424",
+};
 
 const MySlimes: NextPage = () => {
   const [didMount, setDidMount] = useState<boolean>(false);
@@ -57,6 +64,10 @@ const MySlimes: NextPage = () => {
     }, 690);
   };
 
+  const handleToggle = (isOn: boolean): void => {
+    setCollection(isOn ? darkKai : collections[23]);
+  };
+
   return (
     <PageLayout
       pageTitle={"My Slimes"}
@@ -101,6 +112,7 @@ const MySlimes: NextPage = () => {
               label={asset?.name ?? "select asset"}
               items={assets}
             />
+            {/* <Toggle /> */}
           </div>
           {/* download container */}
           <div
@@ -125,18 +137,28 @@ const MySlimes: NextPage = () => {
                   key="selected"
                   {...midExitAnimation}
                 >
-                  <Button
-                    className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-48 sm:!w-56 md:!w-64 h-14 rounded-lg"
-                    isLoading={isDownloading}
-                    disabled={false}
-                    onClick={() =>
-                      downloadAsset(
-                        `/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
-                      )
-                    }
-                  >
-                    {asset?.actionLabel ?? "download wallpaper"}
-                  </Button>
+                  <div className="relative">
+                    <Button
+                      className="font-primary !bg-custom-dark !text-custom-light !text-lg !shadow !w-48 sm:!w-56 md:!w-64 h-14 rounded-lg"
+                      isLoading={isDownloading}
+                      disabled={false}
+                      onClick={() =>
+                        downloadAsset(
+                          `/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
+                        )
+                      }
+                    >
+                      {asset?.actionLabel ?? "download wallpaper"}
+                    </Button>
+                    {collection?.id === 23 && (
+                      <div className="absolute left-1/2 -bottom-[78%] md:-bottom-[82%] transform -translate-x-1/2 flex items-center text-xs">
+                        <p className="absolute -left-7">Kai</p>
+                        <Toggle handleToggle={handleToggle} />
+                        <p className="absolute -right-14">Dark Kai</p>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="pb-4 mt-10 lg:pb-6 h-full w-full flex items-center lg:items-start justify-center">
                     <AnimatePresence mode="wait">
                       {/* pfp */}
@@ -226,4 +248,38 @@ const MySlimes: NextPage = () => {
   );
 };
 
+interface ToggleProps extends HTMLAttributes<HTMLDivElement> {
+  handleToggle: (isOn: boolean) => void;
+}
+const Toggle: FC<ToggleProps> = (props: ToggleProps) => {
+  const { handleToggle, className } = props;
+  const [isOn, setIsOn] = useState(false);
+
+  const toggleSwitch = () => {
+    setIsOn(!isOn);
+  };
+
+  useEffect(() => {
+    handleToggle(isOn);
+  }, [handleToggle, isOn]);
+
+  return (
+    <motion.div
+      className={`w-12 h-7 rounded-full p-1 cursor-pointer ${
+        isOn ? "bg-custom-primary" : "bg-gray-400"
+      } ${className}`}
+      onClick={toggleSwitch}
+      // whileHover={{ scale: 1.1 }}
+      // whileTap={{ scale: 0.9 }}
+      transition={{ duration: 1, type: "spring", stiffness: 700 }}
+    >
+      <motion.div
+        className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-all duration-300 ${
+          isOn ? "translate-x-5" : ""
+        }`}
+        transition={{ duration: 1, type: "spring", stiffness: 700 }}
+      />
+    </motion.div>
+  );
+};
 export default MySlimes;
