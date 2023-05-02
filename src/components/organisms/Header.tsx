@@ -11,12 +11,12 @@ import { motion, useScroll, Variants } from "framer-motion";
 
 interface Props {
   showHeader?: boolean; //used to show header if isStatic is false
-  headerType?: string;
+  headerType?: string; //scroll, fixed, absolute
   mainColor?: string;
 }
 
 const Header: FC<Props> = (props: Props) => {
-  const { headerType = "absolute", showHeader = false, mainColor } = props;
+  const { headerType = "absolute", showHeader = true, mainColor } = props;
 
   const [header, setHeader] = useState<boolean>();
 
@@ -83,7 +83,7 @@ const Header: FC<Props> = (props: Props) => {
   const Content = () => (
     <div className={`w-screen`}>
       <motion.div
-        className={`h-full w-full px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center opacity-95`}
+        className={`h-full w-full px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center`}
         initial={{ backgroundColor: mainColor }}
         animate={{ backgroundColor: mainColor }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -99,7 +99,6 @@ const Header: FC<Props> = (props: Props) => {
       className={`top-0 z-20 transition-all duration-500 ${
         headerType === "scroll" ? "fixed" : headerType
       } `}
-      // ${headerType === "absolute" ? " opacity-100" : " opacity-90"} `}
     >
       {headerType !== "scroll" ? (
         <Content />

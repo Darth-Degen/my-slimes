@@ -8,14 +8,14 @@ interface Props {
   children: ReactNode;
   pageTitle?: string;
   showFooter?: boolean;
-  showPage?: boolean;
+  // showPage?: boolean;
   headerType?: string;
   showHeader?: boolean;
   footerAccentColor?: string;
   footerTextColor?: string;
   footerHex?: string;
   mainColor?: string;
-  // stopScroll?: boolean;
+  stopScroll?: boolean;
   assets?: boolean[]; //image didLoad values
 }
 
@@ -24,9 +24,9 @@ const PageLayout: FC<Props> = (props: Props) => {
     children,
     pageTitle = "Slimes",
     showFooter = false,
-    showPage = true,
+    // showPage = true,
     headerType = "absolute",
-    // stopScroll = false,
+    stopScroll = false,
     showHeader = false,
     assets = [],
     //footer customizations
@@ -68,20 +68,18 @@ const PageLayout: FC<Props> = (props: Props) => {
         <PageHead title={pageTitle} description="An art project by scum" />
 
         {/* header */}
-        {showPage && (
-          <Header
-            headerType={headerType}
-            showHeader={showHeader}
-            mainColor={mainColor}
-          />
-        )}
+        <Header
+          headerType={headerType}
+          showHeader={showHeader}
+          mainColor={mainColor}
+        />
         {/* body */}
         <main className="flex flex-col justify-start items-center h-full overflow-x-clip">
           {children}
         </main>
 
         {/* footer */}
-        {showFooter && showPage && (
+        {showFooter && (
           <Footer
             backgroundAccentColor={footerAccentColor}
             textColor={footerTextColor}

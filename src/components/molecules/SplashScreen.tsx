@@ -60,13 +60,7 @@ const SplashScreen: FC<Props> = (props: Props) => {
             duration: animationTransition / 1000,
             ease: "easeInOut",
           }}
-        >
-          {/*<div className="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2">
-             <motion.div className="rounded" {...containerAnimation}>
-              <ExpIcon color={"white"} />
-            </motion.div> 
-          </div>*/}
-        </motion.div>
+        ></motion.div>
       )}
     </AnimatePresence>
   );
