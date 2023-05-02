@@ -26,6 +26,34 @@ const MenuIcon: FC<Props> = (props: Props) => {
       // {...menuAnimation}
     >
       <svg
+        width="226"
+        height="142"
+        viewBox="0 0 226 142"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={`${className} w-10 h-10`}
+      >
+        <path
+          d="M13 13H213"
+          stroke="#312A29"
+          strokeWidth="25"
+          strokeLinecap="round"
+        />
+        <path
+          d="M13 70.8477H213"
+          stroke="#312A29"
+          strokeWidth="25"
+          strokeLinecap="round"
+        />
+        <path
+          d="M13 129.395H213"
+          stroke="#312A29"
+          strokeWidth="25"
+          strokeLinecap="round"
+        />
+      </svg>
+
+      {/* <svg
         width="83"
         height="52"
         viewBox="0 0 83 52"
@@ -55,7 +83,7 @@ const MenuIcon: FC<Props> = (props: Props) => {
           strokeMiterlimit="10"
           strokeLinecap="round"
         />
-      </svg>
+      </svg> */}
     </motion.div>
   );
 };

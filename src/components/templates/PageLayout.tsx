@@ -1,7 +1,7 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { PageHead, Header, Footer } from "@components";
+import { PageHead, Header, Footer, SplashScreen } from "@components";
 import { motion } from "framer-motion";
-import { enterAnimation } from "@constants";
+import { enterAnimation, ViewContext } from "@constants";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -15,7 +15,8 @@ interface Props {
   footerTextColor?: string;
   footerHex?: string;
   mainColor?: string;
-  stopScroll?: boolean;
+  // stopScroll?: boolean;
+  assets?: boolean[]; //image didLoad values
 }
 
 const PageLayout: FC<Props> = (props: Props) => {
@@ -25,13 +26,22 @@ const PageLayout: FC<Props> = (props: Props) => {
     showFooter = false,
     showPage = true,
     headerType = "absolute",
+    // stopScroll = false,
     showHeader = false,
+    assets = [],
+    //footer customizations
     footerAccentColor,
     footerTextColor,
     footerHex,
     mainColor = "#8BD2B9",
-    stopScroll = false,
   } = props;
+
+  //context for splash screen & modals
+  const [showView, setShowView] = useState<boolean>(false);
+  const value = {
+    showView,
+    setShowView,
+  };
 
   const router = useRouter();
 
@@ -44,38 +54,45 @@ const PageLayout: FC<Props> = (props: Props) => {
   }, [router.pathname, mainColor]);
 
   //stop page scroll (when modal or menu open)
-  useEffect(() => {
-    if (stopScroll) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
-  }, [stopScroll]);
+  // useEffect(() => {
+  //   if (stopScroll) document.body.style.overflow = "hidden";
+  //   else document.body.style.overflow = "auto";
+  // }, [stopScroll]);
 
   return (
-    <motion.div
-      className="flex flex-col lg:min-h-screen justify-between relative"
-      {...enterAnimation}
-    >
-      <PageHead title={pageTitle} description="An art project by scum" />
+    <ViewContext.Provider value={value}>
+      <motion.div
+        className="flex flex-col lg:min-h-screen justify-between relative"
+        {...enterAnimation}
+      >
+        <PageHead title={pageTitle} description="An art project by scum" />
 
-      {showPage && (
-        <Header
-          headerType={headerType}
-          showHeader={showHeader}
-          mainColor={mainColor}
-        />
-      )}
-      <main className="flex flex-col justify-start items-center h-full overflow-x-clip">
-        {children}
-      </main>
+        {/* header */}
+        {showPage && (
+          <Header
+            headerType={headerType}
+            showHeader={showHeader}
+            mainColor={mainColor}
+          />
+        )}
+        {/* body */}
+        <main className="flex flex-col justify-start items-center h-full overflow-x-clip">
+          {children}
+        </main>
 
-      {showFooter && showPage && (
-        <Footer
-          backgroundAccentColor={footerAccentColor}
-          textColor={footerTextColor}
-          hex={footerHex}
-          mainColor={mainColor}
-        />
-      )}
-    </motion.div>
+        {/* footer */}
+        {showFooter && showPage && (
+          <Footer
+            backgroundAccentColor={footerAccentColor}
+            textColor={footerTextColor}
+            hex={footerHex}
+            mainColor={mainColor}
+          />
+        )}
+        {/* modals */}
+        {assets && <SplashScreen assets={assets} />}
+      </motion.div>
+    </ViewContext.Provider>
   );
 };
 export default PageLayout;

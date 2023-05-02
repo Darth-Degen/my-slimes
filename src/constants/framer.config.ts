@@ -135,3 +135,33 @@ export const fadeVariants = {
   },
   open: { opacity: 1, transition: { delay: 0.5, duration: 0.5 } },
 };
+
+export const slideDown = (animate: boolean) => ({
+  initial: { y: -300, opacity: 0 },
+  animate: { y: animate ? 0 : -300, opacity: animate ? 1 : 0 },
+  transition: { duration: 1.5, ease: "easeInOut" },
+});
+
+export const slideUp = (animate: boolean) => ({
+  initial: { y: 300, opacity: 0 },
+  animate: { y: animate ? 0 : 300, opacity: animate ? 1 : 0 },
+  transition: { duration: 1.5, ease: "easeInOut" },
+});
+export const slideLeft = (animate: boolean) => ({
+  initial: { x: 300, opacity: 0 },
+  animate: { x: animate ? 0 : 300, opacity: animate ? 1 : 0 },
+  transition: { duration: 1.5, ease: "easeInOut" },
+});
+export const slideRight = (animate: boolean) => ({
+  initial: { x: -300, opacity: 0 },
+  animate: { x: animate ? 0 : -300, opacity: animate ? 1 : 0 },
+  transition: { duration: 1.5, ease: "easeInOut" },
+});
+
+
+export const imageLoadAnimation = (animate: boolean) => ({
+  initial: { opacity: 0 },
+  animate: { opacity: animate ? 1 : 0 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.25, ease: "easeInOut" },
+})

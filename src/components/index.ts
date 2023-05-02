@@ -21,6 +21,7 @@ const LoadAnimation = dynamic(()=> import("./atoms/LoadAnimation"))
 const LoadCircle = dynamic(()=> import("./atoms/LoadCircle"))
 const LogoText = dynamic(()=> import("./atoms/LogoText"))
 const Modal = dynamic(()=> import("./atoms/Modal"))
+const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
 //molecules
 const PageHead = dynamic(()=> import("./molecules/PageHead"))
 const Logo = dynamic(()=> import("./molecules/Logo"))
@@ -30,6 +31,7 @@ const Menu = dynamic(() => import("./molecules/Menu"))
 const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation"))
 const Paragraph = dynamic(() => import("./molecules/Paragraph"))
 const AssetDisplay = dynamic(() => import("./molecules/AssetDisplay"))
+const SplashScreen = dynamic(() => import("./molecules/SplashScreen"));
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
@@ -78,5 +80,7 @@ export {
   Paragraph,
   ExpIcon,
   AssetDisplay,
-  Modal
+  Modal,
+  SplashScreen,
+  ImageShimmer
 }
