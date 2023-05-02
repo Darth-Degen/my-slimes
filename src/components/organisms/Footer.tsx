@@ -16,7 +16,7 @@ const Footer: FC<Props> = (props: Props) => {
     backgroundAccentColor = "bg-white",
     textColor = "text-white",
     hex = "#FFFFFF",
-    mainColor = "#8BD2B9",
+    mainColor = "#F6EFD3",
   } = props;
 
   const UnderlineAnimation = () => {

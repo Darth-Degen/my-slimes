@@ -16,8 +16,8 @@ module.exports = {
       },
       colors: {
         //main
-        "custom-primary": "#8BD2B9",
-        "custom-secondary": "#FCE4D8",
+        "custom-primary": "#F6EFD3",
+        "custom-secondary": "#8BD2B9",
         //custom
         "custom-green": "#8BD2B9",
         "custom-pink": "#FCE4D8",

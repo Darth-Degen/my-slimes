@@ -17,7 +17,7 @@ const CloseIcon: FC<Props> = (props: Props) => {
   return (
     <motion.div
       className="cursor-pointer p-3"
-      // className="cursor-pointer p-3 hover:shadow hover:shadow-[#8BD2B9] transition-all duration-300 rounded"
+      // className="cursor-pointer p-3 hover:shadow hover:shadow-[#F6EFD3] transition-all duration-300 rounded"
       // {...menuAnimation}
     >
       <svg
@@ -30,14 +30,14 @@ const CloseIcon: FC<Props> = (props: Props) => {
       >
         <path
           d="M9 123.01L127.01 5"
-          stroke="#8BD2B9"
+          stroke="#F6EFD3"
           strokeWidth="10"
           strokeMiterlimit="10"
           strokeLinecap="round"
         />
         <path
           d="M9 5L127.01 123.01"
-          stroke="#8BD2B9"
+          stroke="#F6EFD3"
           strokeWidth="10"
           strokeMiterlimit="10"
           strokeLinecap="round"

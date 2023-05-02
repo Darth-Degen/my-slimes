@@ -33,7 +33,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     footerAccentColor,
     footerTextColor,
     footerHex,
-    mainColor = "#8BD2B9",
+    mainColor = "#F6EFD3",
   } = props;
 
   //context for splash screen & modals
