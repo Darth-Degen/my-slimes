@@ -41,7 +41,6 @@ const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
-const DownloadView = dynamic(()=> import("./templates/DownloadView"))
 const LandingPage = dynamic(()=> import("./templates/LandingPage"))
 
 export {
@@ -61,7 +60,6 @@ export {
   TextInput,
   CheckBox,
   Button,
-  DownloadView,
   LoadAnimation,
   MobileDisplay,
   TwitterIcon,
