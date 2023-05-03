@@ -50,7 +50,7 @@ const SplashScreen: FC<Props> = (props: Props) => {
     <AnimatePresence mode="wait">
       {showAnimation && (
         <motion.div
-          className={`backdrop-blur-xl ${
+          className={`backdrop-blur bg-custom-green ${
             showAnimation ? "fixed z-50 inset-0" : "hidden -z-50"
           }`}
           initial={{ opacity: 1 }}

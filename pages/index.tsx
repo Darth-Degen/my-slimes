@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 
 const Home: NextPage = () => {
-  const [assets, setAssets] = useState<boolean[]>([false]);
+  const [assets, setAssets] = useState<boolean[]>([true]);
 
   return (
-    <PageLayout headerType="scroll" assets={assets}>
+    <PageLayout headerType="fixed" assets={assets}>
       <LandingPage setAssets={setAssets} />
     </PageLayout>
   );

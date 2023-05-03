@@ -10,6 +10,9 @@ const LogoIcon = dynamic(()=> import("./@icons/LogoIcon"))
 const MenuIcon = dynamic(()=> import("./@icons/MenuIcon"))
 const CloseIcon = dynamic(()=> import("./@icons/CloseIcon"))
 const ExpIcon = dynamic(()=> import("./@icons/ExpIcon"))
+const CrackVector = dynamic(()=> import("./@icons/CrackVector"))
+const FlowerVector = dynamic(()=> import("./@icons/FlowerVector"))
+const PaddleVector = dynamic(()=> import("./@icons/PaddleVector"))
 //atoms
 const DropdownButton = dynamic(()=> import("./atoms/DropdownButton"))
 const DropdownItem = dynamic(()=> import("./atoms/DropdownItem"))
@@ -35,7 +38,6 @@ const SplashScreen = dynamic(() => import("./molecules/SplashScreen"));
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
-const MobileDisplay = dynamic(() => import("./organisms/MobileDisplay"))
 const MenuController = dynamic(() => import("./organisms/MenuController"))
 const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
@@ -61,7 +63,6 @@ export {
   CheckBox,
   Button,
   LoadAnimation,
-  MobileDisplay,
   TwitterIcon,
   DiscordIcon,
   LoadCircle,
@@ -80,5 +81,8 @@ export {
   AssetDisplay,
   Modal,
   SplashScreen,
-  ImageShimmer
+  ImageShimmer,
+  CrackVector,
+  FlowerVector,
+  PaddleVector
 }

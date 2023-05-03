@@ -13,6 +13,7 @@ module.exports = {
           "system-ui",
           "monospace",
         ],
+        black: ["pangram-black"],
       },
       colors: {
         //main
@@ -26,10 +27,14 @@ module.exports = {
         "custom-dark": "#232726",
         "custom-red": "#CA2D2D",
         "custom-gray": "#969696",
+        shadow: "rgba(82, 82, 82, 0.25)",
       },
       screens: {
         "3xl": "2160px",
         "4xl": "3000px",
+      },
+      boxShadow: {
+        circular: "0px 0px 47px 30px rgba(82, 82, 82,0.31)", //,0.51 "0px 0px 40px 30px rgba(82, 82, 82, 0.10)", //rgba(82, 82, 82, 0.08)
       },
     },
   },
