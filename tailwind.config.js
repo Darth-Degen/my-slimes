@@ -18,7 +18,7 @@ module.exports = {
         //main
         "custom-primary": "#F6EFD3",
         "custom-secondary": "#8BD2B9",
-        "custom-font": "#312A29",
+        "custom-tertiary": "#312A29",
         //custom
         "custom-green": "#8BD2B9",
         "custom-pink": "#FCE4D8",

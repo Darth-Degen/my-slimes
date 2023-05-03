@@ -31,7 +31,7 @@ const MenuIcon: FC<Props> = (props: Props) => {
         viewBox="0 0 226 142"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`${className} w-10 h-10`}
+        className={` w-9 h-9 ${className}`}
       >
         <path
           d="M13 13H213"

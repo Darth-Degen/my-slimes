@@ -1,5 +1,4 @@
 import { Variants } from "framer-motion"
-import { opacity } from "html2canvas/dist/types/css/property-descriptors/opacity";
 
 //click animations
 export const largeClickAnimation = {

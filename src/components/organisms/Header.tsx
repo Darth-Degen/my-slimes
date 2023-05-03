@@ -1,13 +1,12 @@
+import { FC, useEffect, useRef, useState } from "react";
+import { LogoText, MenuController } from "@components";
 import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Logo, MenuController } from "@components";
-import { motion, useScroll, Variants } from "framer-motion";
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  Variants,
+} from "framer-motion";
+import Link from "next/link";
 
 interface Props {
   showHeader?: boolean; //used to show header if isStatic is false
@@ -29,52 +28,53 @@ const Header: FC<Props> = (props: Props) => {
     show: {
       y: 0,
       transition: {
-        delay: 0.5,
-        duration: 0.69,
+        delay: 0.25,
+        duration: 0.4,
         ease: "easeInOut",
       },
     },
     hidden: {
       y: -height,
       transition: {
-        delay: 0.5,
-        duration: 0.69,
+        delay: 0.25,
+        duration: 0.4,
         ease: "easeInOut",
       },
     },
   };
 
-  //hide header on scroll down, show on scroll up
-  useEffect(() => {
-    return scrollY.onChange((latest) => {
-      //top of page
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest > 0.9) setHeader(true);
+    if (latest < 0.1) setHeader(true);
+  });
 
-      //first instance
-      if (scrollRef.current === undefined) {
+  //hide header on scroll down, show on scroll up
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    //first instance
+    if (scrollRef.current === undefined) {
+      setHeader(false);
+      scrollRef.current = latest;
+      return;
+    }
+
+    //scroll down
+    if (scrollRef.current < latest) {
+      if (scrollRef.current + 30 < latest) {
         setHeader(false);
         scrollRef.current = latest;
-        return;
       }
+      return;
+    }
 
-      //scroll down
-      if (scrollRef.current < latest) {
-        if (scrollRef.current + 30 < latest) {
-          setHeader(false);
-          scrollRef.current = latest;
-        }
-        return;
+    //scroll up
+    if (scrollRef.current > latest) {
+      if (scrollRef.current > latest + 30) {
+        setHeader(true);
+        scrollRef.current = latest;
       }
-
-      //scroll up
-      if (scrollRef.current > latest) {
-        if (scrollRef.current > latest + 80) {
-          setHeader(true);
-          scrollRef.current = latest;
-        }
-        return;
-      }
-    });
-  }, [scrollY]);
+      return;
+    }
+  });
 
   useEffect(() => {
     setHeader(showHeader);
@@ -82,15 +82,17 @@ const Header: FC<Props> = (props: Props) => {
 
   const Content = () => (
     <div className={`w-screen`}>
-      <motion.div
-        className={`h-full w-full px-4 sm:px-6 lg:px-10 py-6 flex justify-between items-center`}
-        initial={{ backgroundColor: mainColor }}
-        animate={{ backgroundColor: mainColor }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-      >
-        <Logo />
+      <div className="h-full w-full px-4 sm:px-6 py-1 sm:py-3 flex justify-between items-center">
+        <Link href="/">
+          <LogoText
+            fill="#312A29"
+            width={94}
+            height={50}
+            className="cursor-pointer"
+          />
+        </Link>
         <MenuController />
-      </motion.div>
+      </div>
     </div>
   );
 
@@ -105,7 +107,7 @@ const Header: FC<Props> = (props: Props) => {
       ) : (
         <motion.aside
           variants={headerVariants}
-          initial={showHeader ? "show" : "hidden"}
+          initial={"show"}
           animate={header ? "show" : "hidden"}
         >
           <Content />

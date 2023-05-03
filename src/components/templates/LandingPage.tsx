@@ -26,6 +26,16 @@ const LandingPage: FC<Props> = (props: Props) => {
           setAssets && setAssets((prevState) => [(prevState[0] = true)])
         }
       />
+      <Image
+        src={bg.src}
+        height={766}
+        width={2371}
+        alt="My Slimes Banner"
+        priority
+        onLoadingComplete={() =>
+          setAssets && setAssets((prevState) => [(prevState[0] = true)])
+        }
+      />
     </motion.div>
   );
 };

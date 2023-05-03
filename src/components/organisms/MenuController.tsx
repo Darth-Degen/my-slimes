@@ -25,7 +25,7 @@ const MenuController: FC<Props> = (props: Props) => {
   return (
     <div className="w-full h-full flex items-end justify-end " ref={wrapperRef}>
       <div key="menu-icon" onClick={() => setOpenMenu(true)}>
-        <MenuIcon />
+        <MenuIcon className="transition-all duration-300 active:scale-90" />
       </div>
       <Menu toggleMenu={setOpenMenu} open={openMenu} />
     </div>
