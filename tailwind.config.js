@@ -28,6 +28,11 @@ module.exports = {
         "custom-red": "#CA2D2D",
         "custom-gray": "#969696",
         shadow: "rgba(82, 82, 82, 0.25)",
+        //version 2 theme
+        "v2-pink": "#FFB094",
+        "v2-beige": "#F6EFD3",
+        "v2-green": "#73EEC5",
+        "v2-dark": "#2C2524",
       },
       screens: {
         "3xl": "2160px",

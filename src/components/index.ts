@@ -35,6 +35,7 @@ const PageLoadAnimation = dynamic(() => import("./molecules/PageLoadAnimation"))
 const Paragraph = dynamic(() => import("./molecules/Paragraph"))
 const AssetDisplay = dynamic(() => import("./molecules/AssetDisplay"))
 const SplashScreen = dynamic(() => import("./molecules/SplashScreen"));
+const MenuItem = dynamic(() => import("./molecules/MenuItem"));
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
@@ -84,5 +85,6 @@ export {
   ImageShimmer,
   CrackVector,
   FlowerVector,
-  PaddleVector
+  PaddleVector,
+  MenuItem
 }

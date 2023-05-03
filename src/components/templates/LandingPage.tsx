@@ -22,7 +22,7 @@ const LandingPage: FC<Props> = (props: Props) => {
       <div className="w-[80px] h-[3px] bg-shadow shadow-circular mb-20 lg:mb-12 rounded-full lg:absolute lg:left-1/2 lg:top-[83%] 3xl:top-[79%] lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2" />
       {/*  footer */}
       <div className="uppercase font-black text-lg pb-4 3xl:pb-20">scroll</div>
-      <div className="hidden lg:flex justify-between w-full pb-2 px-8">
+      <div className="hidden lg:flex justify-between w-full pb-2 px-4 sm:px-6">
         <div className="w-1/3 uppercase">the whole squad here</div>
         <div className="w-1/3 uppercase flex justify-center">and</div>
         <div className="w-1/3 uppercase flex justify-end">everybody eats</div>
