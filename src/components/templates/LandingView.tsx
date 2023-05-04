@@ -5,12 +5,13 @@ import { FlowerVector, CrackVector, PaddleVector } from "@components";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
 }
-const LandingPage: FC<Props> = (props: Props) => {
+const LandingView: FC<Props> = (props: Props) => {
   const { setAssets } = props;
 
   return (
     <motion.div
-      key="landing-page"
+      id="landing"
+      key="landing"
       className="relative w-full h-screen flex flex-col items-center justify-end"
       {...exitAnimation}
     >
@@ -31,4 +32,4 @@ const LandingPage: FC<Props> = (props: Props) => {
   );
 };
 
-export default LandingPage;
+export default LandingView;

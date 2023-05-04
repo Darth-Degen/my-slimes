@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FC, useState } from "react";
 import { midExitAnimation } from "@constants";
 import { useWindowSize } from "@hooks";
+import { useRouter } from "next/router";
 
 interface MenuItems {
   title: string;
@@ -17,15 +18,34 @@ const MenuItem: FC<miProps> = (props: miProps) => {
 
   const [hover, setHover] = useState<boolean>(false);
   const [winWidth, winHeight] = useWindowSize();
+  const router = useRouter();
+
+  const handleClick = (): void => {
+    if (!item.isLanding) router.push(item.src);
+    else scrollToSection(item.title);
+  };
+
+  const scrollToSection = (id: string): void => {
+    const yOffset = -80; // adjust for fixed header
+    const element = document.getElementById(id);
+    const y =
+      element!.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div
       className="flex flex-col lg:flex-row lg:items-end lg:gap-1.5 cursor-pointer uppercase font-black"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={() => handleClick()}
     >
       <div
-        className={`responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] relative transition-colors duration-500 ${
+        className={`responsive-font lg:text-9xl 2xl:text-[9rem] 3xl:text-[12rem] 4xl:text-[16rem] relative transition-colors duration-500 ${
           hover ? "text-v2-green" : "text-custom-primary "
         }`}
       >
@@ -44,7 +64,7 @@ const MenuItem: FC<miProps> = (props: miProps) => {
           {hover && (
             <motion.p
               key="subtitle"
-              className="text-custom-primary text-2xl whitespace-normal w-10 self-end pb-2.5 pl-1"
+              className="text-custom-primary text-2xl 2xl:text-4xl whitespace-normal w-10 self-end pb-2.5 2xl:pb-3 pl-1"
               {...midExitAnimation}
             >
               {item.subtitle}

@@ -44,7 +44,11 @@ const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
-const LandingPage = dynamic(()=> import("./templates/LandingPage"))
+const LandingView = dynamic(()=> import("./templates/LandingView"))
+const WhatView = dynamic(()=> import("./templates/WhatView"))
+const WhoView = dynamic(()=> import("./templates/WhoView"))
+const FriendsView = dynamic(()=> import("./templates/FriendsView"))
+const WhereView = dynamic(()=> import("./templates/WhereView"))
 
 export {
   PageHead,
@@ -74,7 +78,7 @@ export {
   CloseIcon,
   LogoText,
   PageLoadAnimation,
-  LandingPage,
+  LandingView,
   AboutSection,
   ScumSection,
   Paragraph,
@@ -86,5 +90,9 @@ export {
   CrackVector,
   FlowerVector,
   PaddleVector,
-  MenuItem
+  MenuItem,
+  WhatView,
+  WhoView,
+  FriendsView,
+  WhereView,
 }

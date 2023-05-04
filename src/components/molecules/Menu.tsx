@@ -2,6 +2,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MenuItem } from "@components";
 import { useWindowSize } from "@hooks";
+import { useRouter } from "next/router";
 interface Props {
   toggleMenu: Dispatch<SetStateAction<boolean>>;
   open: boolean;
@@ -11,10 +12,45 @@ const Menu: FC<Props> = (props: Props) => {
   const { toggleMenu, open } = props;
   const [winWidth, winHeight] = useWindowSize();
 
+  const router = useRouter();
+  const isLanding = router.asPath === "/";
   //breakpoints
   const isMd: boolean = winWidth > 768 - 1;
   const isLg: boolean = winWidth > 1024 - 1;
   const isXl: boolean = winWidth > 1260 - 1;
+
+  const menuData = [
+    {
+      title: "what",
+      subtitle: "we're doing",
+      src: "/",
+      isLanding: isLanding,
+    },
+    {
+      title: "who",
+      subtitle: "we are",
+      src: "/",
+      isLanding: isLanding,
+    },
+    {
+      title: "friends",
+      subtitle: "with benifits",
+      src: "/",
+      isLanding: isLanding,
+    },
+    {
+      title: "where",
+      subtitle: "to buy",
+      src: "/",
+      isLanding: isLanding,
+    },
+    {
+      title: "slimes",
+      subtitle: "only",
+      src: "/slimes",
+      isLanding: false,
+    },
+  ];
 
   const getWidth = (): number => {
     if (isXl) return winWidth * 0.55;
@@ -56,38 +92,5 @@ const Menu: FC<Props> = (props: Props) => {
     </>
   );
 };
-
-const menuData = [
-  {
-    title: "what",
-    subtitle: "we're doing",
-    src: "",
-    isLanding: true,
-  },
-  {
-    title: "who",
-    subtitle: "we are",
-    src: "",
-    isLanding: true,
-  },
-  {
-    title: "friends",
-    subtitle: "with benifits",
-    src: "",
-    isLanding: true,
-  },
-  {
-    title: "where",
-    subtitle: "to buy",
-    src: "",
-    isLanding: true,
-  },
-  {
-    title: "slimes",
-    subtitle: "only",
-    src: "/slimes",
-    isLanding: false,
-  },
-];
 
 export default Menu;
