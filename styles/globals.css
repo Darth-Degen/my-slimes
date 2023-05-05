@@ -45,8 +45,12 @@ html {
 
 .responsive-font {
   font-size: 9vh;
-  
 }
+/* Add styles to your Tailwind CSS file to hide the scroll bar when the page is locked. */
+/* ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; 
+} */
 
 
 

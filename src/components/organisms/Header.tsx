@@ -76,9 +76,13 @@ const Header: FC<Props> = (props: Props) => {
     }
   });
 
+  // useEffect(() => {
+  //   setHeader(showHeader);
+  // }, [showHeader]);
+
   useEffect(() => {
-    setHeader(showHeader);
-  }, [showHeader]);
+    setHeader(true);
+  }, []);
 
   const Content = () => (
     <div className={`w-screen`}>
