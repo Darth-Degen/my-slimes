@@ -1,10 +1,10 @@
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { PageHead, Header, Footer, SplashScreen } from "@components";
 import { motion } from "framer-motion";
 import { enterAnimation, ViewContext } from "@constants";
 import { useRouter } from "next/router";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   pageTitle?: string;
   showFooter?: boolean;
@@ -34,6 +34,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     footerTextColor,
     footerHex,
     mainColor = "#F6EFD3",
+    className,
   } = props;
 
   //context for splash screen & modals
@@ -74,7 +75,11 @@ const PageLayout: FC<Props> = (props: Props) => {
           mainColor={mainColor}
         />
         {/* body */}
-        <main className="flex flex-col justify-start items-center h-full overflow-x-clip">
+        <main
+          className={`flex flex-col justify-start items-center w-full h-full overflow-x-clip ${
+            className ? className : ""
+          }`}
+        >
           {children}
         </main>
 

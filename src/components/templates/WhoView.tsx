@@ -12,7 +12,7 @@ const WhoView: FC<Props> = (props: Props) => {
   return (
     <div
       id="who"
-      className="relative w-full h-screen flex flex-col items-center"
+      className="relative w-full h-screen flex flex-col items-center bg-custom-primary"
     >
       <p className="responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] text-v2-pink">
         who

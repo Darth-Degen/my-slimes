@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { midExitAnimation } from "@constants";
 import { useWindowSize } from "@hooks";
 import { useRouter } from "next/router";
-
+import { scrollToSection } from "@helpers";
 interface MenuItems {
   title: string;
   subtitle: string;
@@ -23,18 +23,6 @@ const MenuItem: FC<miProps> = (props: miProps) => {
   const handleClick = (): void => {
     if (!item.isLanding) router.push(item.src);
     else scrollToSection(item.title);
-  };
-
-  const scrollToSection = (id: string): void => {
-    const yOffset = -80; // adjust for fixed header
-    const element = document.getElementById(id);
-    const y =
-      element!.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-    window.scrollTo({
-      top: y,
-      behavior: "smooth",
-    });
   };
 
   return (

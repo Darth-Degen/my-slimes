@@ -25,6 +25,7 @@ const LoadCircle = dynamic(()=> import("./atoms/LoadCircle"))
 const LogoText = dynamic(()=> import("./atoms/LogoText"))
 const Modal = dynamic(()=> import("./atoms/Modal"))
 const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
+const ScrollProgress = dynamic(()=> import("./atoms/ScrollProgress"))
 //molecules
 const PageHead = dynamic(()=> import("./molecules/PageHead"))
 const Logo = dynamic(()=> import("./molecules/Logo"))
@@ -95,4 +96,5 @@ export {
   WhoView,
   FriendsView,
   WhereView,
+  ScrollProgress
 }
