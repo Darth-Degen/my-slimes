@@ -152,7 +152,7 @@ const Layout: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className={`w-screen border border-black  ${className}`}
+      className={`w-screen ${className}`}
       ref={scrollRef}
       onScroll={componentProps.onScroll}
     >

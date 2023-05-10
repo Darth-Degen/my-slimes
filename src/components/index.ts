@@ -37,6 +37,7 @@ const Paragraph = dynamic(() => import("./molecules/Paragraph"))
 const AssetDisplay = dynamic(() => import("./molecules/AssetDisplay"))
 const SplashScreen = dynamic(() => import("./molecules/SplashScreen"));
 const MenuItem = dynamic(() => import("./molecules/MenuItem"));
+const TextScroll = dynamic(() => import("./molecules/TextScroll"));
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
@@ -96,5 +97,6 @@ export {
   WhoView,
   FriendsView,
   WhereView,
-  ScrollProgress
+  ScrollProgress,
+  TextScroll
 }
