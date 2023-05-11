@@ -11,10 +11,10 @@ const FriendsView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      id="friends"
       className="relative w-full h-screen flex flex-col items-center"
+      id="friends"
     >
-      <p className="responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] text-v2-pink">
+      <p className="sticky top-[6%] xl:top-[10%]  responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] text-v2-pink">
         friends
       </p>
     </div>

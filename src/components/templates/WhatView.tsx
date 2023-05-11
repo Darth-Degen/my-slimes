@@ -3,7 +3,6 @@ import {
   FC,
   MutableRefObject,
   SetStateAction,
-  useEffect,
   useRef,
   useState,
   forwardRef,
@@ -13,8 +12,6 @@ import {
 import {
   MotionValue,
   motion,
-  useAnimation,
-  useInView,
   useMotionValueEvent,
   useScroll,
   useTransform,
@@ -62,9 +59,11 @@ const WhatView: FC<Props> = (props: Props) => {
   const getRef = (index: number): MutableRefObject<null> => {
     return index === 0 ? ref1 : index === 1 ? ref2 : ref3;
   };
+
   const getImgRef = (index: number): MutableRefObject<null> => {
     return index === 0 ? imgRef1 : index === 1 ? imgRef2 : imgRef3;
   };
+
   const getTopPosition = (index: number): number => {
     let _base = 200;
     if (winHeight > 900) _base = 260;
@@ -74,17 +73,6 @@ const WhatView: FC<Props> = (props: Props) => {
     return index * _base;
   };
 
-  // useEffect(() => {
-  //   if (imgRef1.current) {
-  //     //@ts-ignore
-  //     const firstChildHeight = imgRef1.current.offsetHeight;
-  //     document.documentElement.style.setProperty(
-  //       "--parent-height",
-  //       `${firstChildHeight}px`
-  //     );
-  //   }
-  // }, []);
-
   return (
     <div
       className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center gap-10 2xl:gap-20 w-full p-8 pt-14 lg:p-10"
@@ -92,15 +80,15 @@ const WhatView: FC<Props> = (props: Props) => {
       ref={ref}
     >
       <div className="relative">
-        <div
-          className="absolute lg:block top-0 bottom-0 left- right-0 bg-red-600"
+        {/* <div
+          className="hidden absolute lg:block top-0 bottom-0 left-0 right-0 bg-red-600 overflow-hidden"
           style={{ zIndex: 1, top: height }}
         >
-          {/* <div
+          <div
             className="bg-red-500 sticky top-[6%] xl:top-[10%] z-20"
             style={{ height, width }}
-          ></div> */}
-        </div>
+          ></div>
+        </div> */}
         <div className="hidden lg:block h-full bg-custom-primary z-0 ">
           {whatContent.map((item, index) => {
             return (
@@ -156,8 +144,6 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
       index,
       className,
     } = props;
-    const [winWidth, winHeight] = useWindowSize();
-    // const imgRef = useRef(null);
 
     const { scrollYProgress, scrollY } = useScroll({
       target: imgRef,
@@ -188,9 +174,9 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
       ]
     );
 
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-      console.log("scrollYProgress ", latest);
-    });
+    // useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    //   console.log("scrollYProgress ", latest);
+    // });
 
     return (
       <motion.div

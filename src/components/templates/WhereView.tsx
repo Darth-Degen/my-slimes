@@ -11,10 +11,10 @@ const WhereView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      id="where"
       className="relative w-full h-screen flex flex-col items-center"
+      id="where"
     >
-      <p className="responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] text-v2-pink">
+      <p className="sticky top-[6%] xl:top-[10%] responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] text-v2-pink">
         where
       </p>
     </div>
