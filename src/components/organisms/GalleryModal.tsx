@@ -34,7 +34,6 @@ const GalleryModal: FC<Props> = (props: Props) => {
       onClick={() => {
         setImageId(-1);
       }}
-      className=""
     >
       <div className="flex flex-col md:flex-row justify-between bg-v2-dark !bg-opacity-100 h-full w-full">
         {/* slime */}
