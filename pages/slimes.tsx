@@ -128,7 +128,7 @@ const MySlimes: NextPage = () => {
                   {...midExitAnimation}
                   className="flex h-[330px] lg:h-full w-full items-center justify-center"
                 >
-                  <LogoIcon size={250} />
+                  <LogoIcon width={250} height={250} />
                 </motion.div>
               ) : (
                 //selected

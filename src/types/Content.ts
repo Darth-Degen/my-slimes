@@ -1,6 +1,6 @@
 
 
-interface WhatViewContent {
+export interface WhatViewContent {
   title: string;
   src: string;
   textOne: string;
