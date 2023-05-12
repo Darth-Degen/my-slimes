@@ -1,4 +1,4 @@
-
+import { WhatViewContent } from "@types";
 export const whatContent: WhatViewContent[] = [
   {
     title: "community",
