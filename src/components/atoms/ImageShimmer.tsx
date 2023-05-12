@@ -47,7 +47,7 @@ const ImageShimmer: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className={`relative rounded overflow-hidden ${className}`}
+      className={`rounded overflow-hidden ${className}`}
       initial={animation?.initial}
       animate={animation?.animate}
       transition={animation?.transition}

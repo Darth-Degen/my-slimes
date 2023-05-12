@@ -5,6 +5,7 @@ import {
   Ref,
   SetStateAction,
   forwardRef,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -18,7 +19,7 @@ import {
   useTransform,
 } from "framer-motion";
 import {} from "@components";
-import { collections } from "@constants";
+import { ViewContext, collections } from "@constants";
 import { Collection } from "@types";
 import Image from "next/image";
 import { useWindowSize } from "src/hooks";
@@ -56,10 +57,17 @@ interface GProps {
 const Gallery: FC<GProps> = (props: GProps) => {
   const { collections, parentRef } = props;
   return (
-    <div className="sticky top-[14%] flex overflow-x-auto gap-3 3xl:gap-5 py-32 4xl:pb-[200px] bg-custom-primary">
-      {collections.map((slime) => (
-        <GalleryItem item={slime} key={slime.name} parentRef={parentRef} />
-      ))}
+    <div className="sticky top-[14%]">
+      <div className="flex overflow-x-auto gap-3 3xl:gap-5 py-32 4xl:pb-[200px] bg-custom-primary px-5 min-w-full">
+        {collections.map((slime, index) => (
+          <GalleryItem
+            item={slime}
+            key={slime.name}
+            parentRef={parentRef}
+            index={index}
+          />
+        ))}
+      </div>
     </div>
   );
 };
@@ -67,6 +75,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
 interface GiProps {
   item: Collection;
   parentRef: React.RefObject<HTMLDivElement>;
+  index: number;
 }
 
 /*
@@ -84,8 +93,9 @@ enum DimensionType {
 }
 
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
-  const { item, parentRef } = props;
+  const { item, parentRef, index } = props;
 
+  const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress, scrollY } = useScroll({
     target: parentRef,
@@ -109,9 +119,9 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     if (latest === 0) setIsFixed(true);
   });
 
-  useEffect(() => {
-    console.log("isInView ", isInView);
-  }, [isInView]);
+  // useEffect(() => {
+  //   console.log("isInView ", isInView);
+  // }, [isInView]);
 
   const width = (type: DimensionType): string | number => {
     if (winWidth > 3000) return "w-[160px]";
@@ -130,7 +140,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   };
 
   const hoverWidth = (): number => {
-    console.log("isFixed ", isFixed);
+    // console.log("isFixed ", isFixed);
     return isFixed
       ? (height(DimensionType.Number) as number)
       : (width(DimensionType.Number) as number);
@@ -138,6 +148,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
 
   return (
     <motion.div
+      onClick={() => setGalleryModalId(index)}
       ref={childRef}
       className={`relative rounded-xl cursor-pointer
         ${width(DimensionType.String)} 

@@ -38,12 +38,14 @@ const AssetDisplay = dynamic(() => import("./molecules/AssetDisplay"))
 const SplashScreen = dynamic(() => import("./molecules/SplashScreen"));
 const MenuItem = dynamic(() => import("./molecules/MenuItem"));
 const TextScroll = dynamic(() => import("./molecules/TextScroll"));
+const ModalV2 = dynamic(() => import("./molecules/ModalV2"));
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
 const MenuController = dynamic(() => import("./organisms/MenuController"))
 const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
+const GalleryModal = dynamic(() => import("./organisms/GalleryModal"))
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
 const LandingView = dynamic(()=> import("./templates/LandingView"))
@@ -98,5 +100,7 @@ export {
   FriendsView,
   WhereView,
   ScrollProgress,
-  TextScroll
+  TextScroll,
+  GalleryModal,
+  ModalV2
 }

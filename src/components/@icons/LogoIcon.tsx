@@ -4,23 +4,29 @@ import { motion } from "framer-motion";
 interface Props extends SVGProps<SVGSVGElement> {
   fill?: string;
   fillHover?: string;
-  size?: number;
+  animate?: boolean;
 }
 
 const LogoIcon: FC<Props> = (props: Props) => {
-  const { fillHover = "white", className, fill = "white", size = 56 } = props;
+  const {
+    fillHover = "white",
+    className,
+    fill = "white",
+    animate = true,
+    ...componentProps
+  } = props;
 
   const logoAnimation = {
     initial: { fill: fill },
-    whileHover: { fill: fillHover },
-    whileTap: { scale: 0.9 },
+    whileHover: { fill: animate ? fillHover : fill },
+    whileTap: { scale: animate ? 0.9 : 1 },
     transition: { duration: 0.3, ease: "easeInOut" },
   };
 
   return (
     <motion.svg
-      width={size}
-      height={size}
+      width={componentProps.width ?? 56}
+      height={componentProps.height ?? 56}
       viewBox="0 0 129 157"
       xmlns="http://www.w3.org/2000/svg"
       key="logo-icon"

@@ -1,6 +1,12 @@
 import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
-import { PageHead, Header, Footer, SplashScreen } from "@components";
-import { motion } from "framer-motion";
+import {
+  PageHead,
+  Header,
+  Footer,
+  SplashScreen,
+  GalleryModal,
+} from "@components";
+import { AnimatePresence, motion } from "framer-motion";
 import { enterAnimation, ViewContext } from "@constants";
 import { useRouter } from "next/router";
 
@@ -39,9 +45,12 @@ const PageLayout: FC<Props> = (props: Props) => {
 
   //context for splash screen & modals
   const [showView, setShowView] = useState<boolean>(false);
+  const [galleryModalId, setGalleryModalId] = useState<number>(-1);
   const value = {
     showView,
     setShowView,
+    galleryModalId,
+    setGalleryModalId,
   };
 
   const router = useRouter();
@@ -94,6 +103,15 @@ const PageLayout: FC<Props> = (props: Props) => {
         )}
         {/* modals */}
         {assets && <SplashScreen assets={assets} />}
+        <AnimatePresence mode="wait">
+          {galleryModalId !== -1 && (
+            <GalleryModal
+              key="gallery-modal"
+              imageId={galleryModalId}
+              setImageId={setGalleryModalId}
+            />
+          )}
+        </AnimatePresence>
       </motion.div>
     </ViewContext.Provider>
   );
