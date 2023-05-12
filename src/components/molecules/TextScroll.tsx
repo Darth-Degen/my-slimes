@@ -1,5 +1,6 @@
 import { useScroll, MotionValue, useTransform, motion } from "framer-motion";
 import { HTMLAttributes, FC, forwardRef, useState } from "react";
+import { WhatViewContent } from "@types";
 
 interface TextProps extends HTMLAttributes<HTMLDivElement> {
   content: WhatViewContent;
