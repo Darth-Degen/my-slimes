@@ -32,20 +32,19 @@ const WhoView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className="relative w-full min-h-screen bg-custom-primary py-10 lg:p-20 "
+      className="relative w-full min-h-screen bg-custom-primary py-10 lg:py-20 "
       id="who"
       ref={ref}
     >
-      <div className="flex flex-col gap-20 items-center">
-        <h3
-          className="z-10 sticky top-[8%] md:top-[5%] text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] 
-        font-black px-2 w-full"
-        >
-          MEET THE SLIMES
-        </h3>
-        <Gallery collections={collections} parentRef={ref} />
-        <div className="pb-[1500px]" />
-      </div>
+      {" "}
+      <h3
+        className="z-10 sticky top-[8%] md:top-[5%] text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] 
+  font-black px-2 w-full"
+      >
+        MEET THE SLIMES
+      </h3>
+      <Gallery collections={collections} parentRef={ref} />
+      <div className="pb-[1500px]" />
     </div>
   );
 };
@@ -56,9 +55,28 @@ interface GProps {
 }
 const Gallery: FC<GProps> = (props: GProps) => {
   const { collections, parentRef } = props;
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      const threshold = 30; // Adjust this value as needed
+
+      if (Math.abs(event.deltaX) > threshold) {
+        event.preventDefault();
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener("wheel", handleWheel, { passive: false });
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   return (
-    <div className="sticky top-[14%]">
-      <div className="flex overflow-x-auto gap-3 3xl:gap-5 py-32 4xl:pb-[200px] bg-custom-primary px-5 min-w-full">
+    <div className="sticky top-[14%] flex flex-col w-screen items-center overflow-x-scroll">
+      {/* ml-[2300px] md:ml-[1900px] lg:ml-[1150px] */}
+      <div className="flex overflow-x-scroll gap-3 3xl:gap-5 py-32 4xl:pb-[200px] bg-custom-primary px-5 min-w-full ml-[2300px] sm:ml-[2100px] md:ml-[1900px] lg:ml-[1600px] xl:ml-[1400px] 2xl:ml-[800px] 3xl:ml-[1100px] 4xl:ml-[600px]">
         {collections.map((slime, index) => (
           <GalleryItem
             item={slime}
