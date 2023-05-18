@@ -1,24 +1,19 @@
 import {
   Dispatch,
   FC,
-  MutableRefObject,
-  Ref,
   SetStateAction,
-  forwardRef,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import {
-  MotionValue,
   motion,
   useInView,
   useMotionValueEvent,
   useScroll,
   useTransform,
 } from "framer-motion";
-import {} from "@components";
 import { ViewContext, collections } from "@constants";
 import { Collection } from "@types";
 import Image from "next/image";
@@ -75,7 +70,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
 
   return (
     <div className="sticky top-[14%] flex flex-col w-screen items-center overflow-x-scroll">
-      {/* ml-[2300px] md:ml-[1900px] lg:ml-[1150px] */}
       <div className="flex overflow-x-scroll gap-3 3xl:gap-5 py-32 4xl:pb-[200px] bg-custom-primary px-5 min-w-full ml-[2300px] sm:ml-[2100px] md:ml-[1900px] lg:ml-[1600px] xl:ml-[1400px] 2xl:ml-[800px] 3xl:ml-[1100px] 4xl:ml-[600px]">
         {collections.map((slime, index) => (
           <GalleryItem
@@ -122,7 +116,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const isInView = useInView(childRef);
   const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
 
-  const max = Math.random() * (120 - 80) + 80; //120;
+  const max = Math.random() * (140 - 100) + 100; //120;
   const min = Math.random() * (-80 - -120) + -120; //-120;
   const starting = Math.random() * (max - min) + min;
 
@@ -136,10 +130,6 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   useMotionValueEvent(topPosition, "change", (latest) => {
     if (latest === 0) setIsFixed(true);
   });
-
-  // useEffect(() => {
-  //   console.log("isInView ", isInView);
-  // }, [isInView]);
 
   const width = (type: DimensionType): string | number => {
     if (winWidth > 3000) return "w-[160px]";

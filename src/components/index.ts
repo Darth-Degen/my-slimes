@@ -53,6 +53,7 @@ const WhatView = dynamic(()=> import("./templates/WhatView"))
 const WhoView = dynamic(()=> import("./templates/WhoView"))
 const FriendsView = dynamic(()=> import("./templates/FriendsView"))
 const WhereView = dynamic(()=> import("./templates/WhereView"))
+const SlimesView = dynamic(()=> import("./templates/SlimesView"))
 
 export {
   PageHead,
@@ -102,5 +103,6 @@ export {
   ScrollProgress,
   TextScroll,
   GalleryModal,
-  ModalV2
+  ModalV2,
+  SlimesView
 }
