@@ -9,6 +9,7 @@ import {
 } from "@components";
 import { useState } from "react";
 import { NextPage } from "next";
+import { collections } from "@constants";
 
 const Home: NextPage = () => {
   const [assets, setAssets] = useState<boolean[]>([]);

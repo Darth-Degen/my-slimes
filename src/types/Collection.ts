@@ -5,4 +5,5 @@ export interface Collection {
   name: string;
   color: string;
   doublePfp?: boolean
+  topValue: number;
 }

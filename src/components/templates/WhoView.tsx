@@ -116,15 +116,15 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const isInView = useInView(childRef);
   const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
 
-  const max = Math.random() * (140 - 100) + 100; //120;
-  const min = Math.random() * (-80 - -120) + -120; //-120;
-  const starting = Math.random() * (max - min) + min;
-
+  // const max = Math.random() * (140 - 100) + 100; //120;
+  // const min = Math.random() * (-80 - -120) + -120; //-120;
+  // const starting = Math.random() * (max - min) + min;
+  // console.log("starting ", starting);
   const [isFixed, setIsFixed] = useState<boolean>(false);
   const topPosition = useTransform(
     scrollYProgress,
     [0, 0.5],
-    [starting, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
   );
 
   useMotionValueEvent(topPosition, "change", (latest) => {
