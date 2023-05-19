@@ -41,13 +41,14 @@ const GalleryModal: FC<Props> = (props: Props) => {
           transition={{ duration: 1 }}
           exit={{ opacity: 0 }}
           key="main"
-          className="relative w-full h-full lg:w-full xl:w-[70vh] lg:h-[70vh]"
+          className="relative w-full h-full lg:w-full xl:w-[70vh] lg:h-[70vh] "
         >
-          <ImageShimmer
+          <Image
             src={mainImage}
             alt={`Slime ${imageId}`}
             fill
-            imageClass="!rounded-3xl"
+            // imageClass="!rounded-3xl"
+            className="rounded-3xl"
           />
         </motion.div>
         {/* info */}

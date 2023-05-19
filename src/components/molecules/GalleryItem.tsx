@@ -81,18 +81,18 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     <motion.div
       onClick={() => setGalleryModalId(index)}
       ref={childRef}
-      className={`relative rounded-xl bg-indigo-400
+      className={`relative rounded-xl 
         ${width(DimensionType.String)} 
         ${height(DimensionType.String)} 
         ${isFixed ? "cursor-pointer" : ""}
       `}
-      style={{ translateY: didLoad ? translateY : 0 }}
+      style={{ translateY: didLoad && index < 6 ? translateY : 0 }}
       whileHover={{
         width: hoverWidth(),
       }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* <Image
+      <Image
         src={src}
         alt={item.name}
         fill
@@ -100,7 +100,8 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
         className="rounded-xl"
         // imageClass="rounded-xl"
         onLoadingComplete={() => setDidLoad(true)}
-      /> */}
+        priority
+      />
     </motion.div>
   );
 };
