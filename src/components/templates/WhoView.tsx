@@ -15,8 +15,11 @@ interface Props {
 }
 const WhoView: FC<Props> = (props: Props) => {
   const { setAssets } = props;
-  const [isFixed, setIsFixed] = useState<boolean>(false);
+  const [isGalleryFixed, setIsGalleryFixed] = useState<boolean>(false);
+  const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  console.log("isHeaderFixed ", isHeaderFixed);
 
   return (
     <div
@@ -25,28 +28,23 @@ const WhoView: FC<Props> = (props: Props) => {
       ref={ref}
     >
       <AnimatePresence mode="wait">
-        {isFixed && (
+        {isGalleryFixed && (
           <WordScroll
             word="MEET THE SLIMES"
             className="text-center font-black px-2 text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[16rem]"
+            setIsFixed={setIsHeaderFixed}
+            isFixed={isHeaderFixed}
           />
-          //  <motion.h3
-          //       className="z-10 sticky top-[8%] md:top-[5%] text-center font-black px-2 w-full
-          //       text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] "
-          //       {...midExitAnimation}
-          //     >
-          //       MEET THE SLIMES
-          //     </motion.h3>
         )}
       </AnimatePresence>
 
       <Gallery
         collections={collections}
         parentRef={ref}
-        setIsFixed={setIsFixed}
-        isFixed={isFixed}
+        setIsFixed={setIsGalleryFixed}
+        isFixed={isGalleryFixed && isHeaderFixed}
       />
-      <div className="pb-[6000px]" />
+      <div className="pb-[4000px]" />
     </div>
   );
 };

@@ -13,6 +13,7 @@ const darkKai: Collection = {
   name: "Dark Kai",
   tag: "dark-kai",
   color: "#242424",
+  topValue: 10,
 };
 
 const MySlimes: NextPage = () => {
