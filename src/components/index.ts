@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+//animations
+const WordScroll = dynamic(()=> import("./@animations/WordScroll"))
 
 //icons
 const SunIcon = dynamic(()=> import("./@icons/SunIcon"))
@@ -39,6 +41,7 @@ const SplashScreen = dynamic(() => import("./molecules/SplashScreen"));
 const MenuItem = dynamic(() => import("./molecules/MenuItem"));
 const TextScroll = dynamic(() => import("./molecules/TextScroll"));
 const ModalV2 = dynamic(() => import("./molecules/ModalV2"));
+const GalleryItem = dynamic(() => import("./molecules/GalleryItem"))
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
@@ -46,6 +49,7 @@ const MenuController = dynamic(() => import("./organisms/MenuController"))
 const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
 const GalleryModal = dynamic(() => import("./organisms/GalleryModal"))
+const Gallery = dynamic(() => import("./organisms/Gallery"))
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
 const LandingView = dynamic(()=> import("./templates/LandingView"))
@@ -104,5 +108,8 @@ export {
   TextScroll,
   GalleryModal,
   ModalV2,
-  SlimesView
+  SlimesView,
+  Gallery,
+  GalleryItem,
+  WordScroll
 }

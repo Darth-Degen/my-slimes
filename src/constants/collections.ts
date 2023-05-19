@@ -105,7 +105,7 @@ export const collections: Collection[] = [
     name: "El Santo",
     tag: "el-santo",
     color: "#3969A2",
-    topValue: -120,
+    topValue: -100,
   },
   {
     id:15,

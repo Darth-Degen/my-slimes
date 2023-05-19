@@ -75,7 +75,7 @@ const WhatView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center gap-10 2xl:gap-20 w-full p-8 pt-14 lg:p-10"
+      className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14 lg:p-10"
       id="what"
       ref={ref}
     >
