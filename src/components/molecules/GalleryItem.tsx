@@ -38,7 +38,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const topPosition = useTransform(
     scrollYProgress,
     [0, 0.3],
-    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+    [item.topValue * 2, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
   );
 
   useMotionValueEvent(topPosition, "change", (latest) => {
