@@ -46,34 +46,37 @@ const WordScroll: FC<Props> = (props: Props) => {
     //set start + end values
     if (!initRef.current) {
       setStart(latest);
-      setEnd(latest + 2000);
+      setEnd(latest + 1500);
       initRef.current = true;
     }
     if (end && latest >= end) {
       setIsFixed(true);
     } else setIsFixed(false);
   });
-
+  console.log("wordLetters ", wordLetters, wordLetters.length);
   return (
-    <div className="z-10 sticky top-[8%] md:top-[5%] flex justify-center items-center">
+    <div className="z-10 sticky top-[8%] lg:top-[5%] flex justify-center items-center">
       <div className="flex flex-col ">
         {start && end && (
           <div ref={containerRef} className={`flex flex-wrap ${className}`}>
-            {wordLetters.map((letter, index) => (
-              <WordScrollItem
-                letter={letter}
-                index={index}
-                key={index}
-                start={start}
-                end={end}
-              />
-            ))}
+            {wordLetters.map((letter, index) => {
+              console.log("letter ", letter);
+              return (
+                <WordScrollItem
+                  letter={letter}
+                  index={index}
+                  key={index}
+                  start={start}
+                  end={end}
+                />
+              );
+            })}
           </div>
         )}
         <AnimatePresence mode="wait">
           {isFixed && (
             <motion.div
-              className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6"
+              className="hidden md:flex justify-between w-full pb-4 px-4 sm:px-6"
               key="we-eatin"
               {...midExitAnimation}
             >
@@ -107,10 +110,10 @@ const WordScrollItem: FC<ItemProps> = (props: ItemProps) => {
   const translateY = useTransform(
     scrollY,
     [start, end],
-    [-300 * (index + 1), 0]
+    [-200 * (index + 1), 0]
   );
   // const opacity = useTransform(scrollY, [start, end], [0.5, 1]);
-
+  console.log("space ", letter === " ");
   return (
     <motion.span
       ref={ref}
@@ -121,7 +124,7 @@ const WordScrollItem: FC<ItemProps> = (props: ItemProps) => {
         // opacity,
       }}
     >
-      {letter}
+      {letter === " " ? <span> &nbsp;</span> : letter}
     </motion.span>
   );
 };

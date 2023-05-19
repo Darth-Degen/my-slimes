@@ -19,8 +19,6 @@ const WhoView: FC<Props> = (props: Props) => {
   const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  console.log("isHeaderFixed ", isHeaderFixed);
-
   return (
     <div
       className="relative w-full min-h-screen bg-custom-primary py-10 lg:py-20 "
@@ -31,7 +29,7 @@ const WhoView: FC<Props> = (props: Props) => {
         {isGalleryFixed && (
           <WordScroll
             word="MEET THE SLIMES"
-            className="text-center font-black px-2 text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[16rem]"
+            className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
             setIsFixed={setIsHeaderFixed}
             isFixed={isHeaderFixed}
           />
