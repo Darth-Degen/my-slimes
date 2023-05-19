@@ -4,7 +4,14 @@ import {
   useMotionValueEvent,
   motion,
 } from "framer-motion";
-import { Dispatch, SetStateAction, FC, useContext, useRef } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  FC,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { ViewContext } from "@constants";
 import { useWindowSize } from "@hooks";
 import { Collection } from "@types";
@@ -26,6 +33,7 @@ enum DimensionType {
 
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const { item, parentRef, index, isFixed, setIsFixed } = props;
+  const [didLoad, setDidLoad] = useState<boolean>(false);
 
   const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
@@ -78,19 +86,20 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
         ${height(DimensionType.String)} 
         ${isFixed ? "cursor-pointer" : ""}
       `}
-      style={{ translateY }}
+      style={{ translateY: didLoad ? translateY : 0 }}
       whileHover={{
         width: hoverWidth(),
       }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      <ImageShimmer
+      <Image
         src={src}
         alt={item.name}
         fill
         style={{ objectFit: "cover" }}
         className="rounded-xl"
-        imageClass="rounded-xl"
+        // imageClass="rounded-xl"
+        onLoadingComplete={() => setDidLoad(true)}
       />
     </motion.div>
   );
