@@ -35,13 +35,13 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const childRef = useRef<HTMLDivElement>(null);
   const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
 
-  const topPosition = useTransform(
+  const translateY = useTransform(
     scrollYProgress,
     [0, 0.3],
-    [item.topValue * 2, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
   );
 
-  useMotionValueEvent(topPosition, "change", (latest) => {
+  useMotionValueEvent(translateY, "change", (latest) => {
     if (latest === 0) setIsFixed(true);
     else setIsFixed(false);
   });
@@ -78,7 +78,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
         ${height(DimensionType.String)} 
         ${isFixed ? "cursor-pointer" : ""}
       `}
-      style={{ top: topPosition }}
+      style={{ translateY }}
       whileHover={{
         width: hoverWidth(),
       }}
