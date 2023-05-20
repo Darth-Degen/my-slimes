@@ -53,24 +53,21 @@ const WordScroll: FC<Props> = (props: Props) => {
       setIsFixed(true);
     } else setIsFixed(false);
   });
-  console.log("wordLetters ", wordLetters, wordLetters.length);
+
   return (
     <div className="z-10 sticky top-[8%] lg:top-[5%] flex justify-center items-center">
       <div className="flex flex-col ">
         {start && end && (
           <div ref={containerRef} className={`flex flex-wrap ${className}`}>
-            {wordLetters.map((letter, index) => {
-              console.log("letter ", letter);
-              return (
-                <WordScrollItem
-                  letter={letter}
-                  index={index}
-                  key={index}
-                  start={start}
-                  end={end}
-                />
-              );
-            })}
+            {wordLetters.map((letter, index) => (
+              <WordScrollItem
+                letter={letter}
+                index={index}
+                key={index}
+                start={start}
+                end={end}
+              />
+            ))}
           </div>
         )}
         <AnimatePresence mode="wait">
@@ -112,8 +109,7 @@ const WordScrollItem: FC<ItemProps> = (props: ItemProps) => {
     [start, end],
     [-200 * (index + 1), 0]
   );
-  // const opacity = useTransform(scrollY, [start, end], [0.5, 1]);
-  console.log("space ", letter === " ");
+
   return (
     <motion.span
       ref={ref}

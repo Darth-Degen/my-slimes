@@ -86,7 +86,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
         ${height(DimensionType.String)} 
         ${isFixed ? "cursor-pointer" : ""}
       `}
-      style={{ translateY: didLoad && index < 6 ? translateY : 0 }}
+      style={{ translateY: didLoad ? translateY : 0 }}
       whileHover={{
         width: hoverWidth(),
       }}
