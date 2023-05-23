@@ -6,6 +6,7 @@ import {
   FriendsView,
   WhereView,
   ScrollProgress,
+  BuyRacksView,
 } from "@components";
 import { useState } from "react";
 import { NextPage } from "next";
@@ -17,11 +18,13 @@ const Home: NextPage = () => {
   return (
     <PageLayout headerType="scroll" assets={assets}>
       <ScrollProgress />
+      {/* TODO: add onLoadingComplete when landing graphic is added */}
       <LandingView setAssets={setAssets} />
-      <WhatView setAssets={setAssets} />
-      <WhoView setAssets={setAssets} />
-      <FriendsView setAssets={setAssets} />
-      <WhereView setAssets={setAssets} />
+      <BuyRacksView />
+      <WhatView />
+      <WhoView />
+      <FriendsView />
+      <WhereView />
     </PageLayout>
   );
 };

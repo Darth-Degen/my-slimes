@@ -16,6 +16,18 @@
   font-family: pangram-black;
   src: url('../public/fonts/Pangram-Black.ttf') format('truetype');
 }
+@font-face {
+  font-family: pangram-bold;
+  src: url('../public/fonts/Pangram-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: neuebit;
+  src: url('../public/fonts/NeueBit-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: neuebit-bold;
+  src: url('../public/fonts/NeueBit-Bold.ttf') format('truetype');
+}
 
 a {
   color: inherit;
@@ -36,6 +48,9 @@ a {
   h1,h2 { 
     @apply font-primary 
   }
+  .link{
+    @apply text-blue-600 underline cursor-pointer
+  }
 }
 
 html {
@@ -55,3 +70,4 @@ html {
 .clip {
   clip-path: circle(50%);
 }
+

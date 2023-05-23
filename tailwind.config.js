@@ -5,6 +5,11 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      backgroundImage: {
+        "white-gradient": `linear-gradient(360.58deg, #FFFFFF 43.76%, rgba(255, 255, 255, 0) 106.82%)`,
+        "ait-gradient":
+          "linear-gradient(0deg, rgba(156,217,204,1) 37%, rgba(2,1,2,1) 37%)",
+      },
       fontFamily: {
         primary: ["mk-hell", "-apple-system", "system-ui", "monospace"],
         secondary: [
@@ -14,6 +19,9 @@ module.exports = {
           "monospace",
         ],
         black: ["pangram-black"],
+        bold: ["pangram-bold"],
+        neuebit: ["neuebit"],
+        "neuebit-bold": ["neuebit-bold"],
       },
       colors: {
         //main
@@ -27,6 +35,9 @@ module.exports = {
         "custom-dark": "#232726",
         "custom-red": "#CA2D2D",
         "custom-gray": "#969696",
+        //all in time
+        "ait-teal": "#9CD9CC",
+        "ait-black": "#020102",
         shadow: "rgba(82, 82, 82, 0.25)",
         //version 2 theme
         "v2-pink": "#FFB094",

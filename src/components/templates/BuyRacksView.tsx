@@ -1,0 +1,288 @@
+import {
+  Dispatch,
+  FC,
+  HTMLAttributes,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { ImageShimmer } from "@components";
+import {} from "@constants";
+import Image from "next/image";
+import { useWindowSize } from "@hooks";
+/*
+ * page flow
+ * 1. buy now
+ * 2. raffle live
+ *     - win
+ *     - lose
+ * 3. end
+ */
+
+interface Status {
+  name: StatusName;
+  text: string;
+  endDate: Date;
+  src: string;
+  caption: string;
+  timerCaption: string;
+}
+enum StatusName {
+  Buy,
+  Raffle,
+  End,
+}
+const initialStatus: Status[] = [
+  {
+    name: StatusName.Buy,
+    text: "BUY NOW!!!",
+    endDate: new Date("5/24/23"),
+    src: "/images/ait/pika.png",
+    caption:
+      "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
+    timerCaption: "time left to buy racks",
+  },
+  {
+    name: StatusName.Raffle,
+    text: "RAFFLE LIVE ",
+    endDate: new Date(new Date().getDate() + 5),
+    src: "/images/ait/yoda.png",
+    caption: "the lucky mfr who won a slime is:",
+    timerCaption: "winner chosen in:",
+  },
+  {
+    name: StatusName.End,
+    text: "",
+    endDate: new Date(),
+    src: "",
+    caption: "",
+    timerCaption: "",
+  },
+];
+
+interface Props {}
+const BuyRacksView: FC<Props> = (props: Props) => {
+  const [activeStatus, setActiveStatus] = useState<Status>(initialStatus[0]);
+
+  const ref = useRef<HTMLDivElement>(null);
+  const [winWidth, winHeight] = useWindowSize();
+  const { scrollYProgress, scrollY } = useScroll({ target: ref });
+  // const y = useTransform(scrollYProgress, [0, 0.25], [-200, 0]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 0.4, 0.75, 0.9],
+    [-300, 0, 0, -300]
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.4, 0.7, 0.9],
+    [0, 1, 1, 0]
+  );
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    console.log("scrollYProgress ", latest);
+  });
+
+  return (
+    <div
+      className="w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal"
+      id="buyracks"
+      ref={ref}
+    >
+      <div className="pb-20" />
+      <motion.div
+        className="sticky flex flex-col gap-4 lg:flex-row justify-center items-center lg:top-[10%] xl:top-[15%] rounded-full h-auto lg:h-[75vh] w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
+        style={{
+          y: winWidth >= 1024 ? y : 0,
+          opacity: winWidth >= 1024 ? opacity : 1,
+        }}
+      >
+        {/* header */}
+        <h2
+          className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
+          text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
+        >
+          all in time
+        </h2>
+        {/* content */}
+        <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
+          <TextBox text={activeStatus.text} />
+          <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
+          <TextBox text={activeStatus.text} />
+        </div>
+        <Countdown
+          futureDate={activeStatus.endDate}
+          caption={activeStatus.timerCaption}
+          className="absolute bottom-0"
+        />
+        {/* TODO: this will take you to the market place so you can see what each item is worth in racks */}
+        <a
+          href=""
+          rel="noreferrer"
+          target="_blank"
+          className="link uppercase absolute -bottom-10 font-bold"
+        >
+          see ticket value
+        </a>
+      </motion.div>
+      <div className="pt-20 lg:pt-0 lg:pb-[2000px]" />
+    </div>
+  );
+};
+
+interface CountdownProps extends HTMLAttributes<HTMLDivElement> {
+  futureDate: Date;
+  caption: string;
+}
+
+const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
+  const { futureDate, caption, className } = props;
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const timeDifference = futureDate.getTime() - currentTime;
+
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      setCountdown({ days, hours, minutes, seconds });
+
+      if (timeDifference < 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [futureDate]);
+
+  return (
+    <div
+      className={`flex flex-col justify-center text-ait-teal font-  whitespace-nowrap ${className}`}
+    >
+      <div className="flex justify-start gap-0 text-7xl max-w-[300px]">
+        <CountdownItem value={countdown.days} />
+        {":"}
+        <CountdownItem value={countdown.hours} />
+        {":"}
+        <CountdownItem value={countdown.minutes} />
+        {":"}
+        <CountdownItem value={countdown.seconds} />
+      </div>
+      <p className="uppercase  flex justify-center text-xl">{caption}</p>
+    </div>
+  );
+};
+
+interface CountdownItemProps {
+  value: number;
+}
+
+const CountdownItem: React.FC<CountdownItemProps> = (
+  props: CountdownItemProps
+) => {
+  const { value } = props;
+  return (
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ type: "spring", stiffness: 150 }}
+    >
+      <div className="">{value}</div>
+    </motion.div>
+  );
+};
+
+interface TextProps {
+  text: string;
+}
+const TextBox: FC<TextProps> = (props: TextProps) => {
+  const { text } = props;
+  return (
+    <div className="flex flex-col gap-0">
+      {[...Array(5)].map((item) => (
+        <p className="text-ait-teal text-6xl font-neuebit-bold" key={item}>
+          {text}
+        </p>
+      ))}
+    </div>
+  );
+};
+interface ImageProps {
+  src: string;
+  caption: string;
+}
+const ImageBox: FC<ImageProps> = (props: ImageProps) => {
+  const { src, caption } = props;
+
+  const isRaffle = src.includes("yoda");
+
+  return (
+    <div className="flex h-auto relative mb-14">
+      <ImageShimmer
+        src={src}
+        width={2032 / 4.5}
+        height={1355 / 4.5}
+        alt="All in Time"
+      />
+      <div
+        className={`absolute  ${
+          isRaffle ? "left-14 top-[45%]" : "-left-10 top-1/2"
+        }`}
+      >
+        <Image
+          src={"/images/ait/speech-box.png"}
+          width={303}
+          height={151}
+          alt="All in Time"
+        />
+        {isRaffle ? (
+          <>
+            <div
+              className="absolute top-14 left-3.5 w-[285px] uppercase font-bold text-[15px]"
+              dangerouslySetInnerHTML={{ __html: caption }}
+            />
+            <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold text-[15px] break-all">
+              {/* TODO: update url and display to winner address */}
+              <a
+                href="https://solana.fm/address/yxJHJXqmo5vmJUGqizHRJyPezrGsv8Ze7YyQr3sKpf3?cluster=mainnet-qn1"
+                rel="noreferrer"
+                target="_blank"
+              >
+                yxJHJXqmo5vmJUGqizHRJyPezrGsv8Ze7YyQr3sKpf3
+              </a>
+            </div>
+          </>
+        ) : (
+          <div
+            className="absolute top-12 left-3.5 w-[285px] uppercase font-bold"
+            dangerouslySetInnerHTML={{ __html: caption }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default BuyRacksView;
