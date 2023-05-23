@@ -1,13 +1,21 @@
 import { exitAnimation } from "@constants";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FlowerVector, CrackVector, PaddleVector } from "@components";
 import { useWindowSize } from "@hooks";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
+  setIsInView: Dispatch<SetStateAction<boolean>>;
 }
 const LandingView: FC<Props> = (props: Props) => {
-  const { setAssets } = props;
+  const { setAssets, setIsInView } = props;
 
   const [winWidth, winHeight] = useWindowSize();
   const { scrollY, scrollYProgress } = useScroll();
@@ -17,11 +25,17 @@ const LandingView: FC<Props> = (props: Props) => {
   const y2 = useTransform(scrollY, [0, 150], [0, -150]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
+  const isInView = useInView(scrollRef);
+
+  useEffect(() => {
+    setIsInView(isInView);
+  }, [isInView, setIsInView]);
+
   return (
     <motion.div
       id="landing"
       key="landing"
-      className="relative w-full h-screen flex flex-col items-center justify-end"
+      className="relative w-full h-screen flex flex-col items-center justify-end mb-32"
       {...exitAnimation}
       ref={scrollRef}
     >

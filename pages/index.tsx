@@ -8,19 +8,26 @@ import {
   ScrollProgress,
   BuyRacksView,
 } from "@components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import { collections } from "@constants";
 
 const Home: NextPage = () => {
   const [assets, setAssets] = useState<boolean[]>([]);
+  const [scrollColor, setScrollColor] = useState<string>("bg-v2-green");
+  const [isRacksInView, setIsRacksInView] = useState<boolean>(false);
+  const [isLandingInView, setIsLandingInView] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isRacksInView && !isLandingInView) setScrollColor("bg-v2-beige");
+    else setScrollColor("bg-v2-green");
+  }, [isLandingInView, isRacksInView]);
 
   return (
     <PageLayout headerType="scroll" assets={assets}>
-      <ScrollProgress />
+      <ScrollProgress backgroundColor={scrollColor} />
       {/* TODO: add onLoadingComplete when landing graphic is added */}
-      <LandingView setAssets={setAssets} />
-      <BuyRacksView />
+      <LandingView setAssets={setAssets} setIsInView={setIsLandingInView} />
+      <BuyRacksView setIsInView={setIsRacksInView} />
       <WhatView />
       <WhoView />
       <FriendsView />

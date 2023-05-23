@@ -43,6 +43,7 @@ module.exports = {
         "v2-pink": "#FFB094",
         "v2-beige": "#F6EFD3",
         "v2-green": "#73EEC5",
+        "v2-dark-green": "#5CBE9D",
         "v2-dark": "#2C2524",
       },
       screens: {

@@ -12,8 +12,9 @@ import {
   useMotionValueEvent,
   useScroll,
   useTransform,
+  useInView,
 } from "framer-motion";
-import { ImageShimmer } from "@components";
+import { ImageShimmer, NumberInput } from "@components";
 import {} from "@constants";
 import Image from "next/image";
 import { useWindowSize } from "@hooks";
@@ -39,11 +40,12 @@ enum StatusName {
   Raffle,
   End,
 }
+
 const initialStatus: Status[] = [
   {
     name: StatusName.Buy,
     text: "BUY NOW!!!",
-    endDate: new Date("5/24/23"),
+    endDate: new Date(2023, 4, 26, 9, 10, 50),
     src: "/images/ait/pika.png",
     caption:
       "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
@@ -52,7 +54,7 @@ const initialStatus: Status[] = [
   {
     name: StatusName.Raffle,
     text: "RAFFLE LIVE ",
-    endDate: new Date(new Date().getDate() + 5),
+    endDate: new Date("5/29/23"),
     src: "/images/ait/yoda.png",
     caption: "the lucky mfr who won a slime is:",
     timerCaption: "winner chosen in:",
@@ -67,8 +69,11 @@ const initialStatus: Status[] = [
   },
 ];
 
-interface Props {}
+interface Props {
+  setIsInView: Dispatch<SetStateAction<boolean>>;
+}
 const BuyRacksView: FC<Props> = (props: Props) => {
+  const { setIsInView } = props;
   const [activeStatus, setActiveStatus] = useState<Status>(initialStatus[0]);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -78,7 +83,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   const y = useTransform(
     scrollYProgress,
     [0, 0.4, 0.75, 0.9],
-    [-300, 0, 0, -300]
+    [-200, 0, 0, 200]
   );
   const opacity = useTransform(
     scrollYProgress,
@@ -86,13 +91,27 @@ const BuyRacksView: FC<Props> = (props: Props) => {
     [0, 1, 1, 0]
   );
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("scrollYProgress ", latest);
-  });
+  const isInView = useInView(ref);
+
+  useEffect(() => {
+    setIsInView(isInView);
+  }, [isInView, setIsInView]);
+
+  // useMotionValueEvent(scrollYProgress, "change", (latest) => {
+  //   console.log("scrollYProgress ", latest);
+  // });
+
+  const handleDateEnd = () => {
+    if (activeStatus.name === StatusName.Buy) {
+      setActiveStatus(initialStatus[1]);
+    } else if (activeStatus.name === StatusName.Raffle) {
+      setActiveStatus(initialStatus[2]);
+    }
+  };
 
   return (
     <div
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal"
+      className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
       id="buyracks"
       ref={ref}
     >
@@ -107,32 +126,62 @@ const BuyRacksView: FC<Props> = (props: Props) => {
         {/* header */}
         <h2
           className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
-          text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
+    text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
         >
           all in time
         </h2>
-        {/* content */}
-        <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
-          <TextBox text={activeStatus.text} />
-          <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
-          <TextBox text={activeStatus.text} />
-        </div>
-        <Countdown
-          futureDate={activeStatus.endDate}
-          caption={activeStatus.timerCaption}
-          className="absolute bottom-0"
-        />
-        {/* TODO: this will take you to the market place so you can see what each item is worth in racks */}
-        <a
-          href=""
-          rel="noreferrer"
-          target="_blank"
-          className="link uppercase absolute -bottom-10 font-bold"
-        >
-          see ticket value
-        </a>
+        {activeStatus.name !== StatusName.End && (
+          <>
+            {/* content */}
+            <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
+              <TextBox text={activeStatus.text} />
+              <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
+              {activeStatus.name === StatusName.Buy && <BuyRacks />}
+              {activeStatus.name === StatusName.Raffle && (
+                <TextBox text={activeStatus.text} />
+              )}
+            </div>
+            <Countdown
+              // status={activeStatus}
+              futureDate={activeStatus.endDate}
+              caption={activeStatus.timerCaption}
+              className="pb-10 lg:pb-0 lg:absolute bottom-0"
+              handleDateEnd={handleDateEnd}
+            />
+            {/* TODO: this will take you to the market place so you can see what each item is worth in racks */}
+            <a
+              href=""
+              rel="noreferrer"
+              target="_blank"
+              className="link uppercase absolute -bottom-10 font-bold"
+            >
+              see ticket value
+            </a>
+          </>
+        )}
       </motion.div>
       <div className="pt-20 lg:pt-0 lg:pb-[2000px]" />
+    </div>
+  );
+};
+
+interface BuyRacksProps extends HTMLAttributes<HTMLDivElement> {}
+const BuyRacks: FC<BuyRacksProps> = (props: BuyRacksProps) => {
+  const {} = props;
+
+  const handleInput = (amount: number) => {
+    console.log("amount ", amount);
+  };
+
+  return (
+    <div className="flex flex-col items-center lg:items-start gap-3 font-neuebit-bold">
+      <p className="text-ait-teal text-4xl md:text-5xl">QTY:</p>
+      <NumberInput supply={100} handleInput={handleInput} />
+      <p className="text-ait-teal text-4xl">TOTAL: 11.5 SOL</p>
+
+      <motion.button className="flex pt-2 items-center justify-center rounded-full w-60 h-14 bg-ait-teal text-4xl md:text-5xl transition-all duration-300 hover:bg-ait-black hover:text-v2-dark-green hover:border hover:border-v2-green">
+        BUY RACKS
+      </motion.button>
     </div>
   );
 };
@@ -140,10 +189,12 @@ const BuyRacksView: FC<Props> = (props: Props) => {
 interface CountdownProps extends HTMLAttributes<HTMLDivElement> {
   futureDate: Date;
   caption: string;
+  handleDateEnd: () => void;
 }
 
 const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
-  const { futureDate, caption, className } = props;
+  const { futureDate, caption, handleDateEnd, className } = props;
+  const [didStart, setDidStart] = useState<boolean>(false);
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -170,6 +221,7 @@ const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
       if (timeDifference < 0) {
         clearInterval(interval);
       }
+      setDidStart(true);
     }, 1000);
 
     return () => {
@@ -177,11 +229,20 @@ const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
     };
   }, [futureDate]);
 
+  useEffect(() => {
+    if (futureDate < new Date()) {
+      handleDateEnd();
+    }
+  }, [countdown, didStart, futureDate, handleDateEnd]);
+
   return (
     <div
-      className={`flex flex-col justify-center text-ait-teal font-  whitespace-nowrap ${className}`}
+      className={`flex flex-col justify-center text-ait-teal whitespace-nowrap ${className}`}
     >
-      <div className="flex justify-start gap-0 text-7xl max-w-[300px]">
+      {caption === initialStatus[1].timerCaption && (
+        <p className="uppercase pb-1 flex justify-center text-xl">{caption}</p>
+      )}
+      <div className="flex justify-start items-start gap-0 text-7xl max-w-[290px]">
         <CountdownItem value={countdown.days} />
         {":"}
         <CountdownItem value={countdown.hours} />
@@ -190,7 +251,9 @@ const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
         {":"}
         <CountdownItem value={countdown.seconds} />
       </div>
-      <p className="uppercase  flex justify-center text-xl">{caption}</p>
+      {caption === initialStatus[0].timerCaption && (
+        <p className="uppercase pb-1 flex justify-center text-xl">{caption}</p>
+      )}
     </div>
   );
 };
@@ -209,7 +272,7 @@ const CountdownItem: React.FC<CountdownItemProps> = (
       animate={{ scale: 1 }}
       transition={{ type: "spring", stiffness: 150 }}
     >
-      <div className="">{value}</div>
+      <div className="">{value > 0 ? value : 0}</div>
     </motion.div>
   );
 };
@@ -222,7 +285,10 @@ const TextBox: FC<TextProps> = (props: TextProps) => {
   return (
     <div className="flex flex-col gap-0">
       {[...Array(5)].map((item) => (
-        <p className="text-ait-teal text-6xl font-neuebit-bold" key={item}>
+        <p
+          className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-neuebit-bold"
+          key={item}
+        >
           {text}
         </p>
       ))}
