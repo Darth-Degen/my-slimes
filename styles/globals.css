@@ -51,6 +51,9 @@ a {
   .link{
     @apply text-blue-600 underline cursor-pointer
   }
+  .wallet-adapter-dropdown {
+    @apply bg-ait-gray
+  }
 }
 
 html {

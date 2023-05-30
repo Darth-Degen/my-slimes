@@ -28,6 +28,8 @@ const LogoText = dynamic(()=> import("./atoms/LogoText"))
 const Modal = dynamic(()=> import("./atoms/Modal"))
 const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
 const ScrollProgress = dynamic(()=> import("./atoms/ScrollProgress"))
+const WalletButton = dynamic(()=> import("./atoms/WalletButton"))
+const ConnectButton = dynamic(()=> import("./atoms/ConnectButton"))
 //molecules
 const PageHead = dynamic(()=> import("./molecules/PageHead"))
 const Logo = dynamic(()=> import("./molecules/Logo"))
@@ -113,5 +115,7 @@ export {
   Gallery,
   GalleryItem,
   WordScroll,
-  BuyRacksView
+  BuyRacksView,
+  WalletButton,
+  ConnectButton
 }

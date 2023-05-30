@@ -8,7 +8,7 @@ interface Props {
 }
 
 const LoadCircle: FC<Props> = (props: Props) => {
-  const { color = "#fff", size = 20 } = props;
+  const { color = "#fff", size = 18 } = props;
 
   return (
     <motion.svg

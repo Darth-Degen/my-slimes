@@ -29,7 +29,7 @@ const NumberInput: FC<Props> = (props: Props) => {
   return (
     <div>
       <input
-        className={`${className} relative flex items-center w-40 h-10 px-4 pt-1 text-4xl text-black rounded focus:outline-ait-teal ${
+        className={`${className} relative flex items-center w-40 h-10 pl-4 pr-1 pt-1 text-4xl text-black rounded focus:outline-ait-teal ${
           componentProps.disabled ? "cursor-not-allowed" : ""
         }`}
         onKeyPress={(e) => onKeyPress(e)}

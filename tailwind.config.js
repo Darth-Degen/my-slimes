@@ -38,6 +38,7 @@ module.exports = {
         //all in time
         "ait-teal": "#9CD9CC",
         "ait-black": "#020102",
+        "ait-gray": "#E8E8E8",
         shadow: "rgba(82, 82, 82, 0.25)",
         //version 2 theme
         "v2-pink": "#FFB094",

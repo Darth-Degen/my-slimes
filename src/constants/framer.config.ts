@@ -20,9 +20,15 @@ export const linkClickAnimation = {
 
 //tap animations
 export const tapAnimation = {
-  whileTap: { scale: 0.97 },
-}
+  whileTap: { scale: 0.95 },
+  transition:{ duration: 0.01, ease: "easeInOut" },
 
+}
+export const midTapAnimation = {
+  whileTap: { scale: 0.95 },
+  transition:{ duration: 0.1, ease: "easeInOut" },
+
+}
 //opacity animations
 export const exitAnimation = {
   initial:{ opacity: 0 },

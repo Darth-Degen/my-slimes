@@ -14,10 +14,15 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
-import { ImageShimmer, NumberInput } from "@components";
-import {} from "@constants";
+import { ImageShimmer, NumberInput, ConnectButton } from "@components";
+import { tapAnimation } from "@constants";
 import Image from "next/image";
 import { useWindowSize } from "@hooks";
+import {
+  WalletMultiButton,
+  useWalletModal,
+} from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 /*
  * page flow
  * 1. buy now
@@ -76,10 +81,13 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   const { setIsInView } = props;
   const [activeStatus, setActiveStatus] = useState<Status>(initialStatus[0]);
 
+  const { connected, publicKey } = useWallet();
+  const { setVisible } = useWalletModal();
+
   const ref = useRef<HTMLDivElement>(null);
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress, scrollY } = useScroll({ target: ref });
-  // const y = useTransform(scrollYProgress, [0, 0.25], [-200, 0]);
+
   const y = useTransform(
     scrollYProgress,
     [0, 0.4, 0.75, 0.9],
@@ -92,7 +100,6 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   );
 
   const isInView = useInView(ref);
-
   useEffect(() => {
     setIsInView(isInView);
   }, [isInView, setIsInView]);
@@ -109,6 +116,10 @@ const BuyRacksView: FC<Props> = (props: Props) => {
     }
   };
 
+  const handleMint = () => {
+    if (!connected) setVisible(true);
+  };
+
   return (
     <div
       className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
@@ -123,6 +134,19 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           opacity: winWidth >= 1024 ? opacity : 1,
         }}
       >
+        {/* <ConnectButton /> */}
+        <div className="absolute -top-16 lg:-top-20 right-10 lg:right-10">
+          <WalletMultiButton
+            startIcon={undefined}
+            className="  !text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
+          >
+            {publicKey
+              ? publicKey.toBase58().slice(0, 4) +
+                ".." +
+                publicKey.toBase58().slice(-4)
+              : "Connect"}
+          </WalletMultiButton>
+        </div>
         {/* header */}
         <h2
           className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
@@ -136,7 +160,9 @@ const BuyRacksView: FC<Props> = (props: Props) => {
             <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
               <TextBox text={activeStatus.text} />
               <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
-              {activeStatus.name === StatusName.Buy && <BuyRacks />}
+              {activeStatus.name === StatusName.Buy && (
+                <BuyRacks handleMint={handleMint} />
+              )}
               {activeStatus.name === StatusName.Raffle && (
                 <TextBox text={activeStatus.text} />
               )}
@@ -165,9 +191,11 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   );
 };
 
-interface BuyRacksProps extends HTMLAttributes<HTMLDivElement> {}
+interface BuyRacksProps extends HTMLAttributes<HTMLDivElement> {
+  handleMint: () => void;
+}
 const BuyRacks: FC<BuyRacksProps> = (props: BuyRacksProps) => {
-  const {} = props;
+  const { handleMint } = props;
 
   const handleInput = (amount: number) => {
     console.log("amount ", amount);
@@ -179,7 +207,11 @@ const BuyRacks: FC<BuyRacksProps> = (props: BuyRacksProps) => {
       <NumberInput supply={100} handleInput={handleInput} />
       <p className="text-ait-teal text-4xl">TOTAL: 11.5 SOL</p>
 
-      <motion.button className="flex pt-2 items-center justify-center rounded-full w-60 h-14 bg-ait-teal text-4xl md:text-5xl transition-all duration-300 hover:bg-ait-black hover:text-v2-dark-green hover:border hover:border-v2-green">
+      <motion.button
+        className="my-2 flex pt-1 items-center justify-center rounded-full w-48 h-14 bg-ait-teal text-4xl  transition-all duration-300 hover:bg-ait-black hover:text-v2-dark-green hover:border hover:border-v2-green"
+        {...tapAnimation}
+        onClick={() => handleMint()}
+      >
         BUY RACKS
       </motion.button>
     </div>
