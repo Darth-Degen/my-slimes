@@ -50,6 +50,30 @@ import {
 const COMMITMENT = "finalized";
 const CONNECTION_ENV = "devnet"; // 'mainnet' | 'devnet'
 
+/*
+  How to use this lib?
+  
+  1. Instantiate a new version of the class
+  
+  ```js
+  const editionProgram = new EditionsContractService(
+    wallet as any,
+    connection,
+    editionProgramIdlJSON as anchor.Idl,
+    EDITION_PROGRAM_ID
+  );
+  ```
+
+
+  2. Enjoy
+
+  ```js 
+  const editionMintKey = await editionProgram.buyFixedPriceEdition(
+    editionSaleContract
+  );
+  ```
+*/
+
 export class EditionsContractService {
   wallet: anchor.Wallet;
   connection: Connection;
