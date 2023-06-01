@@ -25,6 +25,7 @@ const WhoView: FC<Props> = (props: Props) => {
       id="who"
       ref={ref}
     >
+      {/* test comment */}
       <AnimatePresence mode="wait">
         {isGalleryFixed && (
           <WordScroll
