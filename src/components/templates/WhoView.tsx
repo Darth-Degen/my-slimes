@@ -11,6 +11,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { collections, midExitAnimation } from "@constants";
 import { Gallery, WordScroll } from "@components";
+import useOnScreen from "src/hooks/useOnScreen";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
 }
@@ -20,13 +21,19 @@ const WhoView: FC<Props> = (props: Props) => {
   const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const inView = useOnScreen(ref, "0px -10%");
+
   useEffect(() => {
     console.log("gallery fixed", isGalleryFixed);
   }, [isGalleryFixed]);
 
+  useEffect(() => {
+    console.log("gallery in view", inView);
+  }, [inView]);
+
   return (
     <div
-      className="relative w-full min-h-screen bg-custom-primary py-10 lg:py-20 "
+      className="relative w-full min-h-screen bg-custom-primary py-10 lg:py-20"
       id="who"
       ref={ref}
     >
@@ -46,6 +53,7 @@ const WhoView: FC<Props> = (props: Props) => {
           parentRef={ref}
           setIsFixed={setIsGalleryFixed}
           isFixed={isGalleryFixed && isHeaderFixed}
+          inView={inView}
           key="gallery"
         />
         <div className="pb-[4000px]" />

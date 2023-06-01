@@ -1,2 +1,3 @@
-export * from "./useWindowSize"
-export * from "./useOutsideAlerter"
+export * from "./useWindowSize";
+export * from "./useOutsideAlerter";
+export * from "./useOnScreen";

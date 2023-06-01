@@ -7,9 +7,10 @@ interface GProps {
   parentRef: React.RefObject<HTMLDivElement>;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
+  inView: boolean;
 }
 const Gallery: FC<GProps> = (props: GProps) => {
-  const { collections, parentRef, isFixed, setIsFixed } = props;
+  const { collections, parentRef, isFixed, setIsFixed, inView } = props;
 
   return (
     <div className="sticky top-0 md:top-[8%] lg:top-[14%] flex flex-col w-screen items-center overflow-x-scroll  ">
@@ -22,6 +23,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
             index={index}
             setIsFixed={setIsFixed}
             isFixed={isFixed}
+            inView={inView}
           />
         ))}
       </div>

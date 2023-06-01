@@ -24,6 +24,7 @@ interface GiProps {
   index: number;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
+  inView: boolean;
 }
 
 enum DimensionType {
@@ -32,7 +33,7 @@ enum DimensionType {
 }
 
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
-  const { item, parentRef, index, isFixed, setIsFixed } = props;
+  const { item, parentRef, index, isFixed, setIsFixed, inView } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
   const { setGalleryModalId } = useContext(ViewContext);
@@ -51,7 +52,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
 
   useMotionValueEvent(translateY, "change", (latest) => {
     // console.log("latest", latest);
-    if (latest === 0) setIsFixed(true);
+    if (latest === 0 && inView) setIsFixed(true);
     else setIsFixed(false);
   });
 
