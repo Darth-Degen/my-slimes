@@ -92,7 +92,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* <Image
+      <Image
         src={src}
         alt={item.name}
         fill
@@ -100,12 +100,6 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
         className="rounded-xl"
         onLoadingComplete={() => setDidLoad(true)}
         priority
-      /> */}
-      <img
-        src={src}
-        alt={item.name}
-        className="rounded-xl"
-        onLoad={() => setDidLoad(true)}
       />
     </motion.div>
   );

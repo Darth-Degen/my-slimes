@@ -4,6 +4,7 @@ import {
   HTMLAttributes,
   ReactNode,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -18,6 +19,11 @@ const WhoView: FC<Props> = (props: Props) => {
   const [isGalleryFixed, setIsGalleryFixed] = useState<boolean>(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log("gallery fixed", isGalleryFixed);
+    console.log("header fixed", isHeaderFixed);
+  }, [isGalleryFixed, isHeaderFixed]);
 
   return (
     <div
