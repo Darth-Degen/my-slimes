@@ -41,16 +41,15 @@ const WhoView: FC<Props> = (props: Props) => {
             key="word-scroll"
           />
         )}
+        <Gallery
+          collections={collections}
+          parentRef={ref}
+          setIsFixed={setIsGalleryFixed}
+          isFixed={isGalleryFixed && isHeaderFixed}
+          key="gallery"
+        />
+        <div className="pb-[4000px]" />
       </AnimatePresence>
-
-      <Gallery
-        collections={collections}
-        parentRef={ref}
-        setIsFixed={setIsGalleryFixed}
-        isFixed={isGalleryFixed && isHeaderFixed}
-        key="gallery"
-      />
-      <div className="pb-[4000px]" />
     </div>
   );
 };

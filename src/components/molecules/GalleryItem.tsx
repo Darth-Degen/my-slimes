@@ -50,6 +50,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   );
 
   useMotionValueEvent(translateY, "change", (latest) => {
+    // console.log("latest", latest);
     if (latest === 0) setIsFixed(true);
     else setIsFixed(false);
   });
