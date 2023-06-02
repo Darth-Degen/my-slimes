@@ -3,6 +3,7 @@ import {
   useTransform,
   useMotionValueEvent,
   motion,
+  useInView,
 } from "framer-motion";
 import {
   Dispatch,
@@ -37,11 +38,13 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
 
   const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
+  const childRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: parentRef,
   });
-  const childRef = useRef<HTMLDivElement>(null);
+
   const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
+  const isInView = useInView(parentRef);
 
   const translateY = useTransform(
     scrollYProgress,
@@ -50,6 +53,9 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   );
 
   useMotionValueEvent(translateY, "change", (latest) => {
+    // if (index === 0) console.log("parent item  ", isInView, parentRef);
+    if (index === 0)
+      console.log("gallery item  ", latest, isInView, parentRef.current);
     if (latest === 0) setIsFixed(true);
     else setIsFixed(false);
   });

@@ -42,20 +42,8 @@ const WhoView: FC<Props> = (props: Props) => {
         setIsFixed={setIsGalleryFixed}
         isFixed={isGalleryFixed && isHeaderFixed}
       />
-      <div className="pb-[4000px]" />
+      <div className="pb-[3000px]" />
     </div>
-  );
-};
-
-interface sProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-}
-const VerticalTextScrollAnimation: FC<sProps> = (props: sProps) => {
-  const { children, className, ...componentProps } = props;
-  return (
-    <motion.div className="" key="vtsa" {...midExitAnimation}>
-      {children}
-    </motion.div>
   );
 };
 
