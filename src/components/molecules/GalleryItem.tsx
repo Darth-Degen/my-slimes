@@ -43,23 +43,19 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     target: parentRef,
   });
 
-  const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
+  const src = `/images/small-pfp/${item.tag}.webp`;
   const isInView = useInView(parentRef);
 
   const translateY = useTransform(
     scrollYProgress,
     [0, 0.3],
-    [
-      // isInView ? item.topValue : 0,
-      item.topValue,
-      winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
-    ]
+    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
   );
 
   useMotionValueEvent(translateY, "change", (latest) => {
     // if (index === 0) console.log("parent item  ", isInView, parentRef);
-    if (index === 0)
-      console.log("gallery item  ", latest, isInView, parentRef.current);
+    // if (index === 0)
+    //   console.log("gallery item  ", latest, isInView, parentRef.current);
     if (latest === 0) setIsFixed(true);
     else setIsFixed(false);
   });

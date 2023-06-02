@@ -1,15 +1,6 @@
-import {
-  Dispatch,
-  FC,
-  HTMLAttributes,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { AnimatePresence, motion, useInView } from "framer-motion";
-import { collections, midExitAnimation } from "@constants";
+import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import { AnimatePresence, useInView } from "framer-motion";
+import { collections } from "@constants";
 import { Gallery, WordScroll } from "@components";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
@@ -21,21 +12,12 @@ const WhoView: FC<Props> = (props: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref);
 
-  useEffect(() => {
-    console.log("isInView ", isInView);
-  }, [isInView]);
-
   return (
     <div
       className="relative w-full min-h-screen bg-custom-primary py-10 lg:py-20 "
       id="who"
       ref={ref}
     >
-      {/* <motion.div
-             key="who"
-             {...midExitAnimation}
-             className="sticky top-0 md:top-[8%] lg:top-[14%] "
-           > */}
       <AnimatePresence mode="wait">
         {isGalleryFixed && isInView && (
           <WordScroll
@@ -56,10 +38,9 @@ const WhoView: FC<Props> = (props: Props) => {
             isFixed={isGalleryFixed && isHeaderFixed}
           />
         )}
-        {/* </motion.div> */}
       </AnimatePresence>
 
-      <div className="pb-[2000px]" />
+      <div className="pb-[2100px]" />
     </div>
   );
 };
