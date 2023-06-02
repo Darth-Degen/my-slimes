@@ -50,7 +50,8 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     scrollYProgress,
     [0, 0.3],
     [
-      isInView ? item.topValue : 0,
+      // isInView ? item.topValue : 0,
+      item.topValue,
       winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
     ]
   );
