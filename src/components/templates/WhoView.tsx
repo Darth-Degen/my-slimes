@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { collections, midExitAnimation } from "@constants";
 import { Gallery, WordScroll } from "@components";
 interface Props {
@@ -31,29 +31,35 @@ const WhoView: FC<Props> = (props: Props) => {
       id="who"
       ref={ref}
     >
-      {isInView && (
-        <>
-          <AnimatePresence mode="wait">
-            {isGalleryFixed && (
-              <WordScroll
-                word="MEET THE SLIMES"
-                className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
-                setIsFixed={setIsHeaderFixed}
-                isFixed={isHeaderFixed}
-              />
-            )}
-          </AnimatePresence>
+      {/* <motion.div
+             key="who"
+             {...midExitAnimation}
+             className="sticky top-0 md:top-[8%] lg:top-[14%] "
+           > */}
+      <AnimatePresence mode="wait">
+        {isGalleryFixed && isInView && (
+          <WordScroll
+            word="MEET THE SLIMES"
+            className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
+            setIsFixed={setIsHeaderFixed}
+            isFixed={isHeaderFixed}
+          />
+        )}
+      </AnimatePresence>
 
+      <AnimatePresence mode="wait">
+        {isInView && (
           <Gallery
             collections={collections}
             parentRef={ref}
             setIsFixed={setIsGalleryFixed}
             isFixed={isGalleryFixed && isHeaderFixed}
           />
-        </>
-      )}
+        )}
+        {/* </motion.div> */}
+      </AnimatePresence>
 
-      <div className="pb-[2800px]" />
+      <div className="pb-[2000px]" />
     </div>
   );
 };

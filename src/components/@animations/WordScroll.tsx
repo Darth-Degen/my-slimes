@@ -46,7 +46,7 @@ const WordScroll: FC<Props> = (props: Props) => {
     //set start + end values
     if (!initRef.current) {
       setStart(latest);
-      setEnd(latest + 1500);
+      setEnd(latest + 750);
       initRef.current = true;
     }
     if (end && latest >= end) {
