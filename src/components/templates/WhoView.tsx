@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, useInView } from "framer-motion";
 import { collections, midExitAnimation } from "@constants";
 import { Gallery, WordScroll } from "@components";
 interface Props {
@@ -18,6 +18,7 @@ const WhoView: FC<Props> = (props: Props) => {
   const [isGalleryFixed, setIsGalleryFixed] = useState<boolean>(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref);
 
   return (
     <div
@@ -26,7 +27,7 @@ const WhoView: FC<Props> = (props: Props) => {
       ref={ref}
     >
       <AnimatePresence mode="wait">
-        {isGalleryFixed && (
+        {isGalleryFixed && isInView && (
           <WordScroll
             word="MEET THE SLIMES"
             className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
@@ -42,7 +43,7 @@ const WhoView: FC<Props> = (props: Props) => {
         setIsFixed={setIsGalleryFixed}
         isFixed={isGalleryFixed && isHeaderFixed}
       />
-      <div className="pb-[3000px]" />
+      <div className="pb-[2800px]" />
     </div>
   );
 };
