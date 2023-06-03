@@ -96,7 +96,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       whileHover={{
         width: hoverWidth(),
       }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
     >
       <Image
         src={src}

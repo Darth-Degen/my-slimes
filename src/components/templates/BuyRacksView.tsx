@@ -88,16 +88,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress, scrollY } = useScroll({ target: ref });
 
-  const y = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.75, 0.9],
-    [-200, 0, 0, 200]
-  );
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.7, 0.9],
-    [0, 1, 1, 0]
-  );
+  const y = useTransform(scrollYProgress, [0, 0.4, 0.75, 0.9], [0, 0, 0, -100]);
 
   const isInView = useInView(ref);
   useEffect(() => {
@@ -122,19 +113,17 @@ const BuyRacksView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
+      className={`w-full min-h-screen flex flex-col items-center justify-end bg-ait-teal`}
       id="buyracks"
       ref={ref}
     >
-      <div className="pb-20" />
+      <div className="py-20" />
       <motion.div
         className="sticky flex flex-col gap-4 lg:flex-row justify-center items-center lg:top-[10%] xl:top-[15%] rounded-full h-auto lg:h-[75vh] w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
         style={{
           y: winWidth >= 1024 ? y : 0,
-          opacity: winWidth >= 1024 ? opacity : 1,
         }}
       >
-        {/* <ConnectButton /> */}
         <div className="absolute -top-16 lg:-top-20 right-10 lg:right-10">
           <WalletMultiButton
             startIcon={undefined}
@@ -186,7 +175,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           </>
         )}
       </motion.div>
-      <div className="pt-20 lg:pt-0 lg:pb-[2000px]" />
+      <div className="pt-20 lg:pt-0 lg:pb-[500px]" />
     </div>
   );
 };

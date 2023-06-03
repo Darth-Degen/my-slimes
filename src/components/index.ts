@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 //animations
 const WordScroll = dynamic(()=> import("./@animations/WordScroll"))
+const WordFall = dynamic(()=> import("./@animations/WordFall"))
 
 //icons
 const SunIcon = dynamic(()=> import("./@icons/SunIcon"))
@@ -117,5 +118,6 @@ export {
   WordScroll,
   BuyRacksView,
   WalletButton,
-  ConnectButton
+  ConnectButton,
+  WordFall
 }
