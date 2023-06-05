@@ -1,4 +1,11 @@
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { AnimatePresence, useInView } from "framer-motion";
 import { collections } from "@constants";
 import { Gallery, WordFall } from "@components";

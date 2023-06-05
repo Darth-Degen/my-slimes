@@ -70,6 +70,11 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     if (latest === 0) setIsFixed(true);
     else setIsFixed(false);
   });
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    console.log("scrollYProgress  ", latest);
+    if (latest > 0.95) setIsFixed(false);
+    else setIsFixed(true);
+  });
 
   const width = (type: DimensionType): string | number => {
     if (winWidth > 3000) return "w-[160px]";

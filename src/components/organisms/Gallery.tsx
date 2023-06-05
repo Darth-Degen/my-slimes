@@ -8,7 +8,7 @@ import {
 } from "react";
 import { GalleryItem, GalleryArrowButton } from "@components";
 import { Collection } from "@types";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { fastExitAnimation } from "@constants";
 import { useWindowSize } from "@hooks";
 
@@ -30,8 +30,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
   const [winWidth, winHeight] = useWindowSize();
   const ref = useRef<HTMLDivElement>(null);
 
-  // const { scrollX } = useScroll({ target: ref });
-
   //back clicked
   const handlePrev = () => {
     if (currentIndex > 0) {
@@ -49,6 +47,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
 
   //first or last child enters view
   const handleIsInView = (index: number) => {
+    //TODO: fix logic to show when track pad scrolls
     if (index === 0) setIsFirstInView(true);
     else setIsFirstInView(false);
 
@@ -56,32 +55,15 @@ const Gallery: FC<GProps> = (props: GProps) => {
     else setIsLastInView(false);
   };
 
-  //user scrolls
-  // const handleScroll = () => {
-  //   // Check if the div has been scrolled
-  //   const isScrolled = scrollX.get() !== 0;
-  //   if (isScrolled) setCurrentIndex(3);
-  //   // console.log("Is Scrolled:", isScrolled);
-  //   // Check if the div is at the beginning
-  //   const isAtBeginning = scrollX.get() === 0;
-  //   if (isScrolled) setCurrentIndex(0);
-  //   // console.log("Is at Beginning:", isAtBeginning);
-  //   console.log(" scrollX.get() ", scrollX.get());
-  // };
-  // useMotionValueEvent(scrollX, "change", (latest) => {
-  //   console.log("latest ", latest);
-  // });
-
   //set scroll distance on click
   useEffect(() => {
-    const scrollDisance = -320;
-    // const imageWidth = 100;
+    const scrollDisance = -335;
     setScrollValue(currentIndex * scrollDisance);
   }, [collections.length, currentIndex, scrollValue, winWidth]);
 
-  // useEffect(() => {
-  //   console.log("didChildHover ", didChildHover);
-  // }, [didChildHover]);
+  useEffect(() => {
+    console.log("isFirstInView ", isFirstInView);
+  }, [isFirstInView]);
 
   return (
     <motion.div
@@ -92,12 +74,12 @@ const Gallery: FC<GProps> = (props: GProps) => {
       <GalleryArrowButton
         direction="left"
         onClick={handlePrev}
-        disabled={!isFixed || currentIndex === 0 || isFirstInView}
+        disabled={(!isFixed || currentIndex === 0) && !isFirstInView}
         className="z-10 w-16 hidden md:flex"
       />
       {/* <div className="flex overflow-x-scroll gap-3 3xl:gap-5 py-44 4xl:pb-[200px] px-5 min-w-full ml-[2300px] sm:ml-[2100px] md:ml-[1900px] lg:ml-[1600px] xl:ml-[1400px] 2xl:ml-[800px] 3xl:ml-[1100px] 4xl:ml-[600px]"> */}
       {/* <div className="flex overflow-x-auto gap-3 3xl:gap-5 py-44 4xl:pb-[200px]"> */}
-      <div className="flex items-center overflow-x-auto lg:overflow-x-clip ">
+      <div className="flex items-center overflow-x-scroll">
         <motion.div
           className="relative flex gap-3 3xl:gap-5 py-44 4xl:pb-[200px] px-4 md:px-0"
           initial={{ x: 0 }}
