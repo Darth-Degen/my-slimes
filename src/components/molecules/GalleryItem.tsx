@@ -72,7 +72,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     console.log("scrollYProgress  ", latest);
-    if (latest > 0.95) setIsFixed(false);
+    if (latest > 0.92) setIsFixed(false);
     else setIsFixed(true);
   });
 

@@ -21,7 +21,7 @@ const WhoView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className="relative w-full min-h-screen bg-custom-primary py-10 lg:py-20"
+      className="relative w-full min-h-screen bg-custom-primary py-10 "
       id="who"
       ref={ref}
     >
@@ -29,9 +29,10 @@ const WhoView: FC<Props> = (props: Props) => {
         {isGalleryFixed && isInView && (
           <WordFall
             word="MEET THE SLIMES"
-            className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
+            className="text-center font-black px-2 responsive-text"
+            // className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
             setIsFixed={setIsHeaderFixed}
-            isFixed={isHeaderFixed}
+            isFixed={isGalleryFixed}
           />
         )}
       </AnimatePresence>

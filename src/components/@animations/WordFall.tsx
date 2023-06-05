@@ -12,9 +12,8 @@ import {
   motion,
   useMotionValueEvent,
   useScroll,
-  useTransform,
 } from "framer-motion";
-import { midExitAnimation } from "src/constants";
+import { fastExitAnimation } from "src/constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   word: string;
@@ -55,8 +54,8 @@ const WordFall: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="z-10 sticky top-[8%] lg:top-[5%] flex justify-center items-center"
-      {...midExitAnimation}
+      className="z-10 sticky top-[8%] lg:top-[5%] 2xl:-top-2 flex justify-center items-center"
+      {...fastExitAnimation}
     >
       <div className="flex flex-col ">
         {start && end && (
@@ -75,9 +74,9 @@ const WordFall: FC<Props> = (props: Props) => {
         <AnimatePresence mode="wait">
           {isFixed && (
             <motion.div
-              className="hidden md:flex justify-between w-full pb-4 px-4 sm:px-6"
+              className="hidden md:flex justify-between w-full pb-4 px-4 sm:px-6 xl:-mt-14"
               key="we-eatin"
-              {...midExitAnimation}
+              {...fastExitAnimation}
             >
               <div className="w-1/3 uppercase">the whole squad here</div>
               <div className="w-1/3 uppercase flex justify-center">and</div>
@@ -110,7 +109,11 @@ const WordFallItem: FC<ItemProps> = (props: ItemProps) => {
       initial={{ opacity: 0, translateY: index * -200 }}
       animate={{ opacity: 1, translateY: 0 }}
       transition={{ duration: 0.5 }}
-      exit={{ opacity: 0, translateY: index * -200 }}
+      exit={{
+        opacity: 0,
+        translateY: index * -200,
+        transition: { duration: 0.25 },
+      }}
     >
       {letter === " " ? <span> &nbsp;</span> : letter}
     </motion.span>
