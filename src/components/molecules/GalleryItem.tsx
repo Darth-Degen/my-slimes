@@ -12,6 +12,7 @@ import {
   useContext,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import { ViewContext } from "@constants";
 import { useWindowSize } from "@hooks";
@@ -25,6 +26,8 @@ interface GiProps {
   index: number;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
+  handleIsInView: (index: number) => void;
+  setDidHover: Dispatch<SetStateAction<boolean>>;
 }
 
 enum DimensionType {
@@ -33,7 +36,15 @@ enum DimensionType {
 }
 
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
-  const { item, parentRef, index, isFixed, setIsFixed } = props;
+  const {
+    item,
+    parentRef,
+    index,
+    isFixed,
+    setIsFixed,
+    handleIsInView,
+    setDidHover,
+  } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
   const { setGalleryModalId } = useContext(ViewContext);
@@ -44,7 +55,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
 
   const src = `/images/small-pfp/${item.tag}.webp`;
-  const isInView = useInView(parentRef);
+  const isInView = useInView(childRef);
 
   const translateY = useTransform(
     scrollYProgress,
@@ -83,9 +94,16 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       : (width(DimensionType.Number) as number);
   };
 
+  //tell parent final child is in view
+  useEffect(() => {
+    if (isInView) handleIsInView(index);
+  }, [isInView, handleIsInView, index]);
+
   return (
     <motion.div
       onClick={() => setGalleryModalId(index)}
+      // onMouseEnter={() => setDidHover(true)}
+      // onMouseLeave={() => setDidHover(false)}
       ref={childRef}
       className={`relative rounded-xl 
         ${width(DimensionType.String)} 

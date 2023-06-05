@@ -35,7 +35,6 @@ const WordFall: FC<Props> = (props: Props) => {
   useEffect(() => {
     if (containerRef.current) {
       const containerHeight = containerRef.current.offsetHeight;
-      // console.log("containerHeight ", containerHeight);
       document.body.style.height = `${containerHeight}px`;
     }
   }, []);
@@ -55,7 +54,10 @@ const WordFall: FC<Props> = (props: Props) => {
   });
 
   return (
-    <div className="z-10 sticky top-[8%] lg:top-[5%] flex justify-center items-center">
+    <motion.div
+      className="z-10 sticky top-[8%] lg:top-[5%] flex justify-center items-center"
+      {...midExitAnimation}
+    >
       <div className="flex flex-col ">
         {start && end && (
           <div ref={containerRef} className={`flex flex-wrap ${className}`}>
@@ -86,7 +88,7 @@ const WordFall: FC<Props> = (props: Props) => {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -101,27 +103,14 @@ const WordFallItem: FC<ItemProps> = (props: ItemProps) => {
   const { letter, index, start, end } = props;
   const ref = useRef<HTMLDivElement>(null);
 
-  console.log("start ", start);
-  console.log("end ", end);
-  const { scrollY } = useScroll();
-  const translateY = useTransform(
-    scrollY,
-    [start, end],
-    [-200 * (index + 1), 0]
-  );
-
   return (
     <motion.span
       ref={ref}
       key={index}
-      className=""
-      style={{
-        translateY,
-        // opacity,
-      }}
-      // initial={{ translateY: start }}
-      // animate={{ translateY: end }}
-      // transition={{ duration: 1 }}
+      initial={{ opacity: 0, translateY: index * -200 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ duration: 0.5 }}
+      exit={{ opacity: 0, translateY: index * -200 }}
     >
       {letter === " " ? <span> &nbsp;</span> : letter}
     </motion.span>

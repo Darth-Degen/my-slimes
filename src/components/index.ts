@@ -31,6 +31,7 @@ const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
 const ScrollProgress = dynamic(()=> import("./atoms/ScrollProgress"))
 const WalletButton = dynamic(()=> import("./atoms/WalletButton"))
 const ConnectButton = dynamic(()=> import("./atoms/ConnectButton"))
+const GalleryArrowButton = dynamic(()=> import("./atoms/GalleryArrowButton"))
 //molecules
 const PageHead = dynamic(()=> import("./molecules/PageHead"))
 const Logo = dynamic(()=> import("./molecules/Logo"))
@@ -119,5 +120,6 @@ export {
   BuyRacksView,
   WalletButton,
   ConnectButton,
-  WordFall
+  WordFall,
+  GalleryArrowButton
 }
