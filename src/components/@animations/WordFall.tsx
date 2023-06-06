@@ -106,13 +106,13 @@ const WordFallItem: FC<ItemProps> = (props: ItemProps) => {
     <motion.span
       ref={ref}
       key={index}
-      initial={{ opacity: 0, translateY: index * -200 }}
+      initial={{ opacity: 0, translateY: index * -100 }}
       animate={{ opacity: 1, translateY: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       exit={{
         opacity: 0,
-        translateY: index * -200,
-        transition: { duration: 0.25 },
+        translateY: index * -100,
+        transition: { duration: 0.3 },
       }}
     >
       {letter === " " ? <span> &nbsp;</span> : letter}

@@ -30,7 +30,6 @@ const WhoView: FC<Props> = (props: Props) => {
           <WordFall
             word="MEET THE SLIMES"
             className="text-center font-black px-2 responsive-text"
-            // className="text-center font-black px-2 text-[2.5rem] sm:text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[9rem] 2xl:text-[10rem] 3xl:text-[12rem] 4xl:text-[16rem]"
             setIsFixed={setIsHeaderFixed}
             isFixed={isGalleryFixed}
           />

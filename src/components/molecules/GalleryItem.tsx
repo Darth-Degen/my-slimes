@@ -18,7 +18,6 @@ import { ViewContext } from "@constants";
 import { useWindowSize } from "@hooks";
 import { Collection } from "@types";
 import Image from "next/image";
-import { ImageShimmer } from "@components";
 
 interface GiProps {
   item: Collection;
@@ -71,7 +70,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     else setIsFixed(false);
   });
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("scrollYProgress  ", latest);
+    // console.log("scrollYProgress  ", latest);
     if (latest > 0.92) setIsFixed(false);
     else setIsFixed(true);
   });

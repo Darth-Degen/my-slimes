@@ -66,10 +66,11 @@ const WhatView: FC<Props> = (props: Props) => {
 
   const getTopPosition = (index: number): number => {
     let _base = 200;
+
     if (winHeight > 900) _base = 260;
     else if (winHeight > 600 && winWidth >= 1024) _base = 210;
     else if (winHeight > 600) _base = 190;
-    // console.log("base ", _base, winHeight);
+
     return index * _base;
   };
 
@@ -80,15 +81,6 @@ const WhatView: FC<Props> = (props: Props) => {
       ref={ref}
     >
       <div className="relative">
-        {/* <div
-          className="hidden absolute lg:block top-0 bottom-0 left-0 right-0 bg-red-600 overflow-hidden"
-          style={{ zIndex: 1, top: height }}
-        >
-          <div
-            className="bg-red-500 sticky top-[6%] xl:top-[10%] z-20"
-            style={{ height, width }}
-          ></div>
-        </div> */}
         <div className="hidden lg:block h-full bg-custom-primary z-0 ">
           {whatContent.map((item, index) => {
             return (

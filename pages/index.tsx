@@ -11,6 +11,8 @@ import {
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 
+const _assets = [{}];
+
 const Home: NextPage = () => {
   const [assets, setAssets] = useState<boolean[]>([]);
   const [scrollColor, setScrollColor] = useState<string>("bg-v2-green");
