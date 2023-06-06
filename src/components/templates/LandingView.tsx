@@ -1,5 +1,5 @@
 import { exitAnimation } from "@constants";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
 import {
   Dispatch,
   FC,
@@ -8,8 +8,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { FlowerVector, CrackVector, PaddleVector } from "@components";
 import { useWindowSize } from "@hooks";
+// import debounce from "lodash.debounce";
 
 interface Assets {
   src: string;
@@ -31,14 +31,15 @@ interface Props {
 const LandingView: FC<Props> = (props: Props) => {
   const { setAssets, setIsInView } = props;
 
-  const [video, setVideo] = useState<string>(_assets[0].src);
-
-  const isLooping = video.includes("loop");
+  const [showLoop, setShowLoop] = useState<boolean>(false);
 
   const [winWidth, winHeight] = useWindowSize();
   const { scrollY, scrollYProgress } = useScroll();
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLVideoElement>(null);
+  const loopRef = useRef<HTMLVideoElement>(null);
 
+  // const debouncer = debounce((value) => setShowLoop(value), 60);
   // const y = useTransform(scrollY, [0, 400], [0, -400]);
   // const y2 = useTransform(scrollY, [0, 150], [0, -150]);
   // const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
@@ -48,6 +49,23 @@ const LandingView: FC<Props> = (props: Props) => {
   useEffect(() => {
     setIsInView(isInView);
   }, [isInView, setIsInView]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     debouncer.cancel();
+  //   };
+  // }, [debouncer]);
+
+  useEffect(() => {
+    console.log("Landing VIEWE");
+  }, []);
+
+  useEffect(() => {
+    if (showLoop && loopRef.current && introRef.current) {
+      loopRef.current.play();
+      introRef.current.pause();
+    }
+  }, [showLoop]);
 
   return (
     <motion.div
@@ -65,14 +83,83 @@ const LandingView: FC<Props> = (props: Props) => {
       </div> */}
       {/* <div className="w-[80px] h-[3px] z-10 bg-shadow shadow-circular mb-20 lg:mb-12 rounded-full lg:absolute lg:left-1/2 lg:top-[83%] 3xl:top-[79%] lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2"></div> */}
 
-      <video
-        className="h-screen w-screen"
+      {/* <AnimatePresence mode="wait">
+        {!showLoop && ( */}
+      <motion.video
+        ref={introRef}
+        autoPlay
+        muted
+        playsInline
+        key="intro"
+        className={`h-screen w-screen absolute inset-0 -z-10 ${
+          !showLoop ? "visible" : "invisible"
+        }`}
+        style={{ objectFit: "cover" }}
+        onLoadedData={() => {
+          console.log("onLoadedData 1");
+          setAssets &&
+            setAssets((prevState) => [
+              ...prevState.slice(0, 0),
+              true,
+              ...prevState.slice(0 + 1),
+            ]);
+        }}
+        onEnded={() => setShowLoop(true)}
+        {...exitAnimation}
+      >
+        <source src={_assets[0].src} type="video/mp4" />
+      </motion.video>
+      {/* )}
+      </AnimatePresence> */}
+
+      <motion.video
+        // autoPlay
+        ref={loopRef}
+        muted
+        playsInline
+        loop
+        className={`h-screen w-screen absolute inset-0 -z-10 ${
+          showLoop ? "visible" : "invisible"
+        }`}
+        style={{ objectFit: "cover" }}
+        onLoadedData={() => {
+          console.log("onLoadedData 2");
+          setAssets &&
+            setAssets((prevState) => [
+              ...prevState.slice(0, 1),
+              true,
+              ...prevState.slice(1 + 1),
+            ]);
+        }}
+        // onEnded={() => onVideoEnded(id)}
+        // {...exitAnimation}
+      >
+        <source src={_assets[1].src} type="video/mp4" />
+      </motion.video>
+
+      {/* <motion.video 
+        key={`bg-${id}`}
+        loop={loop} 
+        onLoadedData={() => onLoadData(id)}
+        onEnded={() => onVideoEnd(id)}
+        id={`vid-${id}` }
+        className={styles}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }} 
+      >
+        <source src={src} type="video/mp4"/>  
+      </motion.video>     */}
+
+      {/* <video
+        className={`h-screen w-screen absolute inset-0 -z-10`}
         autoPlay
         muted
         style={{ objectFit: "cover" }}
       >
-        <source src={video} type="video/mp4" />
-      </video>
+        <source src={_assets[1].src} type="video/mp4" />
+      </video> */}
 
       <div className="uppercase font-black text-lg pb-6 3xl:pb-20">scroll</div>
       <div className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6">
