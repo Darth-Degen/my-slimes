@@ -35,7 +35,7 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id="landing"
       key="landing"
-      className="relative w-full h-screen flex flex-col items-center justify-end mb-32"
+      className="relative w-full h-screen flex flex-col items-center justify-end"
       {...exitAnimation}
       ref={scrollRef}
     >
@@ -54,14 +54,14 @@ const LandingView: FC<Props> = (props: Props) => {
       >
         scroll
       </motion.div>
-      <motion.div
+      <div
         className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6"
-        style={{ y, opacity }}
+        // style={{ y, opacity }}
       >
         <div className="w-1/3 uppercase">the whole squad here</div>
         <div className="w-1/3 uppercase flex justify-center">and</div>
         <div className="w-1/3 uppercase flex justify-end">everybody eats</div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

@@ -11,7 +11,17 @@ import {
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 
-const _assets = [{}];
+interface Assets {
+  src: string;
+}
+const _assets: Assets[] = [
+  {
+    src: "/videos/loading-intro.mp4",
+  },
+  {
+    src: "/videos/loading-loop.mp4",
+  },
+];
 
 const Home: NextPage = () => {
   const [assets, setAssets] = useState<boolean[]>([]);

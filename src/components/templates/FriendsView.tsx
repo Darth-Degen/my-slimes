@@ -20,23 +20,6 @@ const FriendsView: FC<Props> = (props: Props) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: parentRef });
 
-  // const handleScroll = useCallback(() => {
-  //   if (!videoRef.current) return;
-  //   const videoElement = videoRef.current;
-  //   // Calculate the current progress based on scrollYProgress and the video duration
-  //   const progress = scrollYProgress.get() * videoElement.duration;
-  //   // Set the current time of the video to match the progress
-  //   videoElement.currentTime = progress;
-  // }, [scrollYProgress]);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [handleScroll]);
-
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (!videoRef.current) return;
     const videoElement = videoRef.current;
@@ -44,14 +27,6 @@ const FriendsView: FC<Props> = (props: Props) => {
     const progress = latest * videoElement.duration;
     // Set the current time of the video to match the progress
     videoElement.currentTime = progress;
-
-    // console.log(
-    //   "video scroll  ",
-    //   latest,
-    //   videoElement.duration,
-    //   progress
-    //   // videoElement.currentTime
-    // );
   });
 
   return (
@@ -63,7 +38,7 @@ const FriendsView: FC<Props> = (props: Props) => {
       <div className="sticky top-0 ">
         <video
           ref={videoRef}
-          className="h-screen w-screem"
+          className="h-screen w-screen"
           muted
           style={{ objectFit: "cover" }}
         >

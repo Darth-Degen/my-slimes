@@ -147,7 +147,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           <>
             {/* content */}
             <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
-              <TextBox text={activeStatus.text} />
+              <TextBox text={activeStatus.text} className="hidden lg:flex" />
               <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
               {activeStatus.name === StatusName.Buy && (
                 <BuyRacks handleMint={handleMint} />
@@ -298,13 +298,13 @@ const CountdownItem: React.FC<CountdownItemProps> = (
   );
 };
 
-interface TextProps {
+interface TextProps extends HTMLAttributes<HTMLDivElement> {
   text: string;
 }
 const TextBox: FC<TextProps> = (props: TextProps) => {
-  const { text } = props;
+  const { text, className, ...componentProps } = props;
   return (
-    <div className="flex flex-col gap-0">
+    <div className={`flex flex-col gap-0 ${className}`} {...componentProps}>
       {[...Array(5)].map((item) => (
         <p
           className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-neuebit-bold"
