@@ -1,13 +1,5 @@
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import {} from "@components";
+import { Dispatch, FC, SetStateAction, useRef } from "react";
+import { VideoScroll } from "@components";
 import {} from "@constants";
 
 interface Props {
@@ -16,18 +8,7 @@ interface Props {
 const FriendsView: FC<Props> = (props: Props) => {
   const { setAssets } = props;
 
-  const videoRef = useRef<HTMLVideoElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: parentRef });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (!videoRef.current) return;
-    const videoElement = videoRef.current;
-    // Calculate the current progress based on scrollYProgress and the video duration
-    const progress = latest * videoElement.duration;
-    // Set the current time of the video to match the progress
-    videoElement.currentTime = progress;
-  });
 
   return (
     <div
@@ -35,17 +16,7 @@ const FriendsView: FC<Props> = (props: Props) => {
       id="friends"
       ref={parentRef}
     >
-      <div className="sticky top-0 ">
-        <video
-          ref={videoRef}
-          className="h-screen w-screen"
-          muted
-          style={{ objectFit: "cover" }}
-        >
-          <source src="/videos/handshake.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div className="mb-[1500px]" />
+      <VideoScroll parentRef={parentRef} paddingBottom={1000} />
     </div>
   );
 };
