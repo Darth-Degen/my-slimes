@@ -45,13 +45,13 @@ const FriendsView: FC<Props> = (props: Props) => {
     // Set the current time of the video to match the progress
     videoElement.currentTime = progress;
 
-    console.log(
-      "video scroll  ",
-      latest,
-      videoElement.duration,
-      progress
-      // videoElement.currentTime
-    );
+    // console.log(
+    //   "video scroll  ",
+    //   latest,
+    //   videoElement.duration,
+    //   progress
+    //   // videoElement.currentTime
+    // );
   });
 
   return (
@@ -61,11 +61,16 @@ const FriendsView: FC<Props> = (props: Props) => {
       ref={parentRef}
     >
       <div className="sticky top-0 ">
-        <video ref={videoRef} className="h-screen w-auto" muted>
+        <video
+          ref={videoRef}
+          className="h-screen w-screem"
+          muted
+          style={{ objectFit: "cover" }}
+        >
           <source src="/videos/handshake.mp4" type="video/mp4" />
         </video>
       </div>
-      <div className="mb-[2000px]" />
+      <div className="mb-[1500px]" />
     </div>
   );
 };
