@@ -61,9 +61,9 @@ const Gallery: FC<GProps> = (props: GProps) => {
     setScrollValue(currentIndex * scrollDisance);
   }, [collections.length, currentIndex, scrollValue, winWidth]);
 
-  useEffect(() => {
-    console.log("isFirstInView ", isFirstInView);
-  }, [isFirstInView]);
+  // useEffect(() => {
+  //   console.log("isFirstInView ", isFirstInView);
+  // }, [isFirstInView]);
 
   return (
     <motion.div
@@ -77,7 +77,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
         disabled={(!isFixed || currentIndex === 0) && !isFirstInView}
         className="z-10 w-16 hidden md:flex"
       />
-      <div className="flex items-center overflow-x-scroll">
+      <div className="flex items-center overflow-x-scroll overflow-y-hidden">
         <motion.div
           className="relative flex gap-3 3xl:gap-5 py-44 4xl:pb-[200px] px-4 md:px-0"
           initial={{ x: 0 }}

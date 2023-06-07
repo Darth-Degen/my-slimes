@@ -58,7 +58,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
 
   const translateY = useTransform(
     scrollYProgress,
-    [0, 0.3],
+    [0, 0.2],
     [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
   );
 

@@ -69,8 +69,8 @@ html {
 }
 /* Add styles to your Tailwind CSS file to hide the scroll bar when the page is locked. */
 ::-webkit-scrollbar {
-  width: 0px;
-  background: transparent; 
+  /* width: 0px;
+  background: transparent;  */
 }
 
 .clip {

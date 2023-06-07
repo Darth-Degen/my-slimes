@@ -8,10 +8,12 @@ import {
   forwardRef,
   HTMLAttributes,
   ReactNode,
+  useEffect,
 } from "react";
 import {
   MotionValue,
   motion,
+  useInView,
   useMotionValueEvent,
   useScroll,
   useTransform,
@@ -19,7 +21,7 @@ import {
 import { TextScroll } from "@components";
 import Image from "next/image";
 import { useWindowSize } from "@hooks";
-import { whatContent } from "@constants";
+import { slideUp, whatContent } from "@constants";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
 }
@@ -40,6 +42,8 @@ const WhatView: FC<Props> = (props: Props) => {
   const imgRef1 = useRef(null);
   const imgRef2 = useRef(null);
   const imgRef3 = useRef(null);
+
+  const isInView = useInView(ref);
 
   const { scrollYProgress, scrollY } = useScroll({
     target: ref,
@@ -74,14 +78,21 @@ const WhatView: FC<Props> = (props: Props) => {
     return index * _base;
   };
 
+  const animate = () => {
+    return slideUp(isInView, 1500, 2, 0.51);
+  };
+
   return (
     <div
       className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14 lg:p-10"
       id="what"
       ref={ref}
     >
-      <div className="relative">
-        <div className="hidden lg:block h-full bg-custom-primary z-0 ">
+      <motion.div
+        className="relative"
+        // {...animate()}
+      >
+        <div className="hidden lg:block h-full  z-0 ">
           {whatContent.map((item, index) => {
             return (
               <ImageAnimation
@@ -101,20 +112,25 @@ const WhatView: FC<Props> = (props: Props) => {
               </ImageAnimation>
             );
           })}
-          <div className="pb-[600px]" />
+          <div className="pb-[320px]" />
         </div>
-      </div>
-      <div className="sticky flex flex-col justify-around items-start gap-32">
+      </motion.div>
+
+      <motion.div
+        className="sticky flex flex-col justify-around items-start gap-32"
+        // {...animate()}
+      >
         {whatContent.map((item, index) => (
           <TextScroll
             content={item}
             key={item.title}
             topPosition={getTopPosition(index)}
             divRef={getRef(index)}
+            index={index}
           />
         ))}
-        <div className="pb-[600px] lg:pb-[1100px]" />
-      </div>
+        <div className="pb-[900px]" />
+      </motion.div>
     </div>
   );
 };
@@ -141,30 +157,39 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
       target: imgRef,
     });
 
+    // const y: MotionValue<number> = useTransform(
+    //   scrollY,
+    //   [startTopPosition, 3000],
+    //   [1000, topPosition]
+    // );
+
+    const [winWidth, winHeight] = useWindowSize();
+    const startY = winHeight * 2;
     const y: MotionValue<number> = useTransform(
       scrollY,
-      [startTopPosition, 600],
-      [800, topPosition]
+      [startY - 300, startY + winHeight + index * 600],
+      [startY, topPosition]
     );
-    const opacity: MotionValue<number> = useTransform(
-      scrollYProgress,
-      [1, 0],
-      [index === 0 ? 1 : 0, 1]
-    );
-    const imageScale = useTransform(scrollYProgress, [0.5, 1], [1, 0]);
-    const imageClip = useTransform(
-      scrollYProgress,
-      [0, 0.5, 1],
-      ["0%, 100%", "0%, 50%", "0%, 0%"]
-    );
-    const clipPath = useTransform(
-      scrollY,
-      [0, 400],
-      [
-        "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%)",
-      ]
-    );
+
+    // const opacity: MotionValue<number> = useTransform(
+    //   scrollYProgress,
+    //   [1, 0],
+    //   [index === 0 ? 1 : 0, 1]
+    // );
+    // const imageScale = useTransform(scrollYProgress, [0.5, 1], [1, 0]);
+    // const imageClip = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.5, 1],
+    //   ["0%, 100%", "0%, 50%", "0%, 0%"]
+    // );
+    // const clipPath = useTransform(
+    //   scrollY,
+    //   [0, 400],
+    //   [
+    //     "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+    //     "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%)",
+    //   ]
+    // );
 
     // useMotionValueEvent(scrollYProgress, "change", (latest) => {
     //   console.log("scrollYProgress ", latest);
@@ -181,7 +206,7 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
           objectFit: "cover",
           position: "sticky",
           // scale: imageScale,
-          clipPath,
+          // clipPath,
         }}
         ref={imgRef}
       >

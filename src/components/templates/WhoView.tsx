@@ -20,11 +20,7 @@ const WhoView: FC<Props> = (props: Props) => {
   const isInView = useInView(ref);
 
   return (
-    <div
-      className="relative w-full min-h-screen bg-custom-primary py-10 "
-      id="who"
-      ref={ref}
-    >
+    <div className="relative w-full min-h-screen py-10 " id="who" ref={ref}>
       <AnimatePresence mode="wait">
         {isGalleryFixed && isInView && (
           <WordFall
