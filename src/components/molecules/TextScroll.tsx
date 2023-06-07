@@ -30,6 +30,8 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
     const [winWidth, winHeight] = useWindowSize();
     // const divRef = useRef(null);
 
+    const is3XL = winWidth >= 2160;
+
     const { scrollYProgress, scrollY } = useScroll({
       target: divRef,
     });
@@ -49,9 +51,18 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
 
     const y: MotionValue<number> = useTransform(
       scrollY,
-      [startY - winHeight, startY + winHeight + index * winHeight],
+      [
+        startY - (is3XL ? winHeight * 2 : winHeight),
+        startY + winHeight + index * (is3XL ? winHeight * 0.5 : winHeight),
+      ],
       [startY, topPosition]
     );
+
+    // const y: MotionValue<number> = useTransform(
+    //   scrollY,
+    //   [startY - winHeight, startY + winHeight + index * winHeight],
+    //   [startY, topPosition]
+    // );
 
     // useMotionValueEvent(scrollY, "change", (latest) => {
     //   if (content.title === "culture")

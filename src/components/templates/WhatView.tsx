@@ -112,7 +112,7 @@ const WhatView: FC<Props> = (props: Props) => {
               </ImageAnimation>
             );
           })}
-          <div className="pb-[2100px]" />
+          <div className="pb-[2100px] 3xl:pb-[2500px]" />
         </div>
       </motion.div>
 
@@ -129,7 +129,7 @@ const WhatView: FC<Props> = (props: Props) => {
             index={index}
           />
         ))}
-        <div className="pb-[2700px]" />
+        <div className="pb-[2700px] 3xl:pb-[3000px]" />
       </motion.div>
     </div>
   );
@@ -164,12 +164,16 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
     // );
 
     const [winWidth, winHeight] = useWindowSize();
+    const is3XL = winWidth >= 2160;
     const startY = winHeight * 2;
     const y: MotionValue<number> = useTransform(
       scrollY,
       [
-        startY - winHeight,
-        startY + winHeight + index * winHeight + index * 500,
+        startY - (is3XL ? winHeight * 2 : winHeight),
+        startY +
+          winHeight +
+          index * (is3XL ? winHeight * 0.5 : winHeight) +
+          index * 500,
       ],
       [startY, topPosition]
     );
