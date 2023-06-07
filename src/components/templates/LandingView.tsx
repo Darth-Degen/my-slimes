@@ -43,9 +43,6 @@ const LandingView: FC<Props> = (props: Props) => {
   useEffect(() => {
     setIsInView(isInView);
   }, [isInView, setIsInView]);
-  useEffect(() => {
-    console.log("Landing VIEWE");
-  }, []);
 
   useEffect(() => {
     if (showLoop && loopRef.current && introRef.current) {

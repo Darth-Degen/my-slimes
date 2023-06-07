@@ -13,7 +13,7 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
-import { fastExitAnimation } from "src/constants";
+import { fastExitAnimation } from "@constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   word: string;
@@ -111,7 +111,7 @@ const WordFallItem: FC<ItemProps> = (props: ItemProps) => {
       transition={{ duration: 0.4 }}
       exit={{
         opacity: 0,
-        translateY: index * -100,
+        // translateY: index * -100,
         transition: { duration: 0.3 },
       }}
     >

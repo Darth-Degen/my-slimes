@@ -82,9 +82,9 @@ const Gallery: FC<GProps> = (props: GProps) => {
     setScrollValue(currentIndex * scrollDisance);
   }, [collections.length, currentIndex, scrollValue, winWidth]);
 
-  useEffect(() => {
-    console.log("scrollDirection ", scrollDirection);
-  }, [scrollDirection]);
+  // useEffect(() => {
+  //   console.log("scrollDirection ", scrollDirection);
+  // }, [scrollDirection]);
 
   useEffect(() => {
     if (isInView) setStartY(scrollY.get());
@@ -105,7 +105,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
       />
       <div className="flex items-center overflow-x-scroll overflow-y-hidden">
         <motion.div
-          className="relative flex gap-3 3xl:gap-5 pt-32 pb-64 4xl:pb-[200px] px-4 md:px-0"
+          className="relative flex gap-3 3xl:gap-5 pt-32  px-4 md:px-0"
           initial={{ x: 0 }}
           animate={{ x: scrollValue }}
           transition={{ duration: 0.5 }}

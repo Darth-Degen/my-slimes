@@ -95,9 +95,9 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (index === 0) console.log("YProgress  ", latest);
+    // if (index === 0) console.log("YProgress  ", latest);
     //used to hide header on scroll down
-    if (latest > 0.8) setIsFixed(false);
+    if (latest > 0.96) setIsFixed(false);
     else setIsFixed(true);
   });
 
