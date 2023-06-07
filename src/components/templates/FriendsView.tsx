@@ -16,7 +16,11 @@ const FriendsView: FC<Props> = (props: Props) => {
       id="friends"
       ref={parentRef}
     >
-      <VideoScroll parentRef={parentRef} paddingBottom={1000} />
+      <VideoScroll
+        src={"/videos/handshake.mp4"}
+        parentRef={parentRef}
+        paddingBottom={500}
+      />
     </div>
   );
 };
