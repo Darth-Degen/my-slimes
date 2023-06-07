@@ -54,7 +54,7 @@ const WordFall: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="z-10 sticky top-[8%] lg:top-[5%] 2xl:-top-2 flex justify-center items-center"
+      className="z-10  2xl:-top-2 flex justify-center items-center"
       {...fastExitAnimation}
     >
       <div className="flex flex-col ">

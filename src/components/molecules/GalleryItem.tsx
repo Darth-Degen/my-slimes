@@ -4,6 +4,7 @@ import {
   useMotionValueEvent,
   motion,
   useInView,
+  MotionValue,
 } from "framer-motion";
 import {
   Dispatch,
@@ -27,6 +28,8 @@ interface GiProps {
   setIsFixed: Dispatch<SetStateAction<boolean>>;
   handleIsInView: (index: number) => void;
   setDidHover: Dispatch<SetStateAction<boolean>>;
+  startY: number;
+  scrollDirection: string;
 }
 
 enum DimensionType {
@@ -43,35 +46,58 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     setIsFixed,
     handleIsInView,
     setDidHover,
+    startY,
+    scrollDirection,
   } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
   const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const childRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress, scrollY } = useScroll({
     target: parentRef,
   });
 
   const src = `/images/small-pfp/${item.tag}.webp`;
   const isInView = useInView(childRef);
 
-  const translateY = useTransform(
-    scrollYProgress,
-    [0, 0.2],
-    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  // const translateY = useTransform(
+  //   scrollYProgress,
+  //   [0, 0.2],
+  //   [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  // );
+
+  // const startY = winHeight * 4;
+  // const startYAuto = scrollY.get();
+  // console.log("startYAuto ", startYAuto);
+  //[3904, ]
+  const translateY: MotionValue<number> = useTransform(
+    scrollY,
+    [startY, startY + winHeight],
+    [
+      scrollDirection === "down" ? item.topValue * 1.45 : 0,
+      winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
+    ]
   );
+
+  // useMotionValueEvent(scrollY, "change", (latest) => {
+  //   if (index === 0) console.log("scrollY  ", latest, startY);
+  // });
 
   useMotionValueEvent(translateY, "change", (latest) => {
     // if (index === 0) console.log("parent item  ", isInView, parentRef);
     // if (index === 0)
     //   console.log("gallery item  ", latest, isInView, parentRef.current);
+
+    // if (index === 0) console.log("translateY ", latest);
     if (latest === 0) setIsFixed(true);
     else setIsFixed(false);
   });
+
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // console.log("scrollYProgress  ", latest);
-    if (latest > 0.92) setIsFixed(false);
+    if (index === 0) console.log("YProgress  ", latest);
+    //used to hide header on scroll down
+    if (latest > 0.8) setIsFixed(false);
     else setIsFixed(true);
   });
 

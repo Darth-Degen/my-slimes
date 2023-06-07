@@ -79,7 +79,7 @@ const WhatView: FC<Props> = (props: Props) => {
   };
 
   const animate = () => {
-    return slideUp(isInView, 1500, 2, 0.51);
+    return slideUp(isInView, 200, 0.5);
   };
 
   return (
@@ -112,7 +112,7 @@ const WhatView: FC<Props> = (props: Props) => {
               </ImageAnimation>
             );
           })}
-          <div className="pb-[320px]" />
+          <div className="pb-[2100px]" />
         </div>
       </motion.div>
 
@@ -129,7 +129,7 @@ const WhatView: FC<Props> = (props: Props) => {
             index={index}
           />
         ))}
-        <div className="pb-[900px]" />
+        <div className="pb-[2700px]" />
       </motion.div>
     </div>
   );
@@ -167,7 +167,10 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
     const startY = winHeight * 2;
     const y: MotionValue<number> = useTransform(
       scrollY,
-      [startY - 300, startY + winHeight + index * 600],
+      [
+        startY - winHeight,
+        startY + winHeight + index * winHeight + index * 500,
+      ],
       [startY, topPosition]
     );
 

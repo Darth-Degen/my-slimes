@@ -20,30 +20,32 @@ const WhoView: FC<Props> = (props: Props) => {
   const isInView = useInView(ref);
 
   return (
-    <div className="relative w-full min-h-screen py-10 " id="who" ref={ref}>
-      <AnimatePresence mode="wait">
-        {isGalleryFixed && isInView && (
-          <WordFall
-            word="MEET THE SLIMES"
-            className="text-center font-black px-2 responsive-text"
-            setIsFixed={setIsHeaderFixed}
-            isFixed={isGalleryFixed}
-          />
-        )}
-      </AnimatePresence>
+    <div className="relative w-full min-h-screen " id="who" ref={ref}>
+      <div className="h-[300px] sticky top-[8%] lg:top-[0%]">
+        <AnimatePresence mode="wait">
+          {isGalleryFixed && isInView && (
+            <WordFall
+              word="MEET THE SLIMES"
+              className="text-center font-black px-2 responsive-text"
+              setIsFixed={setIsHeaderFixed}
+              isFixed={isGalleryFixed}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+      {/* <div className="py-32 -z-10 bg-red-500" /> */}
+      {/* <AnimatePresence mode="wait">
+        {isInView && ( */}
+      <Gallery
+        collections={collections}
+        parentRef={ref}
+        setIsFixed={setIsGalleryFixed}
+        isFixed={isGalleryFixed && isHeaderFixed}
+      />
+      {/* )}
+      </AnimatePresence> */}
 
-      <AnimatePresence mode="wait">
-        {isInView && (
-          <Gallery
-            collections={collections}
-            parentRef={ref}
-            setIsFixed={setIsGalleryFixed}
-            isFixed={isGalleryFixed && isHeaderFixed}
-          />
-        )}
-      </AnimatePresence>
-
-      <div className="pb-[2100px]" />
+      <div className="pb-[500px]" />
     </div>
   );
 };

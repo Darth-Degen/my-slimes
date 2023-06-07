@@ -30,8 +30,6 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
     const [winWidth, winHeight] = useWindowSize();
     // const divRef = useRef(null);
 
-    const startY = winHeight * 2;
-
     const { scrollYProgress, scrollY } = useScroll({
       target: divRef,
     });
@@ -41,9 +39,17 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
       [1, 0.3, 0],
       [0, 1, 1]
     );
+    // const y: MotionValue<number> = useTransform(
+    //   scrollY,
+    //   [startY - winHeight, startY + winHeight + index * winHeight],
+    //   [startY, topPosition]
+    // );
+
+    const startY = winHeight * 2;
+
     const y: MotionValue<number> = useTransform(
       scrollY,
-      [startY - 200, startY + winHeight + index * 200],
+      [startY - winHeight, startY + winHeight + index * winHeight],
       [startY, topPosition]
     );
 

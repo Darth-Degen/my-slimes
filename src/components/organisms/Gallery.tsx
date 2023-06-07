@@ -8,7 +8,7 @@ import {
 } from "react";
 import { GalleryItem, GalleryArrowButton } from "@components";
 import { Collection } from "@types";
-import { motion } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { fastExitAnimation } from "@constants";
 import { useWindowSize } from "@hooks";
 
@@ -26,9 +26,30 @@ const Gallery: FC<GProps> = (props: GProps) => {
   const [isFirstInView, setIsFirstInView] = useState<boolean>(false);
   const [isLastInView, setIsLastInView] = useState<boolean>(false);
   const [didChildHover, setDidChildHover] = useState<boolean>(false);
+  const [startY, setStartY] = useState<number>();
+
+  const isInView = useInView(parentRef);
 
   const [winWidth, winHeight] = useWindowSize();
   const ref = useRef<HTMLDivElement>(null);
+
+  const { scrollY } = useScroll({
+    target: ref,
+  });
+
+  //scroll direction
+  const [scrollDirection, setScrollDirection] = useState("down");
+  const prevScrollY = useRef<number>(0);
+  useEffect(() => {
+    if (isInView) {
+      setScrollDirection(scrollY.get() > prevScrollY.current ? "down" : "up");
+    }
+    prevScrollY.current = scrollY.get();
+  }, [isInView, scrollY]);
+  // useTransform(scrollY, (value) => {
+  //   // const currentValue = value.get();
+
+  // });
 
   //back clicked
   const handlePrev = () => {
@@ -61,13 +82,18 @@ const Gallery: FC<GProps> = (props: GProps) => {
     setScrollValue(currentIndex * scrollDisance);
   }, [collections.length, currentIndex, scrollValue, winWidth]);
 
-  // useEffect(() => {
-  //   console.log("isFirstInView ", isFirstInView);
-  // }, [isFirstInView]);
+  useEffect(() => {
+    console.log("scrollDirection ", scrollDirection);
+  }, [scrollDirection]);
+
+  useEffect(() => {
+    if (isInView) setStartY(scrollY.get());
+    // else if (isInView && scrollDirection === "up") setStartY(0);
+  }, [isInView, scrollY]);
 
   return (
     <motion.div
-      className="sticky top-0 md:top-[8%] lg:top-[14%] flex items-center"
+      className="sticky top-0 md:top-[8%] lg:top-[20%] flex items-center z-20"
       key="gallery"
       {...fastExitAnimation}
     >
@@ -79,25 +105,28 @@ const Gallery: FC<GProps> = (props: GProps) => {
       />
       <div className="flex items-center overflow-x-scroll overflow-y-hidden">
         <motion.div
-          className="relative flex gap-3 3xl:gap-5 py-44 4xl:pb-[200px] px-4 md:px-0"
+          className="relative flex gap-3 3xl:gap-5 pt-32 pb-64 4xl:pb-[200px] px-4 md:px-0"
           initial={{ x: 0 }}
           animate={{ x: scrollValue }}
           transition={{ duration: 0.5 }}
           ref={ref}
         >
-          {collections.map((slime, index) => (
-            <GalleryItem
-              item={slime}
-              key={slime.name}
-              parentRef={parentRef}
-              index={index}
-              setIsFixed={setIsFixed}
-              isFixed={isFixed}
-              handleIsInView={handleIsInView}
-              // didChildHover={didChildHover}
-              setDidHover={setDidChildHover}
-            />
-          ))}
+          {startY &&
+            collections.map((slime, index) => (
+              <GalleryItem
+                item={slime}
+                key={slime.name}
+                parentRef={parentRef}
+                index={index}
+                setIsFixed={setIsFixed}
+                isFixed={isFixed}
+                handleIsInView={handleIsInView}
+                // didChildHover={didChildHover}
+                setDidHover={setDidChildHover}
+                startY={startY}
+                scrollDirection={scrollDirection}
+              />
+            ))}
         </motion.div>
       </div>
       <GalleryArrowButton
