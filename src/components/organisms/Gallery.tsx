@@ -21,6 +21,8 @@ interface GProps {
 const Gallery: FC<GProps> = (props: GProps) => {
   const { collections, parentRef, isFixed, setIsFixed } = props;
 
+  const [gallery, setGallery] = useState<Collection[]>(collections);
+
   const [scrollValue, setScrollValue] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFirstInView, setIsFirstInView] = useState<boolean>(false);
@@ -46,45 +48,84 @@ const Gallery: FC<GProps> = (props: GProps) => {
     }
     prevScrollY.current = scrollY.get();
   }, [isInView, scrollY]);
-  // useTransform(scrollY, (value) => {
-  //   // const currentValue = value.get();
 
-  // });
+  //returns width of closed image in GalleryItem
+  const imageWidth = (): number => {
+    if (winWidth > 3000) return 160 + 20; //image width + gap
+    else if (winWidth > 2000) return 130 + 20;
+    return 100 + 12;
+  };
+  //scrolls x images per click
+  const scrollDistance: number = imageWidth() * -4;
+  const imagesPerScroll = Math.abs(scrollDistance / imageWidth());
+  const scope = currentIndex * imagesPerScroll;
 
   //back clicked
   const handlePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     }
-    setScrollValue;
   };
-
   //next clicked
   const handleNext = () => {
-    if (currentIndex < collections.length - 1 && !isLastInView) {
+    if (currentIndex < gallery.length - 1 && !isLastInView) {
+      // if (gallery.length > collections.length * 1.5) {
+      //   setCurrentIndex(currentIndex);
+      //   setGallery((prevState) => [
+      //     ...prevState.slice(imagesPerScroll), //slice after first x(4)
+      //     ...prevState.slice(0, imagesPerScroll), //add x(4) to end
+      //   ]);
+      // } else {
       setCurrentIndex(currentIndex + 1);
+      setGallery((prevState) => [
+        ...prevState,
+        ...prevState.slice(scope, scope + imagesPerScroll),
+      ]);
+      // }
     }
+    //
   };
-
-  //first or last child enters view
-  const handleIsInView = (index: number) => {
-    //TODO: fix logic to show when track pad scrolls
-    if (index === 0) setIsFirstInView(true);
-    else setIsFirstInView(false);
-
-    if (index === collections.length - 1) setIsLastInView(true);
-    else setIsLastInView(false);
-  };
-
+  useEffect(() => {
+    console.log(currentIndex, currentIndex * imagesPerScroll, gallery.length);
+  }, [currentIndex]);
   //set scroll distance on click
   useEffect(() => {
-    const scrollDisance = -335;
-    setScrollValue(currentIndex * scrollDisance);
-  }, [collections.length, currentIndex, scrollValue, winWidth]);
+    setScrollValue(currentIndex * scrollDistance);
+  }, [collections.length, currentIndex, scrollDistance, winWidth]);
 
+  // const paginatedCollection = (): Collection[] => {
+  //   return collections;
+  // };
+
+  // const scrollXRef = useRef<number>(0);
+  // const inViewRef = useRef<number[]>([]);
+  // const [inViewState, setInViewState] = useState<number[]>([]);
+  //first or last child enters view
+  const handleIsInView = (index: number) => {
+    // console.log("handleIsInView ", index);
+    //list of all indexes in view
+    //1. add index if in view
+    // setInViewState((prevState) => [...prevState, index]);
+    // console.log("inViewState ", inViewState);
+    // inViewRef.current.push(index);
+    // console.log("inViewRef ", inViewRef.current);
+    //2. get length
+    //3. remove opposite index if exceeds length
+    // //scrolling right
+    // if (index > scrollXRef.current) setGallery((prevState => [...prevState, galler ]))
+    // scrollXRef.current = index
+    // //TODO: fix logic to show when track pad scrolls
+    // if (index === 0) setIsFirstInView(true);
+    // else setIsFirstInView(false);
+    // if (index === collections.length - 1) setIsLastInView(true);
+    // else setIsLastInView(false);
+  };
   // useEffect(() => {
-  //   console.log("scrollDirection ", scrollDirection);
-  // }, [scrollDirection]);
+  //   console.log("isFixed ", isFixed, isFirstInView, isLastInView);
+  // }, [isFirstInView, isFixed, isLastInView]);
+  // useEffect(() => {
+  //   inViewRef.current = [];
+  // }, []);
 
   useEffect(() => {
     if (isInView) setStartY(scrollY.get());
@@ -93,29 +134,32 @@ const Gallery: FC<GProps> = (props: GProps) => {
 
   return (
     <motion.div
-      className="sticky top-0 md:top-[8%] lg:top-[20%] flex items-center z-20"
+      className="sticky top-0 md:top-[8%] lg:top-[20%] flex items-center z-10"
       key="gallery"
       {...fastExitAnimation}
     >
       <GalleryArrowButton
         direction="left"
         onClick={handlePrev}
-        disabled={(!isFixed || currentIndex === 0) && !isFirstInView}
+        // disabled={currentIndex === 0}
+        disabled={!isFixed || currentIndex === 0}
+        // disabled={(!isFixed || currentIndex === 0) && !isFirstInView}
         className="z-10 w-16 hidden md:flex"
       />
-      <div className="flex items-center overflow-x-scroll overflow-y-hidden">
+      {/* <div className="flex items-center overflow-x-scroll overflow-y-hidden"> */}
+      <div className="flex items-center overflow-x-hidden overflow-y-hidden">
         <motion.div
-          className="relative flex gap-3 3xl:gap-5 pt-32  px-4 md:px-0"
+          className="relative flex gap-3 3xl:gap-5 pt-32 pb-20  px-4 md:px-0"
           initial={{ x: 0 }}
           animate={{ x: scrollValue }}
           transition={{ duration: 0.5 }}
           ref={ref}
         >
           {startY &&
-            collections.map((slime, index) => (
+            gallery.map((slime, index) => (
               <GalleryItem
                 item={slime}
-                key={slime.name}
+                key={slime.name + index}
                 parentRef={parentRef}
                 index={index}
                 setIsFixed={setIsFixed}
@@ -132,7 +176,8 @@ const Gallery: FC<GProps> = (props: GProps) => {
       <GalleryArrowButton
         direction="right"
         onClick={handleNext}
-        disabled={!isFixed || isLastInView}
+        // disabled={!isFixed || isLastInView}
+        disabled={!isFixed}
         className="z-10 w-16 hidden md:flex"
       />
     </motion.div>

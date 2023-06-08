@@ -85,12 +85,12 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   // });
 
   useMotionValueEvent(translateY, "change", (latest) => {
-    // if (index === 0) console.log("parent item  ", isInView, parentRef);
+    // if (index === 0) console.log("child item  ", Math.abs(latest));
     // if (index === 0)
     //   console.log("gallery item  ", latest, isInView, parentRef.current);
 
     // if (index === 0) console.log("translateY ", latest);
-    if (latest === 0) setIsFixed(true);
+    if (Math.abs(latest) < 10) setIsFixed(true);
     else setIsFixed(false);
   });
 

@@ -19,7 +19,7 @@ const FriendsView: FC<Props> = (props: Props) => {
       <VideoScroll
         src={"/videos/handshake.mp4"}
         parentRef={parentRef}
-        paddingBottom={500}
+        paddingBottom={800}
       />
     </div>
   );
