@@ -75,7 +75,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     scrollY,
     [startY, startY + winHeight],
     [
-      scrollDirection === "down" ? item.topValue * 1.75 : 0,
+      scrollDirection === "down" ? item.topValue * 1.5 : 0,
       winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
     ]
   );

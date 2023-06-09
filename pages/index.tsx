@@ -67,7 +67,7 @@ const Home: NextPage = () => {
   // });
 
   useEffect(() => {
-    console.log("--> ", currentPage);
+    // console.log("--> ", currentPage);
     if (
       currentPage === pageIDs[0] ||
       currentPage === pageIDs[1] ||

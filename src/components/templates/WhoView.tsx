@@ -60,7 +60,7 @@ const WhoView: FC<Props> = (props: Props) => {
       {/* )}
       </AnimatePresence> */}
 
-      <div className="pb-[700px] 3xl:pb-[900px]" />
+      <div className="pb-[500px] l:pb-[700px] 3xl:pb-[900px]" />
     </div>
   );
 };
