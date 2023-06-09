@@ -27,8 +27,15 @@ const WhoView: FC<Props> = (props: Props) => {
     if (isInView) setCurrentPage(id);
   }, [id, isInView, setCurrentPage]);
 
+  useEffect(() => {
+    console.log("isGalleryFixed ", isGalleryFixed);
+  }, [isGalleryFixed]);
+  useEffect(() => {
+    console.log("isInView ", isInView);
+  }, [isInView]);
+
   return (
-    <div className="relative w-full min-h-screen " id="who" ref={ref}>
+    <div className="relative w-full min-h-screen mt-32" id="who" ref={ref}>
       <div className="h-[300px] sticky top-[8%] lg:top-[0%]">
         <AnimatePresence mode="wait">
           {isGalleryFixed && isInView && (

@@ -68,7 +68,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     console.log("--> ", currentPage);
-    scrollToSection(currentPage);
+    if (
+      currentPage === pageIDs[0] ||
+      currentPage === pageIDs[1] ||
+      currentPage === pageIDs[2]
+    )
+      scrollToSection(currentPage);
   }, [currentPage]);
 
   //changes progress bar color over BuyRacksView

@@ -75,7 +75,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     scrollY,
     [startY, startY + winHeight],
     [
-      scrollDirection === "down" ? item.topValue * 1.45 : 0,
+      scrollDirection === "down" ? item.topValue * 1.75 : 0,
       winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
     ]
   );
@@ -98,7 +98,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     // if (index === 0) console.log("YProgress  ", latest);
 
     //used to hide header on scroll down/up
-    if (latest > 0.96 || latest < 0.1) setIsFixed(false);
+    if (latest > 0.96 || latest < 0.01) setIsFixed(false);
     else setIsFixed(true);
   });
 
