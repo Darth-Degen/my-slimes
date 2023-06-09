@@ -10,7 +10,7 @@ import { GalleryItem, GalleryArrowButton } from "@components";
 import { Collection } from "@types";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { fastExitAnimation } from "@constants";
-import { useWindowSize } from "@hooks";
+import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface GProps {
   collections: Collection[];
@@ -31,6 +31,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
   const [startY, setStartY] = useState<number>();
 
   const isInView = useInView(parentRef);
+  const scrollDirection = useScrollDirection();
 
   const [winWidth, winHeight] = useWindowSize();
   const ref = useRef<HTMLDivElement>(null);
@@ -40,14 +41,14 @@ const Gallery: FC<GProps> = (props: GProps) => {
   });
 
   //scroll direction
-  const [scrollDirection, setScrollDirection] = useState("down");
-  const prevScrollY = useRef<number>(0);
-  useEffect(() => {
-    if (isInView) {
-      setScrollDirection(scrollY.get() > prevScrollY.current ? "down" : "up");
-    }
-    prevScrollY.current = scrollY.get();
-  }, [isInView, scrollY]);
+  // const [scrollDirection, setScrollDirection] = useState("down");
+  // const prevScrollY = useRef<number>(0);
+  // useEffect(() => {
+  //   if (isInView) {
+  //     setScrollDirection(scrollY.get() > prevScrollY.current ? "down" : "up");
+  //   }
+  //   prevScrollY.current = scrollY.get();
+  // }, [isInView, scrollY]);
 
   //returns width of closed image in GalleryItem
   const imageWidth = (): number => {
@@ -69,25 +70,13 @@ const Gallery: FC<GProps> = (props: GProps) => {
   //next clicked
   const handleNext = () => {
     if (currentIndex < gallery.length - 1 && !isLastInView) {
-      // if (gallery.length > collections.length * 1.5) {
-      //   setCurrentIndex(currentIndex);
-      //   setGallery((prevState) => [
-      //     ...prevState.slice(imagesPerScroll), //slice after first x(4)
-      //     ...prevState.slice(0, imagesPerScroll), //add x(4) to end
-      //   ]);
-      // } else {
       setCurrentIndex(currentIndex + 1);
       setGallery((prevState) => [
         ...prevState,
         ...prevState.slice(scope, scope + imagesPerScroll),
       ]);
-      // }
     }
-    //
   };
-  useEffect(() => {
-    console.log(currentIndex, currentIndex * imagesPerScroll, gallery.length);
-  }, [currentIndex]);
   //set scroll distance on click
   useEffect(() => {
     setScrollValue(currentIndex * scrollDistance);
@@ -120,12 +109,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
     // if (index === collections.length - 1) setIsLastInView(true);
     // else setIsLastInView(false);
   };
-  // useEffect(() => {
-  //   console.log("isFixed ", isFixed, isFirstInView, isLastInView);
-  // }, [isFirstInView, isFixed, isLastInView]);
-  // useEffect(() => {
-  //   inViewRef.current = [];
-  // }, []);
 
   useEffect(() => {
     if (isInView) setStartY(scrollY.get());

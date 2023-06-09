@@ -24,11 +24,13 @@ import { useWindowSize } from "@hooks";
 import { slideUp, whatContent } from "@constants";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
+  id: string;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 const WhatView: FC<Props> = (props: Props) => {
-  const { setAssets } = props;
+  const { setAssets, id, setCurrentPage } = props;
 
-  const [isSticky, setIsSticky] = useState(false);
+  // const [isSticky, setIsSticky] = useState(false);
 
   const [winWidth, winHeight] = useWindowSize();
 
@@ -44,21 +46,25 @@ const WhatView: FC<Props> = (props: Props) => {
   const imgRef3 = useRef(null);
 
   const isInView = useInView(ref);
+  //auto scroll
+  useEffect(() => {
+    if (isInView) setCurrentPage(id);
+  }, [id, isInView, setCurrentPage]);
 
-  const { scrollYProgress, scrollY } = useScroll({
-    target: ref,
-  });
-  const stickyPosition = useTransform(scrollY, (value) =>
-    value >= winHeight ? "sticky" : ""
-  );
+  // const { scrollYProgress, scrollY } = useScroll({
+  //   target: ref,
+  // });
+  // const stickyPosition = useTransform(scrollY, (value) =>
+  //   value >= winHeight ? "sticky" : ""
+  // );
 
-  useMotionValueEvent(stickyPosition, "change", (latest) => {
-    if (latest === "sticky") {
-      setIsSticky(true);
-    } else {
-      setIsSticky(false);
-    }
-  });
+  // useMotionValueEvent(stickyPosition, "change", (latest) => {
+  //   if (latest === "sticky") {
+  //     setIsSticky(true);
+  //   } else {
+  //     setIsSticky(false);
+  //   }
+  // });
 
   const getRef = (index: number): MutableRefObject<null> => {
     return index === 0 ? ref1 : index === 1 ? ref2 : ref3;
@@ -78,14 +84,14 @@ const WhatView: FC<Props> = (props: Props) => {
     return index * _base;
   };
 
-  const animate = () => {
-    return slideUp(isInView, 200, 0.5);
-  };
+  // const animate = () => {
+  //   return slideUp(isInView, 200, 0.5);
+  // };
 
   return (
     <div
       className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14 lg:p-10"
-      id="what"
+      id={id}
       ref={ref}
     >
       <motion.div

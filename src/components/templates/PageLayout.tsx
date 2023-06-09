@@ -41,6 +41,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     footerHex,
     mainColor = "#f9f1d9", //"#F6EFD3",
     className,
+    ...componentProps
   } = props;
 
   //context for splash screen & modals
@@ -88,6 +89,7 @@ const PageLayout: FC<Props> = (props: Props) => {
           className={`flex flex-col justify-start items-center w-full h-full overflow-x-clip ${
             className ? className : ""
           }`}
+          {...componentProps}
         >
           {children}
         </main>

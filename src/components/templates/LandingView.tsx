@@ -25,22 +25,32 @@ const _assets: Assets[] = [
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
   setIsInView: Dispatch<SetStateAction<boolean>>;
+  id: string;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 
 const LandingView: FC<Props> = (props: Props) => {
-  const { setAssets, setIsInView } = props;
+  const { setAssets, setIsInView, id, setCurrentPage } = props;
 
   const [showLoop, setShowLoop] = useState<boolean>(false);
 
   const [winWidth, winHeight] = useWindowSize();
   const { scrollY, scrollYProgress } = useScroll();
+  //refs
   const scrollRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(scrollRef);
+  const isChildInView = useInView(innerRef);
+  //auto scroll
+  useEffect(() => {
+    if (isChildInView) setCurrentPage(id);
+  }, [id, isChildInView, setCurrentPage]);
 
   useEffect(() => {
+    // console.log("landing ", isInView);
     setIsInView(isInView);
   }, [isInView, setIsInView]);
 
@@ -53,7 +63,7 @@ const LandingView: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      id="landing"
+      id={id}
       key="landing"
       className="relative w-full h-screen flex flex-col items-center justify-end"
       {...exitAnimation}
@@ -106,7 +116,12 @@ const LandingView: FC<Props> = (props: Props) => {
         <source src={_assets[1].src} type="video/mp4" />
       </motion.video>
 
-      <div className="uppercase font-black text-lg pb-6 3xl:pb-20">scroll</div>
+      <div
+        className="uppercase font-black text-lg pb-6 3xl:pb-20"
+        ref={innerRef}
+      >
+        scroll
+      </div>
       <div className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6">
         <div className="w-1/3 uppercase">the whole squad here</div>
         <div className="w-1/3 uppercase flex justify-center">and</div>

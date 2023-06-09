@@ -76,22 +76,31 @@ const initialStatus: Status[] = [
 
 interface Props {
   setIsInView: Dispatch<SetStateAction<boolean>>;
+  id: string;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 const BuyRacksView: FC<Props> = (props: Props) => {
-  const { setIsInView } = props;
+  const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<Status>(initialStatus[0]);
 
   const { connected, publicKey } = useWallet();
   const { setVisible } = useWalletModal();
 
   const ref = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLHeadingElement>(null);
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress, scrollY } = useScroll({ target: ref });
 
   const y = useTransform(scrollYProgress, [0, 0.4, 0.75, 0.9], [0, 0, 0, -100]);
 
-  const isInView = useInView(ref);
+  const isInView = useInView(innerRef);
+  //auto scroll
   useEffect(() => {
+    if (isInView) setCurrentPage(id);
+  }, [id, isInView, setCurrentPage]);
+
+  useEffect(() => {
+    // console.log("buyracks ", isInView);
     setIsInView(isInView);
   }, [isInView, setIsInView]);
 
@@ -113,16 +122,17 @@ const BuyRacksView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col items-center justify-end bg-ait-teal`}
-      id="buyracks"
+      className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
+      id={id}
       ref={ref}
     >
       <div className="py-20" />
       <motion.div
         className="sticky flex flex-col gap-4 lg:flex-row justify-center items-center lg:top-[10%] xl:top-[15%] rounded-full h-auto lg:h-[75vh] w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
-        style={{
-          y: winWidth >= 1024 ? y : 0,
-        }}
+        // style={{
+        //   y: winWidth >= 1024 ? y : 0,
+        // }}
+        ref={innerRef}
       >
         <div className="absolute -top-16 lg:-top-20 right-10 lg:right-10">
           <WalletMultiButton

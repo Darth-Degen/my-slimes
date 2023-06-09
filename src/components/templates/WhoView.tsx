@@ -11,13 +11,21 @@ import { collections } from "@constants";
 import { Gallery, WordFall } from "@components";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
+  id: string;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 const WhoView: FC<Props> = (props: Props) => {
-  const { setAssets } = props;
+  const { setAssets, id, setCurrentPage } = props;
+  //state
   const [isGalleryFixed, setIsGalleryFixed] = useState<boolean>(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
+  //refs
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref);
+  //auto scroll
+  useEffect(() => {
+    if (isInView) setCurrentPage(id);
+  }, [id, isInView, setCurrentPage]);
 
   return (
     <div className="relative w-full min-h-screen " id="who" ref={ref}>
@@ -40,7 +48,7 @@ const WhoView: FC<Props> = (props: Props) => {
         collections={collections}
         parentRef={ref}
         setIsFixed={setIsGalleryFixed}
-        isFixed={isGalleryFixed && isHeaderFixed}
+        isFixed={isGalleryFixed || isHeaderFixed}
       />
       {/* )}
       </AnimatePresence> */}
