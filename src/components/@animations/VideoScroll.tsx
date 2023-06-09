@@ -28,14 +28,12 @@ const VideoScroll: FC<Props> = (props: Props) => {
   );
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("video ", latest);
     if (!videoRef.current) return;
-    console.log("running");
     const videoElement = videoRef.current;
     // Calculate the current progress based on scrollYProgress and the video duration
     const progress = latest * videoElement.duration;
     // Set the current time of the video to match the progress
-    videoElement.currentTime = progress;
+    if (!isNaN(progress)) videoElement.currentTime = progress;
   });
 
   return (
