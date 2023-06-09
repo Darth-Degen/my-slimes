@@ -24,11 +24,13 @@ const FriendsView: FC<Props> = (props: Props) => {
       id="friends"
       ref={parentRef}
     >
-      <VideoScroll
-        src={"/videos/handshake.mp4"}
-        parentRef={parentRef}
-        paddingBottom={800}
-      />
+      {isInView && (
+        <VideoScroll
+          src={"/videos/handshake.mp4"}
+          parentRef={parentRef}
+          paddingBottom={800}
+        />
+      )}
     </div>
   );
 };

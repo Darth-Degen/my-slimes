@@ -19,7 +19,7 @@ const VideoScroll: FC<Props> = (props: Props) => {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({ target: parentRef });
-  const isInView = useInView(videoRef);
+  // const isInView = useInView(videoRef);
 
   const opacity: MotionValue<number> = useTransform(
     scrollYProgress,
@@ -28,8 +28,8 @@ const VideoScroll: FC<Props> = (props: Props) => {
   );
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("video ", latest, isInView);
-    if (!videoRef.current || !isInView) return;
+    console.log("video ", latest);
+    if (!videoRef.current) return;
     console.log("running");
     const videoElement = videoRef.current;
     // Calculate the current progress based on scrollYProgress and the video duration

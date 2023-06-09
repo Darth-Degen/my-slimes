@@ -27,12 +27,12 @@ const WhoView: FC<Props> = (props: Props) => {
     if (isInView) setCurrentPage(id);
   }, [id, isInView, setCurrentPage]);
 
-  useEffect(() => {
-    console.log("isGalleryFixed ", isGalleryFixed);
-  }, [isGalleryFixed]);
-  useEffect(() => {
-    console.log("isInView ", isInView);
-  }, [isInView]);
+  // useEffect(() => {
+  //   console.log("isGalleryFixed ", isGalleryFixed);
+  // }, [isGalleryFixed]);
+  // useEffect(() => {
+  //   console.log("isInView ", isInView);
+  // }, [isInView]);
 
   return (
     <div className="relative w-full min-h-screen mt-32" id="who" ref={ref}>
