@@ -2,6 +2,7 @@ import React, { FC, HTMLAttributes, RefObject, useRef } from "react";
 import {
   MotionValue,
   motion,
+  useInView,
   useMotionValueEvent,
   useScroll,
   useTransform,
@@ -18,6 +19,7 @@ const VideoScroll: FC<Props> = (props: Props) => {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({ target: parentRef });
+  const isInView = useInView(videoRef);
 
   const opacity: MotionValue<number> = useTransform(
     scrollYProgress,
@@ -27,7 +29,7 @@ const VideoScroll: FC<Props> = (props: Props) => {
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     // console.log("video ", latest);
-    if (!videoRef.current) return;
+    if (!videoRef.current || !isInView) return;
     const videoElement = videoRef.current;
     // Calculate the current progress based on scrollYProgress and the video duration
     const progress = latest * videoElement.duration;

@@ -20,7 +20,7 @@ const FriendsView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className="relative w-full min-h-screen flex flex-col items-center"
+      className="relative w-full min-h-screen flex flex-col items-center pb-20"
       id="friends"
       ref={parentRef}
     >
