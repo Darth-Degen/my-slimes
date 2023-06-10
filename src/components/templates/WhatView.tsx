@@ -114,6 +114,16 @@ const WhatView: FC<Props> = (props: Props) => {
                   width={width}
                   alt={item.title}
                   key={index}
+                  priority
+                  onLoadingComplete={() => {
+                    // console.log(`- what ${index + 1}`);
+                    setAssets &&
+                      setAssets((prevState) => [
+                        ...prevState.slice(0, index),
+                        true,
+                        ...prevState.slice(index + 1),
+                      ]);
+                  }}
                 />
               </ImageAnimation>
             );

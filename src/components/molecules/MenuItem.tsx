@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { FC, useState } from "react";
-import { midExitAnimation } from "@constants";
+import { FC, useContext, useState } from "react";
+import { ViewContext, midExitAnimation } from "@constants";
 import { useWindowSize } from "@hooks";
 import { useRouter } from "next/router";
 import { scrollToSection } from "@helpers";
@@ -20,7 +20,10 @@ const MenuItem: FC<miProps> = (props: miProps) => {
   const [winWidth, winHeight] = useWindowSize();
   const router = useRouter();
 
+  const { setDidMenuClick } = useContext(ViewContext);
+
   const handleClick = (): void => {
+    setDidMenuClick(true);
     if (!item.isLanding) router.push(item.src);
     else scrollToSection(item.title);
   };

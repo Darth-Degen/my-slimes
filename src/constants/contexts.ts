@@ -9,7 +9,7 @@ export const ViewContext = createContext({
   setShowView: (value: boolean) => {},
   galleryModalId: -1,
   setGalleryModalId: (value: number) => {},
-  // collabModal: <CollabModal> { id:-1,  type:"" },
-  // setCollabModal: (value: CollabModal) => {},
+  didMenuClick: false,
+  setDidMenuClick: (value: boolean) => {},
 });
 

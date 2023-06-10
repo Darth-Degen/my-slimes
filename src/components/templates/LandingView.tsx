@@ -1,9 +1,10 @@
-import { exitAnimation } from "@constants";
+import { ViewContext, exitAnimation } from "@constants";
 import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
 import {
   Dispatch,
   FC,
   SetStateAction,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -44,6 +45,7 @@ const LandingView: FC<Props> = (props: Props) => {
 
   const isInView = useInView(scrollRef);
   const isChildInView = useInView(innerRef);
+
   //auto scroll
   useEffect(() => {
     if (isChildInView) setCurrentPage(id);
@@ -80,7 +82,7 @@ const LandingView: FC<Props> = (props: Props) => {
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
-          // console.log("onLoadedData 1");
+          // console.log("- landing 0");
           setAssets &&
             setAssets((prevState) => [
               ...prevState.slice(0, 0),
@@ -100,11 +102,11 @@ const LandingView: FC<Props> = (props: Props) => {
         playsInline
         loop
         className={`h-screen w-screen absolute inset-0 -z-10 ${
-          showLoop ? "visible" : "invisible"
+          showLoop ? "visible" : "visible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
-          // console.log("onLoadedData 2");
+          // console.log("- landing 1");
           setAssets &&
             setAssets((prevState) => [
               ...prevState.slice(0, 1),
