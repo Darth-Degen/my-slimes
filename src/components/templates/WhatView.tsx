@@ -128,7 +128,7 @@ const WhatView: FC<Props> = (props: Props) => {
               </ImageAnimation>
             );
           })}
-          <div className="pb-[2100px] 3xl:pb-[2500px]" />
+          <div className="pb-[2950px] 3xl:pb-[3900px]" />
         </div>
       </motion.div>
 
@@ -145,7 +145,7 @@ const WhatView: FC<Props> = (props: Props) => {
             index={index}
           />
         ))}
-        <div className="pb-[2700px] 3xl:pb-[3000px]" />
+        <div className="pb-[3500px] 3xl:pb-[4400px]" />
       </motion.div>
     </div>
   );
@@ -169,7 +169,7 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
       className,
     } = props;
 
-    const { scrollYProgress, scrollY } = useScroll({
+    const { scrollY } = useScroll({
       target: imgRef,
     });
 
@@ -188,8 +188,8 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
         startY - (is3XL ? winHeight * 2 : winHeight),
         startY +
           winHeight +
-          index * (is3XL ? winHeight * 0.5 : winHeight) +
-          index * 500,
+          index * (is3XL ? winHeight * 0.75 : winHeight) +
+          index * (index > 1 ? 900 : 500),
       ],
       [startY, topPosition]
     );
