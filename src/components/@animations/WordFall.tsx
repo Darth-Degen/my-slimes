@@ -59,7 +59,7 @@ const WordFall: FC<Props> = (props: Props) => {
 
   const [show, setShow] = useState<boolean>(false);
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("scrollYProgress ", latest);
+    // console.log("scrollYProgress ", latest);
     if (!show && latest < 0.9) setShow(true);
   });
   return (

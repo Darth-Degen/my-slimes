@@ -71,13 +71,12 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   // const startYAuto = scrollY.get();
   // console.log("startYAuto ", startYAuto);
   //[3904, ]
+  const [show, setShow] = useState<boolean>(false);
   const translateY: MotionValue<number> = useTransform(
     scrollY,
     [startY, startY + winHeight],
     [
-      scrollDirection === "down" && scrollYProgress.get() < 0.8
-        ? item.topValue * 1.5
-        : 0,
+      scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
       winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
     ]
   );
@@ -98,9 +97,10 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // if (index === 0) console.log("YProgress  ", latest);
+    if (index === 0) console.log("YProgress  ", latest);
 
     //used to hide header on scroll down/up
+    if (!show && latest < 0.8) setShow(true);
     if (latest > 0.96 || latest < 0.01) setIsFixed(false);
     else setIsFixed(true);
   });
