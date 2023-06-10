@@ -75,7 +75,9 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     scrollY,
     [startY, startY + winHeight],
     [
-      scrollDirection === "down" ? item.topValue * 1.5 : 0,
+      scrollDirection === "down" && scrollYProgress.get() < 0.8
+        ? item.topValue * 1.5
+        : 0,
       winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
     ]
   );
@@ -84,6 +86,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   //   if (index === 0) console.log("scrollY  ", latest, startY);
   // });
 
+  // if (index === 0) console.log("scrollDirection ", scrollDirection);
   useMotionValueEvent(translateY, "change", (latest) => {
     // if (index === 0) console.log("child item  ", Math.abs(latest));
     // if (index === 0)

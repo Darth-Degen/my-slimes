@@ -19,17 +19,22 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   word: string;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
   isFixed: boolean;
+  parentRef: any;
 }
 
 const WordFall: FC<Props> = (props: Props) => {
-  const { word, setIsFixed, isFixed, className } = props;
+  const { word, setIsFixed, isFixed, className, parentRef } = props;
   const [start, setStart] = useState<number>();
   const [end, setEnd] = useState<number>();
   const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
 
-  const { scrollY } = useScroll();
-  const containerRef = useRef<HTMLDivElement>(null);
   const initRef = useRef<boolean>(false);
+  const { scrollY } = useScroll();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: parentRef,
+  });
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -52,13 +57,19 @@ const WordFall: FC<Props> = (props: Props) => {
     } else setIsFixed(false);
   });
 
+  const [show, setShow] = useState<boolean>(false);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    console.log("scrollYProgress ", latest);
+    if (!show && latest < 0.9) setShow(true);
+  });
   return (
     <motion.div
       className="z-10  2xl:-top-2 flex justify-center items-center"
       {...fastExitAnimation}
+      ref={ref}
     >
       <div className="flex flex-col ">
-        {start && end && (
+        {start && end && show && (
           <div ref={containerRef} className={`flex flex-wrap ${className}`}>
             {wordLetters.map((letter, index) => (
               <WordFallItem

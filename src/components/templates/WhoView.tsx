@@ -27,12 +27,12 @@ const WhoView: FC<Props> = (props: Props) => {
     if (isInView) setCurrentPage(id);
   }, [id, isInView, setCurrentPage]);
 
-  // useEffect(() => {
-  //   console.log("isGalleryFixed ", isGalleryFixed);
-  // }, [isGalleryFixed]);
-  // useEffect(() => {
-  //   console.log("isInView ", isInView);
-  // }, [isInView]);
+  useEffect(() => {
+    console.log("1. gallery ", isGalleryFixed);
+  }, [isGalleryFixed]);
+  useEffect(() => {
+    console.log("2. header ", isHeaderFixed);
+  }, [isHeaderFixed]);
 
   return (
     <div className="relative w-full min-h-screen mt-32" id="who" ref={ref}>
@@ -44,6 +44,7 @@ const WhoView: FC<Props> = (props: Props) => {
               className="text-center font-black px-2 responsive-text"
               setIsFixed={setIsHeaderFixed}
               isFixed={isGalleryFixed}
+              parentRef={ref}
             />
           )}
         </AnimatePresence>
