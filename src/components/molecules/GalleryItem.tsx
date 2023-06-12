@@ -4,6 +4,7 @@ import {
   useMotionValueEvent,
   motion,
   useInView,
+  MotionValue,
 } from "framer-motion";
 import {
   Dispatch,
@@ -12,12 +13,12 @@ import {
   useContext,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import { ViewContext } from "@constants";
 import { useWindowSize } from "@hooks";
 import { Collection } from "@types";
 import Image from "next/image";
-import { ImageShimmer } from "@components";
 
 interface GiProps {
   item: Collection;
@@ -25,6 +26,10 @@ interface GiProps {
   index: number;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
+  handleIsInView: (index: number) => void;
+  setDidHover: Dispatch<SetStateAction<boolean>>;
+  startY: number;
+  scrollDirection: string;
 }
 
 enum DimensionType {
@@ -33,31 +38,71 @@ enum DimensionType {
 }
 
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
-  const { item, parentRef, index, isFixed, setIsFixed } = props;
+  const {
+    item,
+    parentRef,
+    index,
+    isFixed,
+    setIsFixed,
+    handleIsInView,
+    setDidHover,
+    startY,
+    scrollDirection,
+  } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
   const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const childRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress, scrollY } = useScroll({
     target: parentRef,
   });
 
   const src = `/images/small-pfp/${item.tag}.webp`;
-  const isInView = useInView(parentRef);
+  const isInView = useInView(childRef);
 
-  const translateY = useTransform(
-    scrollYProgress,
-    [0, 0.3],
-    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  // const translateY = useTransform(
+  //   scrollYProgress,
+  //   [0, 0.2],
+  //   [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  // );
+
+  // const startY = winHeight * 4;
+  // const startYAuto = scrollY.get();
+  // console.log("startYAuto ", startYAuto);
+  //[3904, ]
+  const [show, setShow] = useState<boolean>(false);
+  const translateY: MotionValue<number> = useTransform(
+    scrollY,
+    [startY, startY + winHeight],
+    [
+      scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
+      winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
+    ]
   );
 
+  // useMotionValueEvent(scrollY, "change", (latest) => {
+  //   if (index === 0) console.log("scrollY  ", latest, startY);
+  // });
+
+  // if (index === 0) console.log("scrollDirection ", scrollDirection);
   useMotionValueEvent(translateY, "change", (latest) => {
-    // if (index === 0) console.log("parent item  ", isInView, parentRef);
+    // if (index === 0) console.log("child item  ", Math.abs(latest));
     // if (index === 0)
     //   console.log("gallery item  ", latest, isInView, parentRef.current);
-    if (latest === 0) setIsFixed(true);
+
+    // if (index === 0) console.log("translateY ", latest);
+    if (Math.abs(latest) < 10) setIsFixed(true);
     else setIsFixed(false);
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    // if (index === 0) console.log("YProgress  ", latest);
+
+    //used to hide header on scroll down/up
+    if (!show && latest < 0.8) setShow(true);
+    if (latest > 0.96 || latest < 0.01) setIsFixed(false);
+    else setIsFixed(true);
   });
 
   const width = (type: DimensionType): string | number => {
@@ -83,9 +128,16 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       : (width(DimensionType.Number) as number);
   };
 
+  //tell parent final child is in view
+  useEffect(() => {
+    if (isInView) handleIsInView(index);
+  }, [isInView, handleIsInView, index]);
+
   return (
     <motion.div
       onClick={() => setGalleryModalId(index)}
+      // onMouseEnter={() => setDidHover(true)}
+      // onMouseLeave={() => setDidHover(false)}
       ref={childRef}
       className={`relative rounded-xl 
         ${width(DimensionType.String)} 
@@ -96,7 +148,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       whileHover={{
         width: hoverWidth(),
       }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
     >
       <Image
         src={src}

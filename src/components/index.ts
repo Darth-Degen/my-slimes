@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 //animations
 const WordScroll = dynamic(()=> import("./@animations/WordScroll"))
+const WordFall = dynamic(()=> import("./@animations/WordFall"))
+const VideoScroll = dynamic(()=> import("./@animations/VideoScroll"))
 
 //icons
 const SunIcon = dynamic(()=> import("./@icons/SunIcon"))
@@ -30,6 +32,7 @@ const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
 const ScrollProgress = dynamic(()=> import("./atoms/ScrollProgress"))
 const WalletButton = dynamic(()=> import("./atoms/WalletButton"))
 const ConnectButton = dynamic(()=> import("./atoms/ConnectButton"))
+const GalleryArrowButton = dynamic(()=> import("./atoms/GalleryArrowButton"))
 //molecules
 const PageHead = dynamic(()=> import("./molecules/PageHead"))
 const Logo = dynamic(()=> import("./molecules/Logo"))
@@ -61,6 +64,7 @@ const FriendsView = dynamic(()=> import("./templates/FriendsView"))
 const WhereView = dynamic(()=> import("./templates/WhereView"))
 const SlimesView = dynamic(()=> import("./templates/SlimesView"))
 const BuyRacksView = dynamic(()=> import("./templates/BuyRacksView"))
+const IndexView = dynamic(()=> import("./templates/IndexView"))
 
 export {
   PageHead,
@@ -117,5 +121,9 @@ export {
   WordScroll,
   BuyRacksView,
   WalletButton,
-  ConnectButton
+  ConnectButton,
+  WordFall,
+  GalleryArrowButton,
+  VideoScroll,
+  IndexView
 }

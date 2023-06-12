@@ -50,7 +50,7 @@ const initialStatus: Status[] = [
   {
     name: StatusName.Buy,
     text: "BUY NOW!!!",
-    endDate: new Date(2023, 5, 3, 9, 10, 50),
+    endDate: new Date(2023, 5, 10, 9, 10, 50),
     src: "/images/ait/pika.png",
     caption:
       "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
@@ -76,31 +76,31 @@ const initialStatus: Status[] = [
 
 interface Props {
   setIsInView: Dispatch<SetStateAction<boolean>>;
+  id: string;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 const BuyRacksView: FC<Props> = (props: Props) => {
-  const { setIsInView } = props;
+  const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<Status>(initialStatus[0]);
 
   const { connected, publicKey } = useWallet();
   const { setVisible } = useWalletModal();
 
   const ref = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLHeadingElement>(null);
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress, scrollY } = useScroll({ target: ref });
 
-  const y = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.75, 0.9],
-    [-200, 0, 0, 200]
-  );
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.7, 0.9],
-    [0, 1, 1, 0]
-  );
+  const y = useTransform(scrollYProgress, [0, 0.4, 0.75, 0.9], [0, 0, 0, -100]);
 
-  const isInView = useInView(ref);
+  const isInView = useInView(innerRef);
+  //auto scroll
   useEffect(() => {
+    if (isInView) setCurrentPage(id);
+  }, [id, isInView, setCurrentPage]);
+
+  useEffect(() => {
+    // console.log("buyracks ", isInView);
     setIsInView(isInView);
   }, [isInView, setIsInView]);
 
@@ -123,18 +123,17 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   return (
     <div
       className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
-      id="buyracks"
+      id={id}
       ref={ref}
     >
-      <div className="pb-20" />
+      <div className="py-20" />
       <motion.div
         className="sticky flex flex-col gap-4 lg:flex-row justify-center items-center lg:top-[10%] xl:top-[15%] rounded-full h-auto lg:h-[75vh] w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
-        style={{
-          y: winWidth >= 1024 ? y : 0,
-          opacity: winWidth >= 1024 ? opacity : 1,
-        }}
+        // style={{
+        //   y: winWidth >= 1024 ? y : 0,
+        // }}
+        ref={innerRef}
       >
-        {/* <ConnectButton /> */}
         <div className="absolute -top-16 lg:-top-20 right-10 lg:right-10">
           <WalletMultiButton
             startIcon={undefined}
@@ -158,7 +157,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           <>
             {/* content */}
             <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
-              <TextBox text={activeStatus.text} />
+              <TextBox text={activeStatus.text} className="hidden lg:flex" />
               <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
               {activeStatus.name === StatusName.Buy && (
                 <BuyRacks handleMint={handleMint} />
@@ -186,7 +185,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           </>
         )}
       </motion.div>
-      <div className="pt-20 lg:pt-0 lg:pb-[2000px]" />
+      <div className="pt-20 lg:pt-0 lg:pb-[500px]" />
     </div>
   );
 };
@@ -309,17 +308,17 @@ const CountdownItem: React.FC<CountdownItemProps> = (
   );
 };
 
-interface TextProps {
+interface TextProps extends HTMLAttributes<HTMLDivElement> {
   text: string;
 }
 const TextBox: FC<TextProps> = (props: TextProps) => {
-  const { text } = props;
+  const { text, className, ...componentProps } = props;
   return (
-    <div className="flex flex-col gap-0">
-      {[...Array(5)].map((item) => (
+    <div className={`flex flex-col gap-0 ${className}`} {...componentProps}>
+      {[...Array(5)].map((item, index) => (
         <p
           className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-neuebit-bold"
-          key={item}
+          key={index}
         >
           {text}
         </p>

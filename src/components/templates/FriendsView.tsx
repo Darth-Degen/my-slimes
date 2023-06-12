@@ -1,22 +1,36 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
-import { motion } from "framer-motion";
-import {} from "@components";
+import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
+import { VideoScroll } from "@components";
 import {} from "@constants";
+import { useInView } from "framer-motion";
 
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
+  id: string;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 const FriendsView: FC<Props> = (props: Props) => {
-  const { setAssets } = props;
+  const { setAssets, id, setCurrentPage } = props;
+
+  const parentRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(parentRef);
+  //auto scroll
+  useEffect(() => {
+    if (isInView) setCurrentPage(id);
+  }, [id, isInView, setCurrentPage]);
 
   return (
     <div
-      className="relative w-full h-screen flex flex-col items-center"
+      className="relative w-full min-h-screen flex flex-col items-center pb-20"
       id="friends"
+      ref={parentRef}
     >
-      <p className="sticky top-[6%] xl:top-[10%]  responsive-font lg:text-9xl 3xl:text-[12rem] 4xl:text-[16rem] text-v2-pink">
-        friends
-      </p>
+      {isInView && (
+        <VideoScroll
+          src={"/videos/handshake.mp4"}
+          parentRef={parentRef}
+          paddingBottom={800}
+        />
+      )}
     </div>
   );
 };

@@ -1,4 +1,14 @@
-import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
+import {
+  Children,
+  FC,
+  HTMLAttributes,
+  ReactNode,
+  useEffect,
+  useState,
+  cloneElement,
+  isValidElement,
+  ReactElement,
+} from "react";
 import {
   PageHead,
   Header,
@@ -9,6 +19,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { enterAnimation, ViewContext } from "@constants";
 import { useRouter } from "next/router";
+import debounce from "lodash.debounce";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -39,18 +50,22 @@ const PageLayout: FC<Props> = (props: Props) => {
     footerAccentColor,
     footerTextColor,
     footerHex,
-    mainColor = "#F6EFD3",
+    mainColor = "#f9f1d9", //"#F6EFD3",
     className,
+    ...componentProps
   } = props;
 
   //context for splash screen & modals
   const [showView, setShowView] = useState<boolean>(false);
   const [galleryModalId, setGalleryModalId] = useState<number>(-1);
+  const [didMenuClick, setDidMenuClick] = useState<boolean>(false);
   const value = {
     showView,
     setShowView,
     galleryModalId,
     setGalleryModalId,
+    didMenuClick,
+    setDidMenuClick,
   };
 
   const router = useRouter();
@@ -62,6 +77,16 @@ const PageLayout: FC<Props> = (props: Props) => {
       document.body.style.backgroundColor = mainColor;
     }
   }, [router.pathname, mainColor]);
+
+  //sets menu click back to false so that auto scroll can work
+  const debouncer = debounce((value) => setDidMenuClick(value), 1000);
+  useEffect(() => {
+    // console.log("1. didMenuClick ", didMenuClick);
+    if (didMenuClick) debouncer(false);
+    return () => {
+      debouncer.cancel();
+    };
+  }, [debouncer, didMenuClick]);
 
   //stop page scroll (when modal or menu open)
   // useEffect(() => {
@@ -88,7 +113,17 @@ const PageLayout: FC<Props> = (props: Props) => {
           className={`flex flex-col justify-start items-center w-full h-full overflow-x-clip ${
             className ? className : ""
           }`}
+          {...componentProps}
         >
+          {/* {Children.map(children, (child) => {
+            if (isValidElement(child)) {
+              return cloneElement(child, {
+                ...child.props,
+                didMenuClick: didMenuClick,
+              });
+            }
+            return child;
+          })} */}
           {children}
         </main>
 
