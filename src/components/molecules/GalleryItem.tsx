@@ -26,7 +26,7 @@ interface GiProps {
   index: number;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
-  handleIsInView: (index: number) => void;
+  // handleIsInView: (index: number) => void;
   setDidHover: Dispatch<SetStateAction<boolean>>;
   startY: number;
   scrollDirection: string;
@@ -44,7 +44,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     index,
     isFixed,
     setIsFixed,
-    handleIsInView,
+    // handleIsInView,
     setDidHover,
     startY,
     scrollDirection,
@@ -129,9 +129,9 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   };
 
   //tell parent final child is in view
-  useEffect(() => {
-    if (isInView) handleIsInView(index);
-  }, [isInView, handleIsInView, index]);
+  // useEffect(() => {
+  //   if (isInView) handleIsInView(index);
+  // }, [isInView, handleIsInView, index]);
 
   return (
     <motion.div

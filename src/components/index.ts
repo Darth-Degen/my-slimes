@@ -47,6 +47,7 @@ const MenuItem = dynamic(() => import("./molecules/MenuItem"));
 const TextScroll = dynamic(() => import("./molecules/TextScroll"));
 const ModalV2 = dynamic(() => import("./molecules/ModalV2"));
 const GalleryItem = dynamic(() => import("./molecules/GalleryItem"))
+const SFCGalleryItem = dynamic(() => import("./molecules/SFCGalleryItem"))
 //organisms
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
@@ -55,6 +56,7 @@ const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
 const GalleryModal = dynamic(() => import("./organisms/GalleryModal"))
 const Gallery = dynamic(() => import("./organisms/Gallery"))
+const SFCGallery = dynamic(() => import("./organisms/SFCGallery"))
 //templates
 const PageLayout = dynamic(()=> import("./templates/PageLayout"))
 const LandingView = dynamic(()=> import("./templates/LandingView"))
@@ -125,5 +127,7 @@ export {
   WordFall,
   GalleryArrowButton,
   VideoScroll,
-  IndexView
+  IndexView,
+  SFCGallery,
+  SFCGalleryItem,
 }
