@@ -101,7 +101,7 @@ const LandingView: FC<Props> = (props: Props) => {
         muted
         playsInline
         loop
-        className={`h-screen w-screen absolute inset-0 -z-10 ${
+        className={`h-screen w-screen absolute inset-0 -z-20 ${
           showLoop ? "visible" : "visible"
         }`}
         style={{ objectFit: "cover" }}

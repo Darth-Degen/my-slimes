@@ -2,6 +2,7 @@ import { SFC } from "@types";
 
 export const sfc: SFC[] = [
   { 
+    id: 1,
     src: "slime-time.webp",
     name: "Slime Time",
     description:"Saturday Morning Cartoons smashed through the Trev Nostalgia machine, sprinkled with Slime's lore and blasted through web3 technology into your wallet.",
@@ -11,6 +12,7 @@ export const sfc: SFC[] = [
     height: 2160,
   },
   { 
+    id: 2,
     src: "floating.webp",
     name: "Floating",
     description:"A collaborative piece between SCUM and nev.in.color. Mixed Media. FIlm photography and digital illustration.",
@@ -20,6 +22,7 @@ export const sfc: SFC[] = [
     height: 2550,
   },
   { 
+    id: 3,
     src: "under-the-tule-tree.webp",
     name: "Under the Tule Tree",
     description:"A collaboration between Aethur and 0xdxadkid for the Slimes Family Collection. Under the Tule Tree; Scum's slime swings from the Arbol de Tule tree, surrounding the centerpiece are characters and Iconic imagery from the worlds of both Aethur and 0xdxadkid.",
@@ -29,6 +32,7 @@ export const sfc: SFC[] = [
     height: 3300,
   },
   { 
+    id: 4,
     src: "xolotl.webp",
     name: "Xolotl",
     description:"3rd piece in the Slimes Family Collection. This is the Salamandre De Fuego - or the Fire Salamander. Representative of the Ancient axolotl depictions.",
@@ -38,6 +42,7 @@ export const sfc: SFC[] = [
     height: 5384,
   },
   { 
+    id: 5,
     src: "mictlan.webp",
     name: "Mictlan",
     description:"An incredible piece by the ETH artist Carbine. Depicting Carbine’s take on a character from the Slimes universe. Reminiscent of Mictlan, the Aztec god of the underworld.",
@@ -47,6 +52,7 @@ export const sfc: SFC[] = [
     height: 6000,
   },
   { 
+    id: 6,
     src: "mirada-dorada.webp", //gif
     name: "Mirada Dorada",
     description:"Mirada Dorada 'Golden Gaze' is an original piece by the accomplished artist Duke +1. Duke took inspiration from the Slimes universe created by Scum. Duke then took further steps to deepen his understanding and appreciation of indigenous Mexican culture, resulting in this piece that feels both timeless and new.",
@@ -56,6 +62,7 @@ export const sfc: SFC[] = [
     height: 684,
   },
   { 
+    id: 7,
     src: "interdimensional.webp",
     name: "Interdimensional",
     description:"Interdimensional is brought to you by Skullface, a well established artist/designer across Web 2 & 3 brands. In this piece, you will find our beloved Axolotl depicted through 2 lenses, part Alebrije (Mexican spirit guide), part traditional Axolotl.",
@@ -65,6 +72,7 @@ export const sfc: SFC[] = [
     height: 4900,
   },
   { 
+    id: 8,
     src: "five-entities.webp", //gif
     name: "Five Entities",
     description:"I've left forevermore, And I'm floating in a most peculiar way, And the stars look very different today",
@@ -74,6 +82,7 @@ export const sfc: SFC[] = [
     height: 2038,
   },
   { 
+    id: 9,
     src: "the-ninefold-path.webp",
     name: "The Ninefold Path",
     description:"With each determined stride towards the portal, one question remains hanging in the air: From whom are they fleeing, and what awaits them on the other side?",

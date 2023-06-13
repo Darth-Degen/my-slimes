@@ -67,9 +67,9 @@ const SFCGallery: FC<Props> = (props: Props) => {
     if (headerIsInView) didAnimateRef.current = true;
   }, [headerIsInView]);
 
-  useEffect(() => {
-    console.log("scrollDirection down", scrollDirection === "down");
-  }, [scrollDirection]);
+  // useEffect(() => {
+  //   console.log("scrollDirection down", scrollDirection === "down");
+  // }, [scrollDirection]);
 
   return (
     <div
