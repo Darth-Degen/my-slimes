@@ -4,4 +4,6 @@ export interface SFC {
   description: string,
   artist: string,
   url: string,
+  width: number,
+  height: number
 }

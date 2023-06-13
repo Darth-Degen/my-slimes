@@ -9,35 +9,37 @@ import {
 import { SFCGalleryItem, GalleryArrowButton } from "@components";
 import { SFC } from "@types";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { fastExitAnimation, sfc } from "@constants";
+import { fastExitAnimation, sfc, slideUp, opacity } from "@constants";
 import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface Props {}
 const SFCGallery: FC<Props> = (props: Props) => {
   const {} = props;
-
+  //state
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [gallery, setGallery] = useState<SFC[]>(sfc);
   const [scrollValue, setScrollValue] = useState<number>(0);
-
-  const [winWidth, winHeight] = useWindowSize();
+  //refs
   const ref = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLHeadingElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const didAnimateRef = useRef<boolean>();
+  //hooks
   const isInView = useInView(ref);
+  const headerIsInView = useInView(headerRef);
+  const galleryIsInView = useInView(galleryRef);
+  const [winWidth, winHeight] = useWindowSize();
   const scrollDirection = useScrollDirection();
-
-  // useEffect(() => {
-  //   console.log("isInView ", isInView);
-  // }, [isInView]);
 
   //returns width of closed image in GalleryItem
   const imageWidth = (): number => {
-    if (winWidth > 3000) return 160 + 20; //image width + gap
-    else if (winWidth > 2000) return 130 + 20;
-    return 100 + 12;
+    if (winWidth > 3000) return 300 + 20; //image width + gap
+    else if (winWidth > 2000) return 300 + 20;
+    return 300 + 20;
   };
 
   //scrolls x images per click
-  const scrollDistance: number = imageWidth() * -4;
+  const scrollDistance: number = imageWidth() * -2;
   const imagesPerScroll = Math.abs(scrollDistance / imageWidth());
   const scope = currentIndex * imagesPerScroll;
   //back clicked
@@ -61,15 +63,40 @@ const SFCGallery: FC<Props> = (props: Props) => {
     setScrollValue(currentIndex * scrollDistance);
   }, [currentIndex, scrollDistance, winWidth]);
 
+  useEffect(() => {
+    if (headerIsInView) didAnimateRef.current = true;
+  }, [headerIsInView]);
+
+  useEffect(() => {
+    console.log("scrollDirection down", scrollDirection === "down");
+  }, [scrollDirection]);
+
   return (
-    <div className="w-full h-screen flex flex-col items-center" ref={ref}>
-      <h3 className="sticky top-[8%] lg:top-[5%] font-primary text-7xl 2xl:text-8xl max-w-[500px] 2xl:max-w-[600px] text-center">
+    <div
+      className="sticky top-[15%]  w-full h-screen flex flex-col items-center"
+      ref={ref}
+      id="friends"
+    >
+      <motion.h3
+        className=" font-primary text-7xl 2xl:text-8xl max-w-[500px] 2xl:max-w-[600px] text-center"
+        ref={headerRef}
+        // {...opacity(
+        //   headerIsInView && scrollDirection === "down",
+        //   scrollDirection === "down" ? 0 : 1,
+        //   1
+        // )}
+      >
         Slimes Family Collection
-      </h3>
+      </motion.h3>
       <motion.div
-        className="sticky top-[8%] lg:top-[20%] 4xl:top-1/4 flex items-center z-10"
+        className="w-screen flex justify-between items-center z-20"
         key="gallery"
-        {...fastExitAnimation}
+        ref={ref}
+        {...opacity(
+          headerIsInView && scrollDirection === "down", //(!didAnimateRef.current),
+          didAnimateRef.current ? 1 : 0,
+          1
+        )}
       >
         <GalleryArrowButton
           direction="left"
@@ -77,10 +104,9 @@ const SFCGallery: FC<Props> = (props: Props) => {
           disabled={currentIndex === 0}
           className="z-10 w-16 hidden md:flex"
         />
-        {/* <div className="flex items-center overflow-x-scroll overflow-y-hidden"> */}
         <div className="flex items-center overflow-x-hidden overflow-y-hidden">
           <motion.div
-            className="relative flex gap-3 3xl:gap-5 pt-32 pb-20  px-4 md:px-0"
+            className="relative flex gap-5 py-10 px-4 md:px-0"
             initial={{ x: 0 }}
             animate={{ x: scrollValue }}
             transition={{ duration: 0.5 }}
@@ -108,6 +134,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
           className="z-10 w-16 hidden md:flex"
         />
       </motion.div>
+      <div className="pb-[2400px] 3xl:pb-[900px]" />
     </div>
   );
 };

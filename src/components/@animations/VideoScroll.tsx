@@ -23,11 +23,12 @@ const VideoScroll: FC<Props> = (props: Props) => {
 
   const opacity: MotionValue<number> = useTransform(
     scrollYProgress,
-    [0, 0.2],
-    [0, 1]
+    [0, 0.01, 0.38, 0.45],
+    [0, 1, 1, 0]
   );
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    // console.log("scrollYProgress ", latest);
     if (!videoRef.current) return;
     const videoElement = videoRef.current;
     // Calculate the current progress based on scrollYProgress and the video duration

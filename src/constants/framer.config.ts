@@ -147,8 +147,8 @@ export const slideUp = (
   duration: number = 1,
   delay: number = 0
 ) => ({
-  initial: { y: distance, opacity: 1 },
-  animate: { y: animate ? 0 : distance, opacity: animate ? 1 : 1 },
+  initial: { y: distance, opacity: 0 },
+  animate: { y: animate ? 0 : distance, opacity: animate ? 1 : 0 },
   transition: { duration: duration, ease: "easeInOut", delay: delay },
 });
 export const slideLeft = (animate: boolean) => ({
@@ -183,3 +183,15 @@ export const scaleExitAnimation = {
   exit: { opacity: 0, scale: 0.95 },
   transition: { duration: 0.4, ease: "easeInOut" },
 };
+
+export const opacity = (
+  animate: boolean,
+  startOpacity: number = 0,
+  duration: number = 1,
+  delay: number = 0
+) => ({
+  initial: {opacity: startOpacity },
+  animate: { opacity: animate ? 1 : startOpacity },
+  exit: {opacity: 1},
+  transition: { duration: duration, ease: "easeInOut", delay: delay },
+});

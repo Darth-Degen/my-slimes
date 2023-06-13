@@ -59,12 +59,12 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
   });
 
   const src = `/images/sfc/${item.src}`;
-  const isInView = useInView(childRef);
+  // const isInView = useInView(childRef);
 
   const width = (type: DimensionType): string | number => {
-    if (winWidth > 3000) return "w-[320px]";
-    else if (winWidth > 2000) return "w-[260px]";
-    return "w-[380px]";
+    if (winWidth > 3000) return "w-[280px]";
+    else if (winWidth > 2000) return "w-[280px]";
+    return "w-[280px]";
   };
 
   const height = (type: DimensionType): string | number => {
@@ -77,17 +77,32 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     return type === DimensionType.String ? "h-[500px]" : 500;
   };
 
-  const hoverWidth = (): number => {
-    // console.log("isFixed ", isFixed);
-    return isFixed
-      ? (height(DimensionType.Number) as number)
-      : (width(DimensionType.Number) as number);
-  };
+  // const width = (type: DimensionType): string | number => {
+  //   if (winWidth > 3000) return "w-[160px]";
+  //   else if (winWidth > 2000) return "w-[130px]";
+  //   return "w-[200px]";
+  // };
 
-  //tell parent final child is in view
-  // useEffect(() => {
-  //   if (isInView) handleIsInView(index);
-  // }, [isInView, handleIsInView, index]);
+  // const height = (type: DimensionType): string | number => {
+  //   if (winHeight < 800 || winWidth < 600)
+  //     return type === DimensionType.String ? "h-[480px]" : 480;
+  //   else if (winWidth > 3000 && winHeight > 1500)
+  //     return type === DimensionType.String ? "h-[1200px]" : 1200;
+  //   else if (winWidth > 2000 && winHeight > 1200)
+  //     return type === DimensionType.String ? "h-[900px]" : 900;
+  //   return type === DimensionType.String ? "h-[600px]" : 600;
+  // };
+
+  const hoverWidth = (): number => {
+    // console.log("hoverWidth ", height(DimensionType.Number) as number);
+    return (
+      (height(DimensionType.Number) as number) * (item.width / item.height)
+    );
+    // console.log("isFixed ", isFixed);
+    // return isFixed
+    //   ? (height(DimensionType.Number) as number)
+    //   : (width(DimensionType.Number) as number);
+  };
 
   return (
     <motion.div
@@ -98,7 +113,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
       className={`relative rounded-xl 
         ${width(DimensionType.String)} 
         ${height(DimensionType.String)} 
-        ${isFixed ? "cursor-pointer" : ""}
+        ${isFixed ? "" : "cursor-pointer"}
       `}
       // style={{ translateY: didLoad ? translateY : 0 }}
       whileHover={{

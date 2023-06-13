@@ -61,25 +61,27 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const src = `/images/small-pfp/${item.tag}.webp`;
   const isInView = useInView(childRef);
 
-  // const translateY = useTransform(
-  //   scrollYProgress,
-  //   [0, 0.2],
-  //   [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
-  // );
+  const translateY = useTransform(
+    scrollYProgress,
+    [0, 0.2],
+    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  );
 
   // const startY = winHeight * 4;
   // const startYAuto = scrollY.get();
   // console.log("startYAuto ", startYAuto);
   //[3904, ]
+
+  //TODO:uncomment if need to revert
   const [show, setShow] = useState<boolean>(false);
-  const translateY: MotionValue<number> = useTransform(
-    scrollY,
-    [startY, startY + winHeight],
-    [
-      scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
-      winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
-    ]
-  );
+  // const translateY: MotionValue<number> = useTransform(
+  //   scrollY,
+  //   [startY, startY + winHeight],
+  //   [
+  //     scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
+  //     winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
+  //   ]
+  // );
 
   // useMotionValueEvent(scrollY, "change", (latest) => {
   //   if (index === 0) console.log("scrollY  ", latest, startY);
