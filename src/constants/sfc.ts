@@ -36,7 +36,7 @@ export const sfc: SFC[] = [
     src: "xolotl.webp",
     name: "Xolotl",
     description:"3rd piece in the Slimes Family Collection. This is the Salamandre De Fuego - or the Fire Salamander. Representative of the Ancient axolotl depictions.",
-    artist: "",
+    artist: "Scum",
     url: "https://exchange.art/editions/4yT9KbwCREZBkJXC8d9kYvQesSRsV2ZXVwynW1BtRYn2",
     width: 4119/10,
     height: 5384/10,
