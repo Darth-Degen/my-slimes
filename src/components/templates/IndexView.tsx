@@ -50,7 +50,9 @@ const IndexView = () => {
   const [isLandingInView, setIsLandingInView] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<string>(pageIDs[0]);
   //refs
+
   //hooks
+
   //context
   const { didMenuClick } = useContext(ViewContext);
 
