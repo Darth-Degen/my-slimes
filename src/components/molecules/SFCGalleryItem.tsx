@@ -51,7 +51,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
   } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
-  const { setGalleryModalId } = useContext(ViewContext);
+  const { setSFCModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const childRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress, scrollY } = useScroll({
@@ -106,7 +106,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
 
   return (
     <motion.div
-      onClick={() => setGalleryModalId(index)}
+      onClick={() => setSFCModalId(item.id)}
       // onMouseEnter={() => setDidHover(true)}
       // onMouseLeave={() => setDidHover(false)}
       ref={childRef}

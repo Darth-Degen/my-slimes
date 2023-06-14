@@ -55,6 +55,7 @@ const MenuController = dynamic(() => import("./organisms/MenuController"))
 const AboutSection = dynamic(() => import("./organisms/AboutSection"))
 const ScumSection = dynamic(() => import("./organisms/ScumSection"))
 const GalleryModal = dynamic(() => import("./organisms/GalleryModal"))
+const SFCModal = dynamic(() => import("./organisms/SFCModal"))
 const Gallery = dynamic(() => import("./organisms/Gallery"))
 const SFCGallery = dynamic(() => import("./organisms/SFCGallery"))
 //templates
@@ -130,4 +131,5 @@ export {
   IndexView,
   SFCGallery,
   SFCGalleryItem,
+  SFCModal
 }

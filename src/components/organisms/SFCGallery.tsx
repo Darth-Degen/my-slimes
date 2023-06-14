@@ -73,12 +73,12 @@ const SFCGallery: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className="sticky top-[15%]  w-full h-screen flex flex-col items-center"
+      className="sticky top-[12%] w-full h-screen flex flex-col items-center gap-6"
       ref={ref}
       id="friends"
     >
       <motion.h3
-        className=" font-primary text-7xl 2xl:text-8xl max-w-[500px] 2xl:max-w-[600px] text-center"
+        className="font-primary text-7xl 2xl:text-8xl max-w-[500px] 2xl:max-w-[600px] text-center"
         ref={headerRef}
         // {...opacity(
         //   headerIsInView && scrollDirection === "down",

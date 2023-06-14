@@ -62,11 +62,11 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   // const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
   const isInView = useInView(childRef);
 
-  // const translateY = useTransform(
-  //   scrollYProgress,
-  //   [0, 0.2],
-  //   [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
-  // );
+  const translateY = useTransform(
+    scrollYProgress,
+    [0, 0.2],
+    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  );
 
   // const startY = winHeight * 4;
   // const startYAuto = scrollY.get();
@@ -75,15 +75,15 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
 
   const [show, setShow] = useState<boolean>(false);
   //TODO:uncomment if need to revert
-  const translateY: MotionValue<number> = useTransform(
-    scrollY,
-    [startY, startY + winHeight],
-    [
-      // scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
-      scrollDirection === "down" ? item.topValue * 1.5 : 0,
-      winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
-    ]
-  );
+  // const translateY: MotionValue<number> = useTransform(
+  //   scrollY,
+  //   [startY, startY + winHeight],
+  //   [
+  //     scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
+  //     scrollDirection === "down" ? item.topValue * 1.5 : 0,
+  //     winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
+  //   ]
+  // );
 
   // useMotionValueEvent(scrollY, "change", (latest) => {
   //   if (index === 0) console.log("scrollY  ", latest, startY);
@@ -101,7 +101,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (index === 0) console.log("YProgress  ", latest);
+    // if (index === 0) console.log("YProgress  ", latest);
 
     //used to hide header on scroll down/up
     if (!show && latest < 0.8) setShow(true);

@@ -11,5 +11,7 @@ export const ViewContext = createContext({
   setGalleryModalId: (value: number) => {},
   didMenuClick: false,
   setDidMenuClick: (value: boolean) => {},
+  sfcModalId: -1,
+  setSFCModalId: (value: number) => {},
 });
 
