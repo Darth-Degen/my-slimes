@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
-import { VideoScroll } from "@components";
+import { VideoScroll, SFCGallery } from "@components";
 import {} from "@constants";
 import { useInView } from "framer-motion";
 
@@ -21,16 +21,22 @@ const FriendsView: FC<Props> = (props: Props) => {
   return (
     <div
       className="relative w-full min-h-screen flex flex-col items-center pb-20"
-      id="friends"
+      id={`friends-parent`}
       ref={parentRef}
     >
+      {/* <div className="relative pb-20"> */}
       {isInView && (
         <VideoScroll
           src={"/videos/handshake.mp4"}
           parentRef={parentRef}
-          paddingBottom={800}
+          paddingBottom={700}
         />
       )}
+      {/* </div> */}
+      {/* <div className="relative pb-20"> */}
+      <SFCGallery />
+      <div className="pb-[600px]" />
+      {/* </div> */}
     </div>
   );
 };

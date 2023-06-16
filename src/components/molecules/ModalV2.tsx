@@ -22,8 +22,9 @@ const Modal: FC<Props> = (props: Props) => {
 
   //stop page scroll when modal open
   useEffect(() => {
+    console.log("hide body ", true);
     if (show) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
+    // else document.body.style.overflow = "auto";
   }, [show]);
 
   return (

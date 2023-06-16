@@ -20,7 +20,7 @@ import {
 } from "framer-motion";
 import { TextScroll } from "@components";
 import Image from "next/image";
-import { useWindowSize } from "@hooks";
+import { useWindowSize, useScrollDirection } from "@hooks";
 import { slideUp, whatContent } from "@constants";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
@@ -45,7 +45,9 @@ const WhatView: FC<Props> = (props: Props) => {
   const imgRef2 = useRef(null);
   const imgRef3 = useRef(null);
 
+  const scrollDirection = useScrollDirection();
   const isInView = useInView(ref);
+  // const didViewRef = useRef<boolean>(false);
   //auto scroll
   useEffect(() => {
     if (isInView) setCurrentPage(id);
@@ -85,8 +87,12 @@ const WhatView: FC<Props> = (props: Props) => {
   };
 
   // const animate = () => {
-  //   return slideUp(isInView, 200, 0.5);
+  //   return slideUp(isInView && scrollDirection === "down", 500, 1, 0.5);
   // };
+
+  // useEffect(() => {
+  //   if (isInView) didViewRef.current = true;
+  // }, [isInView]);
 
   return (
     <div

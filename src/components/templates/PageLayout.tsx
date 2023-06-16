@@ -15,6 +15,7 @@ import {
   Footer,
   SplashScreen,
   GalleryModal,
+  SFCModal,
 } from "@components";
 import { AnimatePresence, motion } from "framer-motion";
 import { enterAnimation, ViewContext } from "@constants";
@@ -59,6 +60,7 @@ const PageLayout: FC<Props> = (props: Props) => {
   const [showView, setShowView] = useState<boolean>(false);
   const [galleryModalId, setGalleryModalId] = useState<number>(-1);
   const [didMenuClick, setDidMenuClick] = useState<boolean>(false);
+  const [sfcModalId, setSFCModalId] = useState<number>(-1);
   const value = {
     showView,
     setShowView,
@@ -66,6 +68,8 @@ const PageLayout: FC<Props> = (props: Props) => {
     setGalleryModalId,
     didMenuClick,
     setDidMenuClick,
+    sfcModalId,
+    setSFCModalId,
   };
 
   const router = useRouter();
@@ -144,6 +148,13 @@ const PageLayout: FC<Props> = (props: Props) => {
               key="gallery-modal"
               imageId={galleryModalId}
               setImageId={setGalleryModalId}
+            />
+          )}
+          {sfcModalId !== -1 && (
+            <SFCModal
+              key="gallery-modal"
+              imageId={sfcModalId}
+              setImageId={setSFCModalId}
             />
           )}
         </AnimatePresence>

@@ -90,25 +90,25 @@ const Gallery: FC<GProps> = (props: GProps) => {
   // const inViewRef = useRef<number[]>([]);
   // const [inViewState, setInViewState] = useState<number[]>([]);
   //first or last child enters view
-  const handleIsInView = (index: number) => {
-    // console.log("handleIsInView ", index);
-    //list of all indexes in view
-    //1. add index if in view
-    // setInViewState((prevState) => [...prevState, index]);
-    // console.log("inViewState ", inViewState);
-    // inViewRef.current.push(index);
-    // console.log("inViewRef ", inViewRef.current);
-    //2. get length
-    //3. remove opposite index if exceeds length
-    // //scrolling right
-    // if (index > scrollXRef.current) setGallery((prevState => [...prevState, galler ]))
-    // scrollXRef.current = index
-    // //TODO: fix logic to show when track pad scrolls
-    // if (index === 0) setIsFirstInView(true);
-    // else setIsFirstInView(false);
-    // if (index === collections.length - 1) setIsLastInView(true);
-    // else setIsLastInView(false);
-  };
+  // const handleIsInView = (index: number) => {
+  //   // console.log("handleIsInView ", index);
+  //   //list of all indexes in view
+  //   //1. add index if in view
+  //   // setInViewState((prevState) => [...prevState, index]);
+  //   // console.log("inViewState ", inViewState);
+  //   // inViewRef.current.push(index);
+  //   // console.log("inViewRef ", inViewRef.current);
+  //   //2. get length
+  //   //3. remove opposite index if exceeds length
+  //   // //scrolling right
+  //   // if (index > scrollXRef.current) setGallery((prevState => [...prevState, galler ]))
+  //   // scrollXRef.current = index
+  //   // //TODO: fix logic to show when track pad scrolls
+  //   // if (index === 0) setIsFirstInView(true);
+  //   // else setIsFirstInView(false);
+  //   // if (index === collections.length - 1) setIsLastInView(true);
+  //   // else setIsLastInView(false);
+  // };
 
   useEffect(() => {
     if (isInView) setStartY(scrollY.get());
@@ -147,7 +147,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
                 index={index}
                 setIsFixed={setIsFixed}
                 isFixed={isFixed}
-                handleIsInView={handleIsInView}
+                // handleIsInView={handleIsInView}
                 // didChildHover={didChildHover}
                 setDidHover={setDidChildHover}
                 startY={startY}

@@ -26,7 +26,7 @@ interface GiProps {
   index: number;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
-  handleIsInView: (index: number) => void;
+  // handleIsInView: (index: number) => void;
   setDidHover: Dispatch<SetStateAction<boolean>>;
   startY: number;
   scrollDirection: string;
@@ -44,7 +44,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     index,
     isFixed,
     setIsFixed,
-    handleIsInView,
+    // handleIsInView,
     setDidHover,
     startY,
     scrollDirection,
@@ -59,27 +59,31 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
 
   const src = `/images/small-pfp/${item.tag}.webp`;
+  // const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
   const isInView = useInView(childRef);
 
-  // const translateY = useTransform(
-  //   scrollYProgress,
-  //   [0, 0.2],
-  //   [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
-  // );
+  const translateY = useTransform(
+    scrollYProgress,
+    [0, 0.2],
+    [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
+  );
 
   // const startY = winHeight * 4;
   // const startYAuto = scrollY.get();
   // console.log("startYAuto ", startYAuto);
   //[3904, ]
+
   const [show, setShow] = useState<boolean>(false);
-  const translateY: MotionValue<number> = useTransform(
-    scrollY,
-    [startY, startY + winHeight],
-    [
-      scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
-      winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
-    ]
-  );
+  //TODO:uncomment if need to revert
+  // const translateY: MotionValue<number> = useTransform(
+  //   scrollY,
+  //   [startY, startY + winHeight],
+  //   [
+  //     scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
+  //     scrollDirection === "down" ? item.topValue * 1.5 : 0,
+  //     winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
+  //   ]
+  // );
 
   // useMotionValueEvent(scrollY, "change", (latest) => {
   //   if (index === 0) console.log("scrollY  ", latest, startY);
@@ -129,13 +133,13 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   };
 
   //tell parent final child is in view
-  useEffect(() => {
-    if (isInView) handleIsInView(index);
-  }, [isInView, handleIsInView, index]);
+  // useEffect(() => {
+  //   if (isInView) handleIsInView(index);
+  // }, [isInView, handleIsInView, index]);
 
   return (
     <motion.div
-      onClick={() => setGalleryModalId(index)}
+      onClick={() => setGalleryModalId(item.id)}
       // onMouseEnter={() => setDidHover(true)}
       // onMouseLeave={() => setDidHover(false)}
       ref={childRef}
