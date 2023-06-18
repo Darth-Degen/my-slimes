@@ -1,18 +1,14 @@
 import {
-  PageLayout,
   LandingView,
   WhatView,
   WhoView,
   FriendsView,
   WhereView,
   ScrollProgress,
-  BuyRacksView,
 } from "@components";
-import { useContext, useEffect, useRef, useState } from "react";
-import { NextPage } from "next";
-import { useScrollDirection } from "@hooks";
+import { BuyRacksView } from "@merch-components";
+import { useContext, useEffect, useState } from "react";
 import { scrollToSection } from "@helpers";
-import { useMotionValueEvent, useScroll } from "framer-motion";
 import { ViewContext } from "@constants";
 
 interface Assets {
