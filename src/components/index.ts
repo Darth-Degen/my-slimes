@@ -66,7 +66,6 @@ const WhoView = dynamic(()=> import("./templates/WhoView"))
 const FriendsView = dynamic(()=> import("./templates/FriendsView"))
 const WhereView = dynamic(()=> import("./templates/WhereView"))
 const SlimesView = dynamic(()=> import("./templates/SlimesView"))
-const BuyRacksView = dynamic(()=> import("./templates/BuyRacksView"))
 const IndexView = dynamic(()=> import("./templates/IndexView"))
 
 export {
@@ -122,7 +121,6 @@ export {
   Gallery,
   GalleryItem,
   WordScroll,
-  BuyRacksView,
   WalletButton,
   ConnectButton,
   WordFall,
