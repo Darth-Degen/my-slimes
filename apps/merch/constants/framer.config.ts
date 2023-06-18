@@ -178,10 +178,10 @@ export const menuAnimation = {
   // whileTap: { scale: 1 },
 };
 export const scaleExitAnimation = {
-  initial: { opacity: 0, scale: 0.95 },
+  initial: { opacity: 0, scale: 0.4 },
   animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.95 },
-  transition: { duration: 0.4, ease: "easeInOut" },
+  exit: { opacity: 0, scale: 0.75},
+  transition: { duration: 0.4, ease: "easeInOut", delay:0 },
 };
 
 export const opacity = (
