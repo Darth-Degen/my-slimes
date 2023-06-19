@@ -10,6 +10,7 @@ const TextBox = dynamic(()=> import("./molecules/TextBox"))
 const CountdownItem = dynamic(()=> import("./molecules/CountdownItem"))
 const BuyRacksForm = dynamic(()=> import("./molecules/BuyRacksForm"))
 const Modal = dynamic(()=> import("./molecules/Modal"))
+const StoreItem = dynamic(()=> import("./molecules/StoreItem"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -38,5 +39,6 @@ export {
   BuyRacksContent,
   Store, 
   ItemDetail, 
-  Checkout
+  Checkout,
+  StoreItem
 }

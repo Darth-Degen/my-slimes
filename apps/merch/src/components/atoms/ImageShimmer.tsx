@@ -47,7 +47,7 @@ const ImageShimmer: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className={`relative rounded overflow-hidden ${className}`}
+      className={`relative  overflow-hidden ${className}`}
       initial={animation?.initial}
       animate={animation?.animate}
       transition={animation?.transition}
@@ -57,7 +57,7 @@ const ImageShimmer: FC<Props> = (props: Props) => {
       <AnimatePresence mode="wait">
         {!imageLoaded && (
           <motion.div
-            className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded opacity-40"
+            className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-m-light-gray via-gray-200 to-m-light-gray  opacity-40"
             style={{
               backgroundSize: "200% 100%",
               animation: "shimmer 1.5s ease-in-out infinite",
@@ -81,7 +81,7 @@ const ImageShimmer: FC<Props> = (props: Props) => {
             //@ts-ignore
             style={{ objectFit: objectFit }}
             alt={alt}
-            className={`rounded ${imageClass}`}
+            className={` ${imageClass}`}
             onLoadingComplete={() => setImageLoaded(true)}
           />
         )}
@@ -91,7 +91,7 @@ const ImageShimmer: FC<Props> = (props: Props) => {
             width={width}
             height={height}
             alt={alt}
-            className={`rounded ${imageClass}`}
+            className={` ${imageClass}`}
             onLoadingComplete={() => setImageLoaded(true)}
           />
         )}
