@@ -4,7 +4,7 @@ import {
   midExitAnimation,
   midClickAnimation,
   scaleExitAnimation,
-} from "@merch-constants";
+} from "apps/merch/src/constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   show: boolean;

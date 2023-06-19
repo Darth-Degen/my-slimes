@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 //local
-import { BuyRacksContent, MerchModule } from "@merch-components";
+import { BuyRacksContent, MerchModule } from "apps/merch/src/components";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 

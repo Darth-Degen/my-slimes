@@ -1,5 +1,5 @@
-import { Modal, Store, ItemDetail, Checkout } from "@merch-components";
-import { StoreContext } from "@merch-constants";
+import { Modal, Store, ItemDetail, Checkout } from "apps/merch/src/components";
+import { StoreContext } from "apps/merch/src/constants";
 import { FC, useContext, useState } from "react";
 
 const StoreModal: FC = () => {

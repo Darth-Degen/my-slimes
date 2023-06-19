@@ -1,6 +1,6 @@
 import { HTMLAttributes, FC, useState, useEffect } from "react";
-import { CountdownItem } from "@merch-components";
-import { rackStatus } from "@merch-constants";
+import { CountdownItem } from "apps/merch/src/components";
+import { rackStatus } from "apps/merch/src/constants";
 
 interface CountdownProps extends HTMLAttributes<HTMLDivElement> {
   futureDate: Date;

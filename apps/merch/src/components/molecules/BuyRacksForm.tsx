@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { HTMLAttributes, FC } from "react";
-import { tapAnimation } from "@merch-constants";
-import { NumberInput } from "@merch-components";
+import { tapAnimation } from "apps/merch/src/constants";
+import { NumberInput } from "apps/merch/src/components";
 
 interface BuyRacksProps extends HTMLAttributes<HTMLDivElement> {
   handleMint: () => void;

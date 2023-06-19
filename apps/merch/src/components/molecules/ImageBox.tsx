@@ -1,4 +1,4 @@
-import { BuyRacksView, ImageShimmer } from "@merch-components";
+import { BuyRacksView, ImageShimmer } from "apps/merch/src/components";
 import { FC } from "react";
 import Image from "next/image";
 
