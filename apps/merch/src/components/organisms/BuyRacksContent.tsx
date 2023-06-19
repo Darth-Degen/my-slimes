@@ -20,9 +20,9 @@ import {
   TextBox,
   Countdown,
   MerchModule,
-} from "@merch-components";
-import { rackStatus, StoreContext } from "@merch-constants";
-import { RackStatus, RackStatusName } from "@merch-types";
+} from "apps/merch/src/components";
+import { rackStatus, StoreContext } from "apps/merch/src/constants";
+import { RackStatus, RackStatusName } from "apps/merch/src/types";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -85,7 +85,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     >
       <div className="py-20" />
       <div
-        className="sticky flex flex-col gap-4 lg:flex-row justify-center items-center lg:top-[10%] xl:top-[15%] rounded-full h-auto lg:h-[75vh] w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
+        className="sticky flex flex-col gap-4 lg:flex-row justify-center items-center lg:top-[10%] xl:top-[15%] rounded-[1.75rem] md:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
         ref={innerRef}
       >
         <div className="absolute -top-16 lg:-top-20 right-10 lg:right-10">

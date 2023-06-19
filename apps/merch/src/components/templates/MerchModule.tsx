@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
-import { StoreModal, ExitModal } from "@merch-components";
+import { StoreModal, ExitModal } from "apps/merch/src/components";
 import { AnimatePresence } from "framer-motion";
-import { StoreContext } from "@merch-constants";
+import { StoreContext } from "apps/merch/src/constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;

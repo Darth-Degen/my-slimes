@@ -4,7 +4,7 @@ import {
   midExitAnimation,
   midClickAnimation,
   scaleExitAnimation,
-} from "@merch-constants";
+} from "apps/merch/src/constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   show: boolean;
@@ -17,7 +17,7 @@ const Modal: FC<Props> = (props: Props) => {
   //stop page scroll when modal open
   useEffect(() => {
     if (show) document.body.style.overflow = "hidden";
-    // else document.body.style.overflow = "auto";
+    else document.body.style.overflow = "auto";
   }, [show]);
 
   return (

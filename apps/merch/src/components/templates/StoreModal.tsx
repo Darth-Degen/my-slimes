@@ -1,5 +1,5 @@
-import { Modal, Store, ItemDetail, Checkout } from "@merch-components";
-import { StoreContext } from "@merch-constants";
+import { Modal, Store, ItemDetail, Checkout } from "apps/merch/src/components";
+import { StoreContext } from "apps/merch/src/constants";
 import { FC, useContext, useState } from "react";
 
 const StoreModal: FC = () => {
@@ -16,7 +16,7 @@ const StoreModal: FC = () => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      className="h-3/4 w-5/6"
+      className="w-[90%] lg:w-5/6 h-[93%] lg:h-3/4 "
     >
       <div className="flex flex-col items-center justify-center h-full w-full text-3xl">
         {step === 1 && checkoutStep === 0 && <Store />}
