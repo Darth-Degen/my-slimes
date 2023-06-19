@@ -1,7 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    //merch TODO: needed for merch module reuse
+    "./apps/**/*.{js,ts,jsx,tsx}",
+  ],
   darkMode: "class",
   theme: {
     extend: {
@@ -46,6 +51,8 @@ module.exports = {
         "v2-green": "#73EEC5",
         "v2-dark-green": "#5CBE9D",
         "v2-dark": "#2C2524",
+        //merch TODO: needed for merch module reuse
+        "m-light-gray": "#EDEDED",
       },
       screens: {
         "3xl": "2160px",

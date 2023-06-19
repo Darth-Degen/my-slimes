@@ -1,14 +1,4 @@
-import {
-  Children,
-  FC,
-  HTMLAttributes,
-  ReactNode,
-  useEffect,
-  useState,
-  cloneElement,
-  isValidElement,
-  ReactElement,
-} from "react";
+import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
 import {
   PageHead,
   Header,
@@ -26,7 +16,6 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   pageTitle?: string;
   showFooter?: boolean;
-  // showPage?: boolean;
   headerType?: string;
   showHeader?: boolean;
   footerAccentColor?: string;
@@ -92,12 +81,6 @@ const PageLayout: FC<Props> = (props: Props) => {
     };
   }, [debouncer, didMenuClick]);
 
-  //stop page scroll (when modal or menu open)
-  // useEffect(() => {
-  //   if (stopScroll) document.body.style.overflow = "hidden";
-  //   else document.body.style.overflow = "auto";
-  // }, [stopScroll]);
-
   return (
     <ViewContext.Provider value={value}>
       <motion.div
@@ -119,15 +102,6 @@ const PageLayout: FC<Props> = (props: Props) => {
           }`}
           {...componentProps}
         >
-          {/* {Children.map(children, (child) => {
-            if (isValidElement(child)) {
-              return cloneElement(child, {
-                ...child.props,
-                didMenuClick: didMenuClick,
-              });
-            }
-            return child;
-          })} */}
           {children}
         </main>
 
