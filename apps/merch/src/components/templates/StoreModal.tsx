@@ -1,16 +1,35 @@
 import { Modal, Store, ItemDetail, Checkout } from "@merch-components";
 import { StoreContext } from "@merch-constants";
+import { Merch, Quantities } from "@merch-types";
+import { getNftsByOwner } from "@merch-helpers";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
-import { Merch } from "@merch-types";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getNftsByOwner } from "@merch-helpers";
-import { Nft, Sft } from "@metaplex-foundation/js";
 
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
 const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
+
+//TODO: replace with api data
+const _quantities: Quantities = {
+  crewneck: {
+    id: "crewneck",
+    quantity: 0,
+  },
+  tee: {
+    id: "tee",
+    quantity: 1,
+  },
+  hat: {
+    id: "hat",
+    quantity: 10,
+  },
+  pack: {
+    id: "pack",
+    quantity: 0,
+  },
+};
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
@@ -20,18 +39,24 @@ const StoreModal: FC = () => {
   //step 0 = cart, step 1 = purchase, step 2 = review
   const [checkoutStep, setCheckoutStep] = useState<number>(-1);
   const [cart, setCart] = useState<Merch[]>([]);
+  const [storeItem, setStoreItem] = useState<Merch>();
   const [nfts, setNfts] = useState<unknown[]>([]); //<(Metadata | Metadata | Nft | Sft)[]>([]);
 
   //solana wallet
   const { publicKey } = useWallet();
   const { connection } = useConnection();
-
+  //add to cart
   const addToCart = (item: Merch) => {
     setCart((prevState) => [...prevState, item]);
   };
-
+  //open cart
   const handleCartClick = (): void => {
     setCheckoutStep(0);
+  };
+  //open detail view and save clicked item
+  const handleImageClick = (item: Merch) => {
+    setStoreItem(item);
+    setStep(1);
   };
 
   //fetch users nfts
@@ -73,6 +98,7 @@ const StoreModal: FC = () => {
     getNfts();
   }, [getNfts]);
 
+  //console outputs
   useEffect(() => {
     if (cart.length > 0) console.log("cart ", cart);
   }, [cart]);
@@ -95,10 +121,12 @@ const StoreModal: FC = () => {
             checkoutStep={checkoutStep}
             nfts={nfts.length}
             cart={cart}
+            quantities={_quantities}
             handleCartClick={handleCartClick}
             addToCart={addToCart}
             setStep={setStep}
             setCheckoutStep={setCheckoutStep}
+            handleImageClick={handleImageClick}
           />
         )}
         {step === 1 && checkoutStep === 0 && <ItemDetail />}
