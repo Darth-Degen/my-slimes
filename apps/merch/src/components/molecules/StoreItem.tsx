@@ -13,7 +13,10 @@ const StoreItem: FC<Props> = (props: Props) => {
   const src = `/images/merch/${item.id}/image.png`;
 
   return (
-    <motion.div className="flex gap-10" {...midExitAnimation}>
+    <motion.div
+      className="flex flex-col md:flex-row gap-10"
+      {...midExitAnimation}
+    >
       {/* image + add to cart */}
       <div className="flex flex-col items-center gap-2">
         <ImageShimmer
@@ -31,8 +34,8 @@ const StoreItem: FC<Props> = (props: Props) => {
         </button>
       </div>
       {/* info */}
-      <div className="flex flex-col items-start justify-start uppercase text-m-mid-gray gap-[17px] -mt-1">
-        <h3 className="font-neuebit-bold text-4xl max-w-[200px] tracking-wide">
+      <div className="flex flex-col items-center md:items-start justify-start uppercase text-m-mid-gray gap-[17px] -mt-1">
+        <h3 className="font-neuebit-bold text-4xl max-w-[180px] tracking-wide text-center md:text-start">
           {item.name}
         </h3>
         <p className="font-neuebit-bold text-xl">cost - {item.cost} racks</p>

@@ -73,10 +73,6 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     if (!connected) setVisible(true);
   };
 
-  useEffect(() => {
-    console.log("child showStore ", showStore);
-  }, [showStore]);
-
   return (
     <div
       className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
