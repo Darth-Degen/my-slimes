@@ -11,7 +11,7 @@ const Footer: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="flex items-center justify-between h-[50px] text-center px-5"
+      className="flex items-center justify-between lg:h-[50px] text-center px-10 py-5 md:py-2"
       {...midExitAnimation}
     >
       {step === 1 && checkoutStep === 0 && (

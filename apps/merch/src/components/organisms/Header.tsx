@@ -1,20 +1,32 @@
 import { motion } from "framer-motion";
 import { Dispatch, FC, SetStateAction } from "react";
 import { midExitAnimation } from "@merch-constants";
-import { Breadcrumbs } from "@merch-components";
+import { Breadcrumbs, NftIndicator, CartIndicator } from "@merch-components";
+import { Merch } from "@merch-types";
 
 interface Props {
   step: number;
   checkoutStep: number;
+  nfts: number;
+  cart: Merch[];
+  handleCartClick: () => void;
   setStep: Dispatch<SetStateAction<number>>;
   setCheckoutStep: Dispatch<SetStateAction<number>>;
 }
 const Header: FC<Props> = (props: Props) => {
-  const { step, checkoutStep, setStep, setCheckoutStep } = props;
+  const {
+    step,
+    checkoutStep,
+    nfts,
+    cart,
+    handleCartClick,
+    setStep,
+    setCheckoutStep,
+  } = props;
 
   return (
     <motion.div
-      className="flex items-center justify-between w-full h-[50px] px-10"
+      className="flex flex-col md:flex-row items-center justify-between gap-5 w-full lg:h-[75px] px-10 py-5 lg:py-2"
       {...midExitAnimation}
     >
       <Breadcrumbs
@@ -23,6 +35,10 @@ const Header: FC<Props> = (props: Props) => {
         setStep={setStep}
         setCheckoutStep={setCheckoutStep}
       />
+      <div className="flex gap-2">
+        <NftIndicator count={nfts} />
+        <CartIndicator cart={cart} handleCartClick={handleCartClick} />
+      </div>
     </motion.div>
   );
 };

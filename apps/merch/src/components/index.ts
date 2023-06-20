@@ -12,6 +12,8 @@ const BuyRacksForm = dynamic(()=> import("./molecules/BuyRacksForm"))
 const Modal = dynamic(()=> import("./molecules/Modal"))
 const StoreItem = dynamic(()=> import("./molecules/StoreItem"))
 const Breadcrumbs = dynamic(()=> import("./molecules/Breadcrumbs"))
+const NftIndicator = dynamic(()=> import("./molecules/NftIndicator"))
+const CartIndicator = dynamic(()=> import("./molecules/CartIndicator"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -46,5 +48,7 @@ export {
   StoreItem,
   Header,
   Footer,
-  Breadcrumbs
+  Breadcrumbs,
+  NftIndicator,
+  CartIndicator
 }

@@ -10,12 +10,12 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
   const { step, checkoutStep, setStep, setCheckoutStep } = props;
 
   return (
-    <div className="flex gap-1.5 tracking-wide text-lg text-[#010206] font-neuebit-bold uppercase">
+    <div className="flex gap-1.5 tracking-wide text-base md:text-xl text-m-black font-neuebit-bold uppercase">
       <div
         className="cursor-pointer"
         onClick={() => {
-          setStep(1);
-          setCheckoutStep(0);
+          setStep(0);
+          setCheckoutStep(-1);
         }}
       >
         all in time
@@ -24,8 +24,8 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
         <div
           className="cursor-pointer"
           onClick={() => {
-            setStep(2);
-            setCheckoutStep(0);
+            setStep(1);
+            setCheckoutStep(-1);
           }}
         >
           {">"}

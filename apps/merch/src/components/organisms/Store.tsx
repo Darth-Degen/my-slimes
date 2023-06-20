@@ -7,22 +7,37 @@ import { Merch } from "@merch-types";
 interface Props {
   step: number;
   checkoutStep: number;
+  nfts: number;
+  cart: Merch[];
+  handleCartClick: () => void;
   addToCart: (item: Merch) => void;
   setStep: Dispatch<SetStateAction<number>>;
   setCheckoutStep: Dispatch<SetStateAction<number>>;
 }
 const Store: FC<Props> = (props: Props) => {
-  const { step, checkoutStep, addToCart, setStep, setCheckoutStep } = props;
+  const {
+    step,
+    checkoutStep,
+    nfts,
+    cart,
+    handleCartClick,
+    addToCart,
+    setStep,
+    setCheckoutStep,
+  } = props;
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-around h-full w-full"
+      className="flex flex-col items-center justify-between lg:justify-around h-full w-full"
       {...midExitAnimation}
     >
       {/* header */}
       <Header
         step={step}
         checkoutStep={checkoutStep}
+        nfts={nfts}
+        cart={cart}
+        handleCartClick={handleCartClick}
         setStep={setStep}
         setCheckoutStep={setCheckoutStep}
       />
