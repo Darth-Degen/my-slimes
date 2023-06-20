@@ -3,9 +3,10 @@ import { FC } from "react";
 
 interface Props {
   backgroundColor?: string;
+  hidden?: boolean;
 }
 const ScrollProgress: FC<Props> = (props: Props) => {
-  const { backgroundColor = "bg-v2-green" } = props;
+  const { backgroundColor = "bg-v2-green", hidden = false } = props;
   const { scrollYProgress } = useScroll();
 
   const scaleX = useSpring(scrollYProgress, {
@@ -16,7 +17,9 @@ const ScrollProgress: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className={`fixed top-0 inset-x-0 z-20 h-2.5 ${backgroundColor}`}
+      className={`${
+        hidden && "hidden"
+      } fixed top-0 inset-x-0 z-20 h-2.5 ${backgroundColor}`}
       style={{ scaleX, originX: 0 }}
     ></motion.div>
   );

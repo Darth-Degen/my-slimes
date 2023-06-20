@@ -28,15 +28,15 @@ interface Props {
   setIsInView: Dispatch<SetStateAction<boolean>>;
   id: string;
   setCurrentPage: Dispatch<SetStateAction<string>>;
+  showLoop: boolean;
+  setShowLoop: Dispatch<SetStateAction<boolean>>;
 }
 
 const LandingView: FC<Props> = (props: Props) => {
-  const { setAssets, setIsInView, id, setCurrentPage } = props;
-
-  const [showLoop, setShowLoop] = useState<boolean>(false);
-
-  const [winWidth, winHeight] = useWindowSize();
-  const { scrollY, scrollYProgress } = useScroll();
+  const { setAssets, setIsInView, id, setCurrentPage, showLoop, setShowLoop } =
+    props;
+  const [winWidth] = useWindowSize();
+  const mobileView = winWidth < 1024;
   //refs
   const scrollRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLVideoElement>(null);
@@ -52,7 +52,6 @@ const LandingView: FC<Props> = (props: Props) => {
   }, [id, isChildInView, setCurrentPage]);
 
   useEffect(() => {
-    // console.log("landing ", isInView);
     setIsInView(isInView);
   }, [isInView, setIsInView]);
 
@@ -67,7 +66,8 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id={id}
       key="landing"
-      className="relative w-full h-screen flex flex-col items-center justify-end"
+      className={`relative w-full ${mobileView ? "h-[85vh]" : "h-screen"} 
+      flex flex-col items-center justify-end`}
       {...exitAnimation}
       ref={scrollRef}
     >
@@ -77,18 +77,12 @@ const LandingView: FC<Props> = (props: Props) => {
         muted
         playsInline
         key="intro"
-        className={`h-screen w-screen absolute inset-0 -z-10 ${
+        className={`h-full w-screen absolute inset-0 -z-10 ${
           !showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
-          // console.log("- landing 0");
-          setAssets &&
-            setAssets((prevState) => [
-              ...prevState.slice(0, 0),
-              true,
-              ...prevState.slice(0 + 1),
-            ]);
+          setAssets && setAssets((prevState) => [true, ...prevState.slice(1)]);
         }}
         onEnded={() => setShowLoop(true)}
         {...exitAnimation}
@@ -101,34 +95,39 @@ const LandingView: FC<Props> = (props: Props) => {
         muted
         playsInline
         loop
-        className={`h-screen w-screen absolute inset-0 -z-20 ${
+        className={`h-full w-screen absolute inset-0 -z-20 ${
           showLoop ? "visible" : "visible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
-          // console.log("- landing 1");
           setAssets &&
             setAssets((prevState) => [
-              ...prevState.slice(0, 1),
+              ...prevState.slice(0, 0),
               true,
-              ...prevState.slice(1 + 1),
+              ...prevState.slice(2),
             ]);
         }}
       >
         <source src={_assets[1].src} type="video/mp4" />
       </motion.video>
 
-      <div
-        className="uppercase font-black text-lg pb-6 3xl:pb-20"
-        ref={innerRef}
-      >
-        scroll
-      </div>
-      <div className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6">
-        <div className="w-1/3 uppercase">the whole squad here</div>
-        <div className="w-1/3 uppercase flex justify-center">and</div>
-        <div className="w-1/3 uppercase flex justify-end">everybody eats</div>
-      </div>
+      {!mobileView && (
+        <>
+          <div
+            className="uppercase font-black text-lg pb-6 3xl:pb-20"
+            ref={innerRef}
+          >
+            scroll
+          </div>
+          <div className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6">
+            <div className="w-1/3 uppercase">the whole squad here</div>
+            <div className="w-1/3 uppercase flex justify-center">and</div>
+            <div className="w-1/3 uppercase flex justify-end">
+              everybody eats
+            </div>
+          </div>
+        </>
+      )}
     </motion.div>
   );
 };

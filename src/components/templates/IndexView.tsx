@@ -5,11 +5,13 @@ import {
   FriendsView,
   WhereView,
   ScrollProgress,
+  LinkFire,
 } from "@components";
 import { BuyRacksView } from "apps/merch/src/components";
 import { useContext, useEffect, useState } from "react";
 import { scrollToSection } from "@helpers";
 import { ViewContext } from "@constants";
+import { useWindowSize } from "@merch-hooks";
 
 interface Assets {
   src: string;
@@ -45,12 +47,21 @@ const IndexView = () => {
   const [isRacksInView, setIsRacksInView] = useState<boolean>(false);
   const [isLandingInView, setIsLandingInView] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<string>(pageIDs[0]);
+  const [showLoop, setShowLoop] = useState<boolean>(false);
   //refs
 
   //hooks
 
   //context
   const { didMenuClick } = useContext(ViewContext);
+
+  // views
+  const [width] = useWindowSize();
+  const mobileView = width < 1024;
+
+  useEffect(() => {
+    console.log("assets", assets);
+  }, [assets]);
 
   // handles auto scroll
   useEffect(() => {
@@ -71,39 +82,47 @@ const IndexView = () => {
 
   return (
     <>
-      <ScrollProgress backgroundColor={scrollColor} />
+      <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} />
       {/* TODO: add onLoadingComplete when landing graphic is added */}
       <LandingView
         setAssets={setAssets}
         setIsInView={setIsLandingInView}
         id={pageIDs[0]}
         setCurrentPage={setCurrentPage}
+        showLoop={showLoop}
+        setShowLoop={setShowLoop}
       />
-      <BuyRacksView
-        setIsInView={setIsRacksInView}
-        id={pageIDs[1]}
-        setCurrentPage={setCurrentPage}
-      />
-      <WhatView
-        setAssets={setAssets}
-        id={pageIDs[2]}
-        setCurrentPage={setCurrentPage}
-      />
-      <WhoView
-        setAssets={setAssets}
-        id={pageIDs[3]}
-        setCurrentPage={setCurrentPage}
-      />
-      <FriendsView
-        setAssets={setAssets}
-        id={pageIDs[4]}
-        setCurrentPage={setCurrentPage}
-      />
-      <WhereView
-        setAssets={setAssets}
-        id={pageIDs[5]}
-        setCurrentPage={setCurrentPage}
-      />
+      {!mobileView ? (
+        <>
+          <BuyRacksView
+            setIsInView={setIsRacksInView}
+            id={pageIDs[1]}
+            setCurrentPage={setCurrentPage}
+          />
+          <WhatView
+            setAssets={setAssets}
+            id={pageIDs[2]}
+            setCurrentPage={setCurrentPage}
+          />
+          <WhoView
+            setAssets={setAssets}
+            id={pageIDs[3]}
+            setCurrentPage={setCurrentPage}
+          />
+          <FriendsView
+            setAssets={setAssets}
+            id={pageIDs[4]}
+            setCurrentPage={setCurrentPage}
+          />
+          <WhereView
+            setAssets={setAssets}
+            id={pageIDs[5]}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      ) : (
+        <LinkFire showLoop={showLoop} />
+      )}
     </>
   );
 };
