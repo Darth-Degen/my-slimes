@@ -34,10 +34,10 @@ const _quantities: Quantities = {
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
 
-  //step 0 = store list, step 1 = item details
+  //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = purchase, step 4 = review
   const [step, setStep] = useState<number>(0);
-  //step 0 = cart, step 1 = purchase, step 2 = review
-  const [checkoutStep, setCheckoutStep] = useState<number>(-1);
+  // //step 2 = cart, step 3 = purchase, step 4 = review
+  // const [checkoutStep, setCheckoutStep] = useState<number>(-1);
   const [cart, setCart] = useState<Merch[]>([]);
   const [storeItem, setStoreItem] = useState<Merch>();
   const [nfts, setNfts] = useState<unknown[]>([]); //<(Metadata | Metadata | Nft | Sft)[]>([]);
@@ -51,7 +51,7 @@ const StoreModal: FC = () => {
   };
   //open cart
   const handleCartClick = (): void => {
-    setCheckoutStep(0);
+    setStep(2);
   };
   //open detail view and save clicked item
   const handleImageClick = (item: Merch) => {
@@ -106,6 +106,10 @@ const StoreModal: FC = () => {
     if (nfts.length > 0) console.log("racks ", nfts.length);
   }, [nfts]);
 
+  useEffect(() => {
+    console.log("step ", step);
+  }, [step]);
+
   return (
     <Modal
       show={showStore}
@@ -115,23 +119,25 @@ const StoreModal: FC = () => {
       className="w-[90%] lg:w-5/6 2xl:w-[80%]  h-[93%] lg:h-3/4 3xl:w-1/2"
     >
       <div className="flex flex-col items-center justify-center h-full w-full text-3xl">
-        {step === 0 && checkoutStep === -1 && (
+        {/* store items */}
+        {step === 0 && (
           <Store
             step={step}
-            checkoutStep={checkoutStep}
+            // checkoutStep={checkoutStep}
             nfts={nfts.length}
             cart={cart}
             quantities={_quantities}
             handleCartClick={handleCartClick}
             addToCart={addToCart}
             setStep={setStep}
-            setCheckoutStep={setCheckoutStep}
+            // setCheckoutStep={setCheckoutStep}
             handleImageClick={handleImageClick}
           />
         )}
-        {step === 1 && checkoutStep === 0 && <ItemDetail />}
+        {/* item detail view */}
+        {step === 1 && <ItemDetail />}
         {/* TODO: handle step 1-3 view inside Checkout */}
-        {checkoutStep > 0 && <Checkout step={checkoutStep} />}
+        {step > 1 && <Checkout step={step} />}
       </div>
     </Modal>
   );

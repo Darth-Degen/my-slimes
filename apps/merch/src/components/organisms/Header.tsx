@@ -6,35 +6,20 @@ import { Merch } from "@merch-types";
 
 interface Props {
   step: number;
-  checkoutStep: number;
   nfts: number;
   cart: Merch[];
   handleCartClick: () => void;
   setStep: Dispatch<SetStateAction<number>>;
-  setCheckoutStep: Dispatch<SetStateAction<number>>;
 }
 const Header: FC<Props> = (props: Props) => {
-  const {
-    step,
-    checkoutStep,
-    nfts,
-    cart,
-    handleCartClick,
-    setStep,
-    setCheckoutStep,
-  } = props;
+  const { step, nfts, cart, handleCartClick, setStep } = props;
 
   return (
     <motion.div
       className="flex flex-col md:flex-row items-center justify-between gap-5 w-full lg:h-[75px] px-10 py-5 lg:py-2"
       {...midExitAnimation}
     >
-      <Breadcrumbs
-        step={step}
-        checkoutStep={checkoutStep}
-        setStep={setStep}
-        setCheckoutStep={setCheckoutStep}
-      />
+      <Breadcrumbs step={step} setStep={setStep} />
       <div className="flex gap-2">
         <NftIndicator count={nfts} />
         <CartIndicator cart={cart} handleCartClick={handleCartClick} />

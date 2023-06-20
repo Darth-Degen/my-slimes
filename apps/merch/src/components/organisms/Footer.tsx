@@ -4,17 +4,16 @@ import { midExitAnimation } from "@merch-constants";
 
 interface Props {
   step: number;
-  checkoutStep: number;
 }
 const Footer: FC<Props> = (props: Props) => {
-  const { step, checkoutStep } = props;
+  const { step } = props;
 
   return (
     <motion.div
       className="flex items-center justify-between lg:h-[50px] text-center px-10 py-5 md:py-2"
       {...midExitAnimation}
     >
-      {step === 1 && checkoutStep === 0 && (
+      {step === 0 && (
         <div className="text-red-500 font-neuebit-bold text-lg">
           NONE OF THESE ITEMS WILL BE MADE AGAIN. GET THEM NOW OR NEVER GET
           THEM.
