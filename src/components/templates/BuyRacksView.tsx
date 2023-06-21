@@ -15,14 +15,20 @@ import {
   useInView,
 } from "framer-motion";
 import { ImageShimmer, NumberInput, ConnectButton } from "@components";
-import { tapAnimation } from "@constants";
+import { COLLECTION_API_URL, tapAnimation } from "@constants";
 import Image from "next/image";
 import { useWindowSize } from "@hooks";
 import {
   WalletMultiButton,
   useWalletModal,
 } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { EditionsContractService } from "src/lib/exchange-art";
+import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
+import { Wallet } from "@coral-xyz/anchor";
+import { PublicKey } from "@solana/web3.js";
+import { getEditionPDA } from "src/lib/exchange-art/utils";
+import { EditionSaleContract } from "src/lib/exchange-art/types/contract.interfaces";
 /*
  * page flow
  * 1. buy now
@@ -50,7 +56,7 @@ const initialStatus: Status[] = [
   {
     name: StatusName.Buy,
     text: "BUY NOW!!!",
-    endDate: new Date(2023, 5, 3, 9, 10, 50),
+    endDate: new Date(2023, 6, 14, 9, 10, 50),
     src: "/images/ait/pika.png",
     caption:
       "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
@@ -59,7 +65,7 @@ const initialStatus: Status[] = [
   {
     name: StatusName.Raffle,
     text: "RAFFLE LIVE ",
-    endDate: new Date("6/5/23"),
+    endDate: new Date("17/6/23"),
     src: "/images/ait/yoda.png",
     caption: "the lucky mfr who won a slime is:",
     timerCaption: "winner chosen in:",
@@ -74,19 +80,32 @@ const initialStatus: Status[] = [
   },
 ];
 
+export const EDITIONS_PROGRAM_ID = new PublicKey('EXBuYPNgBUXMTsjCbezENRUtFQzjUNZxvPGTd11Pznk5');
+
 interface Props {
   setIsInView: Dispatch<SetStateAction<boolean>>;
 }
 const BuyRacksView: FC<Props> = (props: Props) => {
   const { setIsInView } = props;
   const [activeStatus, setActiveStatus] = useState<Status>(initialStatus[0]);
+  const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
 
-  const { connected, publicKey } = useWallet();
+  const { connection } = useConnection();
+  const wallet = useWallet();
+  const { connected, publicKey } = wallet;
   const { setVisible } = useWalletModal();
 
   const ref = useRef<HTMLDivElement>(null);
   const [winWidth, winHeight] = useWindowSize();
   const { scrollYProgress, scrollY } = useScroll({ target: ref });
+
+  const editionContract = new EditionsContractService(
+    wallet,
+    connection,
+    //@ts-ignore
+    editionsContractIdl,
+    EDITIONS_PROGRAM_ID
+  );
 
   const y = useTransform(
     scrollYProgress,
@@ -116,8 +135,32 @@ const BuyRacksView: FC<Props> = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    (async function () {
+      try {
+        const editionInfo = await fetch(COLLECTION_API_URL).then(data => data.json());
+        console.log('editionInfo: ', editionInfo);
+        if (editionInfo?.contractGroups.length && editionInfo?.contractGroups[0].availableContracts.editionSales.length) {
+          setEditionSaleData(editionInfo?.contractGroups[0].availableContracts.editionSales[0]);
+        } else {
+          // TODO error toast
+          console.error('Error fetching edition sale data. Data is wrong');
+        }
+      } catch (e) {
+        // TODO error toast
+        console.error('Error fetching edition sale data.: ', e);
+      }
+    }());
+  }, []);
+
   const handleMint = () => {
     if (!connected) setVisible(true);
+    if (!editionSaleData) {
+      // TODO error toast
+      console.error("Cannot get edition sale data.");
+      return;
+    }
+    editionContract.buyFixedPriceEdition(editionSaleData);
   };
 
   return (
@@ -142,8 +185,8 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           >
             {publicKey
               ? publicKey.toBase58().slice(0, 4) +
-                ".." +
-                publicKey.toBase58().slice(-4)
+              ".." +
+              publicKey.toBase58().slice(-4)
               : "Connect"}
           </WalletMultiButton>
         </div>
@@ -154,6 +197,7 @@ const BuyRacksView: FC<Props> = (props: Props) => {
         >
           all in time
         </h2>
+        <p>STATUS NAME : {activeStatus.name}</p>
         {activeStatus.name !== StatusName.End && (
           <>
             {/* content */}
@@ -345,9 +389,8 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
         alt="All in Time"
       />
       <div
-        className={`absolute  ${
-          isRaffle ? "left-14 top-[45%]" : "-left-10 top-1/2"
-        }`}
+        className={`absolute  ${isRaffle ? "left-14 top-[45%]" : "-left-10 top-1/2"
+          }`}
       >
         <Image
           src={"/images/ait/speech-box.png"}

@@ -19,6 +19,7 @@ import {
   PublicKey,
   SystemProgram,
   SYSVAR_INSTRUCTIONS_PUBKEY,
+  Transaction,
   TransactionInstruction,
   TransactionMessage,
   VersionedTransaction,
@@ -46,9 +47,16 @@ import {
   getAssociatedTokenAddress,
   MINT_SIZE,
 } from '@solana/spl-token';
+import { WalletContextState } from "@solana/wallet-adapter-react";
 
 const COMMITMENT = "finalized";
 const CONNECTION_ENV = "devnet"; // 'mainnet' | 'devnet'
+
+type SolanaWallet = WalletContextState & {
+  publicKey: PublicKey;
+  signTransaction(tx: Transaction): Promise<Transaction>;
+  signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
+};
 
 /*
   How to use this lib?
@@ -75,13 +83,13 @@ const CONNECTION_ENV = "devnet"; // 'mainnet' | 'devnet'
 */
 
 export class EditionsContractService {
-  wallet: anchor.Wallet;
+  wallet: WalletContextState;
   connection: Connection;
   provider!: anchor.Provider;
   editionsProgram!: anchor.Program<EditionsProgram>;
 
   constructor(
-    wallet: anchor.Wallet,
+    wallet: WalletContextState,
     connection: Connection,
     idl?: anchor.Idl,
     programId?: PublicKey
@@ -95,7 +103,7 @@ export class EditionsContractService {
   setProvider() {
     this.provider = new anchor.AnchorProvider(
       this.connection,
-      this.wallet,
+      this.wallet as SolanaWallet,
       anchor.AnchorProvider.defaultOptions()
     );
     anchor.setProvider(this.provider);
@@ -111,12 +119,15 @@ export class EditionsContractService {
       );
     } else {
       // Tests
-      this.editionsProgram = anchor.workspace.EditionsProgram as anchor.Program<EditionsProgram>;
+      // this.editionsProgram = anchor.workspace.EditionsProgram as anchor.Program<EditionsProgram>;
     }
   }
 
   async buyFixedPriceEdition(editionSaleContract: EditionSaleContract): Promise<string> {
     try {
+      if (!this.wallet.publicKey) {
+        throw new Error('Cannot identify wallet.');
+      }
       //1. get connection and wallet
       // No.
 
@@ -390,6 +401,9 @@ export class EditionsContractService {
       transactionV0.sign(additionalSigners);
     }
 
+    if (!this.wallet.signTransaction) {
+      throw new Error('Cannot sign tx')
+    }
     const signedTransactionv0 = await this.wallet.signTransaction(transactionV0);
 
     const transactionSignature = await connection.sendRawTransaction(signedTransactionv0.serialize(), { maxRetries: 5 });
