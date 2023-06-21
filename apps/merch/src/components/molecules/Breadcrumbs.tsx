@@ -1,11 +1,13 @@
 import { Dispatch, FC, SetStateAction } from "react";
+import { Merch } from "@merch-types";
 
 interface Props {
   step: number;
+  storeItem: Merch | undefined;
   setStep: Dispatch<SetStateAction<number>>;
 }
 const Breadcrumbs: FC<Props> = (props: Props) => {
-  const { step, setStep } = props;
+  const { step, storeItem, setStep } = props;
 
   return (
     <div className="flex gap-1.5 tracking-wide text-base md:text-xl text-m-black font-neuebit-bold uppercase">
@@ -25,7 +27,7 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
             setStep(1);
           }}
         >
-          TODO: add selected item
+          {storeItem?.name ?? "merch item"}
         </div>
       )}
     </div>

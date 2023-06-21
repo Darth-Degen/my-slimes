@@ -1,10 +1,13 @@
 import { FC } from "react";
+import { Merch } from "@merch-types";
 
-interface Props {}
+interface Props {
+  item: Merch;
+}
 const ItemDetail: FC<Props> = (props: Props) => {
-  const {} = props;
+  const { item } = props;
 
-  return <div className="">ItemDetail</div>;
+  return <div className="">{item.name}</div>;
 };
 
 export default ItemDetail;

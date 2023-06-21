@@ -8,18 +8,19 @@ interface Props {
   step: number;
   nfts: number;
   cart: Merch[];
+  storeItem: Merch | undefined;
   handleCartClick: () => void;
   setStep: Dispatch<SetStateAction<number>>;
 }
 const Header: FC<Props> = (props: Props) => {
-  const { step, nfts, cart, handleCartClick, setStep } = props;
+  const { step, nfts, cart, storeItem, handleCartClick, setStep } = props;
 
   return (
     <motion.div
-      className="flex flex-col md:flex-row items-center justify-between gap-5 w-full lg:h-[75px] px-10 py-5 lg:py-2"
+      className="flex flex-col md:flex-row items-center justify-between gap-5 w-full px-10 py-5 lg:pt-3"
       {...midExitAnimation}
     >
-      <Breadcrumbs step={step} setStep={setStep} />
+      <Breadcrumbs step={step} setStep={setStep} storeItem={storeItem} />
       <div className="flex gap-2">
         <NftIndicator count={nfts} />
         <CartIndicator cart={cart} handleCartClick={handleCartClick} />
