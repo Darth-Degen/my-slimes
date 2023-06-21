@@ -13,9 +13,9 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
     <AnimatePresence mode="wait">
       {showLoop && (
         <motion.div {...slideUpAnimation}>
-          <div className="w-full grid grid-cols-2 gap-2 px-5 pb-10">
+          <div className="w-full grid grid-cols-2 gap-2 px-5 pt-20 pb-10">
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://exchange.art/series/Slimes/nfts"
               image="/images/linkfire/slimes_secondary.png"
               width={191}
               height={141}
@@ -23,7 +23,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               span={1}
             />
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://exchange.art/series/Slimes%20Family%20Collection/nfts"
               image="/images/linkfire/sfc_secondary.png"
               width={191}
               height={141}
@@ -31,7 +31,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               span={1}
             />
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://twitter.com/myslimes_"
               image="/images/linkfire/slimes_twitter.png"
               width={191}
               height={141}
@@ -39,7 +39,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               span={1}
             />
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://twitter.com/scumsol"
               image="/images/linkfire/scum_twitter.png"
               width={191}
               height={141}
@@ -47,7 +47,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               span={1}
             />
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://discord.gg/scumsol"
               image="/images/linkfire/scum_discord.png"
               width={191}
               height={141}
@@ -55,7 +55,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               span={1}
             />
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://allintime.xyz/"
               image="/images/linkfire/allintime.png"
               width={191}
               height={141}
@@ -63,7 +63,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               span={1}
             />
             <MobileLink
-              href="https://www.youtube.com/watch?v=1qN72LEQnaU"
+              href="https://aether.so/space/Slimes"
               image="/images/linkfire/slimes_family_gallery.png"
               width={392}
               height={98}
