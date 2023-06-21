@@ -21,6 +21,9 @@ const _assets: Assets[] = [
   {
     src: "/videos/loading-loop.mp4",
   },
+  {
+    src: "/videos/mobile_club_loop.mp4",
+  },
 ];
 
 interface Props {
@@ -52,6 +55,12 @@ const LandingView: FC<Props> = (props: Props) => {
   }, [id, isChildInView, setCurrentPage]);
 
   useEffect(() => {
+    if (mobileView) {
+      setShowLoop(true);
+    }
+  }, [mobileView, setShowLoop]);
+
+  useEffect(() => {
     setIsInView(isInView);
   }, [isInView, setIsInView]);
 
@@ -66,7 +75,7 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id={id}
       key="landing"
-      className={`relative w-full ${mobileView ? "h-[85vh]" : "h-screen"} 
+      className={`relative w-full ${mobileView ? "h-[70vh]" : "h-screen"} 
       flex flex-col items-center justify-end`}
       {...exitAnimation}
       ref={scrollRef}
@@ -77,7 +86,9 @@ const LandingView: FC<Props> = (props: Props) => {
         muted
         playsInline
         key="intro"
-        className={`h-full w-screen absolute inset-0 -z-10 ${
+        className={`${
+          mobileView && "hidden"
+        } h-full w-screen absolute inset-0 -z-10 ${
           !showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
@@ -95,7 +106,9 @@ const LandingView: FC<Props> = (props: Props) => {
         muted
         playsInline
         loop
-        className={`h-full w-screen absolute inset-0 -z-20 ${
+        className={`${
+          mobileView && "hidden"
+        } h-full w-screen absolute inset-0 -z-20 ${
           showLoop ? "visible" : "visible"
         }`}
         style={{ objectFit: "cover" }}
@@ -109,6 +122,29 @@ const LandingView: FC<Props> = (props: Props) => {
         }}
       >
         <source src={_assets[1].src} type="video/mp4" />
+      </motion.video>
+
+      <motion.video
+        ref={loopRef}
+        muted
+        playsInline
+        loop
+        className={`${
+          !mobileView && "hidden"
+        } pt-10 h-full w-screen absolute inset-0 -z-20 ${
+          showLoop ? "visible" : "visible"
+        }`}
+        style={{ objectFit: "cover" }}
+        onLoadedData={() => {
+          setAssets &&
+            setAssets((prevState) => [
+              ...prevState.slice(0, 0),
+              true,
+              ...prevState.slice(2),
+            ]);
+        }}
+      >
+        <source src={_assets[2].src} type="video/mp4" />
       </motion.video>
 
       {!mobileView && (
