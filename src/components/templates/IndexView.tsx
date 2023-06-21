@@ -92,37 +92,36 @@ const IndexView = () => {
         showLoop={showLoop}
         setShowLoop={setShowLoop}
       />
-      {!mobileView ? (
-        <>
-          <BuyRacksView
-            setIsInView={setIsRacksInView}
-            id={pageIDs[1]}
-            setCurrentPage={setCurrentPage}
-          />
-          <WhatView
-            setAssets={setAssets}
-            id={pageIDs[2]}
-            setCurrentPage={setCurrentPage}
-          />
-          <WhoView
-            setAssets={setAssets}
-            id={pageIDs[3]}
-            setCurrentPage={setCurrentPage}
-          />
-          <FriendsView
-            setAssets={setAssets}
-            id={pageIDs[4]}
-            setCurrentPage={setCurrentPage}
-          />
-          <WhereView
-            setAssets={setAssets}
-            id={pageIDs[5]}
-            setCurrentPage={setCurrentPage}
-          />
-        </>
-      ) : (
+      <div className="w-full h-full hidden sm:block">
+        <BuyRacksView
+          setIsInView={setIsRacksInView}
+          id={pageIDs[1]}
+          setCurrentPage={setCurrentPage}
+        />
+        <WhatView
+          setAssets={setAssets}
+          id={pageIDs[2]}
+          setCurrentPage={setCurrentPage}
+        />
+        <WhoView
+          setAssets={setAssets}
+          id={pageIDs[3]}
+          setCurrentPage={setCurrentPage}
+        />
+        <FriendsView
+          setAssets={setAssets}
+          id={pageIDs[4]}
+          setCurrentPage={setCurrentPage}
+        />
+        <WhereView
+          setAssets={setAssets}
+          id={pageIDs[5]}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
+      <div className="w-full h-full sm:hidden">
         <LinkFire showLoop={showLoop} />
-      )}
+      </div>
     </>
   );
 };
