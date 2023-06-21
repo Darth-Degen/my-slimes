@@ -20,9 +20,9 @@ import {
   TextBox,
   Countdown,
   MerchModule,
-} from "apps/merch/src/components";
-import { rackStatus, StoreContext } from "apps/merch/src/constants";
-import { RackStatus, RackStatusName } from "apps/merch/src/types";
+} from "@merch-components";
+import { rackStatus, StoreContext } from "@merch-constants";
+import { RackStatus, RackStatusName } from "@merch-types";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -72,10 +72,6 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const handleMint = () => {
     if (!connected) setVisible(true);
   };
-
-  useEffect(() => {
-    console.log("child showStore ", showStore);
-  }, [showStore]);
 
   return (
     <div

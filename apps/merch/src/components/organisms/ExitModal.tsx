@@ -16,7 +16,7 @@ const ExitModal: FC = () => {
       }}
       className="w-[80%] lg:w-2/3 h-2/3 md:h-1/2 lg:h-1/3"
     >
-      <div className="relative flex flex-col items-center justify-evenly h-full w-full p-8 text-center">
+      <div className="relative flex flex-col items-center justify-evenly h-full w-full p-5 text-center">
         {/* content */}
         <h3 className=" text-m-red text-4xl md:text-5xl font-black uppercase">
           Wait Hol&apos; Up
