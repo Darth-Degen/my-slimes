@@ -12,12 +12,13 @@ interface Props {
 }
 
 const MobileLink: FC<Props> = ({ href, image, width, height, alt, span }) => {
+  const spanClass = `col-span-${span}`;
   return (
     <motion.a
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className={`w-full h-full overflow-hidden rounded-xl col-span-${span}`}
+      className={`w-full h-full overflow-hidden rounded-xl ${spanClass}`}
     >
       <Image src={image} width={width} height={height} alt={alt} />
     </motion.a>
