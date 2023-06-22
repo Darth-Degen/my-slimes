@@ -8,7 +8,7 @@ interface Props {
   width: number;
   height: number;
   alt: string;
-  span: 1 | 2;
+  span: "1" | "2";
 }
 
 const MobileLink: FC<Props> = ({ href, image, width, height, alt, span }) => {

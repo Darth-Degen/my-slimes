@@ -20,7 +20,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={191}
               height={141}
               alt="slimes secondary marketplace link"
-              span={1}
+              span="1"
             />
             <MobileLink
               href="https://exchange.art/series/Slimes%20Family%20Collection/nfts"
@@ -28,7 +28,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={191}
               height={141}
               alt="sfc secondary marketplace link"
-              span={1}
+              span="1"
             />
             <MobileLink
               href="https://twitter.com/myslimes_"
@@ -36,7 +36,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={191}
               height={141}
               alt="slimes twitter link"
-              span={1}
+              span="1"
             />
             <MobileLink
               href="https://twitter.com/scumsol"
@@ -44,7 +44,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={191}
               height={141}
               alt="scum twitter link"
-              span={1}
+              span="1"
             />
             <MobileLink
               href="https://discord.gg/scumsol"
@@ -52,7 +52,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={191}
               height={141}
               alt="scum discord link"
-              span={1}
+              span="1"
             />
             <MobileLink
               href="https://allintime.xyz/"
@@ -60,7 +60,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={191}
               height={141}
               alt="all in time link"
-              span={1}
+              span="1"
             />
             <MobileLink
               href="https://aether.so/space/Slimes"
@@ -68,7 +68,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
               width={392}
               height={98}
               alt="slimes family gallery link"
-              span={2}
+              span="2"
             />
           </div>
         </motion.div>
