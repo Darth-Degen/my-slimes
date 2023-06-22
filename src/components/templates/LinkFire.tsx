@@ -12,7 +12,7 @@ const LinkFire: FC<Props> = ({ showLoop }) => {
   return (
     <AnimatePresence mode="wait">
       {showLoop && (
-        <motion.div {...slideUpAnimation}>
+        <motion.div {...slideUpAnimation} className="-mt-12">
           <div className="w-full grid grid-cols-2 gap-2 px-5 pt-20 pb-10">
             <div className="col-span-1 w-full h-full overflow-hidden rounded-xl">
               <MobileLink

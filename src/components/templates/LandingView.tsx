@@ -75,7 +75,7 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id={id}
       key="landing"
-      className={`relative w-full ${mobileView ? "h-[70vh]" : "h-screen"} 
+      className={`relative w-full ${mobileView ? "h-[69vh]" : "h-screen"} 
       flex flex-col items-center justify-end`}
       {...exitAnimation}
       ref={scrollRef}
