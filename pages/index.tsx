@@ -1,7 +1,7 @@
 import { PageLayout, IndexView } from "@components";
 import { useContext, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
-import { useScrollDirection } from "@hooks";
+import { useScrollDirection, useWindowSize } from "@hooks";
 import { scrollToSection } from "@helpers";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { ViewContext } from "@constants";
@@ -37,8 +37,11 @@ const Home: NextPage = () => {
     // false, // [4] what - image 3
   ]);
 
+  const [width] = useWindowSize();
+  const mobileView = width < 1024;
+
   return (
-    <PageLayout headerType="scroll" assets={assets}>
+    <PageLayout headerType={mobileView ? "block" : "scroll"} assets={assets}>
       <IndexView />
     </PageLayout>
   );
