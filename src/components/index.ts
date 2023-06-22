@@ -68,7 +68,6 @@ const WhatView = dynamic(() => import("./templates/WhatView"));
 const WhoView = dynamic(() => import("./templates/WhoView"));
 const FriendsView = dynamic(() => import("./templates/FriendsView"));
 const WhereView = dynamic(() => import("./templates/WhereView"));
-const SlimesView = dynamic(() => import("./templates/SlimesView"));
 const IndexView = dynamic(() => import("./templates/IndexView"));
 const LinkFire = dynamic(() => import("./templates/LinkFire"));
 
@@ -121,7 +120,6 @@ export {
   TextScroll,
   GalleryModal,
   ModalV2,
-  SlimesView,
   Gallery,
   GalleryItem,
   WordScroll,
