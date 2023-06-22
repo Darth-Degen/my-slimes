@@ -34,6 +34,7 @@ const WalletButton = dynamic(() => import("./atoms/WalletButton"));
 const ConnectButton = dynamic(() => import("./atoms/ConnectButton"));
 const GalleryArrowButton = dynamic(() => import("./atoms/GalleryArrowButton"));
 const MobileLink = dynamic(() => import("./atoms/MobileLink"));
+const SlimeHubButton = dynamic(() => import("./atoms/SlimeHubButton"));
 //molecules
 const PageHead = dynamic(() => import("./molecules/PageHead"));
 const Logo = dynamic(() => import("./molecules/Logo"));
@@ -61,6 +62,7 @@ const GalleryModal = dynamic(() => import("./organisms/GalleryModal"));
 const SFCModal = dynamic(() => import("./organisms/SFCModal"));
 const Gallery = dynamic(() => import("./organisms/Gallery"));
 const SFCGallery = dynamic(() => import("./organisms/SFCGallery"));
+const YourSlimes = dynamic(() => import("./organisms/YourSlimes"));
 //templates
 const PageLayout = dynamic(() => import("./templates/PageLayout"));
 const LandingView = dynamic(() => import("./templates/LandingView"));
@@ -68,7 +70,7 @@ const WhatView = dynamic(() => import("./templates/WhatView"));
 const WhoView = dynamic(() => import("./templates/WhoView"));
 const FriendsView = dynamic(() => import("./templates/FriendsView"));
 const WhereView = dynamic(() => import("./templates/WhereView"));
-const SlimesView = dynamic(() => import("./templates/SlimesView"));
+const SlimesHubView = dynamic(() => import("./templates/SlimesHubView"));
 const IndexView = dynamic(() => import("./templates/IndexView"));
 const LinkFire = dynamic(() => import("./templates/LinkFire"));
 
@@ -121,7 +123,7 @@ export {
   TextScroll,
   GalleryModal,
   ModalV2,
-  SlimesView,
+  SlimesHubView,
   Gallery,
   GalleryItem,
   WordScroll,
@@ -130,10 +132,12 @@ export {
   WordFall,
   GalleryArrowButton,
   MobileLink,
+  SlimeHubButton,
   VideoScroll,
   IndexView,
   LinkFire,
   SFCGallery,
+  YourSlimes,
   SFCGalleryItem,
   SFCModal,
 };

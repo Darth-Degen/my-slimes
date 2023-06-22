@@ -45,6 +45,8 @@ module.exports = {
         "ait-black": "#020102",
         "ait-gray": "#E8E8E8",
         shadow: "rgba(82, 82, 82, 0.25)",
+        // slimes hub
+        "slimes-black": "#2E2929",
         //version 2 theme
         "v2-pink": "#FFB094",
         "v2-beige": "#f9f1d9", // "#F6EFD3",
