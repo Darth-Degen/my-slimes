@@ -22,7 +22,7 @@ const Header: FC<Props> = (props: Props) => {
     >
       <Breadcrumbs step={step} setStep={setStep} storeItem={storeItem} />
       <div className="flex gap-2">
-        <NftIndicator count={nfts} />
+        <NftIndicator count={nfts} step={step} />
         <CartIndicator cart={cart} handleCartClick={handleCartClick} />
       </div>
     </motion.div>
