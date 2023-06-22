@@ -5,5 +5,6 @@ export interface Merch {
   maxSupply: number; //or number[]
   cost: number;
   sizes: string[];
-  color: string[];
+  colors: string[];
+  images: string[];
 }

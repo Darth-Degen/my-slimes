@@ -111,10 +111,6 @@ const StoreModal: FC = () => {
     if (nfts.length > 0) console.log("racks ", nfts.length);
   }, [nfts]);
 
-  useEffect(() => {
-    console.log("step ", step);
-  }, [step]);
-
   return (
     <Modal
       show={showStore}
