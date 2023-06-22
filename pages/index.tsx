@@ -35,14 +35,26 @@ const Home: NextPage = () => {
     // false, // [2] what - image 1
     // false, // [3] what - image 2
     // false, // [4] what - image 3
+    // false, // [5] what - image 4
+    // false, // [6] what - image 5
   ]);
 
   const [width] = useWindowSize();
   const mobileView = width < 1024;
 
+  useEffect(() => {
+    if (mobileView) {
+      setAssets([false, false, false, false, false, false, false]);
+    }
+  }, [mobileView]);
+
+  // useEffect(() => {
+  //   console.log("assets", assets);
+  // }, [assets]);
+
   return (
     <PageLayout headerType={mobileView ? "block" : "scroll"} assets={assets}>
-      <IndexView />
+      <IndexView setAssets={setAssets} />
     </PageLayout>
   );
 };
