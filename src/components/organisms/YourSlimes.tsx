@@ -13,18 +13,19 @@ const YourSlimes: FC<Props> = () => {
 
   return (
     <motion.div
-      className="w-full flex items-start justify-center pt-8"
+      className="w-full max-w-[1200px] mx-auto flex items-start justify-center pt-8"
       {...enterAnimation}
     >
       <div className="w-fit rounded-xl overflow-hidden pr-6">
         <Image
           src="/images/slimeshub/pablo.png"
-          width={400}
-          height={400}
+          width={550}
+          height={550}
           alt="featured slime pfp"
         />
       </div>
-      <div className="w-[450px] h-full pl-6 -mt-3">
+      <div className="w-[600px] h-full pl-6 -mt-3">
+        {/* TODO: add dynamic data here (default to pablo when not connected) */}
         <p className="hub-name uppercase text-slimes-black">Pablo</p>
         <p className="font-secondary max-w-[300px] text-[9px] leading-[12px] text-slimes-black -mt-1">
           I feel like Pablo. Ye needs jesus. Blem if you read this text me “I’m
@@ -59,12 +60,13 @@ const YourSlimes: FC<Props> = () => {
         </div>
         {/* your slimes - connect wallet or show icons */}
         <div>
-          <div className="flex items-center gap-2 pb-3">
+          <div className="flex items-center gap-2 pb-4">
             <p className="text-sm uppercase font-black text-slimes-black">
               Your Slime(s):
             </p>
             {publicKey !== null && (
-              <div
+              <motion.div
+                {...smallClickAnimation}
                 className="uppercase underline font-secondary text-xs text-custom-red cursor-pointer"
                 onClick={() => {
                   disconnect();
@@ -75,20 +77,41 @@ const YourSlimes: FC<Props> = () => {
                   ".." +
                   publicKey.toBase58().slice(-4)
                 }`}
-              </div>
+              </motion.div>
             )}
           </div>
-          {publicKey !== null ? (
-            <div className="min-h-[60px]">icons here</div>
-          ) : (
-            <WalletMultiButton className="!bg-v2-green !text-slimes-black !border-none !rounded-lg !h-[60px] !w-[190px] !font-secondary !flex !items-center !justify-center !px-0 !text-sm !uppercase">
-              Connect Wallet
-            </WalletMultiButton>
-          )}
+          {/* TODO: check if user has slimes */}
+          <div
+            className={`${
+              publicKey ? "h-[100px]" : "h-[60px]"
+            } transition-transform duration-500 ease-in-out flex items-start gap-3`}
+          >
+            {publicKey !== null ? (
+              <motion.div
+                className="relative w-[100px] h-[100px] bg-custom-red cursor-pointer flex items-center justify-center overflow-hidden rounded-lg border border-slimes-border shadow-lg"
+                {...smallClickAnimation}
+                onClick={() => {
+                  window.open(
+                    "https://youtube.com/watch?v=dQw4w9WgXcQ",
+                    "_blank",
+                    "noopener noreferrer"
+                  );
+                }}
+              >
+                <p className="p-3 text-sm text-white uppercase font-secondary text-center">
+                  you need a slime friend
+                </p>
+              </motion.div>
+            ) : (
+              <WalletMultiButton className="!bg-v2-green !text-slimes-black !border-none !rounded-lg !h-[60px] !w-[190px] !font-secondary !flex !items-center !justify-center !px-0 !text-sm !uppercase">
+                Connect Wallet
+              </WalletMultiButton>
+            )}
+          </div>
         </div>
         {/* asset library */}
-        <div className="pt-4">
-          <p className="text-sm uppercase font-black text-slimes-black pb-3">
+        <div className="pt-3">
+          <p className="text-sm uppercase font-black text-slimes-black pb-4">
             Asset Library:
           </p>
           <div className="h-[100px] flex items-start gap-3">

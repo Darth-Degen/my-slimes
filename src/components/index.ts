@@ -52,6 +52,7 @@ const TextScroll = dynamic(() => import("./molecules/TextScroll"));
 const ModalV2 = dynamic(() => import("./molecules/ModalV2"));
 const GalleryItem = dynamic(() => import("./molecules/GalleryItem"));
 const SFCGalleryItem = dynamic(() => import("./molecules/SFCGalleryItem"));
+const SlimesHubFooter = dynamic(() => import("./molecules/SlimesHubFooter"));
 //organisms
 const Header = dynamic(() => import("./organisms/Header"));
 const Footer = dynamic(() => import("./organisms/Footer"));
@@ -139,5 +140,6 @@ export {
   SFCGallery,
   YourSlimes,
   SFCGalleryItem,
+  SlimesHubFooter,
   SFCModal,
 };
