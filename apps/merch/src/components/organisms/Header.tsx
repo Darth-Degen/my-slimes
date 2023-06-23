@@ -17,7 +17,7 @@ const Header: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="flex flex-col md:flex-row items-center justify-between gap-5 w-full px-10 py-5 lg:pt-3"
+      className="flex flex-col md:flex-row items-center justify-between gap-3 lg:gap-5 w-full px-10 py-5 lg:pt-3"
       {...midExitAnimation}
     >
       <Breadcrumbs step={step} setStep={setStep} storeItem={storeItem} />

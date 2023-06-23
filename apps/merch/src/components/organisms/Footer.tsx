@@ -12,7 +12,7 @@ const Footer: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className={`flex items-center w-full lg:h-[60px] text-center px-10 py-5 md:py-2 uppercase ${
+      className={`flex flex-col lg:flex-row items-center w-full lg:h-[60px] gap-3 lg:gap-0 text-center px-10 py-5 md:py-2 uppercase ${
         step === 0 ? "justify-center " : "justify-between "
       }`}
       {...midExitAnimation}
@@ -21,20 +21,20 @@ const Footer: FC<Props> = (props: Props) => {
         {step > 0 && (
           <motion.div
             key="racks"
-            className="w-1/4 flex font-neuebit-bold text-m-mid-gray text-base"
+            className="lg:w-1/4 flex font-neuebit-bold text-m-mid-gray text-base"
             {...fastExitAnimation}
           >
             racks = .5 sol ea.
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="w-1/2 text-red-500 font-neuebit-bold text-lg">
+      <div className="lg:w-1/2 text-red-500 font-neuebit-bold text-lg">
         NONE OF THESE ITEMS WILL BE MADE AGAIN. GET THEM NOW OR NEVER GET THEM.
       </div>
       <AnimatePresence mode="wait">
         {step > 0 && (
           <motion.div
-            className="w-1/4 flex justify-end"
+            className="lg:w-1/4 flex justify-end"
             key="logo"
             {...fastExitAnimation}
           >

@@ -35,7 +35,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
       />
       {/*  info + selection */}
       <motion.div
-        className="flex flex-col gap-3 max-w-[375px] text-m-mid-gray text-xl"
+        className="flex flex-col items-center lg:items-start gap-3 max-w-[375px] text-m-mid-gray text-xl"
         {...midExitAnimation}
       >
         <h3 className="font-neuebit-bold text-5xl pb-3">{item.name}</h3>

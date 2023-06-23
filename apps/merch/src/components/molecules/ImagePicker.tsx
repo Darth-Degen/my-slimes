@@ -24,12 +24,12 @@ const ImagePicker: FC<Props> = (props: Props) => {
         <ImageShimmer
           src={`${path}${src}`}
           alt={"Main"}
-          width={450}
-          height={450}
+          width={490}
+          height={490}
           className="transition-all duration-[1250ms] ease-out hover:scale-150 cursor-pointer"
         />
       </div>
-      <div className="flex gap-4 h-full">
+      <div className="flex justify-center lg:justify-start w-full gap-4">
         {images.length &&
           images.map((image, index) => {
             return (
@@ -37,8 +37,8 @@ const ImagePicker: FC<Props> = (props: Props) => {
                 key={index}
                 src={`${path}${image}`}
                 alt="Gallery"
-                width={75}
-                height={75}
+                width={90}
+                height={90}
                 className={`cursor-pointer ${
                   selected === index
                     ? "outline outline-m-mid-gray outline-offset-2"
