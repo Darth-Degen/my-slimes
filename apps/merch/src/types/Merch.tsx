@@ -7,4 +7,6 @@ export interface Merch {
   sizes: string[];
   colors: string[];
   images: string[];
+  size?: string;
+  color?: string;
 }

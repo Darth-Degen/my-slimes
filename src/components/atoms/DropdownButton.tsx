@@ -2,7 +2,6 @@ import { ArrowIcon } from "@components";
 import { arrowVariants } from "@constants";
 import { FC } from "react";
 import { motion } from "framer-motion";
-
 interface Props {
   isActive: boolean;
   label: string;
@@ -11,11 +10,11 @@ interface Props {
 const DropdownButton: FC<Props> = (props: Props) => {
   const { isActive, label } = props;
 
-  const styles: string = "w-60 h-10 font-neuebit-bold text-xl";
+  const styles: string = "w-56 h-10 font-primary";
 
   return (
     <motion.button
-      className={`relative flex justify-between ${styles} uppercase  border-custom-dark items-center px-3 cursor-pointer bg-white transition-colors duration-300`}
+      className={`relative flex justify-between ${styles} border-2 border-custom-dark rounded-xl items-center px-3 cursor-pointer hover:bg-custom-pink transition-colors duration-300`}
       // whileTap={{ scale: 0.97 }}
       // {...backgroundAnimations}
     >
@@ -25,7 +24,7 @@ const DropdownButton: FC<Props> = (props: Props) => {
         variants={arrowVariants}
         className=""
       >
-        <ArrowIcon color={"#505050"} type="single" />
+        <ArrowIcon color={"#232726"} type="thick" />
       </motion.div>
     </motion.button>
   );

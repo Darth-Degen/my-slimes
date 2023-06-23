@@ -24,14 +24,14 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
       </motion.div>
 
       <AnimatePresence mode="wait">
-        {step === 1 && (
+        {step > 0 && (
           <motion.div className="cursor-pointer" {...fastExitAnimation}>
             {">"}
           </motion.div>
         )}
       </AnimatePresence>
       <AnimatePresence mode="wait">
-        {step === 1 && (
+        {step > 0 && (
           <motion.div
             className="cursor-pointer"
             onClick={() => {

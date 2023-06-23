@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { Merch } from "@merch-types";
 import Image from "next/image";
 import { midExitAnimation } from "@merch-constants";
@@ -8,9 +8,11 @@ import { ImagePicker, Dropdown } from "@merch-components";
 import arrows from "../../../images/icons/three-right-arrows.svg";
 interface Props {
   item: Merch;
+  addToCart: (item: Merch) => void;
+  setStep: Dispatch<SetStateAction<number>>;
 }
 const ItemDetail: FC<Props> = (props: Props) => {
-  const { item } = props;
+  const { item, addToCart, setStep } = props;
   const path = `/images/merch/${item.id}/`;
 
   const [selected, setSelected] = useState<number>(0);
@@ -19,14 +21,48 @@ const ItemDetail: FC<Props> = (props: Props) => {
   const [color, setColor] = useState<string>();
   const [size, setSize] = useState<string>();
 
+  const [cartItem, setCartItem] = useState<Merch>(item);
+
   const handleColorSelect = (color: string): void => {
     setColor(color);
   };
   const handleSizeSelect = (size: string): void => {
     setSize(size);
   };
+
+  const handleAddToCart = (): void => {
+    if (cartItem?.size && cartItem?.color) addToCart(cartItem);
+    else console.log(cartItem?.size, cartItem?.color);
+  };
+  const handleBuyNow = (): void => {
+    if (cartItem?.size && cartItem?.color) {
+      setStep(3);
+      addToCart(cartItem);
+    } else console.log(cartItem?.size, cartItem?.color);
+  };
+
+  //update selection on size/color change
+  useEffect(() => {
+    if (size) setCartItem((prevState) => ({ ...prevState, size }));
+  }, [size]);
+  useEffect(() => {
+    if (color) setCartItem((prevState) => ({ ...prevState, color }));
+  }, [color]);
+
+  //set color if only one
+  useEffect(() => {
+    if (item.colors.length === 1) setColor(item.colors[0]);
+  }, [item.colors]);
+
+  //set size if only one
+  useEffect(() => {
+    if (item.sizes.length === 1) setSize(item.sizes[0]);
+  }, [item.sizes]);
+
+  const tempQty = true;
+
   return (
-    <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start gap-10 h-full w-full px-12 lg:px-20 py-5">
+    <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start gap-12 xl:gap-16 h-full w-full px-12 py-5">
       <ImagePicker
         images={item.images}
         path={path}
@@ -35,10 +71,12 @@ const ItemDetail: FC<Props> = (props: Props) => {
       />
       {/*  info + selection */}
       <motion.div
-        className="flex flex-col items-center lg:items-start gap-3 max-w-[375px] text-m-mid-gray text-xl"
+        className="flex flex-col items-center lg:items-start gap-3 max-w-[375px] text-m-mid-gray text-xl -translate-y-2"
         {...midExitAnimation}
       >
-        <h3 className="font-neuebit-bold text-5xl pb-3">{item.name}</h3>
+        <h3 className="font-neuebit-bold text-5xl pb-3 uppercase">
+          {item.name}
+        </h3>
         <div className="bg-[#D9D9D9] w-full py-2 px-7 flex items-center gap-6">
           <Image src={arrows} alt="Arrows" width={154 / 5} height={66 / 5} />
           <p className="uppercase font-neuebit-bold pt-0.5">
@@ -50,7 +88,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
           <p className="font-neuebit-bold">cost - {item.cost}</p>
           <p className="font-neuebit-bold">qty made - {item.maxSupply}</p>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 pb-3">
           <Dropdown
             handleSelect={handleColorSelect}
             setShowDropdown={setColorDropdown}
@@ -66,6 +104,23 @@ const ItemDetail: FC<Props> = (props: Props) => {
             items={item.sizes}
           />
         </div>
+        {tempQty && (
+          <div className="w-[300px] h-12 bg-[#D9D9D9] border border-m-mid-gray rounded-full font-neuebit-bold text-xl">
+            <button
+              className="w-[57%] h-full bg-m-green rounded-full text-white uppercase"
+              onClick={handleBuyNow}
+            >
+              buy for: {item.cost} racks
+            </button>
+            <button
+              className="w-[43%] h-full text-m-mid-gray uppercase"
+              onClick={handleAddToCart}
+            >
+              add to cart
+            </button>
+          </div>
+        )}
+        {!tempQty && <button className=""></button>}
       </motion.div>
     </div>
   );

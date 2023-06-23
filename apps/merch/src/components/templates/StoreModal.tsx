@@ -41,7 +41,7 @@ const _quantities: Quantities = {
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
 
-  //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = purchase, step 4 = review
+  //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
   const [step, setStep] = useState<number>(0);
   const [cart, setCart] = useState<Merch[]>([]);
   const [storeItem, setStoreItem] = useState<Merch>();
@@ -118,7 +118,7 @@ const StoreModal: FC = () => {
         setShowExitModal(true);
       }}
       // className="w-[90%] lg:w-5/6 2xl:w-[72%] 3xl:w-1/2 h-[93%] lg:h-3/4 "
-      className="w-[90%] lg:w-5/6 xl:w-[1280px] 3xl:w-1/2 h-[93%] lg:h-[750px] "
+      className="w-[90%] lg:w-5/6 xl:w-[1280px] 3xl:w-1/2 h-[93%] lg:h-[750px] px-4 py-2"
     >
       <div className="flex flex-col items-center justify-between lg:h-full w-full text-3xl">
         {/* header */}
@@ -139,7 +139,13 @@ const StoreModal: FC = () => {
           />
         )}
         {/* item detail view */}
-        {step === 1 && storeItem && <ItemDetail item={storeItem} />}
+        {step === 1 && storeItem && (
+          <ItemDetail
+            item={storeItem}
+            addToCart={addToCart}
+            setStep={setStep}
+          />
+        )}
         {/* TODO: handle step 1-3 view inside Checkout */}
         {step > 1 && <Checkout step={step} />}
         {/* footer  */}

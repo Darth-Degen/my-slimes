@@ -1,24 +1,27 @@
 import { FC } from "react";
 import { motion, Variants } from "framer-motion";
-import { Merch } from "@merch-types";
+import { Collection, Asset } from "@types";
 
 interface Props {
-  item: string;
-  handleSelect: (id: string) => void;
+  item: Collection | Asset;
+  handleSelect: (id: number) => void;
   variants: Variants;
 }
 
 const DropdownItem: FC<Props> = (props: Props) => {
   const { item, handleSelect, variants } = props;
-  const styles: string = "w-48 h-10 bg-dark text-xs z-20";
+  const styles: string = "w-56 h-10 bg-dark text-xs z-20";
 
   return (
     <li
-      key={item}
-      className={`${styles} px-2 cursor-pointer flex items-center hover:bg-m-light-gray transition-colors duration-300 text-xl font-neuebit uppercase`}
-      onClick={() => handleSelect(item)}
+      key={item?.id}
+      className={`${styles} px-2 cursor-pointer flex items-center hover:bg-custom-pink transition-colors duration-300`}
+      onClick={() => handleSelect(item?.id)}
     >
-      <motion.span variants={variants}>{item}</motion.span>
+      <motion.span variants={variants}>
+        {/* {item.id < 10 ? `00${item.id + 1}` : `0${item.id + 1}`} */}
+        {item.name}
+      </motion.span>
     </li>
   );
 };

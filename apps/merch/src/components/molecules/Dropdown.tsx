@@ -3,7 +3,7 @@ import {
   dropdownItemsAnimations,
   fastExitAnimation,
 } from "@constants";
-import { DropdownButton, DropdownItem } from "@components";
+import { DropdownButton, DropdownItem } from "@merch-components";
 import { Collection, Asset } from "@types";
 import { Dispatch, FC, SetStateAction } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,7 +38,7 @@ const Dropdown: FC<Props> = (props: Props) => {
               initial="hidden"
               animate="show"
             >
-              <motion.ul className="border border-m-black shadow max-h-[240px] overflow-y-scroll z-20 bg-white  min-h-[82px]">
+              <motion.ul className="border border-m-black shadow max-h-[240px] overflow-y-scroll z-20 bg-white">
                 {items &&
                   items.map((item, index) => (
                     <DropdownItem
