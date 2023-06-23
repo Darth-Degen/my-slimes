@@ -47,7 +47,7 @@ const Menu: FC<Props> = (props: Props) => {
     {
       title: "slimes",
       subtitle: "only",
-      src: "/slimes",
+      src: "/hub",
       isLanding: false,
     },
   ];

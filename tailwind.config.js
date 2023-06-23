@@ -47,6 +47,7 @@ module.exports = {
         shadow: "rgba(82, 82, 82, 0.25)",
         // slimes hub
         "slimes-black": "#2E2929",
+        "slimes-border": "#BDBDBD",
         //version 2 theme
         "v2-pink": "#FFB094",
         "v2-beige": "#f9f1d9", // "#F6EFD3",
