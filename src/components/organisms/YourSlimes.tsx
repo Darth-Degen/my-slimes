@@ -1,15 +1,47 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { enterAnimation, smallClickAnimation } from "@constants";
+import {
+  enterAnimation,
+  slimesWhitelist,
+  smallClickAnimation,
+} from "@constants";
 import { motion } from "framer-motion";
 import { SlimeHubButton } from "@components";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { getNftsByOwner } from "src/helpers";
+import toast from "react-hot-toast";
 
 interface Props {}
 
 const YourSlimes: FC<Props> = () => {
   const { publicKey, disconnect } = useWallet();
+  const { connection } = useConnection();
+
+  const [nfts, setNfts] = useState<unknown[]>([]); //<(Metadata | Metadata | Nft | Sft)[]>([]);
+
+  //fetch users nfts
+  const getNfts = useCallback(async () => {
+    if (!connection || !publicKey) return;
+
+    try {
+      //fetch tokens
+      const tokens = await getNftsByOwner(connection, publicKey);
+      if (!tokens || typeof tokens === "string") return;
+
+      const slimes = tokens.filter((token) =>
+        slimesWhitelist.includes(token.address.toBase58())
+      );
+      setNfts(slimes);
+    } catch (e: any) {
+      console.error(e.message);
+      toast.error(`Error ${e.message}`);
+    }
+  }, [connection, publicKey]);
+
+  useEffect(() => {
+    getNfts();
+  }, [getNfts]);
 
   return (
     <motion.div
@@ -81,12 +113,25 @@ const YourSlimes: FC<Props> = () => {
             )}
           </div>
           {/* TODO: check if user has slimes */}
-          <div
-            className={`${
-              publicKey ? "h-[100px]" : "h-[60px]"
-            } transition-transform duration-500 ease-in-out flex items-start gap-3`}
-          >
-            {publicKey !== null ? (
+          <div className={`flex items-start gap-3`}>
+            {nfts.length > 0 &&
+              nfts.map((nft, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg"
+                  >
+                    <Image
+                      src="/images/slimeshub/pablo.png"
+                      alt="pablo full"
+                      height={100}
+                      width={100}
+                      className="rounded-lg shadow-lg"
+                    />
+                  </div>
+                );
+              })}
+            {nfts.length === 0 && publicKey && (
               <motion.div
                 className="relative w-[100px] h-[100px] bg-custom-red cursor-pointer flex items-center justify-center overflow-hidden rounded-lg border border-slimes-border shadow-lg"
                 {...smallClickAnimation}
@@ -102,7 +147,9 @@ const YourSlimes: FC<Props> = () => {
                   you need a slime friend
                 </p>
               </motion.div>
-            ) : (
+            )}
+
+            {!publicKey && (
               <WalletMultiButton className="!bg-v2-green !text-slimes-black !border-none !rounded-lg !h-[60px] !w-[190px] !font-secondary !flex !items-center !justify-center !px-0 !text-sm !uppercase">
                 Connect Wallet
               </WalletMultiButton>
