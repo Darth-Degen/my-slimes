@@ -56,7 +56,11 @@ module.exports = {
         "v2-dark": "#2C2524",
         //merch TODO: needed for merch module reuse
         "m-light-gray": "#EDEDED",
+        "m-mid-gray": "#505050",
         "m-red": "#FF4747",
+        "m-green": "#2E6636",
+        "m-dark-green": "#24512b",
+        "m-black": "#010206",
       },
       screens: {
         "3xl": "2160px",

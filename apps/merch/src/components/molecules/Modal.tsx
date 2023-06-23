@@ -28,9 +28,7 @@ const Modal: FC<Props> = (props: Props) => {
       {...midExitAnimation}
     >
       <motion.div
-        // className={`cursor-default md:bg-opacity-90 relative left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-clip
-        // bg-main bg-cover rounded-3xl  w-[98%] h-[85%] md:h-[90%] lg:h-[70vh] lg:w-[100vh] xl:w-[130vh]
-        className={`cursor-default relative bg-m-light-gray 
+        className={`cursor-default relative bg-m-light-gray overflow-y-auto
         ${className}`}
         {...scaleExitAnimation}
         onClick={(e) => e.stopPropagation()}
