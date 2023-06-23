@@ -24,7 +24,7 @@ const YourSlimes: FC<Props> = () => {
           alt="featured slime pfp"
         />
       </div>
-      <div className="w-[400px] h-full pl-6 -mt-3">
+      <div className="w-[450px] h-full pl-6 -mt-3">
         <p className="hub-name uppercase text-slimes-black">Pablo</p>
         <p className="font-secondary max-w-[300px] text-[9px] leading-[12px] text-slimes-black -mt-1">
           I feel like Pablo. Ye needs jesus. Blem if you read this text me “I’m
@@ -59,8 +59,8 @@ const YourSlimes: FC<Props> = () => {
         </div>
         {/* your slimes - connect wallet or show icons */}
         <div>
-          <div className="flex items-center gap-2">
-            <p className="text-sm uppercase font-black text-slimes-black pb-3">
+          <div className="flex items-center gap-2 pb-3">
+            <p className="text-sm uppercase font-black text-slimes-black">
               Your Slime(s):
             </p>
             {publicKey !== null && (
@@ -91,35 +91,42 @@ const YourSlimes: FC<Props> = () => {
           <p className="text-sm uppercase font-black text-slimes-black pb-3">
             Asset Library:
           </p>
-          <div className="min-h-[100px] flex items-start gap-4">
+          <div className="h-[100px] flex items-start gap-3">
             <Image
               src="/images/slimeshub/pablo.png"
-              width={100}
+              alt="pablo full"
               height={100}
-              alt="featured slime pfp"
-              className="rounded-lg overflow-hidden"
-            />
-            <Image
-              src="/images/wallpapers/desktop-display/pablo.png"
-              width={410}
-              height={246}
-              alt="pablo desktop wallpaper"
-              className="rounded-lg overflow-hidden border border-slimes-border"
-            />
-            <Image
-              src="/images/wallpapers/mobile-display/pablo.png"
-              width={135}
-              height={225}
-              alt="pablo mobile wallpaper"
-              className="rounded-lg overflow-hidden border border-slimes-border"
-            />
-            <Image
-              src="/images/wallpapers/pfp-crop/pablo.png"
               width={100}
-              height={100}
-              alt="pablo pfp crop"
-              className="rounded-lg overflow-hidden border border-slimes-border"
+              className="rounded-lg shadow-lg"
             />
+            <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
+              <Image
+                src="/images/wallpapers/desktop-display/pablo.png"
+                alt="pablo desktop wallpaper"
+                height={200}
+                width={200}
+              />
+            </div>
+            <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
+              <Image
+                src="/images/wallpapers/mobile-display/pablo.png"
+                alt="pablo mobile wallpaper"
+                height={100}
+                width={50}
+              />
+            </div>
+            <div className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg">
+              <Image
+                src="/images/wallpapers/pfp-crop/pablo.png"
+                alt="pablo pfp crop"
+                layout="fill"
+                objectFit="cover"
+                className="absolute inset-0 z-10 bg-transparent p-2"
+                style={{
+                  clipPath: "circle(40% at 50% 50%)",
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
