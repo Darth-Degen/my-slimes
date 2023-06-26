@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { Merch } from "@merch-types";
+import { Merch, Quantity } from "@merch-types";
 import Image from "next/image";
 import { midExitAnimation } from "@merch-constants";
 import { motion } from "framer-motion";
@@ -9,11 +9,12 @@ import { verifyItemInStock } from "@merch-helpers";
 import arrows from "../../../images/icons/three-right-arrows.svg";
 interface Props {
   item: Merch;
+  quantities: Quantity[];
   addToCart: (item: Merch) => void;
   setStep: Dispatch<SetStateAction<number>>;
 }
 const ItemDetail: FC<Props> = (props: Props) => {
-  const { item, addToCart, setStep } = props;
+  const { item, quantities, addToCart, setStep } = props;
   const path = `/images/merch/${item.id}/`;
 
   const [selected, setSelected] = useState<number>(0);
@@ -91,8 +92,14 @@ const ItemDetail: FC<Props> = (props: Props) => {
   //check items in stock
   useEffect(() => {
     if (item)
-      setIsInStock(verifyItemInStock(item, cartItem?.size, cartItem?.color));
-  }, [cartItem?.color, cartItem?.size, color, item]);
+      setIsInStock(
+        verifyItemInStock(item, quantities, cartItem?.size, cartItem?.color)
+      );
+  }, [cartItem?.color, cartItem?.size, color, item, quantities]);
+
+  useEffect(() => {
+    console.log("quantities ", quantities);
+  }, [quantities]);
 
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start gap-12 xl:gap-16 h-full w-full px-12 py-5">

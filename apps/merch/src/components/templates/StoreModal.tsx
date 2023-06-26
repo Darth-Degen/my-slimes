@@ -137,7 +137,7 @@ const StoreModal: FC = () => {
         sizes: item.sizes,
       });
     });
-    //   setQuantities(_quantities);
+    setQuantities(_quantities);
     // });
   }, []);
 
@@ -183,6 +183,7 @@ const StoreModal: FC = () => {
         {/* item detail view */}
         {step === 1 && storeItem && (
           <ItemDetail
+            quantities={quantities}
             item={storeItem}
             addToCart={addToCart}
             setStep={setStep}

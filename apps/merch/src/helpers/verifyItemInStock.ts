@@ -1,9 +1,18 @@
-import { Merch } from "@merch-types";
+import { Merch, Quantity } from "@merch-types";
 
-export const verifyItemInStock = (item: Merch, size?:string, color?: string): boolean => {
-  console.log("verify ", size, color, item)
-  let check = 0;
-  const stock = item.sizes.reduce(
+export const verifyItemInStock = (
+  item: Merch, 
+  quantities: Quantity[], 
+  size?:string, 
+  color?: string
+): boolean => {
+
+  //get index of "item" in quantities array
+  const index = quantities.findIndex(quantity => quantity.productid === item.id)
+
+  //calculate total quantity
+  // const stock = item.sizes.reduce(
+    const stock = quantities[index].sizes.reduce(
     (total, item) => {
        //has size and color param
        if (size && size === item?.size && color && color === item?.color) {
@@ -14,19 +23,16 @@ export const verifyItemInStock = (item: Merch, size?:string, color?: string): bo
       }
       // has size param
       if (size && size === item?.size) {
-        console.log("size ", item, item.quantity);
         return total + item.quantity;
       } 
       else if (size) {
-        console.log("size ", item, 0);
         return total;
       }
      
-
       return total + item.quantity;
     },
     0
   );
-  console.log("stock ", stock)
+
   return stock > 0;
 };

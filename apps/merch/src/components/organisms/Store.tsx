@@ -25,7 +25,7 @@ const Store: FC<Props> = (props: Props) => {
             item={item}
             key={index}
             addToCart={addToCart}
-            inStock={verifyItemInStock(item)}
+            inStock={verifyItemInStock(item, quantities)}
             handleImageClick={handleImageClick}
           />
         ))}
