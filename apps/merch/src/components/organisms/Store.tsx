@@ -12,7 +12,6 @@ interface Props {
 }
 const Store: FC<Props> = (props: Props) => {
   const { quantities, addToCart, handleImageClick } = props;
-  console.log("quantities ", quantities);
 
   return (
     <motion.div

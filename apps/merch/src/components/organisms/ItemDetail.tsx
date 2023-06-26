@@ -4,6 +4,7 @@ import Image from "next/image";
 import { midExitAnimation } from "@merch-constants";
 import { motion } from "framer-motion";
 import { ImagePicker, Dropdown } from "@merch-components";
+import { verifyItemInStock } from "@merch-helpers";
 
 import arrows from "../../../images/icons/three-right-arrows.svg";
 interface Props {
@@ -22,8 +23,9 @@ const ItemDetail: FC<Props> = (props: Props) => {
   const [size, setSize] = useState<string>();
   const [failedColor, setFailedColor] = useState<boolean>(false);
   const [failedSize, setFailedSize] = useState<boolean>(false);
-
   const [cartItem, setCartItem] = useState<Merch>(item);
+
+  const isInStock = verifyItemInStock(item);
 
   const handleColorSelect = (color: string): void => {
     setColor(color);
@@ -85,8 +87,6 @@ const ItemDetail: FC<Props> = (props: Props) => {
     if (cartItem?.color) setFailedColor(false);
   }, [cartItem?.color]);
 
-  const tempQty = true;
-
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start gap-12 xl:gap-16 h-full w-full px-12 py-5">
       <ImagePicker
@@ -142,7 +142,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
             />
           </div>
         </div>
-        {tempQty && (
+        {isInStock ? (
           <div className="w-[300px] h-12 bg-[#D9D9D9] border border-m-mid-gray rounded-full font-neuebit-bold text-xl">
             <button
               className="w-[57%] h-full bg-m-green rounded-full text-white uppercase"
@@ -157,8 +157,11 @@ const ItemDetail: FC<Props> = (props: Props) => {
               add to cart
             </button>
           </div>
+        ) : (
+          <button className="w-44 h-12 text-white rounded-full font-neuebit-bold text-xl bg-red-500 opacity-70 uppercase tracking-wider cursor-not-allowed">
+            sold out
+          </button>
         )}
-        {!tempQty && <button className=""></button>}
       </motion.div>
     </div>
   );
