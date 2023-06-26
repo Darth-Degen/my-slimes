@@ -11,8 +11,7 @@ export const verifyItemInStock = (
   const index = quantities.findIndex(quantity => quantity.productid === item.id)
 
   //calculate total quantity
-  // const stock = item.sizes.reduce(
-    const stock = quantities[index].sizes.reduce(
+    const stock = quantities[index]?.sizes.reduce(
     (total, item) => {
        //has size and color param
        if (size && size === item?.size && color && color === item?.color) {

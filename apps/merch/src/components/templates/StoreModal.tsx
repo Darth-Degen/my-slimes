@@ -15,28 +15,9 @@ import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "dotenv/config";
+
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
 const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
-
-//TODO: replace with api data
-// const _quantities: Quantities = {
-//   crewneck: {
-//     id: "crewneck",
-//     quantity: 0,
-//   },
-//   tee: {
-//     id: "tee",
-//     quantity: 1,
-//   },
-//   hat: {
-//     id: "hat",
-//     quantity: 10,
-//   },
-//   pack: {
-//     id: "pack",
-//     quantity: 0,
-//   },
-// };
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
@@ -159,7 +140,6 @@ const StoreModal: FC = () => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      // className="w-[90%] lg:w-5/6 2xl:w-[72%] 3xl:w-1/2 h-[93%] lg:h-3/4 "
       className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] lg:h-[800px] px-4 py-2"
     >
       <div className="flex flex-col items-center justify-between lg:h-full w-full text-3xl">

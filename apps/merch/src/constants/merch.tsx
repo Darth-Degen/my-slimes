@@ -54,7 +54,7 @@ export const merch: Merch[] = [
       {
         color: "white",
         size: "s",
-        quantity: 0,
+        quantity: 16,
       },
       {
         color: "white",
@@ -100,7 +100,7 @@ export const merch: Merch[] = [
       {
         color: "black",
         size: "2xl",
-        quantity: 0,
+        quantity: 7,
       },
     ],
   },
