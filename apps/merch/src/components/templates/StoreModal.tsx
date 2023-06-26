@@ -7,7 +7,7 @@ import {
   Footer,
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
-import { Merch, Quantities } from "@merch-types";
+import { Merch, Quantity } from "@merch-types";
 import { getNftsByOwner } from "@merch-helpers";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -19,24 +19,24 @@ import "dotenv/config";
 const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
 
 //TODO: replace with api data
-const _quantities: Quantities = {
-  crewneck: {
-    id: "crewneck",
-    quantity: 0,
-  },
-  tee: {
-    id: "tee",
-    quantity: 1,
-  },
-  hat: {
-    id: "hat",
-    quantity: 10,
-  },
-  pack: {
-    id: "pack",
-    quantity: 0,
-  },
-};
+// const _quantities: Quantities = {
+//   crewneck: {
+//     id: "crewneck",
+//     quantity: 0,
+//   },
+//   tee: {
+//     id: "tee",
+//     quantity: 1,
+//   },
+//   hat: {
+//     id: "hat",
+//     quantity: 10,
+//   },
+//   pack: {
+//     id: "pack",
+//     quantity: 0,
+//   },
+// };
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
@@ -46,6 +46,7 @@ const StoreModal: FC = () => {
   const [cart, setCart] = useState<Merch[]>([]);
   const [storeItem, setStoreItem] = useState<Merch>();
   const [nfts, setNfts] = useState<unknown[]>([]);
+  const [quantities, setQuantities] = useState<Quantity[]>([]);
 
   //solana wallet
   const { publicKey } = useWallet();
@@ -125,27 +126,19 @@ const StoreModal: FC = () => {
         console.log(response.data);
       })
       .catch((error) => {
-        // Handle the error
         console.error(error);
+        // Handle the error
+        let _quantities: Quantity[] = [];
+        merch.forEach((item: Merch) => {
+          _quantities.push({
+            productid: item.id,
+            name: item.name,
+            cost: item.cost,
+            sizes: item.sizes,
+          });
+        });
+        setQuantities(_quantities);
       });
-
-    // let config = {
-    //   method: "get",
-    //   maxBodyLength: Infinity,
-    //   url: `${apiUrl}/products`,
-    //   headers: {
-    //     access_token: apiKey,
-    //   },
-    // };
-
-    // axios
-    //   .request(config)
-    //   .then((response) => {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   }, []);
 
   useEffect(() => {
@@ -182,7 +175,7 @@ const StoreModal: FC = () => {
         {/* store items */}
         {step === 0 && (
           <Store
-            quantities={_quantities}
+            quantities={quantities}
             addToCart={addToCart}
             handleImageClick={handleImageClick}
           />

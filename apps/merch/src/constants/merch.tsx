@@ -6,12 +6,12 @@ export const merch: Merch[] = [
     name: "All in time Crewneck",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 200,
+    maxSupply: 178,
     cost: 15,
-    sizes: ["s", "m", "l", "xl", "2xl"],
+    sizeChart: ["s", "m", "l", "xl", "2xl"],
     colors: ["black"],
     images: ["image.png", "image1.png", "image2.png"],
-    quantities: [
+    sizes: [
       {
         size: "s",
         quantity: 30,
@@ -39,12 +39,12 @@ export const merch: Merch[] = [
     name: "skullface tee",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 200,
+    maxSupply: 105,
     cost: 5,
-    sizes: ["sm", "m", "lg", "xl", "2xl"],
+    sizeChart: ["sm", "m", "lg", "xl", "2xl"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png"],
-    quantities: [
+    sizes: [
       //white
       {
         color: "white",
@@ -95,7 +95,7 @@ export const merch: Merch[] = [
       {
         color: "black",
         size: "2xl",
-        quantity: 8,
+        quantity: 0,
       },
     ],
   },
@@ -104,12 +104,12 @@ export const merch: Merch[] = [
     name: "corduroy dad hat",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 200,
+    maxSupply: 190,
     cost: 5,
-    sizes: ["one sizes fits most"],
+    sizeChart: ["one sizes fits most"],
     colors: ["white"],
     images: ["image.png", "image1.png", "image2.png"],
-    quantities: [
+    sizes: [
       {
         size: "one sizes fits most",
         quantity: 190,
@@ -121,15 +121,15 @@ export const merch: Merch[] = [
     name: "culture builder pack",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 200,
+    maxSupply: 190,
     cost: 5,
-    sizes: ["one pack to rule them all"],
+    sizeChart: ["one pack to rule them all"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png"],
-    quantities: [
+    sizes: [
       {
         size: "one pack to rule them all",
-        quantity: 190,
+        quantity: 0, //190
       },
     ],
   },

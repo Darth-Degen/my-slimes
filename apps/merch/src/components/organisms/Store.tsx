@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { midExitAnimation, merch } from "@merch-constants";
-import { StoreItem, Header, Footer } from "@merch-components";
-import { Merch, Quantities } from "@merch-types";
+import { StoreItem } from "@merch-components";
+import { Merch, Quantity } from "@merch-types";
+import { verifyItemInStock } from "@merch-helpers";
 
 interface Props {
-  quantities: Quantities;
+  quantities: Quantity[];
   addToCart: (item: Merch) => void;
   handleImageClick: (item: Merch) => void;
 }
 const Store: FC<Props> = (props: Props) => {
   const { quantities, addToCart, handleImageClick } = props;
+  console.log("quantities ", quantities);
 
   return (
     <motion.div
@@ -24,7 +26,7 @@ const Store: FC<Props> = (props: Props) => {
             item={item}
             key={index}
             addToCart={addToCart}
-            quantity={quantities[item.id].quantity}
+            inStock={verifyItemInStock(item)}
             handleImageClick={handleImageClick}
           />
         ))}

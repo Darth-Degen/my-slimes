@@ -10,12 +10,12 @@ export interface Merch {
   description: string;
   maxSupply: number;
   cost: number;
-  sizes: string[];
+  sizeChart: string[];
   colors: string[];
   images: string[];
   size?: string;
   color?: string;
-  quantities: QuantitiesBySize[];
+  sizes: QuantitiesBySize[];
 }
 
 // const _quantsities: QuantitiesBySize[] = [

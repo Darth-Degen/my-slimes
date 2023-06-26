@@ -74,8 +74,8 @@ const ItemDetail: FC<Props> = (props: Props) => {
 
   //set size if only one
   useEffect(() => {
-    if (item.sizes.length === 1) setSize(item.sizes[0]);
-  }, [item.sizes]);
+    if (item.sizeChart.length === 1) setSize(item.sizeChart[0]);
+  }, [item.sizeChart]);
 
   //resets error indication
   useEffect(() => {
@@ -138,7 +138,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
               setShowDropdown={setSizeDropdown}
               showDropdown={sizeDropdown}
               label={size ?? "SIZE:"}
-              items={item.sizes}
+              items={item.sizeChart}
             />
           </div>
         </div>
