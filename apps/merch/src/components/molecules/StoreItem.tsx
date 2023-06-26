@@ -48,11 +48,11 @@ const StoreItem: FC<Props> = (props: Props) => {
         </div>
         <button
           className="uppercase font-neuebit-bold text-lg bg-m-green px-6 pt-1 text-white transition-colors duration-200 hover:bg-m-dark-green active:bg-opacity-90 shadow-md
-          disabled:bg-red-500 disabled:bg-opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          disabled:bg-red-500 disabled:bg-opacity-50 disabled:cursor-not-allowed disabled:shadow-none min-w-[127px]"
           onClick={() => addToCart(item)}
           disabled={quantity === 0}
         >
-          add to cart
+          {quantity === 0 ? "sold out" : "add to cart"}
         </button>
       </div>
       {/* info */}

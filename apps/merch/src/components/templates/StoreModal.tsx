@@ -6,7 +6,7 @@ import {
   Header,
   Footer,
 } from "@merch-components";
-import { StoreContext } from "@merch-constants";
+import { StoreContext, merch } from "@merch-constants";
 import { Merch, Quantities } from "@merch-types";
 import { getNftsByOwner } from "@merch-helpers";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import "dotenv/config";
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
 const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
 
@@ -103,6 +103,55 @@ const StoreModal: FC = () => {
     getNfts();
   }, [getNfts]);
 
+  //fetch merch quantities
+  const getQuantities = useCallback(() => {
+    if (!process.env.apiKey || !process.env.apiUrl) return;
+
+    const apiKey = process.env.apiKey;
+    const apiUrl = process.env.apiUrl;
+    // const accessToken = "SHMxG54Cyd@hU";
+    // const url = "https://slimes.expapi.link/products";
+
+    axios
+      .get(`${apiUrl}/products`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          access_token: apiKey,
+        },
+      })
+      .then((response) => {
+        // Handle the response data
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
+
+    // let config = {
+    //   method: "get",
+    //   maxBodyLength: Infinity,
+    //   url: `${apiUrl}/products`,
+    //   headers: {
+    //     access_token: apiKey,
+    //   },
+    // };
+
+    // axios
+    //   .request(config)
+    //   .then((response) => {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+  }, []);
+
+  useEffect(() => {
+    getQuantities();
+  }, [getQuantities]);
+
   //console outputs
   useEffect(() => {
     if (cart.length > 0) console.log("cart ", cart);
@@ -118,7 +167,7 @@ const StoreModal: FC = () => {
         setShowExitModal(true);
       }}
       // className="w-[90%] lg:w-5/6 2xl:w-[72%] 3xl:w-1/2 h-[93%] lg:h-3/4 "
-      className="w-[90%] lg:w-5/6 xl:w-[1280px] 3xl:w-1/2 h-[93%] lg:h-[750px] px-4 py-2"
+      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] lg:h-[800px] px-4 py-2"
     >
       <div className="flex flex-col items-center justify-between lg:h-full w-full text-3xl">
         {/* header */}

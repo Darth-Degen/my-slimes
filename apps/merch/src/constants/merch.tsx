@@ -8,9 +8,31 @@ export const merch: Merch[] = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     maxSupply: 200,
     cost: 15,
-    sizes: ["sm", "m", "lg", "xl", "2xl"],
+    sizes: ["s", "m", "l", "xl", "2xl"],
     colors: ["black"],
     images: ["image.png", "image1.png", "image2.png"],
+    quantities: [
+      {
+        size: "s",
+        quantity: 30,
+      },
+      {
+        size: "m",
+        quantity: 58,
+      },
+      {
+        size: "l",
+        quantity: 66,
+      },
+      {
+        size: "xl",
+        quantity: 26,
+      },
+      {
+        size: "2xl",
+        quantity: 8,
+      },
+    ],
   },
   {
     id: "tee",
@@ -22,6 +44,60 @@ export const merch: Merch[] = [
     sizes: ["sm", "m", "lg", "xl", "2xl"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png"],
+    quantities: [
+      //white
+      {
+        color: "white",
+        size: "s",
+        quantity: 16,
+      },
+      {
+        color: "white",
+        size: "m",
+        quantity: 31,
+      },
+      {
+        color: "white",
+        size: "l",
+        quantity: 34,
+      },
+      {
+        color: "white",
+        size: "xl",
+        quantity: 16,
+      },
+      {
+        color: "white",
+        size: "2xl",
+        quantity: 8,
+      },
+      //black
+      {
+        color: "black",
+        size: "s",
+        quantity: 16,
+      },
+      {
+        color: "black",
+        size: "m",
+        quantity: 34,
+      },
+      {
+        color: "black",
+        size: "l",
+        quantity: 41,
+      },
+      {
+        color: "black",
+        size: "xl",
+        quantity: 18,
+      },
+      {
+        color: "black",
+        size: "2xl",
+        quantity: 8,
+      },
+    ],
   },
   {
     id: "hat",
@@ -31,8 +107,14 @@ export const merch: Merch[] = [
     maxSupply: 200,
     cost: 5,
     sizes: ["one sizes fits most"],
-    colors: ["black", "white"],
+    colors: ["white"],
     images: ["image.png", "image1.png", "image2.png"],
+    quantities: [
+      {
+        size: "one sizes fits most",
+        quantity: 190,
+      },
+    ],
   },
   {
     id: "pack",
@@ -44,5 +126,11 @@ export const merch: Merch[] = [
     sizes: ["one pack to rule them all"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png"],
+    quantities: [
+      {
+        size: "one pack to rule them all",
+        quantity: 190,
+      },
+    ],
   },
 ];

@@ -20,6 +20,8 @@ const ItemDetail: FC<Props> = (props: Props) => {
   const [sizeDropdown, setSizeDropdown] = useState<boolean>(false);
   const [color, setColor] = useState<string>();
   const [size, setSize] = useState<string>();
+  const [failedColor, setFailedColor] = useState<boolean>(false);
+  const [failedSize, setFailedSize] = useState<boolean>(false);
 
   const [cartItem, setCartItem] = useState<Merch>(item);
 
@@ -30,15 +32,31 @@ const ItemDetail: FC<Props> = (props: Props) => {
     setSize(size);
   };
 
+  //handle form error
+  const verifySelections = (): boolean => {
+    if (cartItem?.size) {
+      setFailedSize(false);
+    } else {
+      setFailedSize(true);
+    }
+    if (cartItem?.color) {
+      setFailedColor(false);
+    } else {
+      setFailedColor(true);
+    }
+
+    if (cartItem?.size && cartItem?.color) return true;
+    else return false;
+  };
+
   const handleAddToCart = (): void => {
-    if (cartItem?.size && cartItem?.color) addToCart(cartItem);
-    else console.log(cartItem?.size, cartItem?.color);
+    if (verifySelections()) addToCart(cartItem);
   };
   const handleBuyNow = (): void => {
-    if (cartItem?.size && cartItem?.color) {
+    if (verifySelections()) {
       setStep(3);
       addToCart(cartItem);
-    } else console.log(cartItem?.size, cartItem?.color);
+    }
   };
 
   //update selection on size/color change
@@ -58,6 +76,14 @@ const ItemDetail: FC<Props> = (props: Props) => {
   useEffect(() => {
     if (item.sizes.length === 1) setSize(item.sizes[0]);
   }, [item.sizes]);
+
+  //resets error indication
+  useEffect(() => {
+    if (cartItem?.size) setFailedSize(false);
+  }, [cartItem?.size]);
+  useEffect(() => {
+    if (cartItem?.color) setFailedColor(false);
+  }, [cartItem?.color]);
 
   const tempQty = true;
 
@@ -89,20 +115,32 @@ const ItemDetail: FC<Props> = (props: Props) => {
           <p className="font-neuebit-bold">qty made - {item.maxSupply}</p>
         </div>
         <div className="flex flex-col gap-2 pb-3">
-          <Dropdown
-            handleSelect={handleColorSelect}
-            setShowDropdown={setColorDropdown}
-            showDropdown={colorDropdown}
-            label={color ?? "COLOR:"}
-            items={item.colors}
-          />
-          <Dropdown
-            handleSelect={handleSizeSelect}
-            setShowDropdown={setSizeDropdown}
-            showDropdown={sizeDropdown}
-            label={size ?? "SIZE:"}
-            items={item.sizes}
-          />
+          <div
+            className={`transition-all ${
+              failedColor ? "outline outline-2 outline-m-red" : ""
+            }`}
+          >
+            <Dropdown
+              handleSelect={handleColorSelect}
+              setShowDropdown={setColorDropdown}
+              showDropdown={colorDropdown}
+              label={color ?? "COLOR:"}
+              items={item.colors}
+            />
+          </div>
+          <div
+            className={`transition-all  ${
+              failedSize ? "outline outline-2 outline-m-red" : ""
+            }`}
+          >
+            <Dropdown
+              handleSelect={handleSizeSelect}
+              setShowDropdown={setSizeDropdown}
+              showDropdown={sizeDropdown}
+              label={size ?? "SIZE:"}
+              items={item.sizes}
+            />
+          </div>
         </div>
         {tempQty && (
           <div className="w-[300px] h-12 bg-[#D9D9D9] border border-m-mid-gray rounded-full font-neuebit-bold text-xl">

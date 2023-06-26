@@ -12,7 +12,7 @@ const Footer: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className={`flex flex-col lg:flex-row items-center w-full lg:h-[60px] gap-3 lg:gap-0 text-center px-10 py-5 md:py-2 uppercase ${
+      className={`flex flex-col lg:flex-row items-center w-full lg:h-[70px] gap-3 lg:gap-0 text-center px-10 py-5 md:py-2 uppercase ${
         step === 0 ? "justify-center " : "justify-between "
       }`}
       {...midExitAnimation}
