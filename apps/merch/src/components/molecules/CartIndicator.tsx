@@ -23,7 +23,7 @@ const CartIndicator: FC<Props> = (props: Props) => {
         {cart.length > 0 && (
           <motion.div
             id="cartbubble"
-            className="flex items-center justify-center absolute -top-3 right-1.5 bg-red-500 text-lg text-white h-7 w-7 rounded-full"
+            className="flex items-center justify-center absolute -top-1.5 right-2 bg-red-500 text-base text-white h-6 w-6 rounded-full"
             {...fastExitAnimation}
           >
             {cart.length}

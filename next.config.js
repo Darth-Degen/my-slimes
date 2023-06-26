@@ -5,6 +5,10 @@ const nextConfig = {
   images: {
     domains: [],
   },
+  env: {
+    apiKey: "SHMxG54Cyd@hU",
+    apiUrl: "https://slimes.expapi.link",
+  },
 };
 
 module.exports = nextConfig;

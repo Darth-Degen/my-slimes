@@ -1,12 +1,13 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { FC } from "react";
-import { fastExitAnimation, midExitAnimation } from "@merch-constants";
+import { fastExitAnimation } from "@merch-constants";
 
 interface Props {
   count: number;
+  step: number;
 }
 const NftIndicator: FC<Props> = (props: Props) => {
-  const { count } = props;
+  const { count, step } = props;
 
   return (
     <div className="relative flex items-center justify-center uppercase font-neuebit-bold">
@@ -19,9 +20,17 @@ const NftIndicator: FC<Props> = (props: Props) => {
           {count}
         </motion.span>
       </p>
-      <p className="absolute -bottom-4 left-[1px] text-m-mid-gray text-base">
-        racks = .5 sol ea.
-      </p>
+
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.p
+            className="absolute -bottom-4 left-[1px] text-m-mid-gray text-base"
+            {...fastExitAnimation}
+          >
+            racks = .5 sol ea.
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

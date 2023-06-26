@@ -6,7 +6,7 @@ import {
   WhereView,
   ScrollProgress,
 } from "@components";
-import { BuyRacksView } from "apps/merch/src/components";
+import { BuyRacksView } from "@merch-components";
 import { useContext, useEffect, useState } from "react";
 import { scrollToSection } from "@helpers";
 import { ViewContext } from "@constants";
