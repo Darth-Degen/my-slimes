@@ -6,29 +6,34 @@ export const merch: Merch[] = [
     name: "All in time Crewneck",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 178,
+    maxSupply: 188,
     cost: 15,
     sizeChart: ["s", "m", "l", "xl", "2xl"],
     colors: ["black"],
     images: ["image.png", "image1.png", "image2.png"],
     sizes: [
       {
+        color: "black",
         size: "s",
-        quantity: 30,
+        quantity: 30, //30
       },
       {
+        color: "black",
         size: "m",
         quantity: 58,
       },
       {
+        color: "black",
         size: "l",
         quantity: 66,
       },
       {
+        color: "black",
         size: "xl",
         quantity: 26,
       },
       {
+        color: "black",
         size: "2xl",
         quantity: 8,
       },
@@ -39,9 +44,9 @@ export const merch: Merch[] = [
     name: "skullface tee",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 105,
+    maxSupply: 214,
     cost: 5,
-    sizeChart: ["sm", "m", "lg", "xl", "2xl"],
+    sizeChart: ["s", "m", "lg", "xl", "2xl"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png"],
     sizes: [
@@ -107,10 +112,11 @@ export const merch: Merch[] = [
     maxSupply: 190,
     cost: 5,
     sizeChart: ["one sizes fits most"],
-    colors: ["white"],
+    colors: ["corduroy"],
     images: ["image.png", "image1.png", "image2.png"],
     sizes: [
       {
+        color: "corduroy",
         size: "one sizes fits most",
         quantity: 190,
       },
@@ -124,10 +130,11 @@ export const merch: Merch[] = [
     maxSupply: 190,
     cost: 5,
     sizeChart: ["one pack to rule them all"],
-    colors: ["black", "white"],
+    colors: ["pack"],
     images: ["image.png", "image1.png", "image2.png"],
     sizes: [
       {
+        color: "pack",
         size: "one pack to rule them all",
         quantity: 0, //190
       },

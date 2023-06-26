@@ -24,9 +24,9 @@ const ItemDetail: FC<Props> = (props: Props) => {
   const [failedColor, setFailedColor] = useState<boolean>(false);
   const [failedSize, setFailedSize] = useState<boolean>(false);
   const [cartItem, setCartItem] = useState<Merch>(item);
+  const [isInStock, setIsInStock] = useState<boolean>(false);
 
-  const isInStock = verifyItemInStock(item);
-
+  //handle drop downs
   const handleColorSelect = (color: string): void => {
     setColor(color);
   };
@@ -51,6 +51,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
     else return false;
   };
 
+  //actions
   const handleAddToCart = (): void => {
     if (verifySelections()) addToCart(cartItem);
   };
@@ -86,6 +87,12 @@ const ItemDetail: FC<Props> = (props: Props) => {
   useEffect(() => {
     if (cartItem?.color) setFailedColor(false);
   }, [cartItem?.color]);
+
+  //check items in stock
+  useEffect(() => {
+    if (item)
+      setIsInStock(verifyItemInStock(item, cartItem?.size, cartItem?.color));
+  }, [cartItem?.color, cartItem?.size, color, item]);
 
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start gap-12 xl:gap-16 h-full w-full px-12 py-5">

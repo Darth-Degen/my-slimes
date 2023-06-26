@@ -113,32 +113,32 @@ const StoreModal: FC = () => {
     // const accessToken = "SHMxG54Cyd@hU";
     // const url = "https://slimes.expapi.link/products";
 
-    axios
-      .get(`${apiUrl}/products`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          access_token: apiKey,
-        },
-      })
-      .then((response) => {
-        // Handle the response data
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-        let _quantities: Quantity[] = [];
-        merch.forEach((item: Merch) => {
-          _quantities.push({
-            productid: item.id,
-            name: item.name,
-            cost: item.cost,
-            sizes: item.sizes,
-          });
-        });
-        setQuantities(_quantities);
+    // axios
+    //   .get(`${apiUrl}/products`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Access-Control-Allow-Origin": "*",
+    //       access_token: apiKey,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     // Handle the response data
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    // console.error(error);
+    // Handle the error
+    let _quantities: Quantity[] = [];
+    merch.forEach((item: Merch) => {
+      _quantities.push({
+        productid: item.id,
+        name: item.name,
+        cost: item.cost,
+        sizes: item.sizes,
       });
+    });
+    //   setQuantities(_quantities);
+    // });
   }, []);
 
   useEffect(() => {
