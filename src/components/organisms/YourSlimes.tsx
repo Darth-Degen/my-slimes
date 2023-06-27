@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import {
   enterAnimation,
   slimesWhitelist,
@@ -10,7 +11,9 @@ import { SlimeHubButton } from "@components";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
-import toast from "react-hot-toast";
+import { Slime } from "src/types";
+import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
+import axios from "axios";
 
 interface Props {}
 
@@ -19,10 +22,52 @@ const YourSlimes: FC<Props> = () => {
   const { connection } = useConnection();
 
   const [nfts, setNfts] = useState<unknown[]>([]); //<(Metadata | Metadata | Nft | Sft)[]>([]);
+  const [selectedNft, setSelectedNft] = useState<Slime>();
+
+  //fetch nft metadata
+  const getNftMetadata = async (tokens: any[]) => {
+    const jsonArr: Metadata[] = [];
+    await Promise.all(
+      tokens.map(async (token: any) => {
+        const uri = token.uri;
+        try {
+          await axios.get(uri).then((r) => {
+            // @ts-ignore
+            r.data.mintAddress = token.mintAddress;
+            jsonArr.push(r.data);
+          });
+        } catch (e: any) {
+          console.error(e.message);
+        }
+      })
+    );
+    return jsonArr;
+  };
 
   //fetch users nfts
   const getNfts = useCallback(async () => {
-    if (!connection || !publicKey) return;
+    if (!connection || !publicKey) {
+      // default to scum's pfp (tokenId)
+      const tokenURI =
+        "https://arweave.net/F3MpcObdkplLNaH4quhg49gKyR9qXWMiPyhRNMvOjUk";
+
+      const json = await axios.get(tokenURI).then((r) => r.data);
+      let image = json.image;
+      let description = json.description;
+      let name = json.name;
+      let ea_link = "/";
+      let mobileView = `/images/wallpapers/mobile-display/${name}.png`;
+      let desktopView = `/images/wallpapers/desktop-display/${name}.png`;
+      console.log("SCUM JSON", json);
+      setSelectedNft({
+        name,
+        image,
+        description,
+        ea_link,
+        mobileView,
+        desktopView,
+      });
+    }
 
     try {
       //fetch tokens
@@ -33,6 +78,8 @@ const YourSlimes: FC<Props> = () => {
         slimesWhitelist.includes(token.address.toBase58())
       );
       setNfts(slimes);
+      getNftMetadata(slimes);
+      // console.log("all token JSON", tokens);
     } catch (e: any) {
       console.error(e.message);
       toast.error(`Error ${e.message}`);
@@ -49,19 +96,21 @@ const YourSlimes: FC<Props> = () => {
       {...enterAnimation}
     >
       <div className="w-fit rounded-xl overflow-hidden pr-6">
-        <Image
-          src="/images/slimeshub/pablo.png"
-          width={550}
-          height={550}
-          alt="featured slime pfp"
-        />
+        {selectedNft && (
+          <Image
+            src={selectedNft.image}
+            width={550}
+            height={550}
+            alt="featured slime pfp"
+          />
+        )}
       </div>
       <div className="w-[600px] h-full pl-6 -mt-3">
-        {/* TODO: add dynamic data here (default to pablo when not connected) */}
-        <p className="hub-name uppercase text-slimes-black">Pablo</p>
+        <p className="hub-name uppercase text-slimes-black">
+          {selectedNft?.name}
+        </p>
         <p className="font-secondary max-w-[300px] text-[9px] leading-[12px] text-slimes-black -mt-1">
-          I feel like Pablo. Ye needs jesus. Blem if you read this text me “I’m
-          a happy sappy poopsy woopsy” Wooptity poop.
+          {selectedNft?.description}
         </p>
         {/* CTA buttons */}
         <div className="flex items-center gap-6 py-4 min-h-[60px]">
@@ -70,7 +119,7 @@ const YourSlimes: FC<Props> = () => {
             {...smallClickAnimation}
             onClick={() => {
               window.open(
-                "https://youtube.com/watch?v=dQw4w9WgXcQ",
+                `${selectedNft?.ea_link}`,
                 "_blank",
                 "noopener noreferrer"
               );
@@ -81,13 +130,13 @@ const YourSlimes: FC<Props> = () => {
           <SlimeHubButton
             text="Redeem Merch"
             className="line-through"
-            onClick={() => {
-              window.open(
-                "https://youtube.com/watch?v=dQw4w9WgXcQ",
-                "_blank",
-                "noopener noreferrer"
-              );
-            }}
+            // onClick={() => {
+            //   window.open(
+            //     "https://youtube.com/watch?v=dQw4w9WgXcQ",
+            //     "_blank",
+            //     "noopener noreferrer"
+            //   );
+            // }}
           />
         </div>
         {/* your slimes - connect wallet or show icons */}
@@ -161,43 +210,45 @@ const YourSlimes: FC<Props> = () => {
           <p className="text-sm uppercase font-black text-slimes-black pb-4">
             Asset Library:
           </p>
-          <div className="h-[100px] flex items-start gap-3">
-            <Image
-              src="/images/slimeshub/pablo.png"
-              alt="pablo full"
-              height={100}
-              width={100}
-              className="rounded-lg shadow-lg"
-            />
-            <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
+          {selectedNft && (
+            <div className="h-[100px] flex items-start gap-3">
               <Image
-                src="/images/wallpapers/desktop-display/pablo.png"
-                alt="pablo desktop wallpaper"
-                height={200}
-                width={200}
-              />
-            </div>
-            <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
-              <Image
-                src="/images/wallpapers/mobile-display/pablo.png"
-                alt="pablo mobile wallpaper"
+                src={selectedNft?.image}
+                alt={selectedNft?.name}
                 height={100}
-                width={50}
+                width={100}
+                className="rounded-lg shadow-lg"
               />
+              <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
+                <Image
+                  src={`/images/wallpapers/desktop-display/${selectedNft?.name}.png`}
+                  alt={`${selectedNft?.name} desktop wallpaper`}
+                  height={200}
+                  width={200}
+                />
+              </div>
+              <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
+                <Image
+                  src={`/images/wallpapers/mobile-display/${selectedNft?.name}.png`}
+                  alt="pablo mobile wallpaper"
+                  height={100}
+                  width={50}
+                />
+              </div>
+              <div className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg">
+                <Image
+                  src={`/images/wallpapers/pfp-crop/${selectedNft?.name}.png`}
+                  alt="pablo pfp crop"
+                  layout="fill"
+                  objectFit="cover"
+                  className="absolute inset-0 z-10 bg-transparent p-2"
+                  style={{
+                    clipPath: "circle(40% at 50% 50%)",
+                  }}
+                />
+              </div>
             </div>
-            <div className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg">
-              <Image
-                src="/images/wallpapers/pfp-crop/pablo.png"
-                alt="pablo pfp crop"
-                layout="fill"
-                objectFit="cover"
-                className="absolute inset-0 z-10 bg-transparent p-2"
-                style={{
-                  clipPath: "circle(40% at 50% 50%)",
-                }}
-              />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </motion.div>

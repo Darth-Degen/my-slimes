@@ -7,9 +7,11 @@ export interface Collection {
   topValue: number;
 }
 
-export interface Slime extends Collection {
+export interface Slime {
+  name: string;
+  image: string;
+  description: string;
+  ea_link: string;
   mobileView: string;
   desktopView: string;
-  pfp: string;
-  description: string;
 }
