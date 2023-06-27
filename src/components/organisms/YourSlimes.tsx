@@ -186,7 +186,7 @@ const YourSlimes: FC<Props> = () => {
                 {...smallClickAnimation}
                 onClick={() => {
                   window.open(
-                    "https://youtube.com/watch?v=dQw4w9WgXcQ",
+                    "https://exchange.art/series/Slimes/nfts",
                     "_blank",
                     "noopener noreferrer"
                   );
