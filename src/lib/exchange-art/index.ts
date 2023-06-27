@@ -208,7 +208,7 @@ export class EditionsContractService {
     return signedTransactionsv0;
   }
 
-  async sendSignedTransactions(signedTransactionv0: VersionedTransaction) {
+  async sendSignedTransactions(signedTransactionv0: VersionedTransaction): Promise<string> {
     const transactionSignature = await this.connection.sendRawTransaction(
       signedTransactionv0.serialize(),
       { maxRetries: 5 }
@@ -255,7 +255,7 @@ export class EditionsContractService {
     return transactionSignature;
   }
 
-  async verifyTransaction(transactionsSignatures: string) {
+  async verifyTransaction(transactionsSignatures: string): Promise<void> {
     let parsedTx;
     try {
       parsedTx = await this.connection.getParsedTransaction(transactionsSignatures!, {
