@@ -19,6 +19,7 @@ const CartIndicator = dynamic(()=> import("./molecules/CartIndicator"))
 const ImagePicker = dynamic(()=> import("./molecules/ImagePicker"))
 const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const CartActions = dynamic(()=> import("./molecules/CartActions"))
+const CheckoutCartItem = dynamic(()=> import("./molecules/CheckoutCartItem"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -28,6 +29,7 @@ const Checkout = dynamic(()=> import("./organisms/Checkout"))
 const BuyRacksContent = dynamic(()=> import("./organisms/BuyRacksContent"))
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
+const CheckoutCart = dynamic(()=> import("./organisms/CheckoutCart"))
 //templates
 const BuyRacksView = dynamic(()=> import("./templates/BuyRacksView"))
 const MerchModule = dynamic(()=> import("./templates/MerchModule"))
@@ -60,5 +62,7 @@ export {
   DropdownButton,
   DropdownItem,
   Dropdown,
-  CartActions
+  CartActions,
+  CheckoutCart,
+  CheckoutCartItem
 }

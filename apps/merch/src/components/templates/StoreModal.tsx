@@ -92,32 +92,32 @@ const StoreModal: FC = () => {
     const apiKey = process.env.apiKey;
     const apiUrl = process.env.apiUrl;
 
-    axios
-      .get(`${apiUrl}/products`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          access_token: apiKey,
-        },
-      })
-      .then((response) => {
-        // Handle the response data
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-        let _quantities: Quantity[] = [];
-        merch.forEach((item: Merch) => {
-          _quantities.push({
-            productid: item.id,
-            name: item.name,
-            cost: item.cost,
-            sizes: item.sizes,
-          });
-        });
-        setQuantities(_quantities);
+    // axios
+    //   .get(`${apiUrl}/products`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Access-Control-Allow-Origin": "*",
+    //       access_token: apiKey,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     // Handle the response data
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     // Handle the error
+    let _quantities: Quantity[] = [];
+    merch.forEach((item: Merch) => {
+      _quantities.push({
+        productid: item.id,
+        name: item.name,
+        cost: item.cost,
+        sizes: item.sizes,
       });
+    });
+    setQuantities(_quantities);
+    // });
   }, []);
 
   useEffect(() => {
@@ -172,7 +172,14 @@ const StoreModal: FC = () => {
           />
         )}
         {/* cart + checkout process */}
-        {step > 1 && <Checkout cart={cart} step={step} setStep={setStep} />}
+        {step > 1 && (
+          <Checkout
+            cart={cart}
+            step={step}
+            setStep={setStep}
+            updateCart={setCart}
+          />
+        )}
         <Footer step={step} />
       </div>
     </Modal>

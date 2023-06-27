@@ -5,11 +5,11 @@ import {
 } from "@constants";
 import { DropdownButton, DropdownItem } from "@merch-components";
 import { Collection, Asset } from "@types";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, HTMLAttributes, SetStateAction } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Merch } from "@merch-types";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   handleSelect: (id: string) => void;
   setShowDropdown: Dispatch<SetStateAction<boolean>>;
   showDropdown: boolean;
@@ -18,14 +18,28 @@ interface Props {
 }
 
 const Dropdown: FC<Props> = (props: Props) => {
-  const { handleSelect, setShowDropdown, showDropdown, label, items } = props;
+  const {
+    handleSelect,
+    setShowDropdown,
+    showDropdown,
+    label,
+    items,
+    className,
+    ...componentProps
+  } = props;
 
   return (
     <div
       onClick={() => setShowDropdown(!showDropdown)}
       onMouseLeave={() => setShowDropdown(false)}
+      {...componentProps}
+      className="relative"
     >
-      <DropdownButton isActive={showDropdown} label={label} />
+      <DropdownButton
+        isActive={showDropdown}
+        label={label}
+        className={className}
+      />
       <AnimatePresence mode="wait">
         {showDropdown && (
           <motion.div
