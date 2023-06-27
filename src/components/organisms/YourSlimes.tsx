@@ -15,6 +15,7 @@ import { Slime } from "src/types";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import SlimesGrid from "./SlimesGrid";
+import FullResolutionDownload from "../atoms/FullResolutionDownload";
 
 interface Props {}
 
@@ -97,17 +98,19 @@ const YourSlimes: FC<Props> = () => {
   return (
     <motion.div className="w-full max-w-[1200px] mx-auto" {...enterAnimation}>
       <div className="w-full flex items-start justify-center pt-8">
-        <div className="w-fit rounded-xl overflow-hidden pr-6">
-          {selectedNft && (
+        {selectedNft && (
+          <div className="w-fit mr-6">
             <Image
               src={selectedNft.image}
               width={550}
               height={550}
               alt="featured slime pfp"
+              className="rounded-xl overflow-hidden"
             />
-          )}
-        </div>
-        <div className="w-[600px] h-full pl-6 -mt-3">
+            <FullResolutionDownload imageUrl={selectedNft.image} />
+          </div>
+        )}
+        <div className="w-[600px] h-full ml-6 -mt-3">
           <p className="hub-name uppercase text-slimes-black">
             {selectedNft?.name}
           </p>
