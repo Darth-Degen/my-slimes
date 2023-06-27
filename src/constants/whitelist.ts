@@ -25,5 +25,4 @@ export const slimesWhitelist = [
   "8eDha6YyBihJ8Ufq2SiEB88VewSmoFVfb2GCLrYiwmkV",
   "4JGxTczAPU2x4c7mAEMzweBwWSvwrZTV2KtQnLqFgkhN",
   "A8tfprbYBR6QMDmvfDDUdXVzc75tc2Kc7vteUetx2Acm",
-  "7Db9zsSQsLbiiTVg9zAmB6fpnLGRRDDBZ92HtBT9VECH",
 ];

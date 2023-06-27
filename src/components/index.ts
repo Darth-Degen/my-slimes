@@ -64,6 +64,7 @@ const SFCModal = dynamic(() => import("./organisms/SFCModal"));
 const Gallery = dynamic(() => import("./organisms/Gallery"));
 const SFCGallery = dynamic(() => import("./organisms/SFCGallery"));
 const YourSlimes = dynamic(() => import("./organisms/YourSlimes"));
+const SlimesGrid = dynamic(() => import("./organisms/SlimesGrid"));
 //templates
 const PageLayout = dynamic(() => import("./templates/PageLayout"));
 const LandingView = dynamic(() => import("./templates/LandingView"));
@@ -139,6 +140,7 @@ export {
   LinkFire,
   SFCGallery,
   YourSlimes,
+  SlimesGrid,
   SFCGalleryItem,
   SlimesHubFooter,
   SFCModal,

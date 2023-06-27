@@ -1,8 +1,5 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
-import { motion } from "framer-motion";
-import { Button, SlimesHubFooter, YourSlimes } from "@components";
-import { enterAnimation } from "@constants";
-import Image from "next/image";
+import { Dispatch, FC, SetStateAction } from "react";
+import { SlimesHubFooter, YourSlimes } from "@components";
 
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
