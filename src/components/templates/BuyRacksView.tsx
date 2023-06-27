@@ -139,7 +139,8 @@ const BuyRacksView: FC<Props> = (props: Props) => {
     (async function () {
       try {
         const editionInfo = await fetch(COLLECTION_API_URL).then(data => data.json());
-        console.log('editionInfo: ', editionInfo);
+        // console.log('editionInfo: ', editionInfo);
+
         if (editionInfo?.contractGroups.length && editionInfo?.contractGroups[0].availableContracts.editionSales.length) {
           setEditionSaleData(editionInfo?.contractGroups[0].availableContracts.editionSales[0]);
         } else {
@@ -153,14 +154,14 @@ const BuyRacksView: FC<Props> = (props: Props) => {
     }());
   }, []);
 
-  const handleMint = () => {
+  const handleMint = (amountToMint: number) => {
     if (!connected) setVisible(true);
     if (!editionSaleData) {
       // TODO error toast
       console.error("Cannot get edition sale data.");
       return;
     }
-    editionContract.buyFixedPriceEdition(editionSaleData);
+    editionContract.buyMultipleEditions(editionSaleData, amountToMint);
   };
 
   return (
@@ -236,13 +237,15 @@ const BuyRacksView: FC<Props> = (props: Props) => {
 };
 
 interface BuyRacksProps extends HTMLAttributes<HTMLDivElement> {
-  handleMint: () => void;
+  handleMint: (amountToMint: number) => void;
 }
 const BuyRacks: FC<BuyRacksProps> = (props: BuyRacksProps) => {
   const { handleMint } = props;
+  const [amountToMint, setAmountToMint] = useState<number>(1);
 
   const handleInput = (amount: number) => {
     console.log("amount ", amount);
+    setAmountToMint(amount);
   };
 
   return (
@@ -254,7 +257,7 @@ const BuyRacks: FC<BuyRacksProps> = (props: BuyRacksProps) => {
       <motion.button
         className="my-2 flex pt-1 items-center justify-center rounded-full w-48 h-14 bg-ait-teal text-4xl  transition-all duration-300 hover:bg-ait-black hover:text-v2-dark-green hover:border hover:border-v2-green"
         {...tapAnimation}
-        onClick={() => handleMint()}
+        onClick={() => handleMint(amountToMint)}
       >
         BUY RACKS
       </motion.button>

@@ -22,6 +22,7 @@ import {
   Transaction,
   TransactionInstruction,
   TransactionMessage,
+  TransactionSignature,
   VersionedTransaction,
 } from '@solana/web3.js';
 import {
@@ -56,6 +57,12 @@ type SolanaWallet = WalletContextState & {
   publicKey: PublicKey;
   signTransaction(tx: Transaction): Promise<Transaction>;
   signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
+};
+
+type BuyFixedPriceEditionResult = {
+  instructions: Array<TransactionInstruction>;
+  editionMintKeys: Array<any>;
+  editionMintKey: Keypair;
 };
 
 /*
@@ -123,7 +130,159 @@ export class EditionsContractService {
     }
   }
 
-  async buyFixedPriceEdition(editionSaleContract: EditionSaleContract): Promise<string> {
+  async buyMultipleEditions(
+    editionSaleContract: EditionSaleContract,
+    amountToMint?: number
+  ): Promise<Keypair[]> {
+
+    const lookupTableAccount = await this.connection
+      .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
+      .then((res) => res.value);
+
+    const editionMints = await Promise.all([...Array(amountToMint)].map(async () =>
+      await this.buyFixedPriceEdition(editionSaleContract)
+    ));
+
+    // Prepare versionedtx
+    const editionMintsInstructions = await Promise.all(editionMints.map(async (editionMint) =>
+      await this.prepareVersionTx(
+        this.connection,
+        this.wallet.publicKey!,
+        editionMint.instructions,
+        editionMint.editionMintKeys,
+        [lookupTableAccount!]
+      )
+    ));
+
+    // Sign All
+    const signedTransactionsv0 = await this.signAllVersionTx(editionMintsInstructions);
+
+    // Send Versioned Treansactions to network
+    const mintingTxSignatures: TransactionSignature[] = [];
+    await signedTransactionsv0.reduce(async (previous, current) => {
+      await previous;
+      const mintingTxSignature = await this.sendSignedTransactions(current);
+      mintingTxSignatures.push(mintingTxSignature);
+    }, Promise.resolve());
+
+    // Verify all transactions
+    await mintingTxSignatures.reduce(async (prev, curr) => {
+      await prev;
+      await this.verifyTransaction(curr);
+    }, Promise.resolve());
+
+    // TODO use toast
+    // toast('All done 🎉');
+
+    return editionMints.map(edition => edition.editionMintKey);
+  }
+
+  async prepareVersionTx(
+    connection: Connection,
+    payerKey: PublicKey,
+    instructions: TransactionInstruction[],
+    additionalSigners: Keypair[] = [],
+    lookupTableAccounts: AddressLookupTableAccount[] = [],
+  ): Promise<VersionedTransaction> {
+    const versionedTransactionBlockhash = await connection.getLatestBlockhash();
+    const messageV0 = new TransactionMessage({
+      payerKey,
+      recentBlockhash: versionedTransactionBlockhash.blockhash,
+      instructions,
+    }).compileToV0Message(lookupTableAccounts);
+
+    const transactionV0 = new VersionedTransaction(messageV0);
+    if (additionalSigners.length > 0) {
+      transactionV0.sign(additionalSigners);
+    }
+
+    return transactionV0;
+  }
+
+  async signAllVersionTx(transactionsV0: VersionedTransaction[]): Promise<VersionedTransaction[]> {
+    if (!this.wallet.signAllTransactions) {
+      throw new Error('Cannot sign tx')
+    }
+    const signedTransactionsv0 = await this.wallet.signAllTransactions(transactionsV0);
+
+    return signedTransactionsv0;
+  }
+
+  async sendSignedTransactions(signedTransactionv0: VersionedTransaction) {
+    const transactionSignature = await this.connection.sendRawTransaction(
+      signedTransactionv0.serialize(),
+      { maxRetries: 5 }
+    );
+
+    console.log('finaliseVersionTx --> transactionSignature>>', transactionSignature);
+
+    let status;
+    const latestBlockHash = await this.connection.getLatestBlockhash();
+    try {
+      status = (
+        await this.connection.confirmTransaction(
+          {
+            signature: transactionSignature,
+            blockhash: latestBlockHash.blockhash,
+            lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          },
+          COMMITMENT,
+        )
+      ).value;
+    } catch (error) {
+
+      // TODO use toast service
+      // -----
+      // this.uinService.showError({
+      //   message: 'Could not confirm transaction. Please try again.',
+      //   title: `Transaction failed`,
+      // });
+
+      throw new Error('Could not confirm transaction. Please try again.');
+    }
+
+    if (status?.err) {
+
+      // TODO toast
+      // ------
+      // const errors = await this.getErrorForTransaction(connection, transactionSignature);
+      // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
+
+      throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
+    }
+
+    console.log('versioned transactionSignature >> ', transactionSignature);
+    return transactionSignature;
+  }
+
+  async verifyTransaction(transactionsSignatures: string) {
+    let parsedTx;
+    try {
+      parsedTx = await this.connection.getParsedTransaction(transactionsSignatures!, {
+        maxSupportedTransactionVersion: 0,
+      });
+    } catch (error) {
+      throw new Error('Could not retrieve transaction details. Please check your wallet activity.');
+    }
+
+    const logMessages = parsedTx?.meta?.logMessages || [];
+    const botTrafficMessage = logMessages.find((message: string | string[]) =>
+      message.includes('bot traffic is taxed'),
+    );
+
+    if (botTrafficMessage) {
+      const errorMessage = botTrafficMessage.split(',')?.[0] || '';
+      const parsedErrorMessage = `Suspicious activity recorded. ${errorMessage.replace('Program log:', '').trim()}.`;
+
+      // TODO replace with toast service
+      // -----
+      // this.uinService.showError({ message: parsedErrorMessage });
+
+      throw new Error(parsedErrorMessage);
+    }
+  }
+
+  async buyFixedPriceEdition(editionSaleContract: EditionSaleContract): Promise<BuyFixedPriceEditionResult> {
     try {
       if (!this.wallet.publicKey) {
         throw new Error('Cannot identify wallet.');
@@ -342,46 +501,27 @@ export class EditionsContractService {
         .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
         .then((res) => res.value);
 
-      const mintingTxSignature = await this.finaliseVersionTx(
-        this.connection,
-        this.wallet.publicKey,
+      return {
         instructions,
-        [editionMintKey],
-        [lookupTableAccount!],
-      );
+        editionMintKeys: [editionMintKey],
+        editionMintKey
+      };
 
-      let parsedTx;
-      try {
-        parsedTx = await this.connection.getParsedTransaction(mintingTxSignature!, {
-          maxSupportedTransactionVersion: 0,
-        });
-      } catch (error) {
-        throw new Error('Could not retrieve transaction details. Please check your wallet activity.');
-      }
+      // const mintingTxSignature = await this.finaliseVersionTx(
+      //   this.connection,
+      //   this.wallet.publicKey,
+      //   instructions,
+      //   [editionMintKey],
+      //   [lookupTableAccount!],
+      // );
 
-      const logMessages = parsedTx?.meta?.logMessages || [];
-      const botTrafficMessage = logMessages.find((message: string | string[]) =>
-        message.includes('bot traffic is taxed'),
-      );
-
-      if (botTrafficMessage) {
-        const errorMessage = botTrafficMessage.split(',')?.[0] || '';
-        const parsedErrorMessage = `Suspicious activity recorded. ${errorMessage.replace('Program log:', '').trim()}.`;
-
-        // TODO replace with toast service
-        // -----
-        // this.uinService.showError({ message: parsedErrorMessage });
-
-        throw new Error(parsedErrorMessage);
-      }
-
-      return editionMintKey.publicKey.toString();
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
 
+  // Legacy, not used anymore
   async finaliseVersionTx(
     connection: Connection,
     payerKey: PublicKey,
@@ -405,6 +545,9 @@ export class EditionsContractService {
       throw new Error('Cannot sign tx')
     }
     const signedTransactionv0 = await this.wallet.signTransaction(transactionV0);
+
+    // const txSize = signedTransactionv0.serialize().length + (signedTransactionv0.signatures.length * 64);
+    // console.log('txSize: ', txSize);
 
     const transactionSignature = await connection.sendRawTransaction(signedTransactionv0.serialize(), { maxRetries: 5 });
     console.log('finaliseVersionTx --> transactionSignature>>', transactionSignature);
