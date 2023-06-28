@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, FC, SetStateAction } from "react";
-import { CartActions, CheckoutCart } from "@merch-components";
+import { CartActions, CheckoutCart, ShippingForm } from "@merch-components";
 import { Merch } from "@merch-types";
 import toast from "react-hot-toast";
 
@@ -22,7 +22,7 @@ const Checkout: FC<Props> = (props: Props) => {
     }, 0);
   };
 
-  const handleCheckout = (): void => {
+  const handleCartCheckout = (): void => {
     //verify all sizes & colors
     const totalItems = cart.length;
     let totalColors = 0;
@@ -39,6 +39,11 @@ const Checkout: FC<Props> = (props: Props) => {
       return;
     }
     setStep(3);
+  };
+  const handleShippingCheckout = (): void => {
+    //verify all input fields
+
+    setStep(4);
   };
 
   return (
@@ -62,11 +67,14 @@ const Checkout: FC<Props> = (props: Props) => {
         {/* right side */}
         <AnimatePresence mode="wait">
           {step === 2 && (
-            <CartActions setStep={setStep} handleCheckout={handleCheckout} />
+            <CartActions
+              setStep={setStep}
+              handleCheckout={handleCartCheckout}
+            />
           )}
-          {/* {step === 3 && (
-            <CartActions setStep={setStep} handleCheckout={handleCheckout} />
-          )} */}
+          {step === 3 && (
+            <ShippingForm handleCheckout={handleShippingCheckout} />
+          )}
         </AnimatePresence>
       </div>
     </div>

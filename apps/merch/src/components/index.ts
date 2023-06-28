@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 //atoms
 const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
 const NumberInput = dynamic(()=> import("./atoms/NumberInput"))
+const TextInput = dynamic(()=> import("./atoms/TextInput"))
 const DropdownButton = dynamic(()=> import("./atoms/DropdownButton"))
 const DropdownItem = dynamic(()=> import("./atoms/DropdownItem"))
 //molecules
@@ -20,6 +21,7 @@ const ImagePicker = dynamic(()=> import("./molecules/ImagePicker"))
 const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const CartActions = dynamic(()=> import("./molecules/CartActions"))
 const CheckoutCartItem = dynamic(()=> import("./molecules/CheckoutCartItem"))
+const ShippingForm = dynamic(()=> import("./molecules/ShippingForm"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -64,5 +66,7 @@ export {
   Dropdown,
   CartActions,
   CheckoutCart,
-  CheckoutCartItem
+  CheckoutCartItem,
+  ShippingForm,
+  TextInput
 }
