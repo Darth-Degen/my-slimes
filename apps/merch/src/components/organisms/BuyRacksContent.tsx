@@ -11,7 +11,7 @@ import {
   WalletMultiButton,
   useWalletModal,
 } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useInView } from "framer-motion";
 //local
 import {
@@ -23,6 +23,11 @@ import {
 } from "@merch-components";
 import { rackStatus, StoreContext } from "@merch-constants";
 import { RackStatus, RackStatusName } from "@merch-types";
+import { EditionSaleContract } from "src/lib/exchange-art/types/contract.interfaces";
+import { EditionsContractService } from "src/lib/exchange-art";
+import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
+import { COLLECTION_API_URL } from "src/constants";
+import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -43,14 +48,48 @@ interface Props {
 const BuyRacksContent: FC<Props> = (props: Props) => {
   const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<RackStatus>(rackStatus[0]);
+  const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
+
+  const { connection } = useConnection();
+
   //wallet
-  const { connected, publicKey } = useWallet();
+  const wallet = useWallet();
+  const { connected, publicKey } = wallet;
   const { setVisible } = useWalletModal();
+
   //refs
   const ref = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLHeadingElement>(null);
+
   //store module
   const { setShowStore, showStore } = useContext(StoreContext);
+
+  // Setup Exchange Art program
+  const editionContract = new EditionsContractService(
+    wallet,
+    connection,
+    editionsContractIdl,
+    EDITIONS_PROGRAM_ID
+  );
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const editionInfo = await fetch(COLLECTION_API_URL).then(data => data.json());
+        // console.log('editionInfo: ', editionInfo);
+
+        if (editionInfo?.contractGroups.length && editionInfo?.contractGroups[0].availableContracts.editionSales.length) {
+          setEditionSaleData(editionInfo?.contractGroups[0].availableContracts.editionSales[0]);
+        } else {
+          // TODO error toast
+          console.error('Error fetching edition sale data. Data is wrong');
+        }
+      } catch (e) {
+        // TODO error toast
+        console.error('Error fetching edition sale data.: ', e);
+      }
+    }());
+  }, []);
 
   //auto scroll
   const isInView = useInView(innerRef);
@@ -69,8 +108,14 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     }
   };
 
-  const handleMint = () => {
+  const handleMint = (amountToMint: number) => {
     if (!connected) setVisible(true);
+    if (!editionSaleData) {
+      // TODO error toast
+      console.error("Cannot get edition sale data.");
+      return;
+    }
+    editionContract.buyMultipleEditions(editionSaleData, amountToMint);
   };
 
   return (
@@ -91,8 +136,8 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           >
             {publicKey
               ? publicKey.toBase58().slice(0, 4) +
-                ".." +
-                publicKey.toBase58().slice(-4)
+              ".." +
+              publicKey.toBase58().slice(-4)
               : "Connect"}
           </WalletMultiButton>
         </div>
@@ -110,7 +155,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
               <TextBox text={activeStatus.text} className="hidden lg:flex" />
               <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
               {activeStatus.name === RackStatusName.Buy && (
-                <BuyRacksForm handleMint={handleMint} />
+                <BuyRacksForm handleMint={(amountToMint: number) => handleMint(amountToMint)} />
               )}
               {activeStatus.name === RackStatusName.Raffle && (
                 <TextBox text={activeStatus.text} />
