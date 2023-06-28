@@ -13,7 +13,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="flex flex-col w-full lg:w-1/2 h-full bg-white p-6 gap-4 overflow-y-auto"
+      className="flex flex-col w-full xl:w-1/2 lg:min-w-[580px] h-full bg-white p-6 gap-4 overflow-y-auto"
       {...midExitAnimation}
     >
       {!!cart ? (

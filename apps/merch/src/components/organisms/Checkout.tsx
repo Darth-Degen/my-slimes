@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, FC, SetStateAction } from "react";
 import { CartActions, CheckoutCart } from "@merch-components";
 import { Merch } from "@merch-types";
+import toast from "react-hot-toast";
 
 interface Props {
   cart: Merch[];
@@ -13,8 +14,35 @@ interface Props {
 const Checkout: FC<Props> = (props: Props) => {
   const { cart, step, setStep, updateCart } = props;
 
+  const calculateRacks = (): number => {
+    if (cart.length === 0) return 0;
+    //calculate total
+    return cart.reduce((total, item) => {
+      return total + item.cost;
+    }, 0);
+  };
+
+  const handleCheckout = (): void => {
+    //verify all sizes & colors
+    const totalItems = cart.length;
+    let totalColors = 0;
+    let totalSizes = 0;
+
+    cart.forEach((item) => {
+      // console.log(item?.colors, item?.size);
+      if (item?.color) totalColors += 1;
+      if (item?.size) totalSizes += 1;
+    });
+    if (totalItems !== totalColors || totalItems !== totalSizes) {
+      toast.error("Select all sizes and colors");
+      // console.log("totalItems ", totalItems, totalColors, totalSizes);
+      return;
+    }
+    setStep(3);
+  };
+
   return (
-    <div className="flex flex-col gap-3 h-full lg:h-[76%] w-full px-12 py-5 justify-self-start">
+    <div className="flex flex-col gap-3 lg:h-[76%] w-full px-12 mb-5 self-start">
       {/* title */}
       <div className="flex flex-col gap-1 text-m-mid-gray">
         <h3 className="font-neuebit-bold uppercase text-4xl">
@@ -22,12 +50,20 @@ const Checkout: FC<Props> = (props: Props) => {
         </h3>
       </div>
       {/* row */}
-      <div className="w-full h-full flex flex-col lg:flex-row items-center lg:items-start justify-start gap-10  overflow-y-auto">
+      <div className="flex flex-row xl:flex-row gap-10">
         {/* left side */}
-        <CheckoutCart cart={cart} updateCart={updateCart} />
-        {/* step 2 = cart */}
+        <div className="xl:h-[55vh] max-h-[550px] flex flex-col items-center xl:items-start justify-start gap-3">
+          <CheckoutCart cart={cart} updateCart={updateCart} />
+          <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+            <p>total</p>
+            <p>{calculateRacks()} racks</p>
+          </div>
+        </div>
+        {/* right side */}
         <AnimatePresence mode="wait">
-          {step === 2 && <CartActions setStep={setStep} />}
+          {step === 2 && (
+            <CartActions setStep={setStep} handleCheckout={handleCheckout} />
+          )}
         </AnimatePresence>
       </div>
     </div>

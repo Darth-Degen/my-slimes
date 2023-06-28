@@ -9,15 +9,15 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const DropdownButton: FC<Props> = (props: Props) => {
-  const { isActive, label, className } = props;
+  const { isActive, label, className, ...componentProps } = props;
 
   const styles: string = "w-60 h-10 font-neuebit-bold text-xl";
 
   return (
-    <motion.button
-      className={`relative flex justify-between ${styles} uppercase  border-custom-dark items-center px-3 cursor-pointer bg-white transition-colors duration-300 ${className}`}
-      // whileTap={{ scale: 0.97 }}
-      // {...backgroundAnimations}
+    <button
+      className={`relative flex justify-between ${styles} uppercase  border-custom-dark items-center px-3 cursor-pointer bg-white transition-colors duration-300 
+      disabled:cursor-auto ${className}`}
+      {...componentProps}
     >
       {label}
       <motion.div
@@ -25,9 +25,11 @@ const DropdownButton: FC<Props> = (props: Props) => {
         variants={arrowVariants}
         className=""
       >
-        <ArrowIcon color={"#505050"} type="single" />
+        {!componentProps.disabled && (
+          <ArrowIcon color={"#505050"} type="single" />
+        )}
       </motion.div>
-    </motion.button>
+    </button>
   );
 };
 

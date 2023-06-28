@@ -15,6 +15,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   showDropdown: boolean;
   label: string;
   items: string[];
+  disabled?: boolean;
 }
 
 const Dropdown: FC<Props> = (props: Props) => {
@@ -24,6 +25,7 @@ const Dropdown: FC<Props> = (props: Props) => {
     showDropdown,
     label,
     items,
+    disabled,
     className,
     ...componentProps
   } = props;
@@ -39,6 +41,7 @@ const Dropdown: FC<Props> = (props: Props) => {
         isActive={showDropdown}
         label={label}
         className={className}
+        disabled={disabled}
       />
       <AnimatePresence mode="wait">
         {showDropdown && (

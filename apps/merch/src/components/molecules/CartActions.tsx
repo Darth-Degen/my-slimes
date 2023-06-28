@@ -4,10 +4,11 @@ import { midExitAnimation } from "@merch-constants";
 
 interface Props {
   setStep: Dispatch<SetStateAction<number>>;
+  handleCheckout: () => void;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const CartActions: FC<Props> = (props: Props) => {
-  const { setStep } = props;
+  const { setStep, handleCheckout } = props;
 
   return (
     <motion.div
@@ -18,7 +19,7 @@ const CartActions: FC<Props> = (props: Props) => {
       <button
         className="h-12 w-60 bg-m-green rounded-full text-white uppercase font-neuebit-bold text-xl pt-0.5 tracking-wide"
         onClick={() => {
-          setStep(3);
+          handleCheckout();
         }}
       >
         checkout

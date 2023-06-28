@@ -16,40 +16,58 @@ const CheckoutCart: FC<Props> = (props: Props) => {
   const [sizeDropdown, setSizeDropdown] = useState<boolean>(false);
 
   const handleColorSelect = (color: string): void => {
-    updateCart((prevState) => [
-      ...prevState.slice(0, index),
-      { ...prevState[0], color },
-      ...prevState.slice(index + 1),
-    ]);
+    updateCart((prevState) => {
+      console.log("1 - ", prevState);
+      console.log("2 - ", ...prevState.slice(0, index));
+      console.log("3 - ", { ...prevState[0], color });
+      console.log("4 - ", ...prevState.slice(index + 1));
+      return [
+        ...prevState.slice(0, index),
+        { ...prevState[index], color },
+        ...prevState.slice(index + 1),
+      ];
+    });
   };
   const handleSizeSelect = (size: string): void => {
-    updateCart((prevState) => [
-      ...prevState.slice(0, index),
-      { ...prevState[0], size },
-      ...prevState.slice(index + 1),
-    ]);
+    updateCart((prevState) => {
+      // console.log("1 - ", prevState);
+      console.log(index);
+      // console.log("2 - ", ...prevState.slice(0, index));
+      // console.log("3 - ", { ...prevState[index], size });
+      // console.log("4 - ", ...prevState.slice(index + 1));
+      return [
+        ...prevState.slice(0, index),
+        { ...prevState[index], size },
+        ...prevState.slice(index + 1),
+      ];
+    });
+  };
+  const handleRemove = () => {
+    updateCart((prevState) => prevState.filter((_, i) => i !== index));
   };
 
   return (
-    <div className="flex gap-3 font-neuebit-bold border-b divide-y-custom-gray w-full">
-      {/* image */}
-      <div className="">
-        <Image
-          src={`/images/merch/${item.id}/image.png`}
-          width={90}
-          height={90}
-          alt="Merch"
-        />
-      </div>
-      {/* info */}
-      <div className="flex flex-col gap-0 text-m-mid-gray whitespace-nowrap uppercase w-[150px]">
-        <p className="text-xl leading-none">{item.name}</p>
-        <p className="text-base text-custom-gray leading-none">
-          {item?.size ?? <span className="text-m-red">select size</span>}
-        </p>
-        <p className="text-base text-custom-gray leading-none">
-          {item?.color ?? <span className="text-m-red">select color</span>}
-        </p>
+    <div className="flex flex-col md:flex-row gap-3 font-neuebit-bold border-b divide-y-custom-gray w-full">
+      <div className="flex flex-col sm:flex-row gap-3 ">
+        {/* image */}
+        <div className="">
+          <Image
+            src={`/images/merch/${item.id}/image.png`}
+            width={90}
+            height={90}
+            alt="Merch"
+          />
+        </div>
+        {/* info */}
+        <div className="flex flex-col gap-0 text-m-mid-gray whitespace-nowrap uppercase w-[150px]">
+          <p className="text-xl leading-none">{item.name}</p>
+          <p className="text-base text-custom-gray leading-none">
+            {item?.color ?? <span className="text-m-red">select color</span>}
+          </p>
+          <p className="text-base text-custom-gray leading-none">
+            {item?.size ?? <span className="text-m-red">select size</span>}
+          </p>
+        </div>
       </div>
       {/* dropdowns */}
       <div className="flex flex-col gap-2 pb-3">
@@ -65,6 +83,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           label={`COLOR: ${item?.color ?? ""}`}
           items={item.colors}
           className="!w-44 !h-8 bg-m-light-gray !text-base"
+          disabled={item.colors.length === 1}
         />
         {/* </div>
         <div
@@ -79,8 +98,18 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           label={`SIZE: ${item?.size ?? ""}`}
           items={item.sizeChart}
           className="!w-44 !h-8 bg-m-light-gray !text-base"
+          disabled={item.sizeChart.length === 1}
         />
         {/* </div> */}
+      </div>
+      <div className="md:self-center pb-1">
+        <p className="text-2xl leading-none uppercase">{item.cost} racks</p>
+        <p
+          className="whitespace-nowrap text-2xl text-m-red underline uppercase cursor-pointer leading-none"
+          onClick={() => handleRemove()}
+        >
+          remove
+        </p>
       </div>
     </div>
   );
