@@ -68,6 +68,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const editionContract = new EditionsContractService(
     wallet,
     connection,
+    //@ts-ignore
     editionsContractIdl,
     EDITIONS_PROGRAM_ID
   );
@@ -75,20 +76,27 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   useEffect(() => {
     (async function () {
       try {
-        const editionInfo = await fetch(COLLECTION_API_URL).then(data => data.json());
+        const editionInfo = await fetch(COLLECTION_API_URL).then((data) =>
+          data.json()
+        );
         // console.log('editionInfo: ', editionInfo);
 
-        if (editionInfo?.contractGroups.length && editionInfo?.contractGroups[0].availableContracts.editionSales.length) {
-          setEditionSaleData(editionInfo?.contractGroups[0].availableContracts.editionSales[0]);
+        if (
+          editionInfo?.contractGroups.length &&
+          editionInfo?.contractGroups[0].availableContracts.editionSales.length
+        ) {
+          setEditionSaleData(
+            editionInfo?.contractGroups[0].availableContracts.editionSales[0]
+          );
         } else {
           // TODO error toast
-          console.error('Error fetching edition sale data. Data is wrong');
+          console.error("Error fetching edition sale data. Data is wrong");
         }
       } catch (e) {
         // TODO error toast
-        console.error('Error fetching edition sale data.: ', e);
+        console.error("Error fetching edition sale data.: ", e);
       }
-    }());
+    })();
   }, []);
 
   //auto scroll
@@ -136,8 +144,8 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           >
             {publicKey
               ? publicKey.toBase58().slice(0, 4) +
-              ".." +
-              publicKey.toBase58().slice(-4)
+                ".." +
+                publicKey.toBase58().slice(-4)
               : "Connect"}
           </WalletMultiButton>
         </div>
@@ -155,7 +163,11 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
               <TextBox text={activeStatus.text} className="hidden lg:flex" />
               <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
               {activeStatus.name === RackStatusName.Buy && (
-                <BuyRacksForm handleMint={(amountToMint: number) => handleMint(amountToMint)} />
+                <BuyRacksForm
+                  handleMint={(amountToMint: number) =>
+                    handleMint(amountToMint)
+                  }
+                />
               )}
               {activeStatus.name === RackStatusName.Raffle && (
                 <TextBox text={activeStatus.text} />
