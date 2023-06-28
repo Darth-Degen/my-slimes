@@ -222,11 +222,13 @@ const YourSlimes: FC<Props> = () => {
                   alt={selectedNft?.name}
                   height={100}
                   width={100}
-                  className="rounded-lg shadow-lg"
+                  className="rounded-lg shadow-lg border border-slimes-border"
                 />
                 <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
                   <Image
-                    src={`/images/wallpapers/desktop-display/${selectedNft?.name}.png`}
+                    src={`/images/wallpapers/desktop-display/${selectedNft?.name
+                      .replaceAll(" ", "_")
+                      .toLowerCase()}.png`}
                     alt={`${selectedNft?.name} desktop wallpaper`}
                     height={200}
                     width={200}
@@ -234,16 +236,20 @@ const YourSlimes: FC<Props> = () => {
                 </div>
                 <div className="relative flex items-center justify-center w-[100px] h-[100px] overflow-hidden border border-slimes-border rounded-lg shadow-lg">
                   <Image
-                    src={`/images/wallpapers/mobile-display/${selectedNft?.name}.png`}
-                    alt="pablo mobile wallpaper"
+                    src={`/images/wallpapers/mobile-display/${selectedNft?.name
+                      .replaceAll(" ", "_")
+                      .toLowerCase()}.png`}
+                    alt={`${selectedNft?.name} mobile wallpaper`}
                     height={100}
                     width={50}
                   />
                 </div>
                 <div className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg">
                   <Image
-                    src={`/images/wallpapers/pfp-crop/${selectedNft?.name}.png`}
-                    alt="pablo pfp crop"
+                    src={`/images/wallpapers/pfp-crop/${selectedNft?.name
+                      .replaceAll(" ", "_")
+                      .toLowerCase()}.png`}
+                    alt={`${selectedNft?.name} pfp crop`}
                     layout="fill"
                     objectFit="cover"
                     className="absolute inset-0 z-10 bg-transparent p-2"
