@@ -15,28 +15,9 @@ import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "dotenv/config";
+
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
 const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
-
-//TODO: replace with api data
-// const _quantities: Quantities = {
-//   crewneck: {
-//     id: "crewneck",
-//     quantity: 0,
-//   },
-//   tee: {
-//     id: "tee",
-//     quantity: 1,
-//   },
-//   hat: {
-//     id: "hat",
-//     quantity: 10,
-//   },
-//   pack: {
-//     id: "pack",
-//     quantity: 0,
-//   },
-// };
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
@@ -110,8 +91,6 @@ const StoreModal: FC = () => {
 
     const apiKey = process.env.apiKey;
     const apiUrl = process.env.apiUrl;
-    // const accessToken = "SHMxG54Cyd@hU";
-    // const url = "https://slimes.expapi.link/products";
 
     // axios
     //   .get(`${apiUrl}/products`, {
@@ -126,8 +105,8 @@ const StoreModal: FC = () => {
     //     console.log(response.data);
     //   })
     //   .catch((error) => {
-    // console.error(error);
-    // Handle the error
+    //     console.error(error);
+    //     // Handle the error
     let _quantities: Quantity[] = [];
     merch.forEach((item: Merch) => {
       _quantities.push({
@@ -145,6 +124,11 @@ const StoreModal: FC = () => {
     getQuantities();
   }, [getQuantities]);
 
+  //reset selected item
+  useEffect(() => {
+    if (step === 0) setStoreItem(undefined);
+  }, [step]);
+
   //console outputs
   useEffect(() => {
     if (cart.length > 0) console.log("cart ", cart);
@@ -159,11 +143,9 @@ const StoreModal: FC = () => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      // className="w-[90%] lg:w-5/6 2xl:w-[72%] 3xl:w-1/2 h-[93%] lg:h-3/4 "
       className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] lg:h-[800px] px-4 py-2"
     >
       <div className="flex flex-col items-center justify-between lg:h-full w-full text-3xl">
-        {/* header */}
         <Header
           step={step}
           nfts={nfts.length}
@@ -189,9 +171,15 @@ const StoreModal: FC = () => {
             setStep={setStep}
           />
         )}
-        {/* TODO: handle step 1-3 view inside Checkout */}
-        {step > 1 && <Checkout step={step} />}
-        {/* footer  */}
+        {/* cart + checkout process */}
+        {step > 1 && (
+          <Checkout
+            cart={cart}
+            step={step}
+            setStep={setStep}
+            updateCart={setCart}
+          />
+        )}
         <Footer step={step} />
       </div>
     </Modal>

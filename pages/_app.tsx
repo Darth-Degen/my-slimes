@@ -19,6 +19,7 @@ import {
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 import { useMemo } from "react";
+import { Toaster } from "react-hot-toast";
 // Default styles that can be overridden by your app
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -53,6 +54,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <Component {...pageProps} />
+          <Toaster />
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
