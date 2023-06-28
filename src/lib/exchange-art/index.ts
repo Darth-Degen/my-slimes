@@ -27,6 +27,7 @@ import {
 } from '@solana/web3.js';
 import {
   CARDINAL_TOKEN_MANAGER_ADDRESS,
+  delay,
   getCardinalMintCounterPDA,
   getCardinalTokenManagerPDA,
   getCreatorsPubKeysForNft,
@@ -133,48 +134,61 @@ export class EditionsContractService {
   async buyMultipleEditions(
     editionSaleContract: EditionSaleContract,
     amountToMint?: number
-  ): Promise<Keypair[]> {
+  ): Promise<Keypair[] | Error> {
 
-    const lookupTableAccount = await this.connection
-      .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
-      .then((res) => res.value);
+    try {
+      const lookupTableAccount = await this.connection
+        .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
+        .then((res) => res.value);
 
-    const editionMints = await Promise.all([...Array(amountToMint)].map(async () =>
-      await this.buyFixedPriceEdition(editionSaleContract)
-    ));
+      const editionMints = await Promise.all([...Array(amountToMint)].map(async () =>
+        await this.buyFixedPriceEdition(editionSaleContract)
+      ));
 
-    // Prepare versionedtx
-    const editionMintsInstructions = await Promise.all(editionMints.map(async (editionMint) =>
-      await this.prepareVersionTx(
-        this.connection,
-        this.wallet.publicKey!,
-        editionMint.instructions,
-        editionMint.editionMintKeys,
-        [lookupTableAccount!]
-      )
-    ));
+      // Prepare versionedtx
+      const editionMintsInstructions = await Promise.all(editionMints.map(async (editionMint) =>
+        await this.prepareVersionTx(
+          this.connection,
+          this.wallet.publicKey!,
+          editionMint.instructions,
+          editionMint.editionMintKeys,
+          [lookupTableAccount!]
+        )
+      ));
 
-    // Sign All
-    const signedTransactionsv0 = await this.signAllVersionTx(editionMintsInstructions);
+      // Sign All
+      const signedTransactionsv0 = await this.signAllVersionTx(editionMintsInstructions);
 
-    // Send Versioned Treansactions to network
-    const mintingTxSignatures: TransactionSignature[] = [];
-    await signedTransactionsv0.reduce(async (previous, current) => {
-      await previous;
-      const mintingTxSignature = await this.sendSignedTransactions(current);
-      mintingTxSignatures.push(mintingTxSignature);
-    }, Promise.resolve());
+      console.log('signedTransactionsv0: ', signedTransactionsv0);
 
-    // Verify all transactions
-    await mintingTxSignatures.reduce(async (prev, curr) => {
-      await prev;
-      await this.verifyTransaction(curr);
-    }, Promise.resolve());
+      // Send Versioned Treansactions to network
+      const mintingTxSignatures: TransactionSignature[] = [];
+      await signedTransactionsv0.reduce(async (previous, current, index) => {
+        try {
+          await previous;
+          const mintingTxSignature = await this.sendSignedTransactions(current, index);
+          mintingTxSignatures.push(mintingTxSignature);
+        } catch (e) {
+          console.error(e);
+          console.log(`Error minting tx ${index}, moving to next one`);
+        }
+      }, Promise.resolve());
 
-    // TODO use toast
-    // toast('All done 🎉');
+      // Verify all transactions
+      await mintingTxSignatures.reduce(async (prev, curr) => {
+        await prev;
+        await this.verifyTransaction(curr);
+      }, Promise.resolve());
 
-    return editionMints.map(edition => edition.editionMintKey);
+      // TODO use toast
+      // toast('All done 🎉');
+      console.log('All done 🎉');
+
+      return editionMints.map(edition => edition.editionMintKey);
+    } catch (e) {
+      console.error("Error minting: ", e)
+      return new Error("Error minting.")
+    }
   }
 
   async prepareVersionTx(
@@ -208,17 +222,23 @@ export class EditionsContractService {
     return signedTransactionsv0;
   }
 
-  async sendSignedTransactions(signedTransactionv0: VersionedTransaction): Promise<string> {
+  async sendSignedTransactions(
+    signedTransactionv0: VersionedTransaction,
+    transactionNumber: number
+  ): Promise<string> {
+    console.log(`Mint #${transactionNumber} minting...`);
+
     const transactionSignature = await this.connection.sendRawTransaction(
       signedTransactionv0.serialize(),
       { maxRetries: 5 }
     );
 
-    console.log('finaliseVersionTx --> transactionSignature>>', transactionSignature);
+    // console.log('finaliseVersionTx --> transactionSignature>>', transactionSignature);
 
     let status;
-    const latestBlockHash = await this.connection.getLatestBlockhash();
     try {
+      const latestBlockHash = await this.connection.getLatestBlockhash();
+
       status = (
         await this.connection.confirmTransaction(
           {
@@ -238,7 +258,7 @@ export class EditionsContractService {
       //   title: `Transaction failed`,
       // });
 
-      throw new Error('Could not confirm transaction. Please try again.');
+      console.error(`Mint #${transactionNumber} failed.`);
     }
 
     if (status?.err) {
@@ -248,14 +268,20 @@ export class EditionsContractService {
       // const errors = await this.getErrorForTransaction(connection, transactionSignature);
       // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
 
-      throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
+      // throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
+      console.error(`Mint #${transactionNumber} failed.`);
     }
 
-    console.log('versioned transactionSignature >> ', transactionSignature);
+    // console.log('versioned transactionSignature >> ', transactionSignature);
+    console.log(`Mint #${transactionNumber} success.`);
     return transactionSignature;
   }
 
-  async verifyTransaction(transactionsSignatures: string): Promise<void> {
+  async verifyTransaction(transactionsSignatures: string | Error): Promise<void> {
+    if (transactionsSignatures instanceof Error) {
+      return;
+    }
+
     let parsedTx;
     try {
       parsedTx = await this.connection.getParsedTransaction(transactionsSignatures!, {

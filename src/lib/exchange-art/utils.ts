@@ -7,6 +7,10 @@ import { FindNftByMintOutput, Metaplex } from '@metaplex-foundation/js';
 export const CARDINAL_TOKEN_MANAGER_ADDRESS = new PublicKey('mgr99QFMYByTqGPWmNqunV7vBLmWWXdSrHUfV8Jf3JM');
 export const EDITIONS_PROGRAM_ID = new PublicKey('EXBuYPNgBUXMTsjCbezENRUtFQzjUNZxvPGTd11Pznk5');
 
+export function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 export const getWalletMintingStatePDA = (buyer: PublicKey, masterEditionMintKey: PublicKey): PublicKey => {
   return PublicKey.findProgramAddressSync(
     [Buffer.from('exchgeditions'), buyer.toBuffer(), masterEditionMintKey.toBuffer(), EDITIONS_PROGRAM_ID.toBuffer()],
