@@ -55,7 +55,7 @@ const Checkout: FC<Props> = (props: Props) => {
         <div className="xl:h-[55vh] max-h-[550px] flex flex-col items-center xl:items-start justify-start gap-3">
           <CheckoutCart cart={cart} updateCart={updateCart} />
           <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
-            <p>total</p>
+            <p>total:</p>
             <p>{calculateRacks()} racks</p>
           </div>
         </div>
@@ -64,6 +64,9 @@ const Checkout: FC<Props> = (props: Props) => {
           {step === 2 && (
             <CartActions setStep={setStep} handleCheckout={handleCheckout} />
           )}
+          {/* {step === 3 && (
+            <CartActions setStep={setStep} handleCheckout={handleCheckout} />
+          )} */}
         </AnimatePresence>
       </div>
     </div>

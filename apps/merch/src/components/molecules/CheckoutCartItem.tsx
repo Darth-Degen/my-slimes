@@ -17,10 +17,6 @@ const CheckoutCart: FC<Props> = (props: Props) => {
 
   const handleColorSelect = (color: string): void => {
     updateCart((prevState) => {
-      console.log("1 - ", prevState);
-      console.log("2 - ", ...prevState.slice(0, index));
-      console.log("3 - ", { ...prevState[0], color });
-      console.log("4 - ", ...prevState.slice(index + 1));
       return [
         ...prevState.slice(0, index),
         { ...prevState[index], color },
@@ -30,11 +26,6 @@ const CheckoutCart: FC<Props> = (props: Props) => {
   };
   const handleSizeSelect = (size: string): void => {
     updateCart((prevState) => {
-      // console.log("1 - ", prevState);
-      console.log(index);
-      // console.log("2 - ", ...prevState.slice(0, index));
-      // console.log("3 - ", { ...prevState[index], size });
-      // console.log("4 - ", ...prevState.slice(index + 1));
       return [
         ...prevState.slice(0, index),
         { ...prevState[index], size },
