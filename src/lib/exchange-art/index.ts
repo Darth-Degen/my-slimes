@@ -1,17 +1,14 @@
-//TODO: remove
-//@ts-nocheck
-
 import * as anchor from "@coral-xyz/anchor";
 import { EditionsProgram } from "./idl/editions_program_solana";
-import { EditionSaleContract  } from './types/contract.interfaces';
+import { EditionSaleContract } from './types/contract.interfaces';
 import { COIN_TYPES } from './types/interfaces';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
-import { 
-  FindNftByMintOutput, 
-  Metaplex, 
-  Nft, 
-  NftOriginalEdition, 
-  toBigNumber 
+import {
+  FindNftByMintOutput,
+  Metaplex,
+  Nft,
+  NftOriginalEdition,
+  toBigNumber
 } from '@metaplex-foundation/js';
 import {
   AccountMeta,
@@ -22,12 +19,15 @@ import {
   PublicKey,
   SystemProgram,
   SYSVAR_INSTRUCTIONS_PUBKEY,
+  Transaction,
   TransactionInstruction,
   TransactionMessage,
+  TransactionSignature,
   VersionedTransaction,
 } from '@solana/web3.js';
 import {
   CARDINAL_TOKEN_MANAGER_ADDRESS,
+  delay,
   getCardinalMintCounterPDA,
   getCardinalTokenManagerPDA,
   getCreatorsPubKeysForNft,
@@ -49,64 +49,302 @@ import {
   getAssociatedTokenAddress,
   MINT_SIZE,
 } from '@solana/spl-token';
+import { WalletContextState } from "@solana/wallet-adapter-react";
+
+const COMMITMENT = "finalized";
+const CONNECTION_ENV = "devnet"; // 'mainnet' | 'devnet'
+
+type SolanaWallet = WalletContextState & {
+  publicKey: PublicKey;
+  signTransaction(tx: Transaction): Promise<Transaction>;
+  signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
+};
+
+type BuyFixedPriceEditionResult = {
+  instructions: Array<TransactionInstruction>;
+  editionMintKeys: Array<any>;
+  editionMintKey: Keypair;
+};
+
+/*
+  How to use this lib?
+  
+  1. Instantiate a new version of the class
+  
+  ```js
+  const editionProgram = new EditionsContractService(
+    wallet as any,
+    connection,
+    editionProgramIdlJSON as anchor.Idl,
+    EDITION_PROGRAM_ID
+  );
+  ```
+
+
+  2. Enjoy
+
+  ```js 
+  const editionMintKey = await editionProgram.buyFixedPriceEdition(
+    editionSaleContract
+  );
+  ```
+*/
 
 export class EditionsContractService {
-  connectedWalletPubKey: PublicKey;
+  wallet: WalletContextState;
   connection: Connection;
-  // provider!: anchor.Provider;
-  // editionsProgram!: anchor.Program<EditionsProgram>;
+  provider!: anchor.Provider;
+  editionsProgram!: anchor.Program<EditionsProgram>;
 
   constructor(
+    wallet: WalletContextState,
     connection: Connection,
-    pubKey: PublicKey,
     idl?: anchor.Idl,
     programId?: PublicKey
   ) {
+    this.wallet = wallet;
     this.connection = connection;
-    this.connectedWalletPubKey = pubKey;
-    // this.setProvider();
-    // this.setExpoProgram(idl, programId);
+    this.setProvider();
+    this.setEditionsProgram(idl, programId);
   }
 
-  // constructor(
-  //   private uinService: UiNotificationsService,
-  //   private walletService: WalletService,
-  //   private walletChecksService: WalletChecksService, //1.
-  //   private walletAdapterService: WalletAdapterService, //2.
-  //   private editionsProgramClientService: EditionsProgramClientService,//3.
-  //   private walletStore: WalletStore,
-  //   @Inject(CONNECTION_RPC_ENV) private connectionRpcEnv: ConnectionRpcEnvType,
-  // ) {}
+  setProvider() {
+    this.provider = new anchor.AnchorProvider(
+      this.connection,
+      this.wallet as SolanaWallet,
+      anchor.AnchorProvider.defaultOptions()
+    );
+    anchor.setProvider(this.provider);
+  }
 
-  async buyFixedPriceEdition(editionSaleContract: EditionSaleContract): Promise<string> {
+  setEditionsProgram(idl?: anchor.Idl, programId?: PublicKey) {
+    if (idl && programId) {
+      // Prod
+      this.editionsProgram = new anchor.Program<EditionsProgram>(
+        idl as any,
+        programId,
+        this.provider
+      );
+    } else {
+      // Tests
+      // this.editionsProgram = anchor.workspace.EditionsProgram as anchor.Program<EditionsProgram>;
+    }
+  }
+
+  async buyMultipleEditions(
+    editionSaleContract: EditionSaleContract,
+    amountToMint?: number
+  ): Promise<Keypair[] | Error> {
+
     try {
+      const lookupTableAccount = await this.connection
+        .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
+        .then((res) => res.value);
+
+      const editionMints = await Promise.all([...Array(amountToMint)].map(async () =>
+        await this.buyFixedPriceEdition(editionSaleContract)
+      ));
+
+      // Prepare versionedtx
+      const editionMintsInstructions = await Promise.all(editionMints.map(async (editionMint) =>
+        await this.prepareVersionTx(
+          this.connection,
+          this.wallet.publicKey!,
+          editionMint.instructions,
+          editionMint.editionMintKeys,
+          [lookupTableAccount!]
+        )
+      ));
+
+      // Sign All
+      const signedTransactionsv0 = await this.signAllVersionTx(editionMintsInstructions);
+
+      console.log('signedTransactionsv0: ', signedTransactionsv0);
+
+      // Send Versioned Treansactions to network
+      const mintingTxSignatures: TransactionSignature[] = [];
+      await signedTransactionsv0.reduce(async (previous, current, index) => {
+        try {
+          await previous;
+          const mintingTxSignature = await this.sendSignedTransactions(current, index);
+          mintingTxSignatures.push(mintingTxSignature);
+        } catch (e) {
+          console.error(e);
+          console.log(`Error minting tx ${index}, moving to next one`);
+        }
+      }, Promise.resolve());
+
+      // Verify all transactions
+      await mintingTxSignatures.reduce(async (prev, curr) => {
+        await prev;
+        await this.verifyTransaction(curr);
+      }, Promise.resolve());
+
+      // TODO use toast
+      // toast('All done 🎉');
+      console.log('All done 🎉');
+
+      return editionMints.map(edition => edition.editionMintKey);
+    } catch (e) {
+      console.error("Error minting: ", e)
+      return new Error("Error minting.")
+    }
+  }
+
+  async prepareVersionTx(
+    connection: Connection,
+    payerKey: PublicKey,
+    instructions: TransactionInstruction[],
+    additionalSigners: Keypair[] = [],
+    lookupTableAccounts: AddressLookupTableAccount[] = [],
+  ): Promise<VersionedTransaction> {
+    const versionedTransactionBlockhash = await connection.getLatestBlockhash();
+    const messageV0 = new TransactionMessage({
+      payerKey,
+      recentBlockhash: versionedTransactionBlockhash.blockhash,
+      instructions,
+    }).compileToV0Message(lookupTableAccounts);
+
+    const transactionV0 = new VersionedTransaction(messageV0);
+    if (additionalSigners.length > 0) {
+      transactionV0.sign(additionalSigners);
+    }
+
+    return transactionV0;
+  }
+
+  async signAllVersionTx(transactionsV0: VersionedTransaction[]): Promise<VersionedTransaction[]> {
+    if (!this.wallet.signAllTransactions) {
+      throw new Error('Cannot sign tx')
+    }
+    const signedTransactionsv0 = await this.wallet.signAllTransactions(transactionsV0);
+
+    return signedTransactionsv0;
+  }
+
+  async sendSignedTransactions(
+    signedTransactionv0: VersionedTransaction,
+    transactionNumber: number
+  ): Promise<string> {
+    console.log(`Mint #${transactionNumber} minting...`);
+
+    const transactionSignature = await this.connection.sendRawTransaction(
+      signedTransactionv0.serialize(),
+      { maxRetries: 5 }
+    );
+
+    // console.log('finaliseVersionTx --> transactionSignature>>', transactionSignature);
+
+    let status;
+    try {
+      const latestBlockHash = await this.connection.getLatestBlockhash();
+
+      status = (
+        await this.connection.confirmTransaction(
+          {
+            signature: transactionSignature,
+            blockhash: latestBlockHash.blockhash,
+            lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          },
+          COMMITMENT,
+        )
+      ).value;
+    } catch (error) {
+
+      // TODO use toast service
+      // -----
+      // this.uinService.showError({
+      //   message: 'Could not confirm transaction. Please try again.',
+      //   title: `Transaction failed`,
+      // });
+
+      console.error(`Mint #${transactionNumber} failed.`);
+    }
+
+    if (status?.err) {
+
+      // TODO toast
+      // ------
+      // const errors = await this.getErrorForTransaction(connection, transactionSignature);
+      // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
+
+      // throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
+      console.error(`Mint #${transactionNumber} failed.`);
+    }
+
+    // console.log('versioned transactionSignature >> ', transactionSignature);
+    console.log(`Mint #${transactionNumber} success.`);
+    return transactionSignature;
+  }
+
+  async verifyTransaction(transactionsSignatures: string | Error): Promise<void> {
+    if (transactionsSignatures instanceof Error) {
+      return;
+    }
+
+    let parsedTx;
+    try {
+      parsedTx = await this.connection.getParsedTransaction(transactionsSignatures!, {
+        maxSupportedTransactionVersion: 0,
+      });
+    } catch (error) {
+      throw new Error('Could not retrieve transaction details. Please check your wallet activity.');
+    }
+
+    const logMessages = parsedTx?.meta?.logMessages || [];
+    const botTrafficMessage = logMessages.find((message: string | string[]) =>
+      message.includes('bot traffic is taxed'),
+    );
+
+    if (botTrafficMessage) {
+      const errorMessage = botTrafficMessage.split(',')?.[0] || '';
+      const parsedErrorMessage = `Suspicious activity recorded. ${errorMessage.replace('Program log:', '').trim()}.`;
+
+      // TODO replace with toast service
+      // -----
+      // this.uinService.showError({ message: parsedErrorMessage });
+
+      throw new Error(parsedErrorMessage);
+    }
+  }
+
+  async buyFixedPriceEdition(editionSaleContract: EditionSaleContract): Promise<BuyFixedPriceEditionResult> {
+    try {
+      if (!this.wallet.publicKey) {
+        throw new Error('Cannot identify wallet.');
+      }
       //1. get connection and wallet
-      // const connection = await this.walletAdapterService.getConnection();
-      // const connectedWalletPubKey = await this.walletAdapterService.getConnectedWalletPubKey();
+      // No.
+
       //2. set master edition mintkey, price, and currency
       const masterEditionMintKey = new PublicKey(editionSaleContract.keys.mintKey);
       const price = editionSaleContract.data.price;
       const currency = editionSaleContract.data.currency || COIN_TYPES.SOL;
-      //3. check if wall is connected and has enough funds
+
+      //3. check if wallet is connected and has enough funds
       const feeInLamports = 0.011 * LAMPORTS_PER_SOL;
-      await this.walletChecksService.checkIfWalletIsConnected();
-      await this.walletChecksService.checkIfWalletHasEnoughFunds({
-        additionalFeeInLamports: feeInLamports,
-        [currency]: price,
-      });
+
+      // TODO check if wallet has enough funds
+      // ------
+      // await this.walletChecksService.checkIfWalletIsConnected();
+      // await this.walletChecksService.checkIfWalletHasEnoughFunds({
+      //   additionalFeeInLamports: feeInLamports,
+      //   [currency]: price,
+      // });
+
       // *** create program client 
-      const editionsProgramClient = this.editionsProgramClientService.getClient(this.connection);
+      const editionsProgramClient = this.editionsProgram;
+
       //4. ~ determine if wallet minting cap is exceeded
       let walletMintingStatePDA: PublicKey | null = null;
       const walletMintingCap = editionSaleContract.data.walletMintingCap!;
       const WALLET_MINT_CAP_ERROR_MESSAGE = `You can only mint ${walletMintingCap} editions per wallet.`;
-      walletMintingStatePDA = getWalletMintingStatePDA(this.connectedWalletPubKey, masterEditionMintKey);
+      walletMintingStatePDA = getWalletMintingStatePDA(this.wallet.publicKey, masterEditionMintKey);
       try {
-        const walletMintingStateAccount = await editionsProgramClient.account['walletMintingState'].fetch(
+        const walletMintingStateAccount = await editionsProgramClient.account['WalletMintingState'].fetch(
           walletMintingStatePDA,
         );
 
-        // @ts-ignore
         if (walletMintingStateAccount['numMinted'] >= walletMintingCap) {
           throw new Error(WALLET_MINT_CAP_ERROR_MESSAGE);
         }
@@ -115,8 +353,10 @@ export class EditionsContractService {
           throw error;
         }
       }
+
       //5. create royaltyProtection boolean instruction variables 
-      const isRoyaltyProtected = editionSaleContract.data.royaltyProtection;
+      const isRoyaltyProtected = editionSaleContract.data.royaltyProtection || false;
+
       //6. get address of the associated token account for the mint and owner
       const editionMintKey = Keypair.generate();
 
@@ -127,13 +367,14 @@ export class EditionsContractService {
         newEditionDepositAuthority,
         true,
       );
+
       //7. create instruction variables 
       const instructions = [];
 
       const createEditionMintIx = SystemProgram.createAccount({
-        fromPubkey: this.connectedWalletPubKey,
+        fromPubkey: this.wallet.publicKey,
         newAccountPubkey: editionMintKey.publicKey,
-        lamports: await this.walletService.getExemptionRent(this.connection as Connection, MINT_SIZE),
+        lamports: await this.connection.getMinimumBalanceForRentExemption(MINT_SIZE),
         space: MINT_SIZE,
         programId: new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'),
       });
@@ -141,12 +382,12 @@ export class EditionsContractService {
       const createInitializeMintIx = createInitializeMintInstruction(
         editionMintKey.publicKey,
         0,
-        this.connectedWalletPubKey,
-        this.connectedWalletPubKey,
+        this.wallet.publicKey,
+        this.wallet.publicKey,
       );
 
       const createAssociatedTokenAccountIx = createAssociatedTokenAccountInstruction(
-        this.connectedWalletPubKey,
+        this.wallet.publicKey,
         newEditionDepositTokenAccount,
         newEditionDepositAuthority,
         editionMintKey.publicKey,
@@ -155,7 +396,7 @@ export class EditionsContractService {
       const createMintToInstructionIx = createMintToInstruction(
         editionMintKey.publicKey,
         newEditionDepositTokenAccount,
-        this.connectedWalletPubKey,
+        this.wallet.publicKey,
         1,
       );
 
@@ -165,6 +406,7 @@ export class EditionsContractService {
         createAssociatedTokenAccountIx,
         createMintToInstructionIx,
       );
+
       //8. fetch nft data from metaplex and create variables needed for mint
       const metaplex = new Metaplex(this.connection!);
       let nft: FindNftByMintOutput | null;
@@ -181,17 +423,17 @@ export class EditionsContractService {
 
       const masterEditionPda = getEditionPDA(masterEditionMintKey);
       const masterMetadataPda = await getTokenMetadataAccount(masterEditionMintKey);
+
       //9. creating variables continued 
-      // 'mainnet' | 'devnet'
-      const settlementMintPubKey = getSettlementMint(currency, this.connectionRpcEnv);
+      const settlementMintPubKey = getSettlementMint(currency, CONNECTION_ENV); // 'mainnet' | 'devnet'
       const connectWalletTokenAccountForSettlementMintPubKey = await getAssociatedTokenAddress(
         settlementMintPubKey,
-        this.connectedWalletPubKey,
+        this.wallet.publicKey,
       );
 
       const buyerNewEditionDepositAccount = await getAssociatedTokenAddress(
         editionMintKey.publicKey,
-        this.connectedWalletPubKey,
+        this.wallet.publicKey,
       );
       const seller = new PublicKey(editionSaleContract.keys.initializer);
 
@@ -228,7 +470,7 @@ export class EditionsContractService {
       });
 
       const saleStateAccount = new PublicKey(editionSaleContract.keys.saleAccount);
-      const whitelistingState = getWhitelistingStatePDA(this.connectedWalletPubKey, saleStateAccount);
+      const whitelistingState = getWhitelistingStatePDA(this.wallet.publicKey, saleStateAccount);
 
       const mintFixedPriceEditionIx = await editionsProgramClient.methods['mintFixedPriceEdition']({
         price: toBigNumber(price),
@@ -236,8 +478,8 @@ export class EditionsContractService {
         splTokenSettlement: currency !== COIN_TYPES.SOL,
       })
         .accounts({
-          buyer: this.connectedWalletPubKey,
-          payer: this.connectedWalletPubKey,
+          buyer: this.wallet.publicKey,
+          payer: this.wallet.publicKey,
           payerSettlementMintPaymentAccount: connectWalletTokenAccountForSettlementMintPubKey,
           buyerNewEditionDepositAccount,
           seller,
@@ -275,7 +517,7 @@ export class EditionsContractService {
         .instruction();
 
       const exchangeFeeMintingIx = SystemProgram.transfer({
-        fromPubkey: this.connectedWalletPubKey,
+        fromPubkey: this.wallet.publicKey,
         toPubkey: new PublicKey('CaDAUgEtYu5v28B6jp2RUp5kDQdiCZrdEcQN77nCxECV'),
         lamports: feeInLamports,
       });
@@ -285,39 +527,93 @@ export class EditionsContractService {
         .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
         .then((res) => res.value);
 
-      const mintingTxSignature = await this.finaliseVersionTx(
-        this.connection,
-        this.connectedWalletPubKey,
+      return {
         instructions,
-        [editionMintKey],
-        [lookupTableAccount!],
-      );
+        editionMintKeys: [editionMintKey],
+        editionMintKey
+      };
 
-      let parsedTx;
-      try {
-        parsedTx = await this.connection.getParsedTransaction(mintingTxSignature!, {
-          maxSupportedTransactionVersion: 0,
-        });
-      } catch (error) {
-        throw new Error('Could not retrieve transaction details. Please check your wallet activity.');
-      }
+      // const mintingTxSignature = await this.finaliseVersionTx(
+      //   this.connection,
+      //   this.wallet.publicKey,
+      //   instructions,
+      //   [editionMintKey],
+      //   [lookupTableAccount!],
+      // );
 
-      const logMessages = parsedTx?.meta?.logMessages || [];
-      const botTrafficMessage = logMessages.find((message: string | string[]) =>
-        message.includes('bot traffic is taxed'),
-      );
-
-      if (botTrafficMessage) {
-        const errorMessage = botTrafficMessage.split(',')?.[0] || '';
-        const parsedErrorMessage = `Suspicious activity recorded. ${errorMessage.replace('Program log:', '').trim()}.`;
-        this.uinService.showError({ message: parsedErrorMessage });
-        throw new Error(parsedErrorMessage);
-      }
-
-      return editionMintKey.publicKey.toString();
     } catch (error) {
       console.log(error);
       throw error;
     }
+  }
+
+  // Legacy, not used anymore
+  async finaliseVersionTx(
+    connection: Connection,
+    payerKey: PublicKey,
+    instructions: TransactionInstruction[],
+    additionalSigners: Keypair[] = [],
+    lookupTableAccounts: AddressLookupTableAccount[] = [],
+  ): Promise<string> {
+    const versionedTransactionBlockhash = await connection.getLatestBlockhash();
+    const messageV0 = new TransactionMessage({
+      payerKey,
+      recentBlockhash: versionedTransactionBlockhash.blockhash,
+      instructions,
+    }).compileToV0Message(lookupTableAccounts);
+
+    const transactionV0 = new VersionedTransaction(messageV0);
+    if (additionalSigners.length > 0) {
+      transactionV0.sign(additionalSigners);
+    }
+
+    if (!this.wallet.signTransaction) {
+      throw new Error('Cannot sign tx')
+    }
+    const signedTransactionv0 = await this.wallet.signTransaction(transactionV0);
+
+    // const txSize = signedTransactionv0.serialize().length + (signedTransactionv0.signatures.length * 64);
+    // console.log('txSize: ', txSize);
+
+    const transactionSignature = await connection.sendRawTransaction(signedTransactionv0.serialize(), { maxRetries: 5 });
+    console.log('finaliseVersionTx --> transactionSignature>>', transactionSignature);
+
+    let status;
+    const latestBlockHash = await connection.getLatestBlockhash();
+    try {
+      status = (
+        await connection.confirmTransaction(
+          {
+            signature: transactionSignature,
+            blockhash: latestBlockHash.blockhash,
+            lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          },
+          COMMITMENT,
+        )
+      ).value;
+    } catch (error) {
+
+      // TODO use toast service
+      // -----
+      // this.uinService.showError({
+      //   message: 'Could not confirm transaction. Please try again.',
+      //   title: `Transaction failed`,
+      // });
+
+      throw new Error('Could not confirm transaction. Please try again.');
+    }
+
+    if (status?.err) {
+
+      // TODO toast
+      // ------
+      // const errors = await this.getErrorForTransaction(connection, transactionSignature);
+      // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
+
+      throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
+    }
+
+    console.log('versioned transactionSignature >> ', transactionSignature);
+    return transactionSignature;
   }
 }
