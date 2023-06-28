@@ -17,7 +17,6 @@ import toast from "react-hot-toast";
 import "dotenv/config";
 
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
-const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
@@ -55,12 +54,28 @@ const StoreModal: FC = () => {
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
 
+      const editionUpdateAuthority = process.env.editionUpdateAuthority;
+      const editionName = process.env.editionName;
+
       //fetch metadata
-      const jsonArr: Metadata[] = [];
       await Promise.all(
         tokens.map(async (token, index) => {
-          //@ts-ignore
-          if (token.mintAddress.toBase58() === _mintAddress) {
+          // console.log(
+          //   "nft \n",
+          //   token?.updateAuthorityAddress.toBase58(),
+          //   "\n",
+          //   token?.address.toBase58(),
+          //   "\n",
+          //   //@ts-ignore
+          //   token?.mintAddress.toBase58(),
+          //   token
+          // );
+
+          if (
+            token?.updateAuthorityAddress?.toBase58() ===
+              editionUpdateAuthority &&
+            token?.name === editionName
+          ) {
             setNfts((prevState) => [...prevState, token]);
           }
           // const uri = token.uri;
