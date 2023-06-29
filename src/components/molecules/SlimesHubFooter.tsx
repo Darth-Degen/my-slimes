@@ -13,7 +13,6 @@ const SlimesHubFooter: FC = () => {
         <div className="w-1/3 flex items-center justify-center gap-14">
           <motion.button
             className="flex flex-col items-center justify-center gap-2"
-            {...smallClickAnimation}
             onClick={() => {
               window.open(
                 "https://discord.gg/9fZqQ2p9",
@@ -23,7 +22,7 @@ const SlimesHubFooter: FC = () => {
             }}
           >
             <Image
-              src="/images/icons/slimes.svg"
+              src="/images/icons/discord.svg"
               width={40}
               height={40}
               alt="slimes social icon"
@@ -34,7 +33,6 @@ const SlimesHubFooter: FC = () => {
           </motion.button>
           <motion.button
             className="flex flex-col items-center justify-center gap-2"
-            {...smallClickAnimation}
             onClick={() => {
               window.open(
                 "https://twitter.com/scumsol",
@@ -44,7 +42,7 @@ const SlimesHubFooter: FC = () => {
             }}
           >
             <Image
-              src="/images/icons/slimes.svg"
+              src="/images/icons/twitter.svg"
               width={40}
               height={40}
               alt="slimes social icon"
