@@ -4,9 +4,7 @@ import { SlimesHubFooter, YourSlimes } from "@components";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
 }
-const SlimesHubView: FC<Props> = (props: Props) => {
-  const { setAssets } = props;
-
+const SlimesHubView: FC<Props> = () => {
   return (
     <div className="relative w-full min-h-screen flex flex-col items-center">
       <YourSlimes />

@@ -113,13 +113,13 @@ const YourSlimes: FC<Props> = () => {
 
   return (
     <motion.div className="w-full max-w-[1200px] mx-auto" {...enterAnimation}>
-      <div className="w-full flex items-start justify-center px-4 xl:px-0 pt-8">
+      <div className="w-fit lg:w-full mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-center px-4 xl:px-0 pt-8">
         {selectedNft && (
           <div className="flex flex-col items-center justify-center">
             {/* TODO: manage loading states (both initial and in between asset type changes) */}
             <AnimatePresence mode="wait">
               <motion.div
-                className="relative flex items-center justify-center h-[500px] w-[500px] mr-6"
+                className="relative flex items-center justify-center lg:h-[500px] lg:w-[500px] lg:mr-6"
                 {...enterAnimation}
                 key={selectedNft?.name}
               >
@@ -135,17 +135,17 @@ const YourSlimes: FC<Props> = () => {
             <FullResolutionDownload imageUrl={selectedNft.image} />
           </div>
         )}
-        <div className="w-[600px] h-full ml-6 -mt-3">
+        <div className="w-full lg:w-[600px] h-full lg:ml-6 mt-3 lg:-mt-3">
           <p className="hub-name uppercase text-slimes-black">
             {selectedNft?.name}
           </p>
-          <p className="font-secondary max-w-[300px] text-[9px] leading-[12px] text-slimes-black -mt-1">
+          <p className="font-secondary max-w-[300px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
             {selectedNft?.description}
           </p>
           {/* CTA buttons */}
-          <div className="flex items-center gap-6 py-4 min-h-[60px]">
+          <div className="flex flex-col sm:flex-row items-start lg:items-center gap-3 lg:gap-6 py-4 min-h-[60px]">
             <motion.button
-              className="bg-v2-green text-sm w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
+              className="bg-v2-green text-sm w-full sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
               {...smallClickAnimation}
               onClick={() => {
                 window.open(
@@ -157,17 +157,19 @@ const YourSlimes: FC<Props> = () => {
             >
               Exchange Art
             </motion.button>
-            <SlimeHubButton
-              text="Redeem Merch"
-              className="line-through"
+            <motion.button
+              className="bg-v2-green text-sm w-full line-through sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
+              {...smallClickAnimation}
               // onClick={() => {
               //   window.open(
-              //     "https://youtube.com/watch?v=dQw4w9WgXcQ",
+              //     `https://exchange.art/single/${selectedNft?.mintAddress}`,
               //     "_blank",
               //     "noopener noreferrer"
               //   );
               // }}
-            />
+            >
+              RedeeM Merch
+            </motion.button>
           </div>
           {/* your slimes - connect wallet or show icons */}
           <div>
@@ -241,7 +243,7 @@ const YourSlimes: FC<Props> = () => {
               Asset Library:
             </p>
             {selectedNft && (
-              <div className="h-[100px] flex items-start gap-3">
+              <div className="w-full h-[100px] flex items-start gap-3 overflow-x-auto">
                 <Image
                   src={selectedNft?.image}
                   height={100}

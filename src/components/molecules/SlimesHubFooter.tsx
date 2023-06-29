@@ -5,7 +5,7 @@ import { smallClickAnimation } from "@merch-constants";
 
 const SlimesHubFooter: FC = () => {
   return (
-    <div className="w-full py-9 bg-v2-green">
+    <div className="absolute bottom-0 w-full py-9 bg-v2-green">
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between">
         <p className="w-1/3 text-4xl text-white font-black uppercase">
           Connect with your slimes here

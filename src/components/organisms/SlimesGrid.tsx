@@ -63,7 +63,7 @@ const SlimesGrid: FC<Props> = ({
   return (
     <div
       className="w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
-      xl:grid-cols-5 gap-6 py-10 px-4 xl:px-0 mb-32"
+      xl:grid-cols-5 gap-6 py-10 px-10 xl:px-0 mb-32"
     >
       {slimes &&
         slimes
