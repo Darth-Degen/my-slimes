@@ -3,7 +3,6 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { collection, enterAnimation, smallClickAnimation } from "@constants";
 import { motion } from "framer-motion";
-import { Shimmer } from "@components";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
