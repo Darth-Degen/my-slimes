@@ -2,8 +2,8 @@ import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { collection, enterAnimation, smallClickAnimation } from "@constants";
-import { AnimatePresence, motion } from "framer-motion";
-import { ImageShimmer, SlimeHubButton } from "@components";
+import { motion } from "framer-motion";
+import { Shimmer } from "@components";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
@@ -24,6 +24,7 @@ const YourSlimes: FC<Props> = () => {
     "full-res" | "pfp" | "mobile" | "desktop"
   >("full-res"); // selected asset type of slime to display
   const [featuredImage, setFeaturedImage] = useState<string>(); // url of current featured image
+  const [imageLoading, setImageLoading] = useState<boolean>(false); // loading state of featured image
 
   // fetch users nfts
   const getNfts = useCallback(async () => {
@@ -72,6 +73,7 @@ const YourSlimes: FC<Props> = () => {
 
   // manage featured image path based on selected asset type
   useEffect(() => {
+    setImageLoading(true);
     if (selectedNft) {
       switch (selectedAssetType) {
         case "full-res":
@@ -117,21 +119,24 @@ const YourSlimes: FC<Props> = () => {
         {selectedNft && (
           <div className="flex flex-col items-center justify-center">
             {/* TODO: manage loading states (both initial and in between asset type changes) */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                className="relative flex items-center justify-center lg:h-[500px] lg:w-[500px] lg:mr-6"
-                {...enterAnimation}
-                key={selectedNft?.name}
-              >
-                <ImageShimmer
-                  src={featuredImage ?? selectedNft.image}
-                  width={selectedAssetType === "mobile" ? 250 : 500}
-                  height={500}
-                  alt="featured slime asset"
-                  className="rounded-xl overflow-hidden"
-                />
-              </motion.div>
-            </AnimatePresence>
+            <motion.div
+              className="relative flex items-center justify-center lg:h-[500px] lg:w-[500px] lg:mr-6"
+              {...enterAnimation}
+              key={selectedNft?.name ?? "placeholder"}
+            >
+              <Image
+                src={featuredImage ?? selectedNft.image}
+                width={selectedAssetType === "mobile" ? 250 : 500}
+                height={500}
+                alt="featured slime asset"
+                className="rounded-xl overflow-hidden"
+                onLoad={() => setImageLoading(false)}
+                style={{
+                  transition: "opacity 0.5s",
+                  opacity: imageLoading ? 0 : 1,
+                }}
+              />
+            </motion.div>
             <FullResolutionDownload imageUrl={selectedNft.image} />
           </div>
         )}

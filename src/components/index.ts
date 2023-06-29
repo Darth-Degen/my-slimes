@@ -34,7 +34,6 @@ const WalletButton = dynamic(() => import("./atoms/WalletButton"));
 const ConnectButton = dynamic(() => import("./atoms/ConnectButton"));
 const GalleryArrowButton = dynamic(() => import("./atoms/GalleryArrowButton"));
 const MobileLink = dynamic(() => import("./atoms/MobileLink"));
-const SlimeHubButton = dynamic(() => import("./atoms/SlimeHubButton"));
 //molecules
 const PageHead = dynamic(() => import("./molecules/PageHead"));
 const Logo = dynamic(() => import("./molecules/Logo"));
@@ -134,7 +133,6 @@ export {
   WordFall,
   GalleryArrowButton,
   MobileLink,
-  SlimeHubButton,
   VideoScroll,
   IndexView,
   LinkFire,
