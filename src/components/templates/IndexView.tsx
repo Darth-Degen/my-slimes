@@ -71,7 +71,6 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   return (
     <>
       <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} />
-      {/* TODO: add onLoadingComplete when landing graphic is added */}
       <LandingView
         setAssets={setAssets}
         setIsInView={setIsLandingInView}
