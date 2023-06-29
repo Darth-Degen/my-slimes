@@ -73,9 +73,9 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     if (!connected) setVisible(true);
   };
 
-  useEffect(() => {
-    console.log("child showStore ", showStore);
-  }, [showStore]);
+  // useEffect(() => {
+  //   console.log("child showStore ", showStore);
+  // }, [showStore]);
 
   return (
     <div
