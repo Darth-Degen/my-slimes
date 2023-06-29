@@ -42,7 +42,7 @@ const LandingView: FC<Props> = (props: Props) => {
   const { setAssets, setIsInView, id, setCurrentPage, showLoop, setShowLoop } =
     props;
   const [winWidth] = useWindowSize();
-  const mobileView = winWidth < 1024;
+  const mobileView = winWidth <= 1024;
   //refs
   const scrollRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLVideoElement>(null);
@@ -136,7 +136,7 @@ const LandingView: FC<Props> = (props: Props) => {
         key="intro mobile"
         className={`${
           !mobileView && "hidden"
-        } h-full w-screen absolute inset-0 -z-10 ${
+        } pt-10 h-full w-screen absolute inset-0 -z-10 ${
           !showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}

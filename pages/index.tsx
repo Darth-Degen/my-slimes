@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   ]);
 
   const [width] = useWindowSize();
-  const mobileView = width < 1024;
+  const mobileView = width <= 1024;
 
   // useEffect(() => {
   //   console.log("assets", assets);

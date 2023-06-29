@@ -49,7 +49,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
 
   // views
   const [width] = useWindowSize();
-  const mobileView = width < 1024;
+  const mobileView = width <= 1024;
 
   // handles auto scroll
   useEffect(() => {
@@ -79,7 +79,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
         showLoop={showLoop}
         setShowLoop={setShowLoop}
       />
-      <div className="w-full h-full hidden sm:block">
+      <div className="w-full h-full hidden lg:block">
         <BuyRacksView
           setIsInView={setIsRacksInView}
           id={pageIDs[1]}
@@ -106,7 +106,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
           setCurrentPage={setCurrentPage}
         />
       </div>
-      <div className="w-full h-full sm:hidden">
+      <div className="w-full h-full lg:hidden">
         <LinkFire setAssets={setAssets} showLoop={showLoop} />
       </div>
     </>

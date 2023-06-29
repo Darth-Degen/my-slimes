@@ -13,15 +13,15 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
   return (
     <AnimatePresence mode="wait">
       {showLoop && (
-        <motion.div {...slideUpAnimation} className="-mt-12">
-          <div className="w-full grid grid-cols-2 gap-2 px-5 pt-20 pb-10">
+        <motion.div {...slideUpAnimation} className="-mt-12 md:mt-0">
+          <div className="w-full grid grid-cols-2 gap-2 md:gap-4 px-5 pt-20 pb-10">
             <div className="col-span-1 w-full h-full overflow-hidden rounded-xl">
               <MobileLink
                 setAssets={setAssets}
                 href="https://exchange.art/series/Slimes/nfts"
                 image="/images/linkfire/slimes_secondary.png"
-                width={191}
-                height={141}
+                width={1952}
+                height={1164}
                 alt="slimes secondary marketplace link"
                 index={0}
               />
@@ -31,8 +31,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://exchange.art/series/Slimes%20Family%20Collection/nfts"
                 image="/images/linkfire/sfc_secondary.png"
-                width={191}
-                height={141}
+                width={1952}
+                height={1164}
                 alt="sfc secondary marketplace link"
                 index={1}
               />
@@ -42,8 +42,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://twitter.com/myslimes_"
                 image="/images/linkfire/slimes_twitter.png"
-                width={191}
-                height={141}
+                width={1952}
+                height={1164}
                 alt="slimes twitter link"
                 index={2}
               />
@@ -53,8 +53,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://twitter.com/scumsol"
                 image="/images/linkfire/scum_twitter.png"
-                width={191}
-                height={141}
+                width={1952}
+                height={1164}
                 alt="scum twitter link"
                 index={3}
               />
@@ -64,8 +64,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://discord.gg/scumsol"
                 image="/images/linkfire/scum_discord.png"
-                width={191}
-                height={141}
+                width={1952}
+                height={1164}
                 alt="scum discord link"
                 index={4}
               />
@@ -75,8 +75,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://allintime.xyz/"
                 image="/images/linkfire/allintime.png"
-                width={191}
-                height={141}
+                width={1952}
+                height={1164}
                 alt="all in time link"
                 index={5}
               />
@@ -86,8 +86,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://aether.so/space/Slimes"
                 image="/images/linkfire/slimes_family_gallery.png"
-                width={392}
-                height={98}
+                width={4008}
+                height={1002}
                 alt="slimes family gallery link"
                 index={6}
               />
