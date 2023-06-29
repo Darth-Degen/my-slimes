@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 interface Props {
   shipping: ShippingInfo;
-  setStep: Dispatch<SetStateAction<number>>;
+  setStep: (value: number) => void;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
 }
 

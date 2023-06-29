@@ -6,7 +6,7 @@ import { fastExitAnimation } from "@merch-constants";
 interface Props {
   step: number;
   storeItem: Merch | undefined;
-  setStep: Dispatch<SetStateAction<number>>;
+  setStep: (value: number) => void;
 }
 const Breadcrumbs: FC<Props> = (props: Props) => {
   const { step, storeItem, setStep } = props;

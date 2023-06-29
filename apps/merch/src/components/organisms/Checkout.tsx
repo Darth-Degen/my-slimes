@@ -13,7 +13,7 @@ import { fastExitAnimation } from "@merch-constants";
 interface Props {
   cart: Merch[];
   step: number;
-  setStep: Dispatch<SetStateAction<number>>;
+  setStep: (value: number) => void;
   updateCart: Dispatch<SetStateAction<Merch[]>>;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review

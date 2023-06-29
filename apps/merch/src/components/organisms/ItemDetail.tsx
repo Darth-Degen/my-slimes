@@ -11,7 +11,7 @@ interface Props {
   item: Merch;
   quantities: Quantity[];
   addToCart: (item: Merch) => void;
-  setStep: Dispatch<SetStateAction<number>>;
+  setStep: (value: number) => void;
 }
 const ItemDetail: FC<Props> = (props: Props) => {
   const { item, quantities, addToCart, setStep } = props;

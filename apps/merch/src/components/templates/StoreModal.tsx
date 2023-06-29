@@ -19,10 +19,16 @@ import "dotenv/config";
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
 
 const StoreModal: FC = () => {
-  const { showStore, setShowExitModal } = useContext(StoreContext);
+  const {
+    showStore,
+    showOrderModal,
+    step,
+    setShowExitModal,
+    setShowOrderModal,
+    setStep,
+  } = useContext(StoreContext);
 
   //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
-  const [step, setStep] = useState<number>(0);
   const [cart, setCart] = useState<Merch[]>([]);
   const [storeItem, setStoreItem] = useState<Merch>();
   const [nfts, setNfts] = useState<unknown[]>([]);
