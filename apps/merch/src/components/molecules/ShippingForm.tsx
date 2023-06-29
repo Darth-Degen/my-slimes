@@ -93,15 +93,26 @@ const ShippingForm: FC<Props> = (props: Props) => {
       {...midExitAnimation}
     >
       <p className="text-m-red">*all fields required</p>
-      <TextInput placeholder="name" handleInput={handleName} />
       <TextInput
-        placeholder="email"
+        placeholder={shipping.name.length > 0 ? shipping.name : "name"}
+        handleInput={handleName}
+      />
+      <TextInput
+        placeholder={shipping.email.length > 0 ? shipping.email : "email"}
         handleInput={handleEmail}
         type="email"
         error={validEmail === false}
       />
-      <TextInput placeholder="address" handleInput={handleAddress} />
-      <TextInput placeholder="address2" handleInput={handleAddress2} />
+      <TextInput
+        placeholder={shipping.address.length > 0 ? shipping.address : "address"}
+        handleInput={handleAddress}
+      />
+      <TextInput
+        placeholder={
+          shipping.address2.length > 0 ? shipping.address2 : "address2"
+        }
+        handleInput={handleAddress2}
+      />
       <Dropdown
         handleSelect={handleCountry}
         setShowDropdown={setCountryDropdown}
@@ -113,7 +124,10 @@ const ShippingForm: FC<Props> = (props: Props) => {
         className="text-m-mid-gray whitespace-nowrap text-ellipsis"
       />
       {/* TODO: add auto complete */}
-      <TextInput placeholder="city" handleInput={handleCity} />
+      <TextInput
+        placeholder={shipping.city.length > 0 ? shipping.city : "city"}
+        handleInput={handleCity}
+      />
       {/* TODO: states */}
       <Dropdown
         handleSelect={handleState}
@@ -123,7 +137,10 @@ const ShippingForm: FC<Props> = (props: Props) => {
         items={countryNames}
         className="text-m-mid-gray whitespace-nowrap text-ellipsis"
       />
-      <TextInput placeholder="zip" handleInput={handleZip} />
+      <TextInput
+        placeholder={shipping.zip.length > 0 ? shipping.zip : "zip"}
+        handleInput={handleZip}
+      />
       <button
         className="h-12 w-60 bg-m-green rounded-full uppercase font-neuebit-bold text-xl text-white pt-0.5 tracking-wide mt-3.5"
         onClick={handleCheckout}

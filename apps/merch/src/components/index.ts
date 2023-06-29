@@ -22,6 +22,7 @@ const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
 const CartActions = dynamic(()=> import("./molecules/CartActions"))
 const CheckoutCartItem = dynamic(()=> import("./molecules/CheckoutCartItem"))
 const ShippingForm = dynamic(()=> import("./molecules/ShippingForm"))
+const ShippingDetails = dynamic(()=> import("./molecules/ShippingDetails"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -68,5 +69,6 @@ export {
   CheckoutCart,
   CheckoutCartItem,
   ShippingForm,
-  TextInput
+  TextInput,
+  ShippingDetails
 }

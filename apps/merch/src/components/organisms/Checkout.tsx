@@ -1,8 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import { CartActions, CheckoutCart, ShippingForm } from "@merch-components";
+import {
+  CartActions,
+  CheckoutCart,
+  ShippingForm,
+  ShippingDetails,
+} from "@merch-components";
 import { Merch, ShippingInfo } from "@merch-types";
 import toast from "react-hot-toast";
+import { fastExitAnimation } from "@merch-constants";
 
 interface Props {
   cart: Merch[];
@@ -24,6 +30,8 @@ const Checkout: FC<Props> = (props: Props) => {
     state: "",
     zip: "",
   });
+
+  const shippingFee = 2;
 
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
@@ -69,9 +77,29 @@ const Checkout: FC<Props> = (props: Props) => {
         {/* left side */}
         <div className="xl:h-[55vh] max-h-[550px] flex flex-col items-center xl:items-start justify-start gap-3">
           <CheckoutCart cart={cart} updateCart={updateCart} step={step} />
+          <AnimatePresence mode="wait">
+            {step > 3 && (
+              <motion.div
+                key="orderinfo"
+                className="flex flex-col items-center xl:items-start justify-start gap-3"
+                {...fastExitAnimation}
+              >
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                  <p>Cost</p>
+                  <p>{calculateRacks()} racks</p>
+                </div>
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                  <p>shipping</p>
+                  <p>{shippingFee} sol</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
-            <p>total:</p>
-            <p>{calculateRacks()} racks</p>
+            <p>total</p>
+            <p>
+              {calculateRacks()} racks {step > 3 && "+ SOL"}
+            </p>
           </div>
         </div>
         {/* right side */}
@@ -88,6 +116,9 @@ const Checkout: FC<Props> = (props: Props) => {
               shipping={shipping}
               setShipping={setShipping}
             />
+          )}
+          {step > 3 && (
+            <ShippingDetails setStep={setStep} shipping={shipping} />
           )}
         </AnimatePresence>
       </div>
