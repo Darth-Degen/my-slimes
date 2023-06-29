@@ -2079,6 +2079,11 @@
   resolved "https://registry.yarnpkg.com/@types/downloadjs/-/downloadjs-1.4.3.tgz#01c0414a9756afa2bd438b1e2ec6c50de7df316d"
   integrity sha512-MjJepFle/tLtT2/jmDNth6ZnwWzEhm40L+olE5HKR70ISUCfgT55eqreeHldAzFLY2HDUGsn8zgyto8KygN0CA==
 
+"@types/google.maps@*":
+  version "3.53.4"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.53.4.tgz#741442764ebaef1a6705f3ab2c047ffeba333020"
+  integrity sha512-IiDAYTONQEKCBssPtoM0XqWF8YIIk2leba4NOf9qVQ/d8l5gLuS3QT87TrX6/u8rMonQAXC9KEDmM4q7sT6MWg==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
@@ -2150,6 +2155,14 @@
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.8.tgz"
   integrity sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==
   dependencies:
+    "@types/react" "*"
+
+"@types/react-places-autocomplete@^7.2.9":
+  version "7.2.9"
+  resolved "https://registry.yarnpkg.com/@types/react-places-autocomplete/-/react-places-autocomplete-7.2.9.tgz#5d1579f5b91b48a3bc56bc0b385b01aa516c8af4"
+  integrity sha512-N5892g3ocleoHsks7G5T9xdJ2kfRblg7yUKJQZ7nFKETIoAr/Gz/ZyogEbrkB1sEvWEJmn5FEYlMM++rZmQf8w==
+  dependencies:
+    "@types/google.maps" "*"
     "@types/react" "*"
 
 "@types/react@*", "@types/react@18.0.25":

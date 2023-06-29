@@ -14,7 +14,7 @@ const TextInput: FC<Props> = (props: Props) => {
     const val = (event.target as HTMLInputElement).value;
     handleInput(val);
   };
-  if (error === true || error === false) console.log("error ", error);
+  // if (error === true || error === false) console.log("error ", error);
   return (
     <input
       className={`${styles} relative flex justify-between transition-all duration-300 items-center px-3 

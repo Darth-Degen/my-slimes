@@ -5,11 +5,12 @@ import { CheckoutCartItem } from "@merch-components";
 import { Merch } from "@merch-types";
 
 interface Props {
+  step: number;
   cart: Merch[];
   updateCart: Dispatch<SetStateAction<Merch[]>>;
 }
 const CheckoutCart: FC<Props> = (props: Props) => {
-  const { cart, updateCart } = props;
+  const { step, cart, updateCart } = props;
 
   return (
     <motion.div
@@ -23,6 +24,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
             item={item}
             index={index}
             updateCart={updateCart}
+            step={step}
           />
         ))
       ) : (

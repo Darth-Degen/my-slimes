@@ -1,33 +1,27 @@
 import { motion } from "framer-motion";
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { midExitAnimation, countries } from "@merch-constants";
 import { TextInput, Dropdown } from "@merch-components";
 import { Country, ShippingInfo } from "@merch-types";
+import toast from "react-hot-toast";
 
 interface Props {
-  handleCheckout: () => void;
+  shipping: ShippingInfo;
+  setStep: Dispatch<SetStateAction<number>>;
+  setShipping: Dispatch<SetStateAction<ShippingInfo>>;
 }
 
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const ShippingForm: FC<Props> = (props: Props) => {
-  const { handleCheckout } = props;
+  const { setStep, shipping, setShipping } = props;
 
   const [countryDropdown, setCountryDropdown] = useState<boolean>(false);
+  const [stateDropdown, setStateDropdown] = useState<boolean>(false);
   const [validEmail, setValidEmail] = useState<boolean>();
-  const [shipping, setShipping] = useState<ShippingInfo>({
-    name: "",
-    email: "",
-    address: "",
-    address2: "",
-    country: { name: "", code: "" },
-    city: "",
-    state: "",
-    zip: "",
-  });
 
   const countryNames: string[] = countries.map((country) => country.name);
 
-  //handle input
+  //handle inputs
 
   const handleName = (name: string) => {
     setShipping((prevState) => ({ ...prevState, name }));
@@ -48,6 +42,35 @@ const ShippingForm: FC<Props> = (props: Props) => {
     ) ?? { name: "", code: "" };
     setShipping((prevState) => ({ ...prevState, country }));
   };
+  const handleState = (state: string) => {
+    setShipping((prevState) => ({ ...prevState, state }));
+  };
+  const handleCity = (city: string) => {
+    setShipping((prevState) => ({ ...prevState, city }));
+  };
+  const handleZip = (zip: string) => {
+    setShipping((prevState) => ({ ...prevState, zip }));
+  };
+  const handleCheckout = (): void => {
+    //verify all input fields
+    if (
+      shipping.name.trim().length < 2 ||
+      shipping.email.length < 2 ||
+      shipping.address.length < 2 ||
+      shipping.address2.length < 2 ||
+      shipping.country.code.length < 2 ||
+      shipping.city.length < 2 ||
+      //TODO: finish zip
+      // shipping.state.length < 2 ||
+      shipping.zip.length < 2 ||
+      !validEmail
+    ) {
+      toast.error("All fields required");
+      return;
+    }
+
+    setStep(4);
+  };
 
   //helpers
   const isValidEmail = (email: string): boolean => {
@@ -55,20 +78,17 @@ const ShippingForm: FC<Props> = (props: Props) => {
     return emailRegex.test(email);
   };
 
-  // useEffect(() => {
-  //   console.log("shipping ", shipping);
-  // }, [shipping]);
-
-  //validate email format
+  //validate email
   useEffect(() => {
     if (shipping?.email) setValidEmail(isValidEmail(shipping.email));
   }, [shipping.email]);
-  useEffect(() => {
-    console.log("validEmail ", validEmail);
-  }, [validEmail]);
+
+  // useEffect(() => {
+  //   console.log("validZip ", validZip);
+  // }, [validZip]);
   return (
     <motion.div
-      className="flex flex-col gap-3 uppercase font-neuebit-bold text-xl"
+      className="flex flex-col items-center xl:items-start justify-between gap-3 uppercase font-neuebit-bold text-xl"
       key="shipping"
       {...midExitAnimation}
     >
@@ -86,15 +106,27 @@ const ShippingForm: FC<Props> = (props: Props) => {
         handleSelect={handleCountry}
         setShowDropdown={setCountryDropdown}
         showDropdown={countryDropdown}
-        label={`Country: ${shipping.country.code}`}
+        label={
+          shipping.country.name.length > 0 ? shipping.country.name : `Country`
+        }
         items={countryNames}
-        className=""
+        className="text-m-mid-gray whitespace-nowrap text-ellipsis"
       />
+      {/* TODO: add auto complete */}
+      <TextInput placeholder="city" handleInput={handleCity} />
+      {/* TODO: states */}
+      <Dropdown
+        handleSelect={handleState}
+        setShowDropdown={setStateDropdown}
+        showDropdown={stateDropdown}
+        label={shipping.state.length > 0 ? shipping.state : `State`}
+        items={countryNames}
+        className="text-m-mid-gray whitespace-nowrap text-ellipsis"
+      />
+      <TextInput placeholder="zip" handleInput={handleZip} />
       <button
-        className="h-12 w-60 bg-m-green rounded-full uppercase font-neuebit-bold text-xl text-white pt-0.5 tracking-wide"
-        onClick={() => {
-          handleCheckout();
-        }}
+        className="h-12 w-60 bg-m-green rounded-full uppercase font-neuebit-bold text-xl text-white pt-0.5 tracking-wide mt-3.5"
+        onClick={handleCheckout}
       >
         finish checkout
       </button>
