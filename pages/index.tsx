@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   const mobileView = width < 1024;
 
   return (
-    <PageLayout headerType={mobileView ? "block" : "scroll"} assets={assets}>
+    <PageLayout headerType={mobileView ? "absolute" : "scroll"} assets={assets}>
       <IndexView />
     </PageLayout>
   );

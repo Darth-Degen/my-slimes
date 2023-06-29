@@ -7,12 +7,11 @@ import {
   smallClickAnimation,
 } from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
-import { SlimeHubButton } from "@components";
+import { ImageShimmer, SlimeHubButton } from "@components";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
 import { Slime } from "src/types";
-import axios from "axios";
 import SlimesGrid from "./SlimesGrid";
 import FullResolutionDownload from "../atoms/FullResolutionDownload";
 
@@ -24,41 +23,19 @@ const YourSlimes: FC<Props> = () => {
 
   const [slimes, setSlimes] = useState<Slime[]>([]); // all slimes in collection
   const [mySlimes, setMySlimes] = useState<Slime[]>([]); // all slimes in my wallet
-  const [selectedNft, setSelectedNft] = useState<Slime>(); // selected slime
+  const [selectedNft, setSelectedNft] = useState<Slime>({
+    name: "Scum",
+    image: "/images/wallpapers/image/scum.png",
+    description:
+      "Leader of the slimes. Best friend named Paco. Love's drawing, hip hop and movies. Once defeated a jaguar in hand to hand combat.",
+    mintAddress: "7fbbpVBnqhYeDbNRmYZ6R18FzWgesX9Ks94oooxJgNu9",
+    mobileView: "/images/wallpapers/mobile-display/scum.png",
+    desktopView: "/images/wallpapers/desktop-display/scum.png",
+  }); // selected slime
   const [selectedAssetType, setSelectedAssetType] = useState<
     "full-res" | "pfp" | "mobile" | "desktop"
   >("full-res"); // selected asset type of slime to display
   const [featuredImage, setFeaturedImage] = useState<string>(); // url of current featured image
-
-  // fetch nft metadata
-  // const getNftMetadata = async (tokenURIs: string[], owned: boolean) => {
-  //   await Promise.all(
-  //     tokenURIs.map(async (tokenURI: string) => {
-  //       try {
-  //         const json = await axios.get(tokenURI).then((r) => r.data);
-  //         let image = json.image;
-  //         let description = json.description;
-  //         let name = json.name;
-  //         let mobileView = `/images/wallpapers/mobile-display/${name}.png`;
-  //         let desktopView = `/images/wallpapers/desktop-display/${name}.png`;
-  //         const thisNft = {
-  //           name,
-  //           image,
-  //           description,
-  //           mobileView,
-  //           desktopView,
-  //         };
-  //         if (owned) {
-  //           setNfts((prev) => [...prev, thisNft]);
-  //         } else {
-  //           setSelectedNft(thisNft);
-  //         }
-  //       } catch (e: any) {
-  //         console.error(e.message);
-  //       }
-  //     })
-  //   );
-  // };
 
   // fetch users nfts
   const getNfts = useCallback(async () => {
@@ -132,23 +109,24 @@ const YourSlimes: FC<Props> = () => {
   }, [selectedNft, selectedAssetType]);
 
   useEffect(() => {
-    getNfts();
-  }, [getNfts]);
+    if (slimes) {
+      getNfts();
+    }
+  }, [getNfts, slimes]);
 
   return (
     <motion.div className="w-full max-w-[1200px] mx-auto" {...enterAnimation}>
-      <div className="w-full flex items-start justify-center pt-8">
+      <div className="w-full flex items-start justify-center px-4 xl:px-0 pt-8">
         {selectedNft && (
           <div className="flex flex-col items-center justify-center">
             {/* TODO: manage loading states (both initial and in between asset type changes) */}
-            {/* <Suspense fallback={<div>Loading...</div>}> */}
             <AnimatePresence mode="wait">
               <motion.div
                 className="relative flex items-center justify-center h-[500px] w-[500px] mr-6"
                 {...enterAnimation}
                 key={selectedNft?.name}
               >
-                <Image
+                <ImageShimmer
                   src={featuredImage ?? selectedNft.image}
                   width={selectedAssetType === "mobile" ? 250 : 500}
                   height={500}
@@ -157,7 +135,6 @@ const YourSlimes: FC<Props> = () => {
                 />
               </motion.div>
             </AnimatePresence>
-            {/* </Suspense> */}
             <FullResolutionDownload imageUrl={selectedNft.image} />
           </div>
         )}

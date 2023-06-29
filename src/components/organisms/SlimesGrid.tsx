@@ -11,7 +11,7 @@ interface Props {
   slimes: Slime[];
   setSlimes: Dispatch<SetStateAction<Slime[]>>;
   selectedNft: Slime | undefined;
-  setSelectedNft: Dispatch<SetStateAction<Slime | undefined>>;
+  setSelectedNft: Dispatch<SetStateAction<Slime>>;
   setSelectedAssetType: Dispatch<
     SetStateAction<"full-res" | "pfp" | "mobile" | "desktop">
   >;
