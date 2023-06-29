@@ -22,6 +22,9 @@ const _assets: Assets[] = [
     src: "/videos/loading-loop.mp4",
   },
   {
+    src: "/videos/mobile_loading.mp4",
+  },
+  {
     src: "/videos/mobile_club_loop.mp4",
   },
 ];
@@ -54,11 +57,11 @@ const LandingView: FC<Props> = (props: Props) => {
     if (isChildInView) setCurrentPage(id);
   }, [id, isChildInView, setCurrentPage]);
 
-  useEffect(() => {
-    if (mobileView) {
-      setShowLoop(true);
-    }
-  }, [mobileView, setShowLoop]);
+  // useEffect(() => {
+  //   if (mobileView) {
+  //     setShowLoop(true);
+  //   }
+  // }, [mobileView, setShowLoop]);
 
   useEffect(() => {
     setIsInView(isInView);
@@ -85,7 +88,7 @@ const LandingView: FC<Props> = (props: Props) => {
         autoPlay
         muted
         playsInline
-        key="intro"
+        key="intro desktop"
         className={`${
           mobileView && "hidden"
         } h-full w-screen absolute inset-0 -z-10 ${
@@ -105,11 +108,12 @@ const LandingView: FC<Props> = (props: Props) => {
         ref={loopRef}
         muted
         playsInline
+        key="loop desktop"
         loop
         className={`${
           mobileView && "hidden"
         } h-full w-screen absolute inset-0 -z-20 ${
-          showLoop ? "visible" : "visible"
+          showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
@@ -125,26 +129,53 @@ const LandingView: FC<Props> = (props: Props) => {
       </motion.video>
 
       <motion.video
-        ref={loopRef}
+        ref={introRef}
         muted
+        autoPlay
         playsInline
-        loop
+        key="intro mobile"
         className={`${
           !mobileView && "hidden"
-        } pt-10 h-full w-screen absolute inset-0 -z-20 ${
-          showLoop ? "visible" : "visible"
+        } h-full w-screen absolute inset-0 -z-10 ${
+          !showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
           setAssets &&
             setAssets((prevState) => [
-              ...prevState.slice(0, 0),
+              ...prevState.slice(0, 1),
               true,
-              ...prevState.slice(2),
+              ...prevState.slice(3),
+            ]);
+        }}
+        onEnded={() => setShowLoop(true)}
+        {...exitAnimation}
+      >
+        <source src={_assets[2].src} type="video/mp4" />
+      </motion.video>
+
+      <motion.video
+        ref={loopRef}
+        muted
+        playsInline
+        key="loop mobile"
+        loop
+        className={`${
+          !mobileView && "hidden"
+        } pt-10 h-full w-screen absolute inset-0 -z-20 ${
+          showLoop ? "visible" : "invisible"
+        }`}
+        style={{ objectFit: "cover" }}
+        onLoadedData={() => {
+          setAssets &&
+            setAssets((prevState) => [
+              ...prevState.slice(0, 2),
+              true,
+              ...prevState.slice(4),
             ]);
         }}
       >
-        <source src={_assets[2].src} type="video/mp4" />
+        <source src={_assets[3].src} type="video/mp4" />
       </motion.video>
 
       {!mobileView && (

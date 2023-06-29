@@ -30,8 +30,10 @@ const pageIDs: string[] = [
 const Home: NextPage = () => {
   //state
   const [assets, setAssets] = useState<boolean[]>([
-    // false, // [0] landing - video 1
-    // false, // [1] landing - video 2
+    // false, // [0] landing - video intro
+    // false, // [1] landing - video loop
+    // false, // [1] landing - video intro mobile
+    // false, // [1] landing - video loop mobile
     // false, // [2] what - image 1
     // false, // [3] what - image 2
     // false, // [4] what - image 3
@@ -42,15 +44,25 @@ const Home: NextPage = () => {
   const [width] = useWindowSize();
   const mobileView = width < 1024;
 
-  useEffect(() => {
-    if (mobileView) {
-      setAssets([false, false, false, false, false, false, false]);
-    }
-  }, [mobileView]);
-
   // useEffect(() => {
-  //   console.log("assets", assets);
-  // }, [assets]);
+  //   if (mobileView) {
+  //     setAssets([
+  //       false,
+  //       false,
+  //       false,
+  //       false,
+  //       // false,
+  //       // false,
+  //       // false,
+  //       // false,
+  //       // false,
+  //     ]);
+  //   }
+  // }, [mobileView]);
+
+  useEffect(() => {
+    console.log("assets", assets);
+  }, [assets]);
 
   return (
     <PageLayout headerType={mobileView ? "block" : "scroll"} assets={assets}>
