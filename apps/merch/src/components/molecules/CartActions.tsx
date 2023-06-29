@@ -12,7 +12,7 @@ const CartActions: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="flex flex-col gap-3"
+      className="flex flex-col items-center xl:items-start gap-3"
       key="cart"
       {...midExitAnimation}
     >

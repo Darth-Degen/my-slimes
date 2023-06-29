@@ -6,11 +6,12 @@ import Image from "next/image";
 interface Props {
   item: Merch;
   index: number;
+  step: number;
   handleCartClick?: () => void;
   updateCart: Dispatch<SetStateAction<Merch[]>>;
 }
 const CheckoutCart: FC<Props> = (props: Props) => {
-  const { item, index, updateCart } = props;
+  const { item, index, step, updateCart } = props;
 
   const [colorDropdown, setColorDropdown] = useState<boolean>(false);
   const [sizeDropdown, setSizeDropdown] = useState<boolean>(false);
@@ -74,7 +75,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           label={`COLOR: ${item?.color ?? ""}`}
           items={item.colors}
           className="!w-44 !h-8 bg-m-light-gray !text-base"
-          disabled={item.colors.length === 1}
+          disabled={item.colors.length === 1 || step > 2}
         />
         {/* </div>
         <div
@@ -89,7 +90,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           label={`SIZE: ${item?.size ?? ""}`}
           items={item.sizeChart}
           className="!w-44 !h-8 bg-m-light-gray !text-base"
-          disabled={item.sizeChart.length === 1}
+          disabled={item.sizeChart.length === 1 || step > 2}
         />
         {/* </div> */}
       </div>

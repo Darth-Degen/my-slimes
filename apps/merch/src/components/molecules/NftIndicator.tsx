@@ -14,7 +14,7 @@ const NftIndicator: FC<Props> = (props: Props) => {
       <p className="text-xl text-m-black">
         racks in your wallet -
         <motion.span
-          className="text-lg text-m-black pl-1"
+          className="text-xl text-m-black pl-1"
           {...fastExitAnimation}
         >
           {count}

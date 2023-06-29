@@ -17,7 +17,6 @@ import toast from "react-hot-toast";
 import "dotenv/config";
 
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
-const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
@@ -55,12 +54,28 @@ const StoreModal: FC = () => {
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
 
+      const editionUpdateAuthority = process.env.editionUpdateAuthority;
+      const editionName = process.env.editionName;
+
       //fetch metadata
-      const jsonArr: Metadata[] = [];
       await Promise.all(
         tokens.map(async (token, index) => {
-          //@ts-ignore
-          if (token.mintAddress.toBase58() === _mintAddress) {
+          // console.log(
+          //   "nft \n",
+          //   token?.updateAuthorityAddress.toBase58(),
+          //   "\n",
+          //   token?.address.toBase58(),
+          //   "\n",
+          //   //@ts-ignore
+          //   token?.mintAddress.toBase58(),
+          //   token
+          // );
+
+          if (
+            token?.updateAuthorityAddress?.toBase58() ===
+              editionUpdateAuthority &&
+            token?.name === editionName
+          ) {
             setNfts((prevState) => [...prevState, token]);
           }
           // const uri = token.uri;
@@ -143,9 +158,9 @@ const StoreModal: FC = () => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] lg:h-[800px] px-4 py-2"
+      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2"
     >
-      <div className="flex flex-col items-center justify-between lg:h-full w-full text-3xl">
+      <div className="flex flex-col items-center justify-between xl:h-full w-full text-3xl">
         <Header
           step={step}
           nfts={nfts.length}

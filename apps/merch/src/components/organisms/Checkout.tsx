@@ -1,8 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Dispatch, FC, SetStateAction } from "react";
-import { CartActions, CheckoutCart } from "@merch-components";
-import { Merch } from "@merch-types";
+import { Dispatch, FC, SetStateAction, useState } from "react";
+import {
+  CartActions,
+  CheckoutCart,
+  ShippingForm,
+  ShippingDetails,
+} from "@merch-components";
+import { Merch, ShippingInfo } from "@merch-types";
 import toast from "react-hot-toast";
+import { fastExitAnimation } from "@merch-constants";
 
 interface Props {
   cart: Merch[];
@@ -14,6 +20,19 @@ interface Props {
 const Checkout: FC<Props> = (props: Props) => {
   const { cart, step, setStep, updateCart } = props;
 
+  const [shipping, setShipping] = useState<ShippingInfo>({
+    name: "",
+    email: "",
+    address: "",
+    address2: "",
+    country: { name: "", code: "" },
+    city: "",
+    state: "",
+    zip: "",
+  });
+
+  const shippingFee = 2;
+
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
     //calculate total
@@ -22,7 +41,11 @@ const Checkout: FC<Props> = (props: Props) => {
     }, 0);
   };
 
-  const handleCheckout = (): void => {
+  const handleCartCheckout = (): void => {
+    if (cart.length === 0) {
+      toast.error("No items in cart");
+      return;
+    }
     //verify all sizes & colors
     const totalItems = cart.length;
     let totalColors = 0;
@@ -42,7 +65,7 @@ const Checkout: FC<Props> = (props: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 lg:h-[76%] w-full px-12 mb-5 self-start">
+    <div className="flex flex-col gap-3 lg:h-[76%] w-full px-12 mb-5 self-start z-10">
       {/* title */}
       <div className="flex flex-col gap-1 text-m-mid-gray">
         <h3 className="font-neuebit-bold uppercase text-4xl">
@@ -50,23 +73,53 @@ const Checkout: FC<Props> = (props: Props) => {
         </h3>
       </div>
       {/* row */}
-      <div className="flex flex-row xl:flex-row gap-10">
+      <div className="flex flex-col xl:flex-row gap-10">
         {/* left side */}
         <div className="xl:h-[55vh] max-h-[550px] flex flex-col items-center xl:items-start justify-start gap-3">
-          <CheckoutCart cart={cart} updateCart={updateCart} />
+          <CheckoutCart cart={cart} updateCart={updateCart} step={step} />
+          <AnimatePresence mode="wait">
+            {step > 3 && (
+              <motion.div
+                key="orderinfo"
+                className="flex flex-col items-center xl:items-start justify-start gap-3"
+                {...fastExitAnimation}
+              >
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                  <p>Cost</p>
+                  <p>{calculateRacks()} racks</p>
+                </div>
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                  <p>shipping</p>
+                  <p>{shippingFee} sol</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
-            <p>total:</p>
-            <p>{calculateRacks()} racks</p>
+            <p>total</p>
+            <p>
+              {calculateRacks()} racks {step > 3 && "+ SOL"}
+            </p>
           </div>
         </div>
         {/* right side */}
         <AnimatePresence mode="wait">
           {step === 2 && (
-            <CartActions setStep={setStep} handleCheckout={handleCheckout} />
+            <CartActions
+              setStep={setStep}
+              handleCheckout={handleCartCheckout}
+            />
           )}
-          {/* {step === 3 && (
-            <CartActions setStep={setStep} handleCheckout={handleCheckout} />
-          )} */}
+          {step === 3 && (
+            <ShippingForm
+              setStep={setStep}
+              shipping={shipping}
+              setShipping={setShipping}
+            />
+          )}
+          {step > 3 && (
+            <ShippingDetails setStep={setStep} shipping={shipping} />
+          )}
         </AnimatePresence>
       </div>
     </div>
