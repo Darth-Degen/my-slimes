@@ -1,17 +1,17 @@
-import { Metaplex, keypairIdentity } from "@metaplex-foundation/js";
-import { Connection, Keypair, PublicKey, clusterApiUrl } from "@solana/web3.js";
+import { Metaplex } from "@metaplex-foundation/js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { slimesWhitelist } from "src/constants";
 import { Slime } from "src/types";
 import LoadAnimation from "../atoms/LoadAnimation";
+import { collection } from "src/constants";
 
 interface Props {
   slimes: Slime[];
   setSlimes: Dispatch<SetStateAction<Slime[]>>;
   selectedNft: Slime | undefined;
-  setSelectedNft: Dispatch<SetStateAction<Slime>>;
+  setSelectedNft: Dispatch<SetStateAction<Slime | undefined>>;
   setSelectedAssetType: Dispatch<
     SetStateAction<"full-res" | "pfp" | "mobile" | "desktop">
   >;
@@ -36,14 +36,15 @@ const SlimesGrid: FC<Props> = ({
       setLoading(true);
       const jsonArr: any[] = [];
       await Promise.all(
-        slimesWhitelist.map(async (tokenId) => {
-          const mintAddress = new PublicKey(tokenId);
+        collection.map(async (token) => {
+          const mintAddress = new PublicKey(token.mintAddress);
           const nft = await metaplex.nfts().findByMint({ mintAddress });
           const uri = nft?.uri;
           try {
             await axios.get(uri).then((r) => {
               // push the mintAddress to the json object
-              r.data.mintAddress = tokenId;
+              r.data.mintAddress = token.mintAddress;
+              r.data.id = token.id;
               jsonArr.push(r.data);
             });
           } catch (e: any) {
@@ -60,18 +61,21 @@ const SlimesGrid: FC<Props> = ({
   }, []);
 
   return (
-    <div className="w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6 py-10 px-4 xl:px-0">
+    <div
+      className="w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
+      xl:grid-cols-5 gap-6 py-10 px-4 xl:px-0 mb-32"
+    >
       {slimes &&
         slimes
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((slime, index) => {
+          .sort((a, b) => a.id - b.id)
+          .map((slime) => {
             return (
               <div
                 className="col-span-1 flex flex-col items-center"
-                key={index}
+                key={slime.id}
               >
                 <Image
-                  src={slime.image ?? ""}
+                  src={slime.image}
                   width={250}
                   height={250}
                   alt={slime.name}
@@ -87,7 +91,10 @@ const SlimesGrid: FC<Props> = ({
                   }
                   border-2 rounded-xl overflow-hidden cursor-pointer`}
                 />
-                <p className="text-black">{slime.name}</p>
+                <p className="text-black font-bold">{slime.name}</p>
+                <p className="text-black font-bold">{`#${
+                  slime.id < 10 ? "00" : "0"
+                }${slime.id}`}</p>
               </div>
             );
           })}

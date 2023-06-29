@@ -1,11 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import {
-  enterAnimation,
-  slimesWhitelist,
-  smallClickAnimation,
-} from "@constants";
+import { collection, enterAnimation, smallClickAnimation } from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { ImageShimmer, SlimeHubButton } from "@components";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -23,15 +19,7 @@ const YourSlimes: FC<Props> = () => {
 
   const [slimes, setSlimes] = useState<Slime[]>([]); // all slimes in collection
   const [mySlimes, setMySlimes] = useState<Slime[]>([]); // all slimes in my wallet
-  const [selectedNft, setSelectedNft] = useState<Slime>({
-    name: "Scum",
-    image: "/images/wallpapers/image/scum.png",
-    description:
-      "Leader of the slimes. Best friend named Paco. Love's drawing, hip hop and movies. Once defeated a jaguar in hand to hand combat.",
-    mintAddress: "7fbbpVBnqhYeDbNRmYZ6R18FzWgesX9Ks94oooxJgNu9",
-    mobileView: "/images/wallpapers/mobile-display/scum.png",
-    desktopView: "/images/wallpapers/desktop-display/scum.png",
-  }); // selected slime
+  const [selectedNft, setSelectedNft] = useState<Slime>(); // selected slime
   const [selectedAssetType, setSelectedAssetType] = useState<
     "full-res" | "pfp" | "mobile" | "desktop"
   >("full-res"); // selected asset type of slime to display
@@ -40,9 +28,11 @@ const YourSlimes: FC<Props> = () => {
   // fetch users nfts
   const getNfts = useCallback(async () => {
     if (!connection || !publicKey) {
+      if (selectedNft) return;
       // default to scum's pfp (tokenUri)
-      const scum: Slime = slimes.filter((slime) => slime.name === "scum")[0];
+      const scum: Slime = slimes.filter((slime) => slime.name === "Scum")[0];
       setSelectedNft(scum);
+      setSelectedAssetType("full-res");
       return;
     }
     try {
@@ -50,13 +40,19 @@ const YourSlimes: FC<Props> = () => {
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
 
-      const ownedSlimes = tokens.filter((token) =>
-        slimesWhitelist.includes(token.address.toBase58())
-      );
+      // check collection for a mint address match
+      const ownedSlimes = tokens.filter((token) => {
+        return collection.some(
+          (slime) => slime.mintAddress === token.address.toBase58()
+        );
+      });
+
       if (ownedSlimes.length === 0) {
+        if (selectedNft) return;
         // default to scum's pfp (tokenUri)
-        const scum: Slime = slimes.filter((slime) => slime.name === "scum")[0];
+        const scum: Slime = slimes.filter((slime) => slime.name === "Scum")[0];
         setSelectedNft(scum);
+        setSelectedAssetType("full-res");
         return;
       }
       // must have slimes, use slimes variable to set ownedSlimes
@@ -67,6 +63,7 @@ const YourSlimes: FC<Props> = () => {
       });
       // TODO: test that this works
       setMySlimes(formattedSlimes);
+      // TODO: probs default to [0] index of owned slimes
     } catch (e: any) {
       console.error(e.message);
       toast.error(`Error fetching Slimes: ${e.message}`);

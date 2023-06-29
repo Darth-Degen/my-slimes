@@ -5,9 +5,11 @@ export interface Collection {
   color: string;
   doublePfp?: boolean;
   topValue: number;
+  mintAddress: string;
 }
 
 export interface Slime {
+  id: number;
   name: string;
   image: string;
   mintAddress: string;
