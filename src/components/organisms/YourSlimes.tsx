@@ -106,21 +106,21 @@ const YourSlimes: FC<Props> = () => {
         case "desktop":
           setFeaturedImage(
             `/images/wallpapers/desktop-display/${selectedNft?.name
-              .replaceAll(" ", "_")
+              .replaceAll(" ", "-")
               .toLowerCase()}.png`
           );
           break;
         case "mobile":
           setFeaturedImage(
             `/images/wallpapers/mobile-display/${selectedNft?.name
-              .replaceAll(" ", "_")
+              .replaceAll(" ", "-")
               .toLowerCase()}.png`
           );
           break;
         case "pfp":
           setFeaturedImage(
             `/images/wallpapers/pfp-crop/${selectedNft?.name
-              .replaceAll(" ", "_")
+              .replaceAll(" ", "-")
               .toLowerCase()}.png`
           );
           break;
@@ -292,7 +292,7 @@ const YourSlimes: FC<Props> = () => {
                 >
                   <Image
                     src={`/images/wallpapers/desktop-display/${selectedNft?.name
-                      .replaceAll(" ", "_")
+                      .replaceAll(" ", "-")
                       .toLowerCase()}.png`}
                     height={200}
                     width={200}
@@ -311,7 +311,7 @@ const YourSlimes: FC<Props> = () => {
                 >
                   <Image
                     src={`/images/wallpapers/mobile-display/${selectedNft?.name
-                      .replaceAll(" ", "_")
+                      .replaceAll(" ", "-")
                       .toLowerCase()}.png`}
                     alt={`${selectedNft?.name} mobile wallpaper`}
                     height={100}
@@ -329,7 +329,7 @@ const YourSlimes: FC<Props> = () => {
                 >
                   <Image
                     src={`/images/wallpapers/pfp-crop/${selectedNft?.name
-                      .replaceAll(" ", "_")
+                      .replaceAll(" ", "-")
                       .toLowerCase()}.png`}
                     alt={`${selectedNft?.name} pfp crop`}
                     layout="fill"
