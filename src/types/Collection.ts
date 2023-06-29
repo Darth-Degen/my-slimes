@@ -10,8 +10,8 @@ export interface Collection {
 export interface Slime {
   name: string;
   image: string;
+  mintAddress: string;
   description: string;
-  ea_link: string;
   mobileView: string;
   desktopView: string;
 }

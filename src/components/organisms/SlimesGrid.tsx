@@ -5,43 +5,57 @@ import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { slimesWhitelist } from "src/constants";
 import { Slime } from "src/types";
+import LoadAnimation from "../atoms/LoadAnimation";
 
 interface Props {
+  slimes: Slime[];
+  setSlimes: Dispatch<SetStateAction<Slime[]>>;
   selectedNft: Slime | undefined;
   setSelectedNft: Dispatch<SetStateAction<Slime | undefined>>;
+  setSelectedAssetType: Dispatch<
+    SetStateAction<"full-res" | "pfp" | "mobile" | "desktop">
+  >;
 }
 
-const SlimesGrid: FC<Props> = ({ selectedNft, setSelectedNft }) => {
-  const [slimes, setSlimes] = useState<Slime[]>([]);
+const SlimesGrid: FC<Props> = ({
+  slimes,
+  setSlimes,
+  selectedNft,
+  setSelectedNft,
+  setSelectedAssetType,
+}) => {
+  const [loading, setLoading] = useState<boolean>(true);
+
   const connection = new Connection(
     "https://cold-sparkling-darkness.solana-mainnet.discover.quiknode.pro/"
   );
   const metaplex = new Metaplex(connection);
 
-  // TODO: obtain all slimes from the blockchain
-  const fetchAllSlimes = async () => {
-    const jsonArr: any = [];
-    await Promise.all(
-      slimesWhitelist.map(async (tokenId) => {
-        const mintAddress = new PublicKey(tokenId);
-        const nft = await metaplex.nfts().findByMint({ mintAddress });
-        const uri = nft?.uri;
-        try {
-          await axios.get(uri).then((r) => {
-            jsonArr.push(r.data);
-          });
-        } catch (e: any) {
-          console.error(e.message);
-        }
-      })
-    );
-    return jsonArr;
-  };
-
   useEffect(() => {
+    const fetchAllSlimes = async () => {
+      setLoading(true);
+      const jsonArr: any[] = [];
+      await Promise.all(
+        slimesWhitelist.map(async (tokenId) => {
+          const mintAddress = new PublicKey(tokenId);
+          const nft = await metaplex.nfts().findByMint({ mintAddress });
+          const uri = nft?.uri;
+          try {
+            await axios.get(uri).then((r) => {
+              // push the mintAddress to the json object
+              r.data.mintAddress = tokenId;
+              jsonArr.push(r.data);
+            });
+          } catch (e: any) {
+            console.error(e.message);
+          }
+        })
+      );
+      setLoading(false);
+      return jsonArr;
+    };
     fetchAllSlimes().then((slimes) => {
       setSlimes(slimes);
-      console.log(slimes);
     });
   }, []);
 
@@ -63,6 +77,7 @@ const SlimesGrid: FC<Props> = ({ selectedNft, setSelectedNft }) => {
                   alt={slime.name}
                   onClick={() => {
                     setSelectedNft(slime);
+                    setSelectedAssetType("full-res");
                     scroll({ top: 0, behavior: "smooth" });
                   }}
                   className={`${
@@ -76,6 +91,7 @@ const SlimesGrid: FC<Props> = ({ selectedNft, setSelectedNft }) => {
               </div>
             );
           })}
+      {/* {loading && <LoadAnimation />} */}
     </div>
   );
 };
