@@ -31,6 +31,7 @@ const Checkout: FC<Props> = (props: Props) => {
     zip: "",
   });
 
+  //TODO: what id shipping fee
   const shippingFee = 2;
 
   const calculateRacks = (): number => {

@@ -9,16 +9,27 @@ import {
 import { StoreContext, merch } from "@merch-constants";
 import { Merch, Quantity } from "@merch-types";
 import { getNftsByOwner } from "@merch-helpers";
-import { FC, useCallback, useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "dotenv/config";
 
-//TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
-
-const StoreModal: FC = () => {
+interface Props {
+  cart: Merch[];
+  setCart: Dispatch<SetStateAction<Merch[]>>;
+}
+const StoreModal: FC<Props> = (props: Props) => {
+  const { cart, setCart } = props;
   const {
     showStore,
     showOrderModal,
@@ -29,7 +40,6 @@ const StoreModal: FC = () => {
   } = useContext(StoreContext);
 
   //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
-  const [cart, setCart] = useState<Merch[]>([]);
   const [storeItem, setStoreItem] = useState<Merch>();
   const [nfts, setNfts] = useState<unknown[]>([]);
   const [quantities, setQuantities] = useState<Quantity[]>([]);
