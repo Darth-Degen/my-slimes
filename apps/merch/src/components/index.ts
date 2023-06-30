@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 //atoms
 const ImageShimmer = dynamic(()=> import("./atoms/ImageShimmer"))
 const NumberInput = dynamic(()=> import("./atoms/NumberInput"))
+const TextInput = dynamic(()=> import("./atoms/TextInput"))
+const DropdownButton = dynamic(()=> import("./atoms/DropdownButton"))
+const DropdownItem = dynamic(()=> import("./atoms/DropdownItem"))
 //molecules
 const ImageBox = dynamic(()=> import("./molecules/ImageBox"))
 const TextBox = dynamic(()=> import("./molecules/TextBox"))
@@ -14,6 +17,12 @@ const StoreItem = dynamic(()=> import("./molecules/StoreItem"))
 const Breadcrumbs = dynamic(()=> import("./molecules/Breadcrumbs"))
 const NftIndicator = dynamic(()=> import("./molecules/NftIndicator"))
 const CartIndicator = dynamic(()=> import("./molecules/CartIndicator"))
+const ImagePicker = dynamic(()=> import("./molecules/ImagePicker"))
+const Dropdown = dynamic(()=> import("./molecules/Dropdown"))
+const CartActions = dynamic(()=> import("./molecules/CartActions"))
+const CheckoutCartItem = dynamic(()=> import("./molecules/CheckoutCartItem"))
+const ShippingForm = dynamic(()=> import("./molecules/ShippingForm"))
+const ShippingDetails = dynamic(()=> import("./molecules/ShippingDetails"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -23,6 +32,7 @@ const Checkout = dynamic(()=> import("./organisms/Checkout"))
 const BuyRacksContent = dynamic(()=> import("./organisms/BuyRacksContent"))
 const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
+const CheckoutCart = dynamic(()=> import("./organisms/CheckoutCart"))
 //templates
 const BuyRacksView = dynamic(()=> import("./templates/BuyRacksView"))
 const MerchModule = dynamic(()=> import("./templates/MerchModule"))
@@ -50,5 +60,15 @@ export {
   Footer,
   Breadcrumbs,
   NftIndicator,
-  CartIndicator
+  CartIndicator,
+  ImagePicker,
+  DropdownButton,
+  DropdownItem,
+  Dropdown,
+  CartActions,
+  CheckoutCart,
+  CheckoutCartItem,
+  ShippingForm,
+  TextInput,
+  ShippingDetails
 }

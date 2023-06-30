@@ -1,0 +1,1 @@
+export const COLLECTION_API_URL = "https://staging.api.exchange.art/v2/mints/contracts?filters%5Bmints%5D=D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35&filters%5BinclUnverified%5D=true";

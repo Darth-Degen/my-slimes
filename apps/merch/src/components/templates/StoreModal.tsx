@@ -1,46 +1,32 @@
-import { Modal, Store, ItemDetail, Checkout } from "@merch-components";
-import { StoreContext } from "@merch-constants";
-import { Merch, Quantities } from "@merch-types";
+import {
+  Modal,
+  Store,
+  ItemDetail,
+  Checkout,
+  Header,
+  Footer,
+} from "@merch-components";
+import { StoreContext, merch } from "@merch-constants";
+import { Merch, Quantity } from "@merch-types";
 import { getNftsByOwner } from "@merch-helpers";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
+import "dotenv/config";
 
 //TODO: method isnt fetching devnet nfts, need to solve and add test edition mint address below
-const _mintAddress = "2i2Riyru1bKjSpqmiX4wyVTxVu61ixVduyBPTreePiVr";
-
-//TODO: replace with api data
-const _quantities: Quantities = {
-  crewneck: {
-    id: "crewneck",
-    quantity: 0,
-  },
-  tee: {
-    id: "tee",
-    quantity: 1,
-  },
-  hat: {
-    id: "hat",
-    quantity: 10,
-  },
-  pack: {
-    id: "pack",
-    quantity: 0,
-  },
-};
 
 const StoreModal: FC = () => {
   const { showStore, setShowExitModal } = useContext(StoreContext);
 
-  //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = purchase, step 4 = review
+  //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
   const [step, setStep] = useState<number>(0);
-  // //step 2 = cart, step 3 = purchase, step 4 = review
-  // const [checkoutStep, setCheckoutStep] = useState<number>(-1);
   const [cart, setCart] = useState<Merch[]>([]);
   const [storeItem, setStoreItem] = useState<Merch>();
-  const [nfts, setNfts] = useState<unknown[]>([]); //<(Metadata | Metadata | Nft | Sft)[]>([]);
+  const [nfts, setNfts] = useState<unknown[]>([]);
+  const [quantities, setQuantities] = useState<Quantity[]>([]);
 
   //solana wallet
   const { publicKey } = useWallet();
@@ -68,12 +54,28 @@ const StoreModal: FC = () => {
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
 
+      const editionUpdateAuthority = process.env.editionUpdateAuthority;
+      const editionName = process.env.editionName;
+
       //fetch metadata
-      const jsonArr: Metadata[] = [];
       await Promise.all(
         tokens.map(async (token, index) => {
-          //@ts-ignore
-          if (token.mintAddress.toBase58() === _mintAddress) {
+          // console.log(
+          //   "nft \n",
+          //   token?.updateAuthorityAddress.toBase58(),
+          //   "\n",
+          //   token?.address.toBase58(),
+          //   "\n",
+          //   //@ts-ignore
+          //   token?.mintAddress.toBase58(),
+          //   token
+          // );
+
+          if (
+            token?.updateAuthorityAddress?.toBase58() ===
+              editionUpdateAuthority &&
+            token?.name === editionName
+          ) {
             setNfts((prevState) => [...prevState, token]);
           }
           // const uri = token.uri;
@@ -98,6 +100,50 @@ const StoreModal: FC = () => {
     getNfts();
   }, [getNfts]);
 
+  //fetch merch quantities
+  const getQuantities = useCallback(() => {
+    if (!process.env.apiKey || !process.env.apiUrl) return;
+
+    const apiKey = process.env.apiKey;
+    const apiUrl = process.env.apiUrl;
+
+    // axios
+    //   .get(`${apiUrl}/products`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Access-Control-Allow-Origin": "*",
+    //       access_token: apiKey,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     // Handle the response data
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     // Handle the error
+    let _quantities: Quantity[] = [];
+    merch.forEach((item: Merch) => {
+      _quantities.push({
+        productid: item.id,
+        name: item.name,
+        cost: item.cost,
+        sizes: item.sizes,
+      });
+    });
+    setQuantities(_quantities);
+    // });
+  }, []);
+
+  useEffect(() => {
+    getQuantities();
+  }, [getQuantities]);
+
+  //reset selected item
+  useEffect(() => {
+    if (step === 0) setStoreItem(undefined);
+  }, [step]);
+
   //console outputs
   useEffect(() => {
     if (cart.length > 0) console.log("cart ", cart);
@@ -106,38 +152,50 @@ const StoreModal: FC = () => {
     if (nfts.length > 0) console.log("racks ", nfts.length);
   }, [nfts]);
 
-  useEffect(() => {
-    console.log("step ", step);
-  }, [step]);
-
   return (
     <Modal
       show={showStore}
       onClick={() => {
         setShowExitModal(true);
       }}
-      className="w-[90%] lg:w-5/6 2xl:w-[80%]  h-[93%] lg:h-3/4 3xl:w-1/2"
+      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2"
     >
-      <div className="flex flex-col items-center justify-center h-full w-full text-3xl">
+      <div className="flex flex-col items-center justify-between xl:h-full w-full text-3xl">
+        <Header
+          step={step}
+          nfts={nfts.length}
+          cart={cart}
+          handleCartClick={handleCartClick}
+          setStep={setStep}
+          storeItem={storeItem}
+        />
         {/* store items */}
         {step === 0 && (
           <Store
-            step={step}
-            // checkoutStep={checkoutStep}
-            nfts={nfts.length}
-            cart={cart}
-            quantities={_quantities}
-            handleCartClick={handleCartClick}
+            quantities={quantities}
             addToCart={addToCart}
-            setStep={setStep}
-            // setCheckoutStep={setCheckoutStep}
             handleImageClick={handleImageClick}
           />
         )}
         {/* item detail view */}
-        {step === 1 && <ItemDetail />}
-        {/* TODO: handle step 1-3 view inside Checkout */}
-        {step > 1 && <Checkout step={step} />}
+        {step === 1 && storeItem && (
+          <ItemDetail
+            quantities={quantities}
+            item={storeItem}
+            addToCart={addToCart}
+            setStep={setStep}
+          />
+        )}
+        {/* cart + checkout process */}
+        {step > 1 && (
+          <Checkout
+            cart={cart}
+            step={step}
+            setStep={setStep}
+            updateCart={setCart}
+          />
+        )}
+        <Footer step={step} />
       </div>
     </Modal>
   );

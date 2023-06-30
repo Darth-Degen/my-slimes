@@ -4,7 +4,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   handleInput: (value: string) => void;
 }
 
-const NumberInput: FC<Props> = (props: Props) => {
+const TextInput: FC<Props> = (props: Props) => {
   const { handleInput, className, ...componentProps } = props;
 
   const [value, setValue] = useState<string>();
@@ -37,4 +37,4 @@ const NumberInput: FC<Props> = (props: Props) => {
   );
 };
 
-export default NumberInput;
+export default TextInput;
