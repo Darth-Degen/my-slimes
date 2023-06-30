@@ -1,13 +1,12 @@
 import { FC } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { smallClickAnimation } from "@merch-constants";
 
 const SlimesHubFooter: FC = () => {
   return (
-    <div className="absolute bottom-0 w-full py-9 bg-v2-green">
+    <div className="absolute bottom-0 w-full py-9 bg-v2-green px-10 xl:px-0">
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between">
-        <p className="w-1/3 text-4xl text-white font-black uppercase">
+        <p className="w-1/3 text-2xl xl:text-4xl text-white font-black uppercase">
           Connect with your slimes here
         </p>
         <div className="w-1/3 flex items-center justify-center gap-14">
@@ -52,7 +51,7 @@ const SlimesHubFooter: FC = () => {
             </p>
           </motion.button>
         </div>
-        <div className="w-1/3" />
+        <div className="hidden xl:block w-1/3" />
       </div>
     </div>
   );
