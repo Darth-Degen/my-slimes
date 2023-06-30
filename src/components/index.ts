@@ -34,6 +34,9 @@ const WalletButton = dynamic(() => import("./atoms/WalletButton"));
 const ConnectButton = dynamic(() => import("./atoms/ConnectButton"));
 const GalleryArrowButton = dynamic(() => import("./atoms/GalleryArrowButton"));
 const MobileLink = dynamic(() => import("./atoms/MobileLink"));
+const FullResolutionDownload = dynamic(
+  () => import("./atoms/FullResolutionDownload")
+);
 //molecules
 const PageHead = dynamic(() => import("./molecules/PageHead"));
 const Logo = dynamic(() => import("./molecules/Logo"));
@@ -52,6 +55,7 @@ const ModalV2 = dynamic(() => import("./molecules/ModalV2"));
 const GalleryItem = dynamic(() => import("./molecules/GalleryItem"));
 const SFCGalleryItem = dynamic(() => import("./molecules/SFCGalleryItem"));
 const SlimesHubFooter = dynamic(() => import("./molecules/SlimesHubFooter"));
+const Scrollbar = dynamic(() => import("./atoms/Scrollbar"));
 //organisms
 const Header = dynamic(() => import("./organisms/Header"));
 const Footer = dynamic(() => import("./organisms/Footer"));
@@ -133,6 +137,7 @@ export {
   WordFall,
   GalleryArrowButton,
   MobileLink,
+  FullResolutionDownload,
   VideoScroll,
   IndexView,
   LinkFire,
@@ -141,5 +146,6 @@ export {
   SlimesGrid,
   SFCGalleryItem,
   SlimesHubFooter,
+  Scrollbar,
   SFCModal,
 };

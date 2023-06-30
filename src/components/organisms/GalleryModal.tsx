@@ -8,7 +8,7 @@ import {
   useContext,
 } from "react";
 import { ImageShimmer, LogoIcon, ModalV2 } from "@components";
-import { collections, ViewContext } from "@constants";
+import { collection as collections, ViewContext } from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
 import Image from "next/image";

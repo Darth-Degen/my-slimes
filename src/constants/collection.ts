@@ -98,14 +98,14 @@ export const collection: Collection[] = [
     topValue: 140,
     mintAddress: "3SeqwjmtXHhzupPoMfQMVBYEghaAYksCY8jaYG7WJ5DV",
   },
-  {
-    id: 12,
-    name: "Lindo",
-    tag: "lindo",
-    color: "#B93D29",
-    topValue: 80,
-    mintAddress: "4eb1TajEfpRngXLCdRgn9sMSYvKPWM1jW87TEHRjQ1e1",
-  },
+  // {
+  //   id: 12,
+  //   name: "Lindo",
+  //   tag: "lindo",
+  //   color: "#B93D29",
+  //   topValue: 80,
+  //   mintAddress: "4eb1TajEfpRngXLCdRgn9sMSYvKPWM1jW87TEHRjQ1e1",
+  // },
   {
     id: 13,
     name: "Nacho",

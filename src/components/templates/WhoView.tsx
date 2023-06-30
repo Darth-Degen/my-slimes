@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, useInView } from "framer-motion";
-import { collections } from "@constants";
+import { collection as collections } from "@constants";
 import { Gallery, WordFall } from "@components";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;

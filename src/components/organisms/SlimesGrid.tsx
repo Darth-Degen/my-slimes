@@ -32,15 +32,16 @@ const SlimesGrid: FC<Props> = ({
   const metaplex = new Metaplex(connection);
 
   useEffect(() => {
+    console.log("I'm here!!");
     const fetchAllSlimes = async () => {
       setLoading(true);
       const jsonArr: any[] = [];
       await Promise.all(
         collection.map(async (token) => {
           const mintAddress = new PublicKey(token.mintAddress);
-          const nft = await metaplex.nfts().findByMint({ mintAddress });
-          const uri = nft?.uri;
           try {
+            const nft = await metaplex.nfts().findByMint({ mintAddress });
+            const uri = nft?.uri;
             await axios.get(uri).then((r) => {
               // push the mintAddress to the json object
               r.data.mintAddress = token.mintAddress;

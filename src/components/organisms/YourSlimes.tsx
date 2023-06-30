@@ -7,8 +7,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
 import { Slime } from "src/types";
-import SlimesGrid from "./SlimesGrid";
-import FullResolutionDownload from "../atoms/FullResolutionDownload";
+import { Scrollbar, SlimesGrid, FullResolutionDownload } from "@components";
 
 interface Props {}
 
@@ -113,8 +112,15 @@ const YourSlimes: FC<Props> = () => {
   }, [getNfts, slimes]);
 
   return (
-    <motion.div className="w-full max-w-[1200px] mx-auto" {...enterAnimation}>
-      <div className="w-fit lg:w-full mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-center px-4 xl:px-0 pt-8">
+    <motion.div
+      className="relative w-full max-w-[1200px] mx-auto"
+      {...enterAnimation}
+    >
+      {/* <Scrollbar> */}
+      <div
+        className="w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
+        items-center lg:items-start justify-center px-4 xl:px-0 pt-8"
+      >
         {selectedNft && (
           <div className="flex flex-col items-center justify-center">
             {/* TODO: manage loading states (both initial and in between asset type changes) */}
@@ -172,7 +178,7 @@ const YourSlimes: FC<Props> = () => {
               //   );
               // }}
             >
-              RedeeM Merch
+              Redeem Merch
             </motion.button>
           </div>
           {/* your slimes - connect wallet or show icons */}
@@ -332,6 +338,7 @@ const YourSlimes: FC<Props> = () => {
         setSelectedNft={setSelectedNft}
         setSelectedAssetType={setSelectedAssetType}
       />
+      {/* </Scrollbar> */}
     </motion.div>
   );
 };

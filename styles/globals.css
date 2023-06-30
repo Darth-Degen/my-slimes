@@ -84,3 +84,29 @@ html {
 .clip {
   clip-path: circle(50%);
 }
+
+.scrollbar-container {
+  width: 100%;
+  height: 75vh; /* adjust as needed */
+  overflow-y: scroll;
+}
+
+/* width */
+.scrollbar-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.scrollbar-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.scrollbar-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
