@@ -69,6 +69,28 @@ const YourSlimes: FC<Props> = () => {
     }
   }, [connection, publicKey, slimes]);
 
+  // swap out display assets with actual images (i.e. desktop/mobile wallpapers)
+  const handleDownload = () => {
+    switch (selectedAssetType) {
+      case "full-res":
+        return selectedNft?.image;
+      case "desktop":
+        return `/images/wallpapers/desktop/${selectedNft?.name
+          .replaceAll(" ", "-")
+          .toLowerCase()}.png`;
+      case "mobile":
+        return `/images/wallpapers/mobile/${selectedNft?.name
+          .replaceAll(" ", "-")
+          .toLowerCase()}.png`;
+      case "pfp":
+        return `/images/wallpapers/pfp-crop/${selectedNft?.name
+          .replaceAll(" ", "-")
+          .toLowerCase()}.png`;
+      default:
+        return selectedNft?.image;
+    }
+  };
+
   // manage featured image path based on selected asset type
   useEffect(() => {
     setImageLoading(true);
@@ -142,7 +164,7 @@ const YourSlimes: FC<Props> = () => {
                 }}
               />
             </motion.div>
-            <FullResolutionDownload imageUrl={selectedNft.image} />
+            <FullResolutionDownload imageUrl={handleDownload()} />
           </div>
         )}
         <div className="w-full lg:w-[600px] h-full lg:ml-6 mt-3 lg:-mt-3">

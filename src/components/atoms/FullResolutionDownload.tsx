@@ -1,11 +1,16 @@
 import { FC } from "react";
 import Image from "next/image";
+import { toast } from "react-hot-toast";
 
 interface Props {
-  imageUrl: string;
+  imageUrl: string | undefined;
 }
 
 const FullResolutionDownload: FC<Props> = ({ imageUrl }: Props) => {
+  if (!imageUrl) {
+    toast.error("Error: No image found");
+    return null;
+  }
   return (
     <a
       className="mt-[14px] flex flex-row justify-center items-center"

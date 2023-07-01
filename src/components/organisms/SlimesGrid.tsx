@@ -32,7 +32,6 @@ const SlimesGrid: FC<Props> = ({
   const metaplex = new Metaplex(connection);
 
   useEffect(() => {
-    console.log("I'm here!!");
     const fetchAllSlimes = async () => {
       setLoading(true);
       const jsonArr: any[] = [];
