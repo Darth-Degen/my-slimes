@@ -6,10 +6,10 @@ const SlimesHubFooter: FC = () => {
   return (
     <div className="absolute bottom-0 w-full py-9 bg-v2-green px-10 xl:px-0">
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between">
-        <p className="w-1/3 text-2xl xl:text-4xl text-white font-black uppercase">
+        <p className="w-1/2 xl:w-1/3 text-2xl xl:text-4xl text-white font-black uppercase">
           Connect with your slimes here
         </p>
-        <div className="w-1/3 flex items-center justify-center gap-14">
+        <div className="w-1/2 xl:w-1/3 flex items-center justify-center gap-14">
           <motion.button
             className="flex flex-col items-center justify-center gap-2"
             onClick={() => {
