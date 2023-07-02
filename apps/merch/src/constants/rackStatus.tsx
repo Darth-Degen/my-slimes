@@ -1,4 +1,4 @@
-import { RackStatus, RackStatusName } from "apps/merch/src/types";
+import { RackStatus, RackStatusName } from "@merch-types";
 
 export const rackStatus: RackStatus[] = [
   {
