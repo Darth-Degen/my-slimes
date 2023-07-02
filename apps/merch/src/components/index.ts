@@ -10,6 +10,10 @@ const TextBox = dynamic(()=> import("./molecules/TextBox"))
 const CountdownItem = dynamic(()=> import("./molecules/CountdownItem"))
 const BuyRacksForm = dynamic(()=> import("./molecules/BuyRacksForm"))
 const Modal = dynamic(()=> import("./molecules/Modal"))
+const StoreItem = dynamic(()=> import("./molecules/StoreItem"))
+const Breadcrumbs = dynamic(()=> import("./molecules/Breadcrumbs"))
+const NftIndicator = dynamic(()=> import("./molecules/NftIndicator"))
+const CartIndicator = dynamic(()=> import("./molecules/CartIndicator"))
 //organisms
 const Countdown = dynamic(()=> import("./organisms/Countdown"))
 const ExitModal = dynamic(()=> import("./organisms/ExitModal"))
@@ -17,6 +21,8 @@ const Store = dynamic(()=> import("./organisms/Store"))
 const ItemDetail = dynamic(()=> import("./organisms/ItemDetail"))
 const Checkout = dynamic(()=> import("./organisms/Checkout"))
 const BuyRacksContent = dynamic(()=> import("./organisms/BuyRacksContent"))
+const Header = dynamic(()=> import("./organisms/Header"))
+const Footer = dynamic(()=> import("./organisms/Footer"))
 //templates
 const BuyRacksView = dynamic(()=> import("./templates/BuyRacksView"))
 const MerchModule = dynamic(()=> import("./templates/MerchModule"))
@@ -38,5 +44,11 @@ export {
   BuyRacksContent,
   Store, 
   ItemDetail, 
-  Checkout
+  Checkout,
+  StoreItem,
+  Header,
+  Footer,
+  Breadcrumbs,
+  NftIndicator,
+  CartIndicator
 }

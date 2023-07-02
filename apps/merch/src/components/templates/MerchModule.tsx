@@ -20,10 +20,6 @@ const MerchModule: FC<Props> = (props: Props) => {
     setShowExitModal,
   };
 
-  // useEffect(() => {
-  //   console.log("parent showStore ", showStore);
-  // }, [showStore]);
-
   return (
     <StoreContext.Provider value={value}>
       {children}
