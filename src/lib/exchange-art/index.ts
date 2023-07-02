@@ -230,8 +230,8 @@ export class EditionsContractService {
     transactionNumber: number
   ): Promise<string> {
     
-    const toastId = toast.loading(`Mint #${transactionNumber + 1}  minting...`);
-    console.log(`Mint #${transactionNumber} minting...`);
+    const toastId = toast.loading(`Rack #${transactionNumber + 1}  minting...`);
+    console.log(`Rack #${transactionNumber} minting...`);
 
     const transactionSignature = await this.connection.sendRawTransaction(
       signedTransactionv0.serialize(),
@@ -261,8 +261,8 @@ export class EditionsContractService {
       //   title: `Transaction failed`,
       // });
 
-      toast.error(`Mint #${transactionNumber + 1} failed.`, { id: toastId })
-      console.error(`Mint #${transactionNumber} failed.`);
+      toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
+      console.error(`Rack #${transactionNumber} failed.`);
     }
 
     if (status?.err) {
@@ -270,13 +270,13 @@ export class EditionsContractService {
       // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
 
       // throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
-      toast.error(`Mint #${transactionNumber + 1} failed.`, { id: toastId })
-      console.error(`Mint #${transactionNumber} failed.`);
+      toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
+      console.error(`Rack #${transactionNumber} failed.`);
     }
 
     // console.log('versioned transactionSignature >> ', transactionSignature);
-      toast.success(`Mint #${transactionNumber + 1} success.`, { id: toastId })
-    console.log(`Mint #${transactionNumber} success.`);
+      toast.success(`Rack #${transactionNumber + 1} success.`, { id: toastId })
+    console.log(`Rack #${transactionNumber} success.`);
     return transactionSignature;
   }
 
