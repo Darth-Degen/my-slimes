@@ -1,9 +1,19 @@
+export interface QuantitiesBySize {
+  color?: string;
+  size: string;
+  quantity: number;
+}
+
 export interface Merch {
   id: string;
   name: string;
   description: string;
-  maxSupply: number; //or number[]
+  maxSupply: number;
   cost: number;
-  sizes: string[];
-  color: string[];
+  sizeChart: string[];
+  colors: string[];
+  images: string[];
+  size?: string;
+  color?: string;
+  sizes: QuantitiesBySize[];
 }

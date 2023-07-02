@@ -6,14 +6,27 @@ import { Merch } from "@merch-types";
 
 interface Props {
   item: Merch;
-  quantity: number;
+  inStock: boolean;
   addToCart: (item: Merch) => void;
   handleImageClick: (item: Merch) => void;
 }
 const StoreItem: FC<Props> = (props: Props) => {
-  const { item, quantity, addToCart, handleImageClick } = props;
-  const src = `/images/merch/${item.id}/image.png`;
+  const { item, inStock, addToCart, handleImageClick } = props;
   const [didHover, setDidHover] = useState<boolean>(false);
+
+  const src = `/images/merch/${item.id}/image.png`;
+
+  const handleAddToCart = (cartItem: Merch) => {
+    //set size & color if only one
+    if (item.sizeChart.length === 1) {
+      cartItem.size = item.sizeChart[0];
+    }
+    if (item.colors.length === 1) {
+      cartItem.color = item.colors[0];
+    }
+    addToCart(cartItem);
+  };
+
   return (
     <motion.div
       className="flex flex-col md:flex-row gap-10"
@@ -48,11 +61,11 @@ const StoreItem: FC<Props> = (props: Props) => {
         </div>
         <button
           className="uppercase font-neuebit-bold text-lg bg-m-green px-6 pt-1 text-white transition-colors duration-200 hover:bg-m-dark-green active:bg-opacity-90 shadow-md
-          disabled:bg-red-500 disabled:bg-opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
-          onClick={() => addToCart(item)}
-          disabled={quantity === 0}
+          disabled:bg-red-500 disabled:bg-opacity-50 disabled:cursor-not-allowed disabled:shadow-none min-w-[127px]"
+          onClick={() => handleAddToCart(item)}
+          disabled={!inStock}
         >
-          add to cart
+          {!inStock ? "sold out" : "add to cart"}
         </button>
       </div>
       {/* info */}
@@ -65,7 +78,7 @@ const StoreItem: FC<Props> = (props: Props) => {
           qty made - {item.maxSupply}*
         </p>
         <div className="flex gap-2 font-neuebit text-xl ">
-          {item.sizes.map((item, index) => (
+          {item.sizeChart.map((item, index) => (
             <span key={index}>{item}</span>
           ))}
         </div>

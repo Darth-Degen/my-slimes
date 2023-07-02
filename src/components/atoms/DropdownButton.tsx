@@ -2,7 +2,6 @@ import { ArrowIcon } from "@components";
 import { arrowVariants } from "@constants";
 import { FC } from "react";
 import { motion } from "framer-motion";
-
 interface Props {
   isActive: boolean;
   label: string;

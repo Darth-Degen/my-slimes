@@ -86,12 +86,14 @@ export const backgroundAnimations = (color: string) => {
 //dropdown
 export const dropdownAnimations: Variants = {
   hidden: {
-    y: -25,
-    scale: 0.96,
+    y: -20,
+    // scale: 0.96,
+    opacity: 0,
   },
   show: {
     y: 0,
     scale: 1,
+    opacity: 0,
     transition: {
       duration: 0.5,
       staggerChildren: 0.1,
