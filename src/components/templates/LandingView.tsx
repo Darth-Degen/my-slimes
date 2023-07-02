@@ -146,7 +146,7 @@ const LandingView: FC<Props> = (props: Props) => {
         key="intro mobile"
         className={`${
           !mobileView && "hidden"
-        } pt-10 h-full w-screen absolute inset-0 -z-10 ${
+        } mt-10 md:pt-16 h-full w-screen absolute inset-0 -z-10 max-w-[900px] mx-auto ${
           !showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
@@ -172,7 +172,7 @@ const LandingView: FC<Props> = (props: Props) => {
         loop
         className={`${
           !mobileView && "hidden"
-        } pt-10 h-full w-screen absolute inset-0 -z-20 ${
+        } mt-10 h-full w-screen absolute inset-0 -z-20 max-w-[900px] mx-auto ${
           showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
