@@ -10,7 +10,7 @@ interface Props {
   cart: Merch[];
   storeItem: Merch | undefined;
   handleCartClick: () => void;
-  setStep: Dispatch<SetStateAction<number>>;
+  setStep: (value: number) => void;
 }
 const Header: FC<Props> = (props: Props) => {
   const { step, nfts, cart, storeItem, handleCartClick, setStep } = props;

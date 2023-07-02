@@ -3,7 +3,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { midExitAnimation } from "@merch-constants";
 
 interface Props {
-  setStep: Dispatch<SetStateAction<number>>;
+  setStep: (value: number) => void;
   handleCheckout: () => void;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
