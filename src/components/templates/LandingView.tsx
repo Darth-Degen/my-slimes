@@ -22,10 +22,10 @@ const _assets: Assets[] = [
     src: "/videos/loading-loop.mp4",
   },
   {
-    src: "/videos/mobile_loading.mp4",
+    src: "/videos/mobile_intro.MP4",
   },
   {
-    src: "/videos/mobile_club_loop.mp4",
+    src: "/videos/mobile_loop.MP4",
   },
 ];
 
@@ -47,6 +47,8 @@ const LandingView: FC<Props> = (props: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
+  const introRefMobile = useRef<HTMLVideoElement>(null);
+  const loopRefMobile = useRef<HTMLVideoElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(scrollRef);
@@ -71,6 +73,12 @@ const LandingView: FC<Props> = (props: Props) => {
     if (showLoop && loopRef.current && introRef.current) {
       loopRef.current.play();
       introRef.current.pause();
+    } else {
+      console.log("wtf");
+    }
+    if (showLoop && loopRefMobile.current && introRefMobile.current) {
+      loopRefMobile.current.play();
+      introRefMobile.current.pause();
     }
   }, [showLoop]);
 
@@ -98,7 +106,9 @@ const LandingView: FC<Props> = (props: Props) => {
         onLoadedData={() => {
           setAssets && setAssets((prevState) => [true, ...prevState.slice(1)]);
         }}
-        onEnded={() => setShowLoop(true)}
+        onEnded={() => {
+          setShowLoop(true);
+        }}
         {...exitAnimation}
       >
         <source src={_assets[0].src} type="video/mp4" />
@@ -129,7 +139,7 @@ const LandingView: FC<Props> = (props: Props) => {
       </motion.video>
 
       <motion.video
-        ref={introRef}
+        ref={introRefMobile}
         muted
         autoPlay
         playsInline
@@ -155,7 +165,7 @@ const LandingView: FC<Props> = (props: Props) => {
       </motion.video>
 
       <motion.video
-        ref={loopRef}
+        ref={loopRefMobile}
         muted
         playsInline
         key="loop mobile"
