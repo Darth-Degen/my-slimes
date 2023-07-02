@@ -28,9 +28,9 @@ const OrderModal: FC<Props> = (props: Props) => {
   };
 
   const handleOrder = (): void => {
-    const toastId = setIsOrdering(true);
-    toast.loading("Ordering...");
-    // toast.dismiss(toastId);
+    // const toastId = setIsOrdering(true);
+    // toast.loading("Ordering...");
+    // toast.dismiss();
     //setStep(7);
   };
 
