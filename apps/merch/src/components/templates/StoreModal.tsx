@@ -174,7 +174,7 @@ const StoreModal: FC<Props> = (props: Props) => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2"
+      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2 z-50"
     >
       <div className="flex flex-col items-center justify-between xl:h-full w-full text-3xl">
         <Header
