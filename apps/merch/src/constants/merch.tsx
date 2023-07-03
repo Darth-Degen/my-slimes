@@ -15,7 +15,7 @@ export const merch: Merch[] = [
       {
         color: "black",
         size: "s",
-        quantity: 30, //30
+        quantity: 30,
       },
       {
         color: "black",
@@ -136,7 +136,7 @@ export const merch: Merch[] = [
       {
         color: "pack",
         size: "one pack to rule them all",
-        quantity: 0, //190
+        quantity: 190,
       },
     ],
   },

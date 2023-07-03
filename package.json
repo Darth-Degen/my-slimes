@@ -1,5 +1,5 @@
 {
-  "name": "nft-wallpapers",
+  "name": "my-slimes",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
@@ -38,7 +38,6 @@
     "next": "13.0.3",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
-    "react-color-extractor": "^1.1.2",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-intersection-observer": "^9.4.3",

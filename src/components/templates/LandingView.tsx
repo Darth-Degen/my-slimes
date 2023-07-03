@@ -1,4 +1,9 @@
-import { ViewContext, exitAnimation } from "@constants";
+import {
+  ViewContext,
+  exitAnimation,
+  midExitAnimation,
+  fastExitAnimation,
+} from "@constants";
 import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
 import {
   Dispatch,
@@ -22,7 +27,10 @@ const _assets: Assets[] = [
     src: "/videos/loading-loop.mp4",
   },
   {
-    src: "/videos/mobile_club_loop.mp4",
+    src: "/videos/mobile_intro.MP4",
+  },
+  {
+    src: "/videos/mobile_loop.MP4",
   },
 ];
 
@@ -39,11 +47,13 @@ const LandingView: FC<Props> = (props: Props) => {
   const { setAssets, setIsInView, id, setCurrentPage, showLoop, setShowLoop } =
     props;
   const [winWidth] = useWindowSize();
-  const mobileView = winWidth < 1024;
+  const mobileView = winWidth <= 1024;
   //refs
   const scrollRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLVideoElement>(null);
   const loopRef = useRef<HTMLVideoElement>(null);
+  const introRefMobile = useRef<HTMLVideoElement>(null);
+  const loopRefMobile = useRef<HTMLVideoElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(scrollRef);
@@ -54,11 +64,11 @@ const LandingView: FC<Props> = (props: Props) => {
     if (isChildInView) setCurrentPage(id);
   }, [id, isChildInView, setCurrentPage]);
 
-  useEffect(() => {
-    if (mobileView) {
-      setShowLoop(true);
-    }
-  }, [mobileView, setShowLoop]);
+  // useEffect(() => {
+  //   if (mobileView) {
+  //     setShowLoop(true);
+  //   }
+  // }, [mobileView, setShowLoop]);
 
   useEffect(() => {
     setIsInView(isInView);
@@ -68,6 +78,12 @@ const LandingView: FC<Props> = (props: Props) => {
     if (showLoop && loopRef.current && introRef.current) {
       loopRef.current.play();
       introRef.current.pause();
+    } else {
+      console.log("wtf");
+    }
+    if (showLoop && loopRefMobile.current && introRefMobile.current) {
+      loopRefMobile.current.play();
+      introRefMobile.current.pause();
     }
   }, [showLoop]);
 
@@ -75,17 +91,18 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id={id}
       key="landing"
-      className={`relative w-full ${mobileView ? "h-[70vh]" : "h-screen"} 
+      className={`relative w-full ${mobileView ? "h-[82vh]" : "h-screen"} 
       flex flex-col items-center justify-end`}
       {...exitAnimation}
       ref={scrollRef}
     >
+      {/* desktop */}
       <motion.video
         ref={introRef}
         autoPlay
         muted
         playsInline
-        key="intro"
+        key="intro desktop"
         className={`${
           mobileView && "hidden"
         } h-full w-screen absolute inset-0 -z-10 ${
@@ -95,21 +112,23 @@ const LandingView: FC<Props> = (props: Props) => {
         onLoadedData={() => {
           setAssets && setAssets((prevState) => [true, ...prevState.slice(1)]);
         }}
-        onEnded={() => setShowLoop(true)}
+        onEnded={() => {
+          setShowLoop(true);
+        }}
         {...exitAnimation}
       >
         <source src={_assets[0].src} type="video/mp4" />
       </motion.video>
-
       <motion.video
         ref={loopRef}
         muted
         playsInline
+        key="loop desktop"
         loop
         className={`${
           mobileView && "hidden"
         } h-full w-screen absolute inset-0 -z-20 ${
-          showLoop ? "visible" : "visible"
+          showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
@@ -124,27 +143,59 @@ const LandingView: FC<Props> = (props: Props) => {
         <source src={_assets[1].src} type="video/mp4" />
       </motion.video>
 
+      {/* mobile */}
+      <AnimatePresence mode="wait">
+        {!showLoop && (
+          <motion.video
+            ref={introRefMobile}
+            muted
+            autoPlay
+            playsInline
+            key="intro-mobile"
+            className={`${
+              !mobileView && "hidden"
+            } md:pt-16 h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-10 max-w-[600px] mx-auto ${
+              !showLoop ? "visible" : "invisible"
+            }`}
+            style={{ objectFit: "cover" }}
+            onLoadedData={() => {
+              setAssets &&
+                setAssets((prevState) => [
+                  ...prevState.slice(0, 1),
+                  true,
+                  ...prevState.slice(3),
+                ]);
+            }}
+            onEnded={() => setShowLoop(true)}
+            {...exitAnimation}
+          >
+            <source src={_assets[2].src} type="video/mp4" />
+          </motion.video>
+        )}
+      </AnimatePresence>
       <motion.video
-        ref={loopRef}
+        ref={loopRefMobile}
         muted
         playsInline
+        key="loop-mobile"
         loop
         className={`${
           !mobileView && "hidden"
-        } pt-10 h-full w-screen absolute inset-0 -z-20 ${
-          showLoop ? "visible" : "visible"
+        } h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-20 max-w-[600px] mx-auto ${
+          showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
           setAssets &&
             setAssets((prevState) => [
-              ...prevState.slice(0, 0),
+              ...prevState.slice(0, 2),
               true,
-              ...prevState.slice(2),
+              ...prevState.slice(4),
             ]);
         }}
+        // {...exitAnimation}
       >
-        <source src={_assets[2].src} type="video/mp4" />
+        <source src={_assets[3].src} type="video/mp4" />
       </motion.video>
 
       {!mobileView && (

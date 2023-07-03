@@ -7,23 +7,22 @@ import {
   ScrollProgress,
   LinkFire,
 } from "@components";
-import { BuyRacksView } from "@merch-components";
-import { useContext, useEffect, useState } from "react";
+import { BuyRacksView } from "apps/merch/src/components";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { scrollToSection } from "@helpers";
 import { ViewContext } from "@constants";
 import { useWindowSize } from "@merch-hooks";
 
-interface Assets {
-  src: string;
+interface Props {
+  setAssets: Dispatch<SetStateAction<boolean[]>>;
 }
-const _assets: Assets[] = [
-  {
-    src: "/videos/loading-intro.mp4",
-  },
-  {
-    src: "/videos/loading-loop.mp4",
-  },
-];
 
 const pageIDs: string[] = [
   "landing",
@@ -34,15 +33,8 @@ const pageIDs: string[] = [
   "where",
 ];
 
-const IndexView = () => {
+const IndexView: FC<Props> = ({ setAssets }) => {
   //state
-  const [assets, setAssets] = useState<boolean[]>([
-    // false, // [0] landing - video 1
-    // false, // [1] landing - video 2
-    // false, // [2] what - image 1
-    // false, // [3] what - image 2
-    // false, // [4] what - image 3
-  ]);
   const [scrollColor, setScrollColor] = useState<string>("bg-v2-green");
   const [isRacksInView, setIsRacksInView] = useState<boolean>(false);
   const [isLandingInView, setIsLandingInView] = useState<boolean>(false);
@@ -57,11 +49,7 @@ const IndexView = () => {
 
   // views
   const [width] = useWindowSize();
-  const mobileView = width < 1024;
-
-  // useEffect(() => {
-  //   console.log("assets", assets);
-  // }, [assets]);
+  const mobileView = width <= 1024;
 
   // handles auto scroll
   useEffect(() => {
@@ -83,7 +71,6 @@ const IndexView = () => {
   return (
     <>
       <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} />
-      {/* TODO: add onLoadingComplete when landing graphic is added */}
       <LandingView
         setAssets={setAssets}
         setIsInView={setIsLandingInView}
@@ -92,7 +79,7 @@ const IndexView = () => {
         showLoop={showLoop}
         setShowLoop={setShowLoop}
       />
-      <div className="w-full h-full hidden sm:block">
+      <div className="w-full h-full hidden lg:block">
         <BuyRacksView
           setIsInView={setIsRacksInView}
           id={pageIDs[1]}
@@ -119,8 +106,8 @@ const IndexView = () => {
           setCurrentPage={setCurrentPage}
         />
       </div>
-      <div className="w-full h-full sm:hidden">
-        <LinkFire showLoop={showLoop} />
+      <div className="w-full h-full lg:hidden">
+        <LinkFire setAssets={setAssets} showLoop={showLoop} />
       </div>
     </>
   );
