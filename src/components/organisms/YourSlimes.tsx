@@ -73,6 +73,15 @@ const YourSlimes: FC<Props> = () => {
     }
   }, [connection, publicKey, slimes]);
 
+  function getContrastYIQ() {
+    if (selectedNft?.color === undefined) return "black";
+    var r = parseInt(selectedNft?.color?.substr(0, 2), 16);
+    var g = parseInt(selectedNft?.color?.substr(2, 2), 16);
+    var b = parseInt(selectedNft?.color?.substr(4, 2), 16);
+    var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+    return yiq >= 128 ? "black" : "white";
+  }
+
   // swap out display assets with actual images (i.e. desktop/mobile wallpapers)
   const handleDownload = () => {
     switch (selectedAssetType) {
@@ -181,7 +190,11 @@ const YourSlimes: FC<Props> = () => {
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-start lg:items-center gap-3 lg:gap-6 py-4 min-h-[60px]">
             <motion.button
-              className="bg-v2-green text-sm w-full sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
+              className={`text-sm w-full sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase`}
+              style={{
+                backgroundColor: selectedNft?.color,
+                color: getContrastYIQ(),
+              }}
               {...smallClickAnimation}
               onClick={() => {
                 window.open(
@@ -194,7 +207,11 @@ const YourSlimes: FC<Props> = () => {
               Exchange Art
             </motion.button>
             <motion.button
-              className="bg-v2-green text-sm w-full line-through sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
+              className="text-sm w-full line-through sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
+              style={{
+                backgroundColor: selectedNft?.color,
+                color: getContrastYIQ(),
+              }}
               {...smallClickAnimation}
               // onClick={() => {
               //   window.open(
@@ -267,7 +284,13 @@ const YourSlimes: FC<Props> = () => {
               )}
 
               {!publicKey && (
-                <WalletMultiButton className="!bg-v2-green !text-slimes-black !border-none !rounded-lg !h-[60px] !w-[190px] !font-secondary !flex !items-center !justify-center !px-0 !text-sm !uppercase">
+                <WalletMultiButton
+                  className="!border-none !rounded-lg !h-[60px] !w-[190px] !font-secondary !flex !items-center !justify-center !px-0 !text-sm !uppercase"
+                  style={{
+                    backgroundColor: selectedNft?.color,
+                    color: getContrastYIQ(),
+                  }}
+                >
                   Connect Wallet
                 </WalletMultiButton>
               )}
