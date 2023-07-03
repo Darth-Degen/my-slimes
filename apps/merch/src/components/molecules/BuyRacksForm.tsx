@@ -23,7 +23,7 @@ const BuyRacksForm: FC<BuyRacksProps> = (props: BuyRacksProps) => {
       <p className="text-ait-teal text-4xl">TOTAL: {amountToMint * cost} SOL</p>
 
       <motion.button
-        className="my-2 flex pt-1 items-center justify-center rounded-full w-48 h-14 bg-ait-teal text-4xl  transition-all duration-300 hover:bg-ait-black hover:text-v2-dark-green hover:border hover:border-v2-green"
+        className="my-2 flex pt-1 items-center justify-center rounded-full w-48 h-14 bg-ait-teal text-4xl  transition-all duration-300 "
         {...tapAnimation}
         onClick={() => handleMint(amountToMint)}
       >

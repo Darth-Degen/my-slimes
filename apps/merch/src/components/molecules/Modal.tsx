@@ -23,7 +23,7 @@ const Modal: FC<Props> = (props: Props) => {
   return (
     <motion.div
       key="image-modal"
-      className="fixed relativeinset-0 backdrop-blur-sm bg-[#232B33] bg-opacity-50 z-50 w-screen h-screen cursor-pointer flex items-center justify-center"
+      className="fixed inset-0 backdrop-blur-sm bg-[#232B33] bg-opacity-50 z-50 w-screen h-screen cursor-pointer flex items-center justify-center"
       onClick={componentProps.onClick}
       {...midExitAnimation}
     >

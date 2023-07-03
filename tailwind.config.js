@@ -47,7 +47,7 @@ module.exports = {
         shadow: "rgba(82, 82, 82, 0.25)",
         //version 2 theme
         "v2-pink": "#FFB094",
-        "v2-beige": "#f9f1d9", // "#F6EFD3",
+        "v2-beige": "#F6EFD3", // "#F6EFD3",
         "v2-green": "#73EEC5",
         "v2-dark-green": "#5CBE9D",
         "v2-dark": "#2C2524",

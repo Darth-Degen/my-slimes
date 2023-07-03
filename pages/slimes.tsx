@@ -1,4 +1,4 @@
-import { PageLayout, SlimesView } from "@components";
+import { PageLayout } from "@components";
 import { NextPage } from "next";
 import { useState } from "react";
 
@@ -7,7 +7,7 @@ const MySlimes: NextPage = () => {
 
   return (
     <PageLayout headerType="secondary" assets={assets}>
-      <SlimesView />
+      {/* <SlimesView /> */}
     </PageLayout>
   );
 };
