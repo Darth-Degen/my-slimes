@@ -165,22 +165,33 @@ export class EditionsContractService {
       console.log('signedTransactionsv0: ', signedTransactionsv0);
 
       // Send Versioned Treansactions to network
-      const mintingTxSignatures: TransactionSignature[] = [];
-      await signedTransactionsv0.reduce(async (previous, current, index) => {
-        try {
-          await previous;
-          const mintingTxSignature = await this.sendSignedTransactions(current, index);
-          mintingTxSignatures.push(mintingTxSignature);
-        } catch (e) {
-          console.error(e);
-          console.log(`Error minting tx ${index}, moving to next one`);
-        }
-      }, Promise.resolve());
+      // const mintingTxSignatures: TransactionSignature[] = [];
+      // await signedTransactionsv0.reduce(async (previous, current, index) => {
+      //   try {
+      //     await previous;
+      //     const mintingTxSignature = await this.sendSignedTransactions(current, index);
+      //     mintingTxSignatures.push(mintingTxSignature);
+      //   } catch (e) {
+      //     console.error(e);
+      //     console.log(`Error minting tx ${index}, moving to next one`);
+      //   }
+      // }, Promise.resolve());
+
+      const mintingTxSignatures = await Promise.all(
+        signedTransactionsv0.map(async (tx, index) => {
+          try {
+            const mintingTxSignature = await this.sendSignedTransactions(tx, index);
+            return mintingTxSignature;
+          } catch (e) {
+            console.error(e);
+            console.log(`Error minting tx ${index}, moving to next one`);
+          }
+        }));
 
       // Verify all transactions
       await mintingTxSignatures.reduce(async (prev, curr) => {
         await prev;
-        await this.verifyTransaction(curr);
+        if (curr) await this.verifyTransaction(curr);
       }, Promise.resolve());
 
       toast.success('All done 🎉');
@@ -229,7 +240,7 @@ export class EditionsContractService {
     signedTransactionv0: VersionedTransaction,
     transactionNumber: number
   ): Promise<string> {
-    
+
     const toastId = toast.loading(`Rack #${transactionNumber + 1}  minting...`);
     console.log(`Rack #${transactionNumber} minting...`);
 
@@ -275,7 +286,7 @@ export class EditionsContractService {
     }
 
     // console.log('versioned transactionSignature >> ', transactionSignature);
-      toast.success(`Rack #${transactionNumber + 1} success.`, { id: toastId })
+    toast.success(`Rack #${transactionNumber + 1} success.`, { id: toastId })
     console.log(`Rack #${transactionNumber} success.`);
     return transactionSignature;
   }
