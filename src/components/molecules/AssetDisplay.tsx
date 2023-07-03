@@ -15,9 +15,9 @@ interface Props {
 const AssetDisplay: FC<Props> = (props: Props) => {
   const { asset, collection, key, isExtra = false, handleClick } = props;
 
-  const src = `/images/wallpapers/${asset?.tag}/${collection?.tag}${
-    isExtra ? "-1" : ""
-  }.png`;
+  const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/${
+    asset?.tag
+  }/${collection?.tag}${isExtra ? "-1" : ""}.png`;
 
   return (
     <motion.div

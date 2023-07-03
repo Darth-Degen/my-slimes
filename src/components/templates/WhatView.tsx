@@ -115,7 +115,7 @@ const WhatView: FC<Props> = (props: Props) => {
                 index={index}
               >
                 <Image
-                  src={`/images/landing/${item.src}`}
+                  src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${item.src}`}
                   height={height}
                   width={width}
                   alt={item.title}

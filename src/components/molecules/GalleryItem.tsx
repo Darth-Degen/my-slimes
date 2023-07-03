@@ -58,8 +58,8 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     target: parentRef,
   });
 
-  const src = `/images/small-pfp/${item.tag}.webp`;
-  // const src = `/images/wallpapers/pfp-crop/${item.tag}.png`;
+  const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/small-pfp/${item.tag}.webp`;
+  // const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${item.tag}.png`;
   const isInView = useInView(childRef);
 
   const translateY = useTransform(

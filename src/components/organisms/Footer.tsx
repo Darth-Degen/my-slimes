@@ -130,7 +130,7 @@ const Footer: FC<Props> = (props: Props) => {
               >
                 <ExpIcon color={mainColor} />
                 {/* <Image
-                src="/images/exp/logo-white.png"
+                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-white.png`}
                 height={50}
                 width={50}
                 alt="EXP"

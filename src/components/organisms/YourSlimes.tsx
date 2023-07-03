@@ -88,15 +88,21 @@ const YourSlimes: FC<Props> = () => {
       case "full-res":
         return selectedNft?.image;
       case "desktop":
-        return `/images/wallpapers/desktop/${selectedNft?.name
+        return `${
+          process.env.NEXT_PUBLIC_CDN_URL
+        }/images/wallpapers/desktop/${selectedNft?.name
           .replaceAll(" ", "-")
           .toLowerCase()}.png`;
       case "mobile":
-        return `/images/wallpapers/mobile/${selectedNft?.name
+        return `${
+          process.env.NEXT_PUBLIC_CDN_URL
+        }/images/wallpapers/mobile/${selectedNft?.name
           .replaceAll(" ", "-")
           .toLowerCase()}.png`;
       case "pfp":
-        return `/images/wallpapers/pfp-crop/${selectedNft?.name
+        return `${
+          process.env.NEXT_PUBLIC_CDN_URL
+        }/images/wallpapers/pfp-crop/${selectedNft?.name
           .replaceAll(" ", "-")
           .toLowerCase()}.png`;
       default:
@@ -114,21 +120,27 @@ const YourSlimes: FC<Props> = () => {
           break;
         case "desktop":
           setFeaturedImage(
-            `/images/wallpapers/desktop-display/${selectedNft?.name
+            `${
+              process.env.NEXT_PUBLIC_CDN_URL
+            }/images/wallpapers/desktop-display/${selectedNft?.name
               .replaceAll(" ", "-")
               .toLowerCase()}.png`
           );
           break;
         case "mobile":
           setFeaturedImage(
-            `/images/wallpapers/mobile-display/${selectedNft?.name
+            `${
+              process.env.NEXT_PUBLIC_CDN_URL
+            }/images/wallpapers/mobile-display/${selectedNft?.name
               .replaceAll(" ", "-")
               .toLowerCase()}.png`
           );
           break;
         case "pfp":
           setFeaturedImage(
-            `/images/wallpapers/pfp-crop/${selectedNft?.name
+            `${
+              process.env.NEXT_PUBLIC_CDN_URL
+            }/images/wallpapers/pfp-crop/${selectedNft?.name
               .replaceAll(" ", "-")
               .toLowerCase()}.png`
           );
@@ -165,7 +177,10 @@ const YourSlimes: FC<Props> = () => {
               key={selectedNft?.name ?? "placeholder"}
             >
               <Image
-                src={featuredImage || "/images/exp/logo-dark.svg"}
+                src={
+                  featuredImage ||
+                  `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
+                }
                 width={selectedAssetType === "mobile" ? 250 : 500}
                 height={500}
                 alt="featured slime asset"
@@ -256,7 +271,10 @@ const YourSlimes: FC<Props> = () => {
                       className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg"
                     >
                       <Image
-                        src={slime.image || "/images/exp/logo-dark.svg"}
+                        src={
+                          slime.image ||
+                          `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
+                        }
                         alt={slime.name}
                         height={100}
                         width={100}
@@ -304,7 +322,10 @@ const YourSlimes: FC<Props> = () => {
             {selectedNft && (
               <div className="w-full h-[100px] flex items-start gap-3 overflow-x-auto">
                 <Image
-                  src={selectedNft?.image || "/images/exp/logo-dark.svg"}
+                  src={
+                    selectedNft?.image ||
+                    `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
+                  }
                   height={100}
                   width={100}
                   alt={selectedNft?.name}
@@ -326,7 +347,9 @@ const YourSlimes: FC<Props> = () => {
                   onClick={() => setSelectedAssetType("desktop")}
                 >
                   <Image
-                    src={`/images/wallpapers/desktop-display/${selectedNft?.name
+                    src={`${
+                      process.env.NEXT_PUBLIC_CDN_URL
+                    }/images/wallpapers/desktop-display/${selectedNft?.name
                       .replaceAll(" ", "-")
                       .toLowerCase()}.png`}
                     height={200}
@@ -345,7 +368,9 @@ const YourSlimes: FC<Props> = () => {
                   onClick={() => setSelectedAssetType("mobile")}
                 >
                   <Image
-                    src={`/images/wallpapers/mobile-display/${selectedNft?.name
+                    src={`${
+                      process.env.NEXT_PUBLIC_CDN_URL
+                    }/images/wallpapers/mobile-display/${selectedNft?.name
                       .replaceAll(" ", "-")
                       .toLowerCase()}.png`}
                     alt={`${selectedNft?.name} mobile wallpaper`}
@@ -363,7 +388,9 @@ const YourSlimes: FC<Props> = () => {
                   onClick={() => setSelectedAssetType("pfp")}
                 >
                   <Image
-                    src={`/images/wallpapers/pfp-crop/${selectedNft?.name
+                    src={`${
+                      process.env.NEXT_PUBLIC_CDN_URL
+                    }/images/wallpapers/pfp-crop/${selectedNft?.name
                       .replaceAll(" ", "-")
                       .toLowerCase()}.png`}
                     alt={`${selectedNft?.name} pfp crop`}

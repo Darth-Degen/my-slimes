@@ -22,7 +22,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = collections[imageId];
-  const mainImage = `/images/wallpapers/pfp-crop/${item.tag}.png`;
+  const mainImage = `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${item.tag}.png`;
   //fetches id from context
   const { galleryModalId } = useContext(ViewContext);
 
@@ -54,7 +54,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
         {/* info */}
         <div className="relative flex flex-col items-center justify-center w-full md:w-1/2 h-full p-10 text-custom-primary ">
           <ImageShimmer
-            src={"/images/modal-backsplash.png"}
+            src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/modal-backsplash.png`}
             alt="splash"
             width={300}
             height={300}

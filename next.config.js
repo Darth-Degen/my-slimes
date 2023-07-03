@@ -9,6 +9,11 @@ const nextConfig = {
         hostname: "arweave.net",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        pathname: "/**",
+      },
     ],
   },
   env: {

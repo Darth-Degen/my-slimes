@@ -57,7 +57,7 @@ const initialStatus: Status[] = [
     name: StatusName.Buy,
     text: "BUY NOW!!!",
     endDate: new Date(2023, 6, 14, 9, 10, 50),
-    src: "/images/ait/pika.png",
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/pika.png`,
     caption:
       "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
     timerCaption: "time left to buy racks",
@@ -66,7 +66,7 @@ const initialStatus: Status[] = [
     name: StatusName.Raffle,
     text: "RAFFLE LIVE ",
     endDate: new Date("17/6/23"),
-    src: "/images/ait/yoda.png",
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/yoda.png`,
     caption: "the lucky mfr who won a slime is:",
     timerCaption: "winner chosen in:",
   },
@@ -80,7 +80,9 @@ const initialStatus: Status[] = [
   },
 ];
 
-export const EDITIONS_PROGRAM_ID = new PublicKey('EXBuYPNgBUXMTsjCbezENRUtFQzjUNZxvPGTd11Pznk5');
+export const EDITIONS_PROGRAM_ID = new PublicKey(
+  "EXBuYPNgBUXMTsjCbezENRUtFQzjUNZxvPGTd11Pznk5"
+);
 
 interface Props {
   setIsInView: Dispatch<SetStateAction<boolean>>;
@@ -138,20 +140,27 @@ const BuyRacksView: FC<Props> = (props: Props) => {
   useEffect(() => {
     (async function () {
       try {
-        const editionInfo = await fetch(COLLECTION_API_URL).then(data => data.json());
+        const editionInfo = await fetch(COLLECTION_API_URL).then((data) =>
+          data.json()
+        );
         // console.log('editionInfo: ', editionInfo);
 
-        if (editionInfo?.contractGroups.length && editionInfo?.contractGroups[0].availableContracts.editionSales.length) {
-          setEditionSaleData(editionInfo?.contractGroups[0].availableContracts.editionSales[0]);
+        if (
+          editionInfo?.contractGroups.length &&
+          editionInfo?.contractGroups[0].availableContracts.editionSales.length
+        ) {
+          setEditionSaleData(
+            editionInfo?.contractGroups[0].availableContracts.editionSales[0]
+          );
         } else {
           // TODO error toast
-          console.error('Error fetching edition sale data. Data is wrong');
+          console.error("Error fetching edition sale data. Data is wrong");
         }
       } catch (e) {
         // TODO error toast
-        console.error('Error fetching edition sale data.: ', e);
+        console.error("Error fetching edition sale data.: ", e);
       }
-    }());
+    })();
   }, []);
 
   const handleMint = (amountToMint: number) => {
@@ -186,8 +195,8 @@ const BuyRacksView: FC<Props> = (props: Props) => {
           >
             {publicKey
               ? publicKey.toBase58().slice(0, 4) +
-              ".." +
-              publicKey.toBase58().slice(-4)
+                ".." +
+                publicKey.toBase58().slice(-4)
               : "Connect"}
           </WalletMultiButton>
         </div>
@@ -392,11 +401,12 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
         alt="All in Time"
       />
       <div
-        className={`absolute  ${isRaffle ? "left-14 top-[45%]" : "-left-10 top-1/2"
-          }`}
+        className={`absolute  ${
+          isRaffle ? "left-14 top-[45%]" : "-left-10 top-1/2"
+        }`}
       >
         <Image
-          src={"/images/ait/speech-box.png"}
+          src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/speech-box.png`}
           width={303}
           height={151}
           alt="All in Time"

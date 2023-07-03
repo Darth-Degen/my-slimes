@@ -21,7 +21,7 @@ const SlimesHubFooter: FC = () => {
             }}
           >
             <Image
-              src="/images/icons/discord.svg"
+              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/discord.svg`}
               width={40}
               height={40}
               alt="slimes social icon"
@@ -41,7 +41,7 @@ const SlimesHubFooter: FC = () => {
             }}
           >
             <Image
-              src="/images/icons/twitter.svg"
+              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/twitter.svg`}
               width={40}
               height={40}
               alt="slimes social icon"

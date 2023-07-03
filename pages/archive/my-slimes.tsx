@@ -150,7 +150,7 @@ const MySlimes: NextPage = () => {
                       disabled={false}
                       onClick={() =>
                         downloadAsset(
-                          `/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
+                          `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
                         )
                       }
                     >

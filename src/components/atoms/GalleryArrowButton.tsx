@@ -43,14 +43,14 @@ const GalleryArrowButton: FC<ArrowProps> = (props: ArrowProps) => {
       > */}
         {direction === "left" ? (
           <Image
-            src="/images/icons/arrow_left.svg"
+            src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/arrow_left.svg`}
             width={100}
             height={100}
             alt="Left Arrow"
           />
         ) : (
           <Image
-            src="/images/icons/arrow_right.svg"
+            src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/arrow_right.svg`}
             width={100}
             height={100}
             alt="Right Arrow"

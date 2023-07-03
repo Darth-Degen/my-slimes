@@ -15,7 +15,7 @@ interface Props {
 }
 const ItemDetail: FC<Props> = (props: Props) => {
   const { item, quantities, addToCart, setStep } = props;
-  const path = `/images/merch/${item.id}/`;
+  const path = `${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/`;
 
   const [selected, setSelected] = useState<number>(0);
   const [colorDropdown, setColorDropdown] = useState<boolean>(false);

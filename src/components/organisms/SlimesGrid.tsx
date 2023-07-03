@@ -76,7 +76,10 @@ const SlimesGrid: FC<Props> = ({
                 key={slime.id}
               >
                 <Image
-                  src={slime.image || "/images/exp/logo-dark.svg"}
+                  src={
+                    slime.image ||
+                    `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
+                  }
                   width={250}
                   height={250}
                   alt={slime.name}

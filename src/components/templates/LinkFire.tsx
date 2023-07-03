@@ -19,7 +19,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://exchange.art/series/Slimes/nfts"
-                image="/images/linkfire/slimes_secondary.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/slimes_secondary.png`}
                 width={1952}
                 height={1164}
                 alt="slimes secondary marketplace link"
@@ -30,7 +30,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://exchange.art/series/Slimes%20Family%20Collection/nfts"
-                image="/images/linkfire/sfc_secondary.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/sfc_secondary.png`}
                 width={1952}
                 height={1164}
                 alt="sfc secondary marketplace link"
@@ -41,7 +41,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://twitter.com/myslimes_"
-                image="/images/linkfire/slimes_twitter.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/slimes_twitter.png`}
                 width={1952}
                 height={1164}
                 alt="slimes twitter link"
@@ -52,7 +52,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://twitter.com/scumsol"
-                image="/images/linkfire/scum_twitter.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/scum_twitter.png`}
                 width={1952}
                 height={1164}
                 alt="scum twitter link"
@@ -63,7 +63,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://discord.gg/scumsol"
-                image="/images/linkfire/scum_discord.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/scum_discord.png`}
                 width={1952}
                 height={1164}
                 alt="scum discord link"
@@ -74,7 +74,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://allintime.xyz/"
-                image="/images/linkfire/allintime.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/allintime.png`}
                 width={1952}
                 height={1164}
                 alt="all in time link"
@@ -85,7 +85,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               <MobileLink
                 setAssets={setAssets}
                 href="https://aether.so/space/Slimes"
-                image="/images/linkfire/slimes_family_gallery.png"
+                image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/slimes_family_gallery.png`}
                 width={4008}
                 height={1002}
                 alt="slimes family gallery link"
