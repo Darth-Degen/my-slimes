@@ -7,7 +7,12 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
 import { Collection } from "src/types";
-import { Scrollbar, SlimesGrid, FullResolutionDownload } from "@components";
+import {
+  Scrollbar,
+  SlimesGrid,
+  FullResolutionDownload,
+  SlimeToggler,
+} from "@components";
 
 interface Props {}
 
@@ -196,9 +201,13 @@ const YourSlimes: FC<Props> = () => {
           </div>
         )}
         <div className="w-full lg:w-[600px] h-full lg:ml-6 mt-3 lg:-mt-3">
-          <p className="hub-name uppercase text-slimes-black">
-            {selectedNft?.name}
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="hub-name uppercase text-slimes-black">
+              {selectedNft?.name}
+            </p>
+            <SlimeToggler />
+          </div>
+
           <p className="font-secondary w-full xl:max-w-[392px] min-h-[40px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
             {selectedNft?.description}
           </p>

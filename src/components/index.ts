@@ -37,6 +37,7 @@ const MobileLink = dynamic(() => import("./atoms/MobileLink"));
 const FullResolutionDownload = dynamic(
   () => import("./atoms/FullResolutionDownload")
 );
+const SlimeToggler = dynamic(() => import("./atoms/SlimeToggler"));
 //molecules
 const PageHead = dynamic(() => import("./molecules/PageHead"));
 const Logo = dynamic(() => import("./molecules/Logo"));
@@ -138,6 +139,7 @@ export {
   GalleryArrowButton,
   MobileLink,
   FullResolutionDownload,
+  SlimeToggler,
   VideoScroll,
   IndexView,
   LinkFire,
