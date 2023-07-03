@@ -9,12 +9,15 @@ interface Props {
 }
 
 const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
-  const slideUpAnimation = slideUp(true, 150, 1.3, 0);
+  const slideUpAnimation = slideUp(true, 1050, 1.3, 0);
   return (
     <AnimatePresence mode="wait">
       {showLoop && (
-        <motion.div {...slideUpAnimation} className="-mt-12 md:mt-0">
-          <div className="w-full grid grid-cols-2 gap-2 md:gap-4 px-5 pt-20 pb-10">
+        <motion.div
+          {...slideUpAnimation}
+          className="md:mt-0 transform -translate-y-1/2 -mt-1/2"
+        >
+          <div className="w-full grid grid-cols-2 gap-2 md:gap-4 px-5 pb-10">
             <div className="col-span-1 w-full h-full overflow-hidden rounded-xl">
               <MobileLink
                 setAssets={setAssets}

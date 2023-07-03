@@ -86,11 +86,12 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id={id}
       key="landing"
-      className={`relative w-full ${mobileView ? "h-[69vh]" : "h-screen"} 
+      className={`relative w-full ${mobileView ? "h-[92vh]" : "h-screen"} 
       flex flex-col items-center justify-end`}
       {...exitAnimation}
       ref={scrollRef}
     >
+      {/* desktop */}
       <motion.video
         ref={introRef}
         autoPlay
@@ -113,7 +114,6 @@ const LandingView: FC<Props> = (props: Props) => {
       >
         <source src={_assets[0].src} type="video/mp4" />
       </motion.video>
-
       <motion.video
         ref={loopRef}
         muted
@@ -138,6 +138,7 @@ const LandingView: FC<Props> = (props: Props) => {
         <source src={_assets[1].src} type="video/mp4" />
       </motion.video>
 
+      {/* mobile */}
       <motion.video
         ref={introRefMobile}
         muted
@@ -146,7 +147,7 @@ const LandingView: FC<Props> = (props: Props) => {
         key="intro mobile"
         className={`${
           !mobileView && "hidden"
-        } mt-10 md:pt-16 h-full w-screen absolute inset-0 -z-10 max-w-[900px] mx-auto ${
+        } md:pt-16 h-3/4 w-screen absolute inset-x-0 top-1/2 transform -translate-y-1/2 -z-10 max-w-[900px] mx-auto ${
           !showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
@@ -172,7 +173,7 @@ const LandingView: FC<Props> = (props: Props) => {
         loop
         className={`${
           !mobileView && "hidden"
-        } mt-10 h-full w-screen absolute inset-0 -z-20 max-w-[900px] mx-auto ${
+        } h-3/4 w-screen absolute inset-x-0 top-[55%] transform -translate-y-1/2 -z-20 max-w-[900px] mx-auto ${
           showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
