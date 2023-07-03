@@ -59,9 +59,9 @@ const IndexView = () => {
   const [width] = useWindowSize();
   const mobileView = width < 1024;
 
-  useEffect(() => {
-    console.log("assets", assets);
-  }, [assets]);
+  // useEffect(() => {
+  //   console.log("assets", assets);
+  // }, [assets]);
 
   // handles auto scroll
   useEffect(() => {

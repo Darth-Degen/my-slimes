@@ -3,15 +3,15 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { Slime } from "src/types";
+import { Collection } from "src/types";
 import LoadAnimation from "../atoms/LoadAnimation";
 import { collection } from "src/constants";
 
 interface Props {
-  slimes: Slime[];
-  setSlimes: Dispatch<SetStateAction<Slime[]>>;
-  selectedNft: Slime | undefined;
-  setSelectedNft: Dispatch<SetStateAction<Slime | undefined>>;
+  slimes: Collection[];
+  setSlimes: Dispatch<SetStateAction<Collection[]>>;
+  selectedNft: Collection | undefined;
+  setSelectedNft: Dispatch<SetStateAction<Collection | undefined>>;
   setSelectedAssetType: Dispatch<
     SetStateAction<"full-res" | "pfp" | "mobile" | "desktop">
   >;
@@ -42,9 +42,10 @@ const SlimesGrid: FC<Props> = ({
             const nft = await metaplex.nfts().findByMint({ mintAddress });
             const uri = nft?.uri;
             await axios.get(uri).then((r) => {
-              // push the mintAddress to the json object
+              // push mintAddress, id, and color to the json object
               r.data.mintAddress = token.mintAddress;
               r.data.id = token.id;
+              r.data.color = token.color;
               jsonArr.push(r.data);
             });
           } catch (e: any) {
@@ -75,7 +76,7 @@ const SlimesGrid: FC<Props> = ({
                 key={slime.id}
               >
                 <Image
-                  src={slime.image}
+                  src={slime.image || "/images/exp/logo-dark.svg"}
                   width={250}
                   height={250}
                   alt={slime.name}

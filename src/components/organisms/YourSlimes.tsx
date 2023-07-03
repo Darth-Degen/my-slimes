@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
-import { Slime } from "src/types";
+import { Collection } from "src/types";
 import { Scrollbar, SlimesGrid, FullResolutionDownload } from "@components";
 
 interface Props {}
@@ -15,9 +15,9 @@ const YourSlimes: FC<Props> = () => {
   const { publicKey, disconnect } = useWallet();
   const { connection } = useConnection();
 
-  const [slimes, setSlimes] = useState<Slime[]>([]); // all slimes in collection
-  const [mySlimes, setMySlimes] = useState<Slime[]>([]); // all slimes in my wallet
-  const [selectedNft, setSelectedNft] = useState<Slime>(); // selected slime
+  const [slimes, setSlimes] = useState<Collection[]>([]); // all slimes in collection
+  const [mySlimes, setMySlimes] = useState<Collection[]>([]); // all slimes in my wallet
+  const [selectedNft, setSelectedNft] = useState<Collection>(); // selected slime
   const [selectedAssetType, setSelectedAssetType] = useState<
     "full-res" | "pfp" | "mobile" | "desktop"
   >("full-res"); // selected asset type of slime to display
@@ -29,7 +29,9 @@ const YourSlimes: FC<Props> = () => {
     if (!connection || !publicKey) {
       if (selectedNft) return;
       // default to scum's pfp (tokenUri)
-      const scum: Slime = slimes.filter((slime) => slime.name === "Scum")[0];
+      const scum: Collection = slimes.filter(
+        (slime) => slime.name === "Scum"
+      )[0];
       setSelectedNft(scum);
       setSelectedAssetType("full-res");
       return;
@@ -49,7 +51,9 @@ const YourSlimes: FC<Props> = () => {
       if (ownedSlimes.length === 0) {
         if (selectedNft) return;
         // default to scum's pfp (tokenUri)
-        const scum: Slime = slimes.filter((slime) => slime.name === "Scum")[0];
+        const scum: Collection = slimes.filter(
+          (slime) => slime.name === "Scum"
+        )[0];
         setSelectedNft(scum);
         setSelectedAssetType("full-res");
         return;
@@ -152,7 +156,7 @@ const YourSlimes: FC<Props> = () => {
               key={selectedNft?.name ?? "placeholder"}
             >
               <Image
-                src={featuredImage ?? selectedNft.image}
+                src={featuredImage || "/images/exp/logo-dark.svg"}
                 width={selectedAssetType === "mobile" ? 250 : 500}
                 height={500}
                 alt="featured slime asset"
@@ -235,7 +239,7 @@ const YourSlimes: FC<Props> = () => {
                       className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg"
                     >
                       <Image
-                        src={slime.image}
+                        src={slime.image || "/images/exp/logo-dark.svg"}
                         alt={slime.name}
                         height={100}
                         width={100}
@@ -277,7 +281,7 @@ const YourSlimes: FC<Props> = () => {
             {selectedNft && (
               <div className="w-full h-[100px] flex items-start gap-3 overflow-x-auto">
                 <Image
-                  src={selectedNft?.image}
+                  src={selectedNft?.image || "/images/exp/logo-dark.svg"}
                   height={100}
                   width={100}
                   alt={selectedNft?.name}
