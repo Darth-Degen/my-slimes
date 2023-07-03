@@ -205,6 +205,9 @@ const YourSlimes: FC<Props> = () => {
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-start lg:items-center gap-3 lg:gap-6 py-4 min-h-[60px]">
             <motion.button
+              initial={{ backgroundColor: selectedNft?.color }}
+              animate={{ backgroundColor: selectedNft?.color }}
+              transition={{ duration: 0.69, ease: "easeInOut" }}
               className={`text-sm w-full sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase`}
               style={{
                 backgroundColor: selectedNft?.color,
@@ -222,6 +225,9 @@ const YourSlimes: FC<Props> = () => {
               Exchange Art
             </motion.button>
             <motion.button
+              initial={{ backgroundColor: selectedNft?.color }}
+              animate={{ backgroundColor: selectedNft?.color }}
+              transition={{ duration: 0.69, ease: "easeInOut" }}
               className="text-sm w-full line-through sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
               style={{
                 backgroundColor: selectedNft?.color,
@@ -302,15 +308,23 @@ const YourSlimes: FC<Props> = () => {
               )}
 
               {!publicKey && (
-                <WalletMultiButton
-                  className="!border-none !rounded-lg !h-[60px] !w-[190px] !font-secondary !flex !items-center !justify-center !px-0 !text-sm !uppercase"
-                  style={{
-                    backgroundColor: selectedNft?.color,
-                    color: getContrastYIQ(),
-                  }}
+                <motion.div
+                  className="!h-[60px] !w-[190px] !border-none !rounded-lg !px-0"
+                  initial={{ backgroundColor: selectedNft?.color }}
+                  animate={{ backgroundColor: selectedNft?.color }}
+                  transition={{ duration: 0.69, ease: "easeInOut" }}
+                  {...smallClickAnimation}
                 >
-                  Connect Wallet
-                </WalletMultiButton>
+                  <WalletMultiButton
+                    className="!w-full !h-full !font-secondary !rounded-lg !bg-transparent !flex !items-center !justify-center !text-sm !uppercase"
+                    style={{
+                      backgroundColor: selectedNft?.color,
+                      color: getContrastYIQ(),
+                    }}
+                  >
+                    Connect Wallet
+                  </WalletMultiButton>
+                </motion.div>
               )}
             </div>
           </div>
