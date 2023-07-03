@@ -27,6 +27,7 @@ module.exports = {
         bold: ["pangram-bold"],
         neuebit: ["neuebit"],
         "neuebit-bold": ["neuebit-bold"],
+        pangramLight: ["pangram-extraLight"],
       },
       colors: {
         //main

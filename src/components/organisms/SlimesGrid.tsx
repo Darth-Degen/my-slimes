@@ -64,7 +64,7 @@ const SlimesGrid: FC<Props> = ({
   return (
     <div
       className="w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
-      xl:grid-cols-5 gap-6 py-10 px-10 xl:px-0 mb-40"
+      xl:grid-cols-5 gap-6 py-10 px-10 sm:px-[37px] xl:px-0 mb-40"
     >
       {slimes &&
         slimes
@@ -90,13 +90,13 @@ const SlimesGrid: FC<Props> = ({
                   }}
                   className={`${
                     selectedNft?.name === slime.name
-                      ? "border-black"
+                      ? "border-slimes-black"
                       : "border-transparent"
                   }
                   border-2 rounded-xl overflow-hidden cursor-pointer`}
                 />
-                <p className="text-black font-bold">{slime.name}</p>
-                <p className="text-black font-bold">{`#${
+                <p className="text-slimes-black font-secondary">{slime.name}</p>
+                <p className="text-slimes-black font-bold text-sm">{`No. ${
                   slime.id < 10 ? "00" : "0"
                 }${slime.id}`}</p>
               </div>

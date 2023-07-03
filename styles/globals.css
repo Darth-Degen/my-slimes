@@ -6,10 +6,13 @@
   font-family: mk-hell;
   src: url("../public/fonts/MK-HELL-Regular.ttf") format("truetype");
 }
-
 @font-face {
   font-family: pangram-regular;
   src: url("../public/fonts/Pangram-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: pangram-extraLight;
+  src: url("../public/fonts/Pangram-ExtraLight.ttf") format("truetype");
 }
 @font-face {
   font-family: pangram-black;

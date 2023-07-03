@@ -165,14 +165,13 @@ const YourSlimes: FC<Props> = () => {
     >
       {/* <Scrollbar> */}
       <div
-        className="w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
-        items-center lg:items-start justify-center px-4 xl:px-0 pt-8"
+        className="w-full sm:w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
+        items-center lg:items-start justify-center px-10 xl:px-0 pt-8"
       >
         {selectedNft && (
           <div className="flex flex-col items-center justify-center">
-            {/* TODO: manage loading states (both initial and in between asset type changes) */}
             <motion.div
-              className="relative flex items-center justify-center lg:h-[500px] lg:w-[500px] lg:mr-6"
+              className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
               {...enterAnimation}
               key={selectedNft?.name ?? "placeholder"}
             >
@@ -181,13 +180,13 @@ const YourSlimes: FC<Props> = () => {
                   featuredImage ||
                   `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
                 }
-                width={selectedAssetType === "mobile" ? 250 : 500}
-                height={500}
+                width={selectedAssetType === "mobile" ? 500 : 1000}
+                height={1000}
                 alt="featured slime asset"
                 className="rounded-xl overflow-hidden"
                 onLoad={() => setImageLoading(false)}
                 style={{
-                  transition: "opacity 0.5s",
+                  transition: "opacity 0.69s",
                   opacity: imageLoading ? 0 : 1,
                 }}
               />
@@ -199,7 +198,7 @@ const YourSlimes: FC<Props> = () => {
           <p className="hub-name uppercase text-slimes-black">
             {selectedNft?.name}
           </p>
-          <p className="font-secondary max-w-[300px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
+          <p className="font-secondary w-full xl:max-w-[392px] min-h-[40px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
             {selectedNft?.description}
           </p>
           {/* CTA buttons */}
@@ -228,12 +227,14 @@ const YourSlimes: FC<Props> = () => {
               initial={{ backgroundColor: selectedNft?.color }}
               animate={{ backgroundColor: selectedNft?.color }}
               transition={{ duration: 0.69, ease: "easeInOut" }}
-              className="text-sm w-full line-through sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase"
+              disabled={true}
+              className="text-sm w-full line-through sm:w-[190px] h-[60px] 
+              rounded-lg font-secondary text-slimes-black uppercase cursor-not-allowed"
               style={{
                 backgroundColor: selectedNft?.color,
                 color: getContrastYIQ(),
               }}
-              {...smallClickAnimation}
+              // {...smallClickAnimation}
               // onClick={() => {
               //   window.open(
               //     `https://exchange.art/single/${selectedNft?.mintAddress}`,

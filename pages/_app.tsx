@@ -25,15 +25,15 @@ require("@solana/wallet-adapter-react-ui/styles.css");
 
 const App = ({ Component, pageProps }: AppProps) => {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
-  const network = WalletAdapterNetwork.Devnet;
+  const network = WalletAdapterNetwork.Mainnet;
 
   // You can also provide a custom RPC endpoint.
   // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
-  // const endpoint =
-  //   "https://bold-cosmological-daylight.solana-mainnet.discover.quiknode.pro/d6b580eb3a983f95fece05b014d36fe7708d9dea/";
+  const endpoint =
+    "https://bold-cosmological-daylight.solana-mainnet.discover.quiknode.pro/d6b580eb3a983f95fece05b014d36fe7708d9dea/";
 
-  const endpoint = "https://api.devnet.solana.com";
+  // const endpoint = "https://api.devnet.solana.com";
 
   const wallets = useMemo(
     () => [
