@@ -1,22 +1,7 @@
 import { PageLayout, IndexView } from "@components";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { NextPage } from "next";
-import { useScrollDirection } from "@hooks";
-import { scrollToSection } from "@helpers";
-import { useMotionValueEvent, useScroll } from "framer-motion";
-import { ViewContext } from "@constants";
-
-interface Assets {
-  src: string;
-}
-const _assets: Assets[] = [
-  {
-    src: "/videos/loading-intro.mp4",
-  },
-  {
-    src: "/videos/loading-loop.mp4",
-  },
-];
+import { useWindowSize } from "@hooks";
 
 const pageIDs: string[] = [
   "landing",
@@ -30,16 +15,27 @@ const pageIDs: string[] = [
 const Home: NextPage = () => {
   //state
   const [assets, setAssets] = useState<boolean[]>([
-    // false, // [0] landing - video 1
-    // false, // [1] landing - video 2
-    // false, // [2] what - image 1
-    // false, // [3] what - image 2
-    // false, // [4] what - image 3
+    // false, // [0] landing - video intro
+    // false, // [1] landing - video loop
+    // false, // [2] landing - video intro mobile
+    // false, // [3] landing - video loop mobile
+    // false, // [4] what - image 1
+    // false, // [5] what - image 2
+    // false, // [6] what - image 3
+    // false, // [7] what - image 4
+    // false, // [8] what - image 5
   ]);
 
+  const [width] = useWindowSize();
+  const mobileView = width <= 1024;
+
+  // useEffect(() => {
+  //   console.log("assets", assets);
+  // }, [assets]);
+
   return (
-    <PageLayout headerType="scroll" assets={assets}>
-      <IndexView />
+    <PageLayout headerType={mobileView ? "absolute" : "scroll"} assets={assets}>
+      <IndexView setAssets={setAssets} />
     </PageLayout>
   );
 };
