@@ -167,7 +167,7 @@ const LandingView: FC<Props> = (props: Props) => {
                 ]);
             }}
             onEnded={() => setShowLoop(true)}
-            {...fastExitAnimation}
+            {...midExitAnimation}
           >
             <source src={_assets[2].src} type="video/mp4" />
           </motion.video>
