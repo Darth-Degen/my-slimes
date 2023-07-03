@@ -108,6 +108,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     if (isInView) setCurrentPage(id);
   }, [id, isInView, setCurrentPage]);
   useEffect(() => {
+    // console.log("isInView ", isInView);
     setIsInView(isInView);
   }, [isInView, setIsInView]);
 
@@ -132,7 +133,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     }
     editionContract.buyMultipleEditions(editionSaleData, amountToMint);
   };
-
+  // console.log("id ", id);
   return (
     <div
       className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
