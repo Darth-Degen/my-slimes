@@ -79,7 +79,7 @@ const LandingView: FC<Props> = (props: Props) => {
       loopRef.current.play();
       introRef.current.pause();
     } else {
-      console.log("wtf");
+      // console.log("wtf");
     }
     if (showLoop && loopRefMobile.current && introRefMobile.current) {
       loopRefMobile.current.play();
