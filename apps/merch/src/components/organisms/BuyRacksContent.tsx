@@ -120,9 +120,13 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   };
 
   const handleMint = (amountToMint: number) => {
-    if (!connected) setVisible(true);
+    if (!connected) {
+      setVisible(true);
+      return;
+    }
     if (!editionSaleData) {
       // TODO error toast
+      toast.error("Cannot get edition sale data.");
       console.error("Cannot get edition sale data.");
       return;
     }
