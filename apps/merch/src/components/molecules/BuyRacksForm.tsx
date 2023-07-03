@@ -19,7 +19,7 @@ const BuyRacksForm: FC<BuyRacksProps> = (props: BuyRacksProps) => {
   return (
     <div className="flex flex-col items-center lg:items-start gap-3 font-neuebit-bold -mt-14">
       <p className="text-ait-teal text-4xl md:text-5xl">QTY:</p>
-      <NumberInput supply={20} handleInput={handleInput} placeholder="20" />
+      <NumberInput supply={50} handleInput={handleInput} placeholder="50" />
       <p className="text-ait-teal text-4xl">TOTAL: {amountToMint * cost} SOL</p>
 
       <motion.button
