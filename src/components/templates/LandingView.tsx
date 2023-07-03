@@ -1,4 +1,9 @@
-import { ViewContext, exitAnimation, midExitAnimation } from "@constants";
+import {
+  ViewContext,
+  exitAnimation,
+  midExitAnimation,
+  fastExitAnimation,
+} from "@constants";
 import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
 import {
   Dispatch,
@@ -149,7 +154,7 @@ const LandingView: FC<Props> = (props: Props) => {
             key="intro-mobile"
             className={`${
               !mobileView && "hidden"
-            } md:pt-16 h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-10 max-w-[900px] mx-auto ${
+            } md:pt-16 h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-10 max-w-[600px] mx-auto ${
               !showLoop ? "visible" : "invisible"
             }`}
             style={{ objectFit: "cover" }}
@@ -162,7 +167,7 @@ const LandingView: FC<Props> = (props: Props) => {
                 ]);
             }}
             onEnded={() => setShowLoop(true)}
-            {...midExitAnimation}
+            {...fastExitAnimation}
           >
             <source src={_assets[2].src} type="video/mp4" />
           </motion.video>
@@ -176,7 +181,7 @@ const LandingView: FC<Props> = (props: Props) => {
         loop
         className={`${
           !mobileView && "hidden"
-        } h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-20 max-w-[900px] mx-auto ${
+        } h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-20 max-w-[600px] mx-auto ${
           showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
