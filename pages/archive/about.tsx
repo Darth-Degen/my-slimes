@@ -8,7 +8,7 @@ import {
 } from "@components";
 import { NextPage } from "next";
 import Image from "next/image";
-import bg from "public/images/slime-time.png";
+// import bg from "public/images/slime-time.png";
 import { useScroll, motion, AnimatePresence } from "framer-motion";
 import { useWindowSize } from "@hooks";
 
@@ -102,13 +102,13 @@ const About: NextPage = () => {
               }}
             >
               <motion.div className="absolute h-screen w-screen top-0 left-0 bg-custom-primary">
-                <Image
+                {/* <Image
                   src={bg.src}
                   fill={true}
                   alt="About"
                   objectFit="cover"
                   onLoadingComplete={() => setLoadingComplete(true)}
-                />
+                /> */}
               </motion.div>
             </motion.aside>
             {/* scroll arrow */}
