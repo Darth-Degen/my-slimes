@@ -34,11 +34,10 @@ const NumberInput: FC<Props> = (props: Props) => {
         }`}
         onKeyPress={(e) => onKeyPress(e)}
         onInput={(e) => onInput(e)}
-        placeholder="23"
         type="number"
         min={1}
         max={supply}
-        disabled={componentProps.disabled}
+        {...componentProps}
       />
     </div>
   );

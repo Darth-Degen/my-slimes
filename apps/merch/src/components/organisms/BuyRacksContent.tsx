@@ -28,6 +28,7 @@ import { EditionsContractService } from "src/lib/exchange-art";
 import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
 import { COLLECTION_API_URL } from "src/constants";
 import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
+import toast from "react-hot-toast";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -90,10 +91,12 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           );
         } else {
           // TODO error toast
+          toast.error("Error fetching edition sale data. Data is wrong");
           console.error("Error fetching edition sale data. Data is wrong");
         }
       } catch (e) {
         // TODO error toast
+        toast.error("Error fetching edition sale data");
         console.error("Error fetching edition sale data.: ", e);
       }
     })();
@@ -117,9 +120,13 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   };
 
   const handleMint = (amountToMint: number) => {
-    if (!connected) setVisible(true);
+    if (!connected) {
+      setVisible(true);
+      return;
+    }
     if (!editionSaleData) {
       // TODO error toast
+      toast.error("Cannot get edition sale data.");
       console.error("Cannot get edition sale data.");
       return;
     }
