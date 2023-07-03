@@ -1,4 +1,4 @@
-import { ViewContext, exitAnimation } from "@constants";
+import { ViewContext, exitAnimation, midExitAnimation } from "@constants";
 import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
 import {
   Dispatch,
@@ -86,7 +86,7 @@ const LandingView: FC<Props> = (props: Props) => {
     <motion.div
       id={id}
       key="landing"
-      className={`relative w-full ${mobileView ? "h-[92vh]" : "h-screen"} 
+      className={`relative w-full ${mobileView ? "h-[82vh]" : "h-screen"} 
       flex flex-col items-center justify-end`}
       {...exitAnimation}
       ref={scrollRef}
@@ -139,37 +139,40 @@ const LandingView: FC<Props> = (props: Props) => {
       </motion.video>
 
       {/* mobile */}
-      <motion.video
-        ref={introRefMobile}
-        muted
-        autoPlay
-        playsInline
-        key="intro mobile"
-        className={`${
-          !mobileView && "hidden"
-        } md:pt-16 h-3/4 w-screen absolute inset-x-0 top-1/2 transform -translate-y-1/2 -z-10 max-w-[900px] mx-auto ${
-          !showLoop ? "visible" : "invisible"
-        }`}
-        style={{ objectFit: "cover" }}
-        onLoadedData={() => {
-          setAssets &&
-            setAssets((prevState) => [
-              ...prevState.slice(0, 1),
-              true,
-              ...prevState.slice(3),
-            ]);
-        }}
-        onEnded={() => setShowLoop(true)}
-        {...exitAnimation}
-      >
-        <source src={_assets[2].src} type="video/mp4" />
-      </motion.video>
-
+      <AnimatePresence mode="wait">
+        {!showLoop && (
+          <motion.video
+            ref={introRefMobile}
+            muted
+            autoPlay
+            playsInline
+            key="intro-mobile"
+            className={`${
+              !mobileView && "hidden"
+            } md:pt-16 h-3/4 w-screen absolute inset-x-0 top-[55%] transform -translate-y-1/2 -z-10 max-w-[900px] mx-auto ${
+              !showLoop ? "visible" : "invisible"
+            }`}
+            style={{ objectFit: "cover" }}
+            onLoadedData={() => {
+              setAssets &&
+                setAssets((prevState) => [
+                  ...prevState.slice(0, 1),
+                  true,
+                  ...prevState.slice(3),
+                ]);
+            }}
+            onEnded={() => setShowLoop(true)}
+            {...midExitAnimation}
+          >
+            <source src={_assets[2].src} type="video/mp4" />
+          </motion.video>
+        )}
+      </AnimatePresence>
       <motion.video
         ref={loopRefMobile}
         muted
         playsInline
-        key="loop mobile"
+        key="loop-mobile"
         loop
         className={`${
           !mobileView && "hidden"
@@ -185,6 +188,7 @@ const LandingView: FC<Props> = (props: Props) => {
               ...prevState.slice(4),
             ]);
         }}
+        // {...exitAnimation}
       >
         <source src={_assets[3].src} type="video/mp4" />
       </motion.video>

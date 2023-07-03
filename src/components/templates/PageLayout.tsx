@@ -115,7 +115,7 @@ const PageLayout: FC<Props> = (props: Props) => {
           />
         )}
         {/* modals */}
-        {assets && <SplashScreen assets={assets} />}
+        {/* {assets && <SplashScreen assets={assets} />} */}
         <AnimatePresence mode="wait">
           {galleryModalId !== -1 && (
             <GalleryModal
