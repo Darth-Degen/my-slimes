@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { collection, enterAnimation, smallClickAnimation } from "@constants";
+import { enterAnimation, smallClickAnimation } from "@constants";
 import { motion } from "framer-motion";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -42,11 +42,17 @@ const YourSlimes: FC<Props> = () => {
       if (!tokens || typeof tokens === "string") return;
 
       // check collection for a mint address match
-      const ownedSlimes = tokens.filter((token) => {
-        return collection.some(
-          (slime) => slime.mintAddress === token.address.toBase58()
-        );
+      const ownedSlimes = slimes.filter((slime) => {
+        return tokens.some((token) => {
+          if (token.address.toBase58()) {
+            //@ts-ignore
+            return slime.mintAddress === token.mintAddress.toBase58();
+          }
+          return false;
+        });
       });
+
+      console.log("owned slimes", ownedSlimes);
 
       if (ownedSlimes.length === 0) {
         if (selectedNft) return;
@@ -59,19 +65,14 @@ const YourSlimes: FC<Props> = () => {
         return;
       }
       // must have slimes, use slimes variable to set ownedSlimes
-      const formattedSlimes = slimes.filter((slime) => {
-        return ownedSlimes.some(
-          (ownedSlime) => ownedSlime.address.toBase58() === slime.mintAddress
-        );
-      });
-      // TODO: test that this works
-      setMySlimes(formattedSlimes);
-      // TODO: probs default to [0] index of owned slimes
+      setMySlimes(ownedSlimes);
+      // default to [0] index of owned slimes
+      setSelectedNft(ownedSlimes[0]);
     } catch (e: any) {
       console.error(e.message);
       toast.error(`Error fetching Slimes: ${e.message}`);
     }
-  }, [connection, publicKey, slimes]);
+  }, [connection, publicKey, slimes, selectedNft]);
 
   function getContrastYIQ() {
     if (selectedNft?.color === undefined) return "black";
@@ -270,12 +271,21 @@ const YourSlimes: FC<Props> = () => {
             </div>
             {/* owned slimes area */}
             <div className={`flex items-start gap-3`}>
-              {mySlimes.length > 0 &&
+              {publicKey &&
+                mySlimes.length > 0 &&
                 mySlimes.map((slime, index) => {
                   return (
                     <div
                       key={index}
-                      className="relative w-[100px] h-[100px] overflow-hidden rounded-lg border border-slimes-border shadow-lg"
+                      className={`${
+                        mySlimes[index] === selectedNft
+                          ? "border-slimes-black"
+                          : "border-transparent"
+                      } 
+                      relative w-[100px] h-[100px] overflow-hidden rounded-lg border cursor-pointer`}
+                      onClick={() => {
+                        setSelectedNft(mySlimes[index]);
+                      }}
                     >
                       <Image
                         src={
@@ -285,7 +295,7 @@ const YourSlimes: FC<Props> = () => {
                         alt={slime.name}
                         height={100}
                         width={100}
-                        className="rounded-lg shadow-lg"
+                        className="rounded-lg"
                       />
                     </div>
                   );
