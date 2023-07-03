@@ -149,7 +149,7 @@ const LandingView: FC<Props> = (props: Props) => {
             key="intro-mobile"
             className={`${
               !mobileView && "hidden"
-            } md:pt-16 h-3/4 w-screen absolute inset-x-0 top-[55%] transform -translate-y-1/2 -z-10 max-w-[900px] mx-auto ${
+            } md:pt-16 h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-10 max-w-[900px] mx-auto ${
               !showLoop ? "visible" : "invisible"
             }`}
             style={{ objectFit: "cover" }}
@@ -176,7 +176,7 @@ const LandingView: FC<Props> = (props: Props) => {
         loop
         className={`${
           !mobileView && "hidden"
-        } h-3/4 w-screen absolute inset-x-0 top-[55%] transform -translate-y-1/2 -z-20 max-w-[900px] mx-auto ${
+        } h-3/4 w-screen absolute overflow-visible inset-x-0 top-[55%] transform -translate-y-1/2 -z-20 max-w-[900px] mx-auto ${
           showLoop ? "visible" : "invisible"
         }`}
         style={{ objectFit: "cover" }}
