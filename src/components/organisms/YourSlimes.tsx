@@ -72,9 +72,9 @@ const YourSlimes: FC<Props> = () => {
         setSelectedAssetType("full-res");
         return;
       } else {
-        if (selectedNft) return;
         // must have slimes, use slimes variable to set ownedSlimes
         setMySlimes(ownedSlimes);
+        if (selectedNft) return;
         // default to [0] index of owned slimes
         setSelectedNft(ownedSlimes[0]);
       }
