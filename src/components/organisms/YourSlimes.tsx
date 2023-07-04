@@ -137,33 +137,130 @@ const YourSlimes: FC<Props> = () => {
         className="w-full sm:w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
         items-center lg:items-start justify-center px-10 xl:px-0 pt-8"
       >
-        {selectedNft && (
+        {/* TODO: might need to axe */}
+        {selectedNft && featuredImage && (
           <div className="flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
-              <motion.div
-                className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
-                {...enterAnimation}
-                key={selectedNft?.name ?? "placeholder"}
-              >
-                {featuredImage && (
+              {selectedAssetType === "full-res" && (
+                <motion.div
+                  className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                  key={0}
+                  {...enterAnimation}
+                >
                   <Image
                     src={
                       isDark
                         ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
                         : featuredImage
                     }
-                    width={selectedAssetType === "mobile" ? 250 : 500}
+                    width={500}
                     height={500}
                     alt="featured slime asset"
                     className="rounded-xl overflow-hidden"
                     onLoadingComplete={() => setImageLoading(false)}
-                    style={{
-                      transition: "opacity 0.69s",
-                      opacity: imageLoading ? 0 : 1,
-                    }}
+                    // style={{
+                    //   transition: "opacity 0.69s",
+                    //   opacity: imageLoading ? 0 : 1,
+                    // }}
                   />
-                )}
-              </motion.div>
+                </motion.div>
+              )}
+              {selectedAssetType === "desktop" && (
+                <motion.div
+                  className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                  key={1}
+                  {...enterAnimation}
+                >
+                  <Image
+                    src={
+                      isDark
+                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/desktop-display/dark-kai.png`
+                        : featuredImage
+                    }
+                    width={500}
+                    height={500}
+                    alt="featured slime asset"
+                    className="rounded-xl overflow-hidden"
+                    onLoadingComplete={() => setImageLoading(false)}
+                    // style={{
+                    //   transition: "opacity 0.69s",
+                    //   opacity: imageLoading ? 0 : 1,
+                    // }}
+                  />
+                </motion.div>
+              )}
+              {selectedAssetType === "mobile" && (
+                <motion.div
+                  className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                  key={2}
+                  {...enterAnimation}
+                >
+                  <Image
+                    src={
+                      isDark
+                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/mobile-display/dark-kai.png`
+                        : featuredImage
+                    }
+                    width={300}
+                    height={500}
+                    alt="featured slime asset"
+                    className="rounded-xl overflow-hidden"
+                    onLoadingComplete={() => setImageLoading(false)}
+                    // style={{
+                    //   transition: "opacity 0.69s",
+                    //   opacity: imageLoading ? 0 : 1,
+                    // }}
+                  />
+                </motion.div>
+              )}
+              {selectedAssetType === "banner" && (
+                <motion.div
+                  className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                  key={2}
+                  {...enterAnimation}
+                >
+                  <Image
+                    src={
+                      isDark
+                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/banner/dark-kai.png`
+                        : featuredImage
+                    }
+                    width={500}
+                    height={250}
+                    alt="featured slime asset"
+                    className="rounded-xl overflow-hidden"
+                    onLoadingComplete={() => setImageLoading(false)}
+                    // style={{
+                    //   transition: "opacity 0.69s",
+                    //   opacity: imageLoading ? 0 : 1,
+                    // }}
+                  />
+                </motion.div>
+              )}
+              {selectedAssetType === "pfp" && (
+                <motion.div
+                  className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                  key={3}
+                  {...enterAnimation}
+                >
+                  <Image
+                    src={
+                      isDark
+                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/dark-kai.png`
+                        : featuredImage
+                    }
+                    width={500}
+                    height={500}
+                    alt="featured slime asset"
+                    className="rounded-xl overflow-hidden"
+                    onLoadingComplete={() => setImageLoading(false)}
+                    // style={{
+                    //   transition: "opacity 0.69s",
+                    //   opacity: imageLoading ? 0 : 1,
+                    // }}
+                  />
+                </motion.div>
+              )}
             </AnimatePresence>
             <FullResolutionDownload imageUrl={handleDownload()} />
           </div>

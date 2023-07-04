@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import Image from "next/image";
 import { Collection } from "src/types";
-import { set } from "@coral-xyz/anchor/dist/cjs/utils/features";
 
 interface Props {
   selectedNft: Collection;

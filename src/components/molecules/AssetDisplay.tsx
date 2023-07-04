@@ -9,7 +9,7 @@ interface Props {
   collection: Collection;
   key: string;
   isExtra?: boolean;
-  handleClick: Dispatch<SetStateAction<string>>;
+  handleClick?: Dispatch<SetStateAction<string>>;
 }
 
 const AssetDisplay: FC<Props> = (props: Props) => {
@@ -28,7 +28,7 @@ const AssetDisplay: FC<Props> = (props: Props) => {
       <motion.div
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        onClick={() => handleClick(src)}
+        onClick={() => (handleClick ? handleClick(src) : null)}
       >
         <Image
           src={src}
