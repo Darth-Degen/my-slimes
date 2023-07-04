@@ -50,6 +50,7 @@ import {
   MINT_SIZE,
 } from '@solana/spl-token';
 import { WalletContextState } from "@solana/wallet-adapter-react";
+import toast from "react-hot-toast";
 
 const COMMITMENT = "finalized";
 const CONNECTION_ENV = "devnet"; // 'mainnet' | 'devnet'
@@ -136,6 +137,8 @@ export class EditionsContractService {
     amountToMint?: number
   ): Promise<Keypair[] | Error> {
 
+    // const toastId = toast.loading('Minting...');
+
     try {
       const lookupTableAccount = await this.connection
         .getAddressLookupTable(new PublicKey(editionSaleContract.keys.addressLookupTable))
@@ -162,30 +165,41 @@ export class EditionsContractService {
       console.log('signedTransactionsv0: ', signedTransactionsv0);
 
       // Send Versioned Treansactions to network
-      const mintingTxSignatures: TransactionSignature[] = [];
-      await signedTransactionsv0.reduce(async (previous, current, index) => {
-        try {
-          await previous;
-          const mintingTxSignature = await this.sendSignedTransactions(current, index);
-          mintingTxSignatures.push(mintingTxSignature);
-        } catch (e) {
-          console.error(e);
-          console.log(`Error minting tx ${index}, moving to next one`);
-        }
-      }, Promise.resolve());
+      // const mintingTxSignatures: TransactionSignature[] = [];
+      // await signedTransactionsv0.reduce(async (previous, current, index) => {
+      //   try {
+      //     await previous;
+      //     const mintingTxSignature = await this.sendSignedTransactions(current, index);
+      //     mintingTxSignatures.push(mintingTxSignature);
+      //   } catch (e) {
+      //     console.error(e);
+      //     console.log(`Error minting tx ${index}, moving to next one`);
+      //   }
+      // }, Promise.resolve());
+
+      const mintingTxSignatures = await Promise.all(
+        signedTransactionsv0.map(async (tx, index) => {
+          try {
+            const mintingTxSignature = await this.sendSignedTransactions(tx, index);
+            return mintingTxSignature;
+          } catch (e) {
+            console.error(e);
+            console.log(`Error minting tx ${index}, moving to next one`);
+          }
+        }));
 
       // Verify all transactions
       await mintingTxSignatures.reduce(async (prev, curr) => {
         await prev;
-        await this.verifyTransaction(curr);
+        if (curr) await this.verifyTransaction(curr);
       }, Promise.resolve());
 
-      // TODO use toast
-      // toast('All done 🎉');
+      toast.success('All done 🎉');
       console.log('All done 🎉');
 
       return editionMints.map(edition => edition.editionMintKey);
     } catch (e) {
+      toast.error('Error minting');
       console.error("Error minting: ", e)
       return new Error("Error minting.")
     }
@@ -226,7 +240,9 @@ export class EditionsContractService {
     signedTransactionv0: VersionedTransaction,
     transactionNumber: number
   ): Promise<string> {
-    console.log(`Mint #${transactionNumber} minting...`);
+
+    const toastId = toast.loading(`Rack #${transactionNumber + 1}  minting...`);
+    console.log(`Rack #${transactionNumber} minting...`);
 
     const transactionSignature = await this.connection.sendRawTransaction(
       signedTransactionv0.serialize(),
@@ -250,30 +266,28 @@ export class EditionsContractService {
         )
       ).value;
     } catch (error) {
-
-      // TODO use toast service
       // -----
       // this.uinService.showError({
       //   message: 'Could not confirm transaction. Please try again.',
       //   title: `Transaction failed`,
       // });
 
-      console.error(`Mint #${transactionNumber} failed.`);
+      toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
+      console.error(`Rack #${transactionNumber} failed.`);
     }
 
     if (status?.err) {
-
-      // TODO toast
-      // ------
       // const errors = await this.getErrorForTransaction(connection, transactionSignature);
       // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
 
       // throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
-      console.error(`Mint #${transactionNumber} failed.`);
+      toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
+      console.error(`Rack #${transactionNumber} failed.`);
     }
 
     // console.log('versioned transactionSignature >> ', transactionSignature);
-    console.log(`Mint #${transactionNumber} success.`);
+    toast.success(`Rack #${transactionNumber + 1} success.`, { id: toastId })
+    console.log(`Rack #${transactionNumber} success.`);
     return transactionSignature;
   }
 

@@ -61,8 +61,8 @@ const LandingView: FC<Props> = (props: Props) => {
 
   //auto scroll
   useEffect(() => {
-    if (isChildInView) setCurrentPage(id);
-  }, [id, isChildInView, setCurrentPage]);
+    if (isInView) setCurrentPage(id);
+  }, [id, isInView, setCurrentPage]);
 
   // useEffect(() => {
   //   if (mobileView) {
@@ -79,7 +79,7 @@ const LandingView: FC<Props> = (props: Props) => {
       loopRef.current.play();
       introRef.current.pause();
     } else {
-      console.log("wtf");
+      // console.log("wtf");
     }
     if (showLoop && loopRefMobile.current && introRefMobile.current) {
       loopRefMobile.current.play();
