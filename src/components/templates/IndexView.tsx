@@ -54,8 +54,8 @@ const IndexView: FC<Props> = ({ setAssets }) => {
     if (
       // currentPage === pageIDs[0] ||
       // currentPage === pageIDs[1] ||
-      currentPage === pageIDs[2] &&
-      !didMenuClick
+      currentPage === pageIDs[2] ||
+      (currentPage === pageIDs[3] && !didMenuClick)
     )
       scrollToSection(currentPage);
   }, [currentPage, didMenuClick]);

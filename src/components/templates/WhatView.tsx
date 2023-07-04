@@ -99,7 +99,6 @@ const WhatView: FC<Props> = (props: Props) => {
   const animateRef = useRef<number>(0);
   useEffect(() => {
     if (isInView) animateRef.current += 1;
-    console.log("animateRef.current ", animateRef.current);
   }, [isInView]);
 
   return (

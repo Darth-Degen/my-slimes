@@ -152,15 +152,26 @@ export const slideUp = (
   animate: { y: animate ? 0 : distance, opacity: animate ? 1 : 0 },
   transition: { duration: duration, ease: "easeInOut", delay: delay },
 });
-export const slideLeft = (animate: boolean) => ({
-  initial: { x: 300, opacity: 0 },
-  animate: { x: animate ? 0 : 300, opacity: animate ? 1 : 0 },
-  transition: { duration: 1.5, ease: "easeInOut" },
+export const slideLeft = (
+  animate: boolean,
+  distance: number = 300,
+  duration: number = 1,
+  delay: number = 0, 
+) => ({
+  initial: { x: distance, opacity: 0 },
+  animate: { x: animate ? 0 : distance, opacity: animate ? 1 : 0 },
+  transition: { duration: duration, ease: "easeInOut", delay: delay },
 });
-export const slideRight = (animate: boolean) => ({
-  initial: { x: -300, opacity: 0 },
-  animate: { x: animate ? 0 : -300, opacity: animate ? 1 : 0 },
-  transition: { duration: 1.5, ease: "easeInOut" },
+export const slideRight = (
+  animate: boolean,
+  distance: number = -300,
+  duration: number = 1,
+  delay: number = 0, 
+  startOpacity: number = 1
+) => ({
+  initial: { x: distance, opacity: startOpacity },
+  animate: { x: animate ? 0 : distance, opacity: animate ? 1 : 0 },
+  transition: { duration: duration, ease: "easeInOut", delay: delay },
 });
 
 export const imageLoadAnimation = (animate: boolean) => ({
