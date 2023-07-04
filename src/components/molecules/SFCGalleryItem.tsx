@@ -5,6 +5,7 @@ import {
   motion,
   useInView,
   MotionValue,
+  Variant,
 } from "framer-motion";
 import {
   Dispatch,
@@ -30,6 +31,7 @@ interface GiProps {
   scrollDirection: string;
   isFixed?: boolean;
   // setIsFixed?: Dispatch<SetStateAction<boolean>>;
+  variant: Variant;
 }
 
 enum DimensionType {
@@ -48,6 +50,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     // startY,
     isFixed = false,
     // setIsFixed,
+    variant,
   } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
@@ -106,31 +109,37 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
 
   return (
     <motion.div
-      onClick={() => setSFCModalId(item.id)}
-      // onMouseEnter={() => setDidHover(true)}
-      // onMouseLeave={() => setDidHover(false)}
-      ref={childRef}
-      className={`relative rounded-xl 
+      key={index}
+      //@ts-ignore
+      variants={variant}
+    >
+      <motion.div
+        onClick={() => setSFCModalId(item.id)}
+        // onMouseEnter={() => setDidHover(true)}
+        // onMouseLeave={() => setDidHover(false)}
+        ref={childRef}
+        className={`relative rounded-xl 
         ${width(DimensionType.String)} 
         ${height(DimensionType.String)} 
         ${isFixed ? "" : "cursor-pointer"}
       `}
-      // style={{ translateY: didLoad ? translateY : 0 }}
-      whileHover={{
-        width: hoverWidth(),
-      }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-    >
-      <Image
-        src={src}
-        alt={item.name}
-        fill
-        style={{ objectFit: "cover" }}
-        className="rounded-xl"
-        // imageClass="rounded-xl"
-        onLoadingComplete={() => setDidLoad(true)}
-        priority
-      />
+        // style={{ translateY: didLoad ? translateY : 0 }}
+        whileHover={{
+          width: hoverWidth(),
+        }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
+        <Image
+          src={src}
+          alt={item.name}
+          fill
+          style={{ objectFit: "cover" }}
+          className="rounded-xl"
+          // imageClass="rounded-xl"
+          onLoadingComplete={() => setDidLoad(true)}
+          priority
+        />
+      </motion.div>
     </motion.div>
   );
 };

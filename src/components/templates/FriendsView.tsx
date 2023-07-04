@@ -25,13 +25,13 @@ const FriendsView: FC<Props> = (props: Props) => {
       ref={parentRef}
     >
       {/* <div className="relative pb-20"> */}
-      {isInView && (
+      {/* {isInView && (
         <VideoScroll
           src={`${process.env.NEXT_PUBLIC_CDN_URL}/videos/handshake.mp4`}
           parentRef={parentRef}
           paddingBottom={700}
         />
-      )}
+      )} */}
       {/* </div> */}
       {/* <div className="relative pb-20"> */}
       <SFCGallery />

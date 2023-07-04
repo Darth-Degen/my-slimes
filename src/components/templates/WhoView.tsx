@@ -99,7 +99,7 @@ const WhoView: FC<Props> = (props: Props) => {
                   key="we-eatin"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 1, ease: "easeInOut", delay: 1.5 }}
+                  transition={{ duration: 1, ease: "easeInOut", delay: 1.25 }}
                 >
                   <div className="w-1/3 uppercase">the whole squad here</div>
                   <div className="w-1/3 uppercase flex justify-center">and</div>
