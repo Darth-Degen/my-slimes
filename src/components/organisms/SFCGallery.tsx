@@ -136,6 +136,20 @@ const SFCGallery: FC<Props> = (props: Props) => {
       },
     },
   };
+  const imageVariants = {
+    hidden: {
+      opacity: animateRef.current < 2 ? 0 : 1,
+      // opacity: 0,
+      // x: -150,
+    }, // Starting position outside the container
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5, // Duration of the animation
+      },
+    },
+  };
 
   return (
     <motion.div
@@ -216,7 +230,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
                   index={index}
                   scrollDirection={scrollDirection}
                   //@ts-ignore
-                  variant={letterVariants}
+                  variant={imageVariants}
                 />
               ))}
             </motion.div>
