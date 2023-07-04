@@ -36,6 +36,7 @@ const MobileLink: FC<Props> = ({
             ...prevState.slice(index + 1),
           ])
         }
+        className="rounded-xl"
       />
     </motion.a>
   );
