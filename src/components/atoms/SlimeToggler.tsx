@@ -14,7 +14,7 @@ const ThemeToggler: FC<Props> = ({ selectedNft, isDark, setIsDark }) => {
   if (selectedNft !== "Kai" || selectedNft === undefined) return null;
 
   return (
-    <div className="h-full flex items-center justify-center">
+    <div className="toggle h-full flex items-center justify-center">
       <input
         type="checkbox"
         id="darkmode-toggle"
