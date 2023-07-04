@@ -15,7 +15,13 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { fastExitAnimation, sfc, slideUp, opacity } from "@constants";
+import {
+  fastExitAnimation,
+  sfc,
+  slideUp,
+  opacity,
+  midExitAnimation,
+} from "@constants";
 import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface Props {}
@@ -117,7 +123,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
   };
   const galleryVariants = {
     hidden: {
-      opacity: animateRef.current < 1 ? 0 : 1,
+      opacity: animateRef.current < 2 ? 0 : 1,
       // opacity: 0,
       // x: -150
     },
@@ -132,11 +138,11 @@ const SFCGallery: FC<Props> = (props: Props) => {
   };
 
   return (
-    <div
+    <motion.div
       className="sticky top-[8%] w-full h-screen flex flex-col items-center gap-0"
       ref={ref}
-      id="friends"
       key="sfcgall"
+      {...midExitAnimation}
     >
       <motion.div className="flex justify-center items-center">
         <div className="flex flex-col ">
@@ -224,7 +230,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
         />
       </motion.div>
       <div className="pb-[2400px] 3xl:pb-[900px]" />
-    </div>
+    </motion.div>
   );
 };
 

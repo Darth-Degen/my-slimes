@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { VideoScroll, SFCGallery } from "@components";
-import {} from "@constants";
+import { midExitAnimation } from "@constants";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 
 interface Props {
@@ -31,7 +31,7 @@ const FriendsView: FC<Props> = (props: Props) => {
   return (
     <div
       className="relative w-full min-h-screen flex flex-col items-center pb-20"
-      id={`friends-parent`}
+      id={`friends`}
       ref={parentRef}
     >
       {/* <div className="relative pb-20"> */}
@@ -53,6 +53,7 @@ const FriendsView: FC<Props> = (props: Props) => {
               muted
               style={{ objectFit: "cover" }}
               onEnded={() => setVideoEnded(true)}
+              {...midExitAnimation}
             >
               <source
                 src={`${process.env.NEXT_PUBLIC_CDN_URL}/videos/handshake.mp4`}

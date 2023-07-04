@@ -70,7 +70,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
 
   return (
     <>
-      <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} />
+      {/* <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} /> */}
       <LandingView
         setAssets={setAssets}
         setIsInView={setIsLandingInView}
@@ -80,11 +80,6 @@ const IndexView: FC<Props> = ({ setAssets }) => {
         setShowLoop={setShowLoop}
       />
       <div className="w-full h-full hidden lg:block">
-        <FriendsView
-          setAssets={setAssets}
-          id={pageIDs[4]}
-          setCurrentPage={setCurrentPage}
-        />
         <BuyRacksView
           setIsInView={setIsRacksInView}
           id={pageIDs[1]}
