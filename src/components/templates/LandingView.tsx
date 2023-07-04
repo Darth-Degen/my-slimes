@@ -27,10 +27,10 @@ const _assets: Assets[] = [
     src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/desktop_loop.mp4`,
   },
   {
-    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/mobile_intro.MP4`,
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/mobile_intro.mp4`,
   },
   {
-    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/mobile_loop.MP4`,
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/mobile_loop.mp4`,
   },
 ];
 
