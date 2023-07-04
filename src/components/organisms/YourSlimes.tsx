@@ -8,6 +8,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
 import { Collection } from "src/types";
 import {
+  AssetLibrary,
   Scrollbar,
   SlimesGrid,
   FullResolutionDownload,
@@ -29,16 +30,7 @@ const YourSlimes: FC<Props> = () => {
   const [featuredImage, setFeaturedImage] = useState<string>(); // url of current featured image
   const [imageLoading, setImageLoading] = useState<boolean>(false); // loading state of featured image
   const [isDark, setIsDark] = useState(false);
-
-  const darkKai: Collection = {
-    id: 23,
-    name: "Kai",
-    tag: "dark-kai",
-    color: "#242424",
-    image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`,
-    mintAddress: "GhfmfuTG4zqtf1bPuJA655jgM1DSaMQyhq6wttsc4m29",
-    topValue: 10,
-  };
+  const [buttonColor, setButtonColor] = useState<string>("black");
 
   // fetch users nfts
   const getNfts = useCallback(async () => {
@@ -113,51 +105,27 @@ const YourSlimes: FC<Props> = () => {
         return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/mobile/${imageName}.png`;
       case "pfp":
         return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${imageName}.png`;
+      case "banner":
+        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/banner/${imageName}.png`;
       default:
         return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`;
     }
   };
-
-  // manage featured image path based on selected asset type
-  useEffect(() => {
-    setImageLoading(true);
-    var imageName = `${isDark ? "dark-" : ""}${selectedNft?.name
-      .replaceAll(" ", "-")
-      .toLowerCase()}`;
-    if (selectedNft) {
-      switch (selectedAssetType) {
-        case "full-res":
-          setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`
-          );
-          break;
-        case "desktop":
-          setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/desktop-display/${imageName}.png`
-          );
-          break;
-        case "mobile":
-          setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/mobile-display/${imageName}.png`
-          );
-          break;
-        case "pfp":
-          setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${imageName}.png`
-          );
-          break;
-        default:
-          `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`;
-          break;
-      }
-    }
-  }, [selectedNft, selectedAssetType, isDark]);
 
   useEffect(() => {
     if (slimes) {
       getNfts();
     }
   }, [getNfts, slimes]);
+
+  useEffect(() => {
+    if (!selectedNft) return;
+    if (isDark) {
+      setButtonColor("#242424");
+    } else {
+      setButtonColor(selectedNft.color);
+    }
+  }, [isDark, selectedNft]);
 
   return (
     <motion.div
@@ -188,7 +156,7 @@ const YourSlimes: FC<Props> = () => {
                     height={500}
                     alt="featured slime asset"
                     className="rounded-xl overflow-hidden"
-                    onLoad={() => setImageLoading(false)}
+                    onLoadingComplete={() => setImageLoading(false)}
                     style={{
                       transition: "opacity 0.69s",
                       opacity: imageLoading ? 0 : 1,
@@ -218,12 +186,12 @@ const YourSlimes: FC<Props> = () => {
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-start lg:items-center gap-3 lg:gap-6 py-4 min-h-[60px]">
             <motion.button
-              initial={{ backgroundColor: selectedNft?.color }}
-              animate={{ backgroundColor: selectedNft?.color }}
+              initial={{ backgroundColor: buttonColor }}
+              animate={{ backgroundColor: buttonColor }}
               transition={{ duration: 0.69, ease: "easeInOut" }}
               className={`text-sm w-full sm:w-[190px] h-[60px] rounded-lg font-secondary text-slimes-black uppercase`}
               style={{
-                backgroundColor: selectedNft?.color,
+                backgroundColor: buttonColor,
                 color: getContrastYIQ(),
               }}
               {...smallClickAnimation}
@@ -238,14 +206,14 @@ const YourSlimes: FC<Props> = () => {
               Exchange Art
             </motion.button>
             <motion.button
-              initial={{ backgroundColor: selectedNft?.color }}
-              animate={{ backgroundColor: selectedNft?.color }}
+              initial={{ backgroundColor: buttonColor }}
+              animate={{ backgroundColor: buttonColor }}
               transition={{ duration: 0.69, ease: "easeInOut" }}
               disabled={true}
               className="text-sm w-full line-through sm:w-[190px] h-[60px] 
               rounded-lg font-secondary text-slimes-black uppercase cursor-not-allowed"
               style={{
-                backgroundColor: selectedNft?.color,
+                backgroundColor: buttonColor,
                 color: getContrastYIQ(),
               }}
               // {...smallClickAnimation}
@@ -334,15 +302,15 @@ const YourSlimes: FC<Props> = () => {
               {!publicKey && (
                 <motion.div
                   className="!h-[60px] !w-[190px] !border-none !rounded-lg !px-0"
-                  initial={{ backgroundColor: selectedNft?.color }}
-                  animate={{ backgroundColor: selectedNft?.color }}
+                  initial={{ backgroundColor: buttonColor }}
+                  animate={{ backgroundColor: buttonColor }}
                   transition={{ duration: 0.69, ease: "easeInOut" }}
                   {...smallClickAnimation}
                 >
                   <WalletMultiButton
                     className="!w-full !h-full !font-secondary !rounded-lg !bg-transparent !flex !items-center !justify-center !text-sm !uppercase"
                     style={{
-                      backgroundColor: selectedNft?.color,
+                      backgroundColor: buttonColor,
                       color: getContrastYIQ(),
                     }}
                   >
@@ -358,120 +326,14 @@ const YourSlimes: FC<Props> = () => {
               Asset Library:
             </p>
             {selectedNft && (
-              <div className="w-full h-[100px] flex items-start gap-3 overflow-x-auto">
-                <Image
-                  src={`${
-                    process.env.NEXT_PUBLIC_CDN_URL
-                  }/images/wallpapers/image/${
-                    selectedNft?.name === "Kai" && isDark ? "dark-" : ""
-                  }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
-                  height={100}
-                  width={100}
-                  alt={selectedNft?.name}
-                  className={`cursor-pointer rounded-lg shadow-lg border ${
-                    selectedAssetType === "full-res"
-                      ? "border-black"
-                      : "border-slimes-border"
-                  }`}
-                  onClick={() => setSelectedAssetType("full-res")}
-                />
-                <div
-                  className={`relative flex items-center justify-center w-[100px] h-[100px] 
-                  overflow-hidden border rounded-lg shadow-lg cursor-pointer
-                  ${
-                    selectedAssetType === "desktop"
-                      ? "border-black"
-                      : "border-slimes-border"
-                  }`}
-                  onClick={() => setSelectedAssetType("desktop")}
-                >
-                  <Image
-                    src={`${
-                      process.env.NEXT_PUBLIC_CDN_URL
-                    }/images/wallpapers/desktop-display/${
-                      selectedNft?.name === "Kai" && isDark ? "dark-" : ""
-                    }${selectedNft?.name
-                      .replaceAll(" ", "-")
-                      .toLowerCase()}.png`}
-                    height={200}
-                    width={200}
-                    alt={`${selectedNft?.name} desktop wallpaper`}
-                  />
-                </div>
-                <div
-                  className={`relative flex items-center justify-center w-[100px] h-[100px] 
-                  overflow-hidden border rounded-lg shadow-lg cursor-pointer 
-                  ${
-                    selectedAssetType === "mobile"
-                      ? "border-black"
-                      : "border-slimes-border"
-                  }`}
-                  onClick={() => setSelectedAssetType("mobile")}
-                >
-                  <Image
-                    src={`${
-                      process.env.NEXT_PUBLIC_CDN_URL
-                    }/images/wallpapers/mobile-display/${
-                      selectedNft?.name === "Kai" && isDark ? "dark-" : ""
-                    }${selectedNft?.name
-                      .replaceAll(" ", "-")
-                      .toLowerCase()}.png`}
-                    alt={`${selectedNft?.name} mobile wallpaper`}
-                    height={100}
-                    width={50}
-                  />
-                </div>
-                <div
-                  className={`relative w-[100px] h-[100px] overflow-hidden rounded-lg 
-                  border shadow-lg cursor-pointer ${
-                    selectedAssetType === "pfp"
-                      ? "border-black"
-                      : "border-slimes-border"
-                  }`}
-                  onClick={() => setSelectedAssetType("pfp")}
-                >
-                  <Image
-                    src={`${
-                      process.env.NEXT_PUBLIC_CDN_URL
-                    }/images/wallpapers/pfp-crop/${
-                      selectedNft?.name === "Kai" && isDark ? "dark-" : ""
-                    }${selectedNft?.name
-                      .replaceAll(" ", "-")
-                      .toLowerCase()}.png`}
-                    alt={`${selectedNft?.name} pfp crop`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="absolute inset-0 z-10 bg-transparent p-2"
-                    style={{
-                      clipPath: "circle(40% at 50% 50%)",
-                    }}
-                  />
-                </div>
-                {/* banner */}
-                <div
-                  className={`relative w-[100px] h-[100px] overflow-hidden rounded-lg 
-                  border shadow-lg cursor-pointer flex items-center justify-center ${
-                    selectedAssetType === "banner"
-                      ? "border-black"
-                      : "border-slimes-border"
-                  }`}
-                  onClick={() => setSelectedAssetType("banner")}
-                >
-                  <Image
-                    src={`${
-                      process.env.NEXT_PUBLIC_CDN_URL
-                    }/images/wallpapers/banner/${
-                      selectedNft?.name === "Kai" && isDark ? "dark-" : ""
-                    }${selectedNft?.name
-                      .replaceAll(" ", "-")
-                      .toLowerCase()}.png`}
-                    height={100}
-                    width={200}
-                    alt={`${selectedNft?.name} pfp crop`}
-                    className="z-10 bg-transparent p-2"
-                  />
-                </div>
-              </div>
+              <AssetLibrary
+                selectedNft={selectedNft}
+                selectedAssetType={selectedAssetType}
+                setSelectedAssetType={setSelectedAssetType}
+                isDark={isDark}
+                setFeaturedImage={setFeaturedImage}
+                setImageLoading={setImageLoading}
+              />
             )}
           </div>
         </div>
