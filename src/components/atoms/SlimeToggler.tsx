@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 
-const ThemeToggler = () => {
-  const [isDark, setIsDark] = useState(false);
+interface Props {
+  selectedNft: string | undefined;
+  isDark: boolean;
+  setIsDark: Dispatch<SetStateAction<boolean>>;
+}
 
+const ThemeToggler: FC<Props> = ({ selectedNft, isDark, setIsDark }) => {
   const toggleTheme = () => {
     setIsDark(!isDark);
   };
 
-  return (
-    <div>
-      <input type="checkbox" id="darkmode-toggle" />
-      <label htmlFor="darkmode-toggle" />
+  if (selectedNft !== "Kai" || selectedNft === undefined) return null;
 
-      <div className="background" />
+  return (
+    <div className="h-full flex items-center justify-center">
+      <input
+        type="checkbox"
+        id="darkmode-toggle"
+        checked={!!isDark}
+        onClick={toggleTheme}
+      />
+      <label htmlFor="darkmode-toggle" />
     </div>
   );
 };

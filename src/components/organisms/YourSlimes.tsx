@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { enterAnimation, smallClickAnimation } from "@constants";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
@@ -28,6 +28,17 @@ const YourSlimes: FC<Props> = () => {
   >("full-res"); // selected asset type of slime to display
   const [featuredImage, setFeaturedImage] = useState<string>(); // url of current featured image
   const [imageLoading, setImageLoading] = useState<boolean>(false); // loading state of featured image
+  const [isDark, setIsDark] = useState(false);
+
+  const darkKai: Collection = {
+    id: 23,
+    name: "Kai",
+    tag: "dark-kai",
+    color: "#242424",
+    image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`,
+    mintAddress: "GhfmfuTG4zqtf1bPuJA655jgM1DSaMQyhq6wttsc4m29",
+    topValue: 10,
+  };
 
   // fetch users nfts
   const getNfts = useCallback(async () => {
@@ -176,36 +187,45 @@ const YourSlimes: FC<Props> = () => {
       >
         {selectedNft && (
           <div className="flex flex-col items-center justify-center">
-            <motion.div
-              className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
-              {...enterAnimation}
-              key={selectedNft?.name ?? "placeholder"}
-            >
-              <Image
-                src={
-                  featuredImage ||
-                  `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
-                }
-                width={selectedAssetType === "mobile" ? 500 : 1000}
-                height={1000}
-                alt="featured slime asset"
-                className="rounded-xl overflow-hidden"
-                onLoad={() => setImageLoading(false)}
-                style={{
-                  transition: "opacity 0.69s",
-                  opacity: imageLoading ? 0 : 1,
-                }}
-              />
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                {...enterAnimation}
+                key={selectedNft?.name ?? "placeholder"}
+              >
+                {featuredImage && (
+                  <Image
+                    src={
+                      isDark
+                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
+                        : featuredImage
+                    }
+                    width={selectedAssetType === "mobile" ? 500 : 1000}
+                    height={1000}
+                    alt="featured slime asset"
+                    className="rounded-xl overflow-hidden"
+                    onLoad={() => setImageLoading(false)}
+                    style={{
+                      transition: "opacity 0.69s",
+                      opacity: imageLoading ? 0 : 1,
+                    }}
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
             <FullResolutionDownload imageUrl={handleDownload()} />
           </div>
         )}
         <div className="w-full lg:w-[600px] h-full lg:ml-6 mt-3 lg:-mt-3">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <p className="hub-name uppercase text-slimes-black">
               {selectedNft?.name}
             </p>
-            <SlimeToggler />
+            <SlimeToggler
+              selectedNft={selectedNft?.name}
+              isDark={isDark}
+              setIsDark={setIsDark}
+            />
           </div>
 
           <p className="font-secondary w-full xl:max-w-[392px] min-h-[40px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
