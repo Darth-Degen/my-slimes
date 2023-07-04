@@ -6,6 +6,7 @@ import {
   WhereView,
   ScrollProgress,
   LinkFire,
+  ExpIcon,
 } from "@components";
 import { BuyRacksView } from "apps/merch/src/components";
 import {
@@ -18,7 +19,7 @@ import {
 } from "react";
 import { scrollToSection } from "@helpers";
 import { ViewContext } from "@constants";
-import { useWindowSize } from "@merch-hooks";
+import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface Props {
   setAssets: Dispatch<SetStateAction<boolean[]>>;
@@ -47,6 +48,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   // views
   const [width] = useWindowSize();
   const mobileView = width <= 1024;
+  const scrollDirection = useScrollDirection();
 
   // handles auto scroll
   useEffect(() => {
@@ -57,7 +59,8 @@ const IndexView: FC<Props> = ({ setAssets }) => {
       (currentPage === pageIDs[2] ||
         currentPage === pageIDs[3] ||
         currentPage === pageIDs[4]) &&
-      !didMenuClick
+      !didMenuClick &&
+      scrollDirection === "down"
     )
       scrollToSection(currentPage);
   }, [currentPage, didMenuClick]);

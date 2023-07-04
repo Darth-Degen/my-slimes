@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MobileLink } from "@components";
+import { MobileLink, ExpIcon } from "@components";
 import { slideUp } from "src/constants";
 
 interface Props {
@@ -14,7 +14,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
     <AnimatePresence mode="wait">
       {showLoop && (
         <motion.div {...slideUpAnimation} className="md:mt-0 md:mx-10">
-          <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-5 pb-10 items-center">
+          <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-5 items-center">
             <div className="col-span-1 w-full h-full overflow-hidden rounded-xl">
               <MobileLink
                 setAssets={setAssets}
@@ -93,6 +93,12 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
               />
             </div>
           </div>
+          {/* <div className=" flex flex-col items-center">
+            <div className={`rounded-l-2xl rounded-r-2xl text-3xl w-min px-5`}>
+              <ExpIcon />
+            </div>
+            <p className={` mt-1.5`}>powered by EXP</p>
+          </div> */}
         </motion.div>
       )}
     </AnimatePresence>

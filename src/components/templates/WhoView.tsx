@@ -84,7 +84,7 @@ const WhoView: FC<Props> = (props: Props) => {
               variants={containerVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="font-black px-2 responsive-text whitespace-nowrap"
+              className="font-black px-2 responsive-text-2 whitespace-nowrap"
             >
               {text.split("").map((letter, index) => (
                 <motion.span key={index} variants={letterVariants}>
@@ -99,7 +99,7 @@ const WhoView: FC<Props> = (props: Props) => {
                   key="we-eatin"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 1, ease: "easeInOut", delay: 1.25 }}
+                  transition={{ duration: 1, ease: "easeInOut", delay: 0.9 }}
                 >
                   <div className="w-1/3 uppercase">the whole squad here</div>
                   <div className="w-1/3 uppercase flex justify-center">and</div>

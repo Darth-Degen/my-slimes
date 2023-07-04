@@ -118,16 +118,16 @@ const WhatView: FC<Props> = (props: Props) => {
               priority
             />
           </div>
-          <div className="flex flex-col justify-around items-start gap-10 sticky top-[5%] xl:top-[10%]">
+          <div className="flex flex-col justify-around items-start gap-6 xl:gap-10 sticky top-[5%] 2xl:top-[10%] pt-20 2xl:pt-0">
             {whatContent.map((item, index) => (
               <div
                 key={index}
                 className={`flex flex-col gap-4 items-center lg:items-start `}
               >
-                <p className="text-xl sm:text-3xl lg:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
+                <p className="text-xl sm:text-3xl lg:text-6xl 2xl:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
                   {item.title}
                 </p>
-                <div className="text-sm sm:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
+                <div className="text-xs 2xl:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
                   <p className="w-auto max-w-[800px]">{item.textOne}</p>
                 </div>
               </div>
