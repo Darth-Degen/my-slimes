@@ -49,16 +49,16 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   const mobileView = width <= 1024;
 
   // handles auto scroll
-  useEffect(() => {
-    console.log("currentPage ", currentPage);
-    if (
-      (currentPage === pageIDs[0] ||
-        currentPage === pageIDs[1] ||
-        currentPage === pageIDs[2]) &&
-      !didMenuClick
-    )
-      scrollToSection(currentPage);
-  }, [currentPage, didMenuClick]);
+  // useEffect(() => {
+  //   // console.log("currentPage ", currentPage);
+  //   if (
+  //     (currentPage === pageIDs[0] ||
+  //       currentPage === pageIDs[1] ||
+  //       currentPage === pageIDs[2]) &&
+  //     !didMenuClick
+  //   )
+  //     scrollToSection(currentPage);
+  // }, [currentPage, didMenuClick]);
 
   //changes progress bar color over BuyRacksView
   useEffect(() => {

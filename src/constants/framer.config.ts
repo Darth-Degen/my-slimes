@@ -145,9 +145,10 @@ export const slideUp = (
   animate: boolean,
   distance: number = 300,
   duration: number = 1,
-  delay: number = 0
+  delay: number = 0,
+  startOpacity: number = 1
 ) => ({
-  initial: { y: distance, opacity: 0 },
+  initial: { y: distance, opacity: startOpacity },
   animate: { y: animate ? 0 : distance, opacity: animate ? 1 : 0 },
   transition: { duration: duration, ease: "easeInOut", delay: delay },
 });
