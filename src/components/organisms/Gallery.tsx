@@ -142,7 +142,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
   };
   const letterVariants = {
     hidden: {
-      opacity: animateRefValue < 1 ? 0 : 1,
+      opacity: animateRefValue < 2 ? 0 : 1,
       // opacity: 0,
       x: 0,
     }, // Starting position outside the container
@@ -151,6 +151,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
       x: 0,
       transition: {
         duration: 0.5, // Duration of the animation
+        // delay: 2,
       },
     },
   };

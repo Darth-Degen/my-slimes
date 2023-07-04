@@ -78,6 +78,11 @@ const IndexView: FC<Props> = ({ setAssets }) => {
         setShowLoop={setShowLoop}
       />
       <div className="w-full h-full hidden lg:block">
+        <WhoView
+          setAssets={setAssets}
+          id={pageIDs[3]}
+          setCurrentPage={setCurrentPage}
+        />
         <BuyRacksView
           setIsInView={setIsRacksInView}
           id={pageIDs[1]}
