@@ -18,10 +18,7 @@ const MenuController: FC<Props> = (props: Props) => {
   }, [openMenu]);
 
   return (
-    <div
-      className="w-full h-full items-end justify-end hidden sm:flex"
-      ref={wrapperRef}
-    >
+    <div className="w-full h-full items-end justify-end flex" ref={wrapperRef}>
       <AnimatePresence mode="wait">
         {!openMenu ? (
           <motion.div key="open" {...menuAnimation}>
