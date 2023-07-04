@@ -23,7 +23,7 @@ const AssetLibrary: FC<Props> = ({
 }) => {
   // manage featured image path based on selected asset type
   useEffect(() => {
-    setImageLoading(true);
+    // setImageLoading(true);
     var imageName = `${isDark ? "dark-" : ""}${selectedNft?.name
       .replaceAll(" ", "-")
       .toLowerCase()}`;

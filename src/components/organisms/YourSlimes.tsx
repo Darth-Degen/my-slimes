@@ -7,12 +7,14 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { getNftsByOwner } from "src/helpers";
 import { Collection } from "src/types";
+import ReactLoading from "react-loading";
 import {
   AssetLibrary,
   Scrollbar,
   SlimesGrid,
   FullResolutionDownload,
   SlimeToggler,
+  LoadAnimation,
 } from "@components";
 
 interface Props {}
@@ -28,7 +30,7 @@ const YourSlimes: FC<Props> = () => {
     "full-res" | "pfp" | "mobile" | "desktop" | "banner"
   >("full-res"); // selected asset type of slime to display
   const [featuredImage, setFeaturedImage] = useState<string>(); // url of current featured image
-  const [imageLoading, setImageLoading] = useState<boolean>(false); // loading state of featured image
+  const [imageLoading, setImageLoading] = useState<boolean>(true); // loading state of featured image
   const [isDark, setIsDark] = useState(false);
   const [buttonColor, setButtonColor] = useState<string>("black");
 
@@ -136,8 +138,9 @@ const YourSlimes: FC<Props> = () => {
     >
       {/* <Scrollbar> */}
       <div
-        className="w-full sm:w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
-        items-center lg:items-start justify-center px-10 xl:px-0 pt-8 overflow-x-auto"
+        className={`w-full sm:w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
+        items-center lg:items-start justify-center px-10 xl:px-0 pt-8 overflow-x-auto
+        ${imageLoading ? "opacity-0" : "opacity-100"}`}
       >
         {selectedNft && featuredImage && (
           <div className="flex flex-col items-center justify-center">
@@ -439,6 +442,16 @@ const YourSlimes: FC<Props> = () => {
           </div>
         </div>
       </div>
+      {/* {imageLoading && (
+        <div
+          className={`${
+            imageLoading ? "opacity-100" : "opacity-0"
+          } absolute top-0 w-full h-[500px] flex flex-col items-center justify-center`}
+        >
+          <ReactLoading type={"balls"} color={"#000"} />
+        </div>
+      )} */}
+
       <SlimesGrid
         slimes={slimes}
         setSlimes={setSlimes}
