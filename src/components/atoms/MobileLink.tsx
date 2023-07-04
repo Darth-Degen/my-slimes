@@ -22,7 +22,12 @@ const MobileLink: FC<Props> = ({
   index,
 }) => {
   return (
-    <motion.a href={href} target="_blank" rel="noreferrer noopener">
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="lg:overflow-hidden"
+    >
       <Image
         src={image}
         width={width}
@@ -36,7 +41,7 @@ const MobileLink: FC<Props> = ({
             ...prevState.slice(index + 1),
           ])
         }
-        className="rounded-xl"
+        className="rounded-xl transition-all duration-500 ease-out lg:hover:scale-125"
       />
     </motion.a>
   );

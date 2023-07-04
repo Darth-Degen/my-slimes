@@ -70,16 +70,24 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     return "w-[280px]";
   };
 
+  // const height = (type: DimensionType): string | number => {
+  //   if (winHeight < 800 || winWidth < 600)
+  //     return type === DimensionType.String ? "h-[380px]" : 380;
+  //   else if (winWidth > 3000 && winHeight > 1500)
+  //     return type === DimensionType.String ? "h-[1000px]" : 1000;
+  //   else if (winWidth > 2000 && winHeight > 1200)
+  //     return type === DimensionType.String ? "h-[800px]" : 900;
+  //   return type === DimensionType.String ? "h-[500px]" : 500;
+  // };
   const height = (type: DimensionType): string | number => {
     if (winHeight < 800 || winWidth < 600)
-      return type === DimensionType.String ? "h-[380px]" : 380;
+      return type === DimensionType.String ? "h-[480px]" : 480;
     else if (winWidth > 3000 && winHeight > 1500)
-      return type === DimensionType.String ? "h-[1000px]" : 1000;
+      return type === DimensionType.String ? "h-[1200px]" : 1200;
     else if (winWidth > 2000 && winHeight > 1200)
-      return type === DimensionType.String ? "h-[800px]" : 900;
-    return type === DimensionType.String ? "h-[500px]" : 500;
+      return type === DimensionType.String ? "h-[900px]" : 900;
+    return type === DimensionType.String ? "h-[600px]" : 600;
   };
-
   // const width = (type: DimensionType): string | number => {
   //   if (winWidth > 3000) return "w-[160px]";
   //   else if (winWidth > 2000) return "w-[130px]";

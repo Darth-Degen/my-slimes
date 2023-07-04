@@ -217,7 +217,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
             ref={ref}
           >
             <motion.div
-              className="relative flex gap-5 py-4 px-4 md:px-0"
+              className="relative flex gap-5 pb-4 px-4 md:px-0"
               variants={galleryVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
