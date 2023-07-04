@@ -27,8 +27,10 @@ const SlimesGrid: FC<Props> = ({
   setIsDark,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
+  // const endpoint =
+  //   "https://devnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
   const endpoint =
-    "https://devnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
+    "https://cold-sparkling-darkness.solana-mainnet.discover.quiknode.pro/";
   const connection = new Connection(endpoint);
   const metaplex = new Metaplex(connection);
 
