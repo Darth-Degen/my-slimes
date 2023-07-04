@@ -13,8 +13,9 @@ interface Props {
   selectedNft: Collection | undefined;
   setSelectedNft: Dispatch<SetStateAction<Collection | undefined>>;
   setSelectedAssetType: Dispatch<
-    SetStateAction<"full-res" | "pfp" | "mobile" | "desktop">
+    SetStateAction<"full-res" | "pfp" | "mobile" | "desktop" | "banner">
   >;
+  setIsDark: Dispatch<SetStateAction<boolean>>;
 }
 
 const SlimesGrid: FC<Props> = ({
@@ -23,6 +24,7 @@ const SlimesGrid: FC<Props> = ({
   selectedNft,
   setSelectedNft,
   setSelectedAssetType,
+  setIsDark,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -85,6 +87,7 @@ const SlimesGrid: FC<Props> = ({
                   alt={slime.name}
                   onClick={() => {
                     setSelectedNft(slime);
+                    setIsDark(false);
                     setSelectedAssetType("full-res");
                     scroll({ top: 0, behavior: "smooth" });
                   }}
