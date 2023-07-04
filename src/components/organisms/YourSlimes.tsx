@@ -71,11 +71,13 @@ const YourSlimes: FC<Props> = () => {
         setSelectedNft(scum);
         setSelectedAssetType("full-res");
         return;
+      } else {
+        if (selectedNft) return;
+        // must have slimes, use slimes variable to set ownedSlimes
+        setMySlimes(ownedSlimes);
+        // default to [0] index of owned slimes
+        setSelectedNft(ownedSlimes[0]);
       }
-      // must have slimes, use slimes variable to set ownedSlimes
-      setMySlimes(ownedSlimes);
-      // default to [0] index of owned slimes
-      setSelectedNft(ownedSlimes[0]);
     } catch (e: any) {
       console.error(e.message);
       toast.error(`Error fetching Slimes: ${e.message}`);
