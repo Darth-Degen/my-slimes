@@ -7,7 +7,7 @@ export const rackStatus: RackStatus[] = [
     endDate: new Date(2023, 6, 7, 9, 10, 50),
     src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/pika.png`,
     caption:
-      "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
+      "RACKS = one raffle ticket for the newest <span class='link'><a href='https://exchange.art/series/Slimes/nfts' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='https://allintime.xyz/' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
     timerCaption: "time left to buy racks",
   },
   {
