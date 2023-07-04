@@ -1,4 +1,5 @@
 export const scrollToSection = (id: string): void => {
+  // console.log("scroll to  ", id)
   const yOffset = 0; // adjust for fixed header
   const element = document.getElementById(id);
   const y =

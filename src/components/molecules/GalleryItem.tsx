@@ -5,6 +5,7 @@ import {
   motion,
   useInView,
   MotionValue,
+  Variant,
 } from "framer-motion";
 import {
   Dispatch,
@@ -30,6 +31,8 @@ interface GiProps {
   setDidHover: Dispatch<SetStateAction<boolean>>;
   startY: number;
   scrollDirection: string;
+  animateRefValue: number;
+  variant: Variant;
 }
 
 enum DimensionType {
@@ -48,6 +51,8 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     setDidHover,
     startY,
     scrollDirection,
+    animateRefValue,
+    variant,
   } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
@@ -91,11 +96,6 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
 
   // if (index === 0) console.log("scrollDirection ", scrollDirection);
   useMotionValueEvent(translateY, "change", (latest) => {
-    // if (index === 0) console.log("child item  ", Math.abs(latest));
-    // if (index === 0)
-    //   console.log("gallery item  ", latest, isInView, parentRef.current);
-
-    // if (index === 0) console.log("translateY ", latest);
     if (Math.abs(latest) < 10) setIsFixed(true);
     else setIsFixed(false);
   });
@@ -132,38 +132,39 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       : (width(DimensionType.Number) as number);
   };
 
-  //tell parent final child is in view
-  // useEffect(() => {
-  //   if (isInView) handleIsInView(index);
-  // }, [isInView, handleIsInView, index]);
-
   return (
     <motion.div
-      onClick={() => setGalleryModalId(item.id)}
-      // onMouseEnter={() => setDidHover(true)}
-      // onMouseLeave={() => setDidHover(false)}
-      ref={childRef}
-      className={`relative rounded-xl 
+      key={index}
+      //@ts-ignore
+      variants={variant}
+    >
+      <motion.div
+        onClick={() => setGalleryModalId(item.id)}
+        // onMouseEnter={() => setDidHover(true)}
+        // onMouseLeave={() => setDidHover(false)}
+        ref={childRef}
+        className={`relative rounded-xl 
         ${width(DimensionType.String)} 
         ${height(DimensionType.String)} 
         ${isFixed ? "cursor-pointer" : ""}
       `}
-      style={{ translateY: didLoad ? translateY : 0 }}
-      whileHover={{
-        width: hoverWidth(),
-      }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-    >
-      <Image
-        src={src}
-        alt={item.name}
-        fill
-        style={{ objectFit: "cover" }}
-        className="rounded-xl"
-        // imageClass="rounded-xl"
-        onLoadingComplete={() => setDidLoad(true)}
-        priority
-      />
+        // style={{ translateY: didLoad ? translateY : 0 }}
+        whileHover={{
+          width: hoverWidth(),
+        }}
+        // transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
+        <Image
+          src={src}
+          alt={item.name}
+          fill
+          style={{ objectFit: "cover" }}
+          className="rounded-xl"
+          // imageClass="rounded-xl"
+          onLoadingComplete={() => setDidLoad(true)}
+          priority
+        />
+      </motion.div>
     </motion.div>
   );
 };

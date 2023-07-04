@@ -17,9 +17,18 @@ interface GProps {
   parentRef: React.RefObject<HTMLDivElement>;
   isFixed: boolean;
   setIsFixed: Dispatch<SetStateAction<boolean>>;
+  isParentInView: boolean;
+  animateRefValue: number;
 }
 const Gallery: FC<GProps> = (props: GProps) => {
-  const { collections, parentRef, isFixed, setIsFixed } = props;
+  const {
+    collections,
+    parentRef,
+    isFixed,
+    setIsFixed,
+    isParentInView,
+    animateRefValue,
+  } = props;
 
   const [gallery, setGallery] = useState<Collection[]>(collections);
 
@@ -30,11 +39,12 @@ const Gallery: FC<GProps> = (props: GProps) => {
   const [didChildHover, setDidChildHover] = useState<boolean>(false);
   const [startY, setStartY] = useState<number>();
 
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(parentRef);
+  const isSelfInView = useInView(ref);
   const scrollDirection = useScrollDirection();
 
   const [winWidth, winHeight] = useWindowSize();
-  const ref = useRef<HTMLDivElement>(null);
 
   const { scrollY } = useScroll({
     target: ref,
@@ -115,11 +125,46 @@ const Gallery: FC<GProps> = (props: GProps) => {
     // else if (isInView && scrollDirection === "up") setStartY(0);
   }, [isInView, scrollY]);
 
+  const containerVariants = {
+    hidden: {
+      opacity: animateRefValue < 1 ? 0 : 1,
+      // x: -150
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        staggerChildren: 0.1, // Delay between staggered children
+        duration: 1,
+        delay: 2,
+      },
+    },
+  };
+  const letterVariants = {
+    hidden: {
+      opacity: animateRefValue < 2 ? 0 : 1,
+      // opacity: 0,
+      x: 0,
+    }, // Starting position outside the container
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5, // Duration of the animation
+        // delay: 2,
+      },
+    },
+  };
+  if (isSelfInView) console.log("isSelfInView ", isSelfInView);
   return (
     <motion.div
       className="sticky top-0 md:top-[8%] lg:top-[20%] 4xl:top-1/4 flex items-center z-10"
       key="gallery"
-      {...fastExitAnimation}
+      // {...fastExitAnimation}
+
+      // variants={containerVariants}
+      // initial="hidden"
+      // animate={isSelfInView ? "visible" : "hidden"}
     >
       <GalleryArrowButton
         direction="left"
@@ -132,28 +177,37 @@ const Gallery: FC<GProps> = (props: GProps) => {
       {/* <div className="flex items-center overflow-x-scroll overflow-y-hidden"> */}
       <div className="flex items-center overflow-x-hidden overflow-y-hidden">
         <motion.div
-          className="relative flex gap-3 3xl:gap-5 pt-32 pb-20  px-4 md:px-0"
           initial={{ x: 0 }}
           animate={{ x: scrollValue }}
           transition={{ duration: 0.5 }}
           ref={ref}
         >
-          {startY &&
-            gallery.map((slime, index) => (
-              <GalleryItem
-                item={slime}
-                key={slime.name + index}
-                parentRef={parentRef}
-                index={index}
-                setIsFixed={setIsFixed}
-                isFixed={isFixed}
-                // handleIsInView={handleIsInView}
-                // didChildHover={didChildHover}
-                setDidHover={setDidChildHover}
-                startY={startY}
-                scrollDirection={scrollDirection}
-              />
-            ))}
+          <motion.div
+            className="relative flex gap-3 3xl:gap-5  pt-0 pb-20  px-4 md:px-0"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isSelfInView ? "visible" : "hidden"}
+          >
+            {startY &&
+              gallery.map((slime, index) => (
+                <GalleryItem
+                  item={slime}
+                  key={slime.name + index}
+                  parentRef={parentRef}
+                  index={index}
+                  setIsFixed={setIsFixed}
+                  isFixed={isFixed}
+                  // handleIsInView={handleIsInView}
+                  // didChildHover={didChildHover}
+                  setDidHover={setDidChildHover}
+                  startY={startY}
+                  scrollDirection={scrollDirection}
+                  animateRefValue={animateRefValue}
+                  //@ts-ignore
+                  variant={letterVariants}
+                />
+              ))}
+          </motion.div>
         </motion.div>
       </div>
       <GalleryArrowButton

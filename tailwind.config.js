@@ -30,7 +30,7 @@ module.exports = {
       },
       colors: {
         //main
-        "custom-primary": "#f9f1d9", // "#F6EFD3",
+        "custom-primary": "#F6EFD3", // "#F6EFD3",
         "custom-secondary": "#8BD2B9",
         "custom-tertiary": "#312A29",
         //custom

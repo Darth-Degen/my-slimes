@@ -40,9 +40,6 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   const [isLandingInView, setIsLandingInView] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<string>(pageIDs[0]);
   const [showLoop, setShowLoop] = useState<boolean>(false);
-  //refs
-
-  //hooks
 
   //context
   const { didMenuClick } = useContext(ViewContext);
@@ -53,11 +50,12 @@ const IndexView: FC<Props> = ({ setAssets }) => {
 
   // handles auto scroll
   useEffect(() => {
+    // console.log("currentPage ", currentPage);
     if (
-      (currentPage === pageIDs[0] ||
-        currentPage === pageIDs[1] ||
-        currentPage === pageIDs[2]) &&
-      !didMenuClick
+      // currentPage === pageIDs[0] ||
+      // currentPage === pageIDs[1] ||
+      currentPage === pageIDs[2] ||
+      (currentPage === pageIDs[3] && !didMenuClick)
     )
       scrollToSection(currentPage);
   }, [currentPage, didMenuClick]);

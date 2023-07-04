@@ -34,8 +34,8 @@ const WhatView: FC<Props> = (props: Props) => {
 
   const [winWidth, winHeight] = useWindowSize();
 
-  const height = 2805 / 4; //701.25
-  const width = 1826 / 4; //456.5
+  const height = 2805 / 3.69; //701.25
+  const width = 1826 / 3.69; //456.5
 
   const ref = useRef(null);
   const ref1 = useRef(null);
@@ -86,13 +86,20 @@ const WhatView: FC<Props> = (props: Props) => {
     return index * _base;
   };
 
-  // const animate = () => {
-  //   return slideUp(isInView && scrollDirection === "down", 500, 1, 0.5);
-  // };
+  const animate = () => {
+    // return slideUp(isInView && scrollDirection === "down", 500, 1, 0.5);
+    return slideUp(isInView, 1000, 1.25, 0.5);
+  };
 
   // useEffect(() => {
   //   if (isInView) didViewRef.current = true;
   // }, [isInView]);
+
+  //one time animation
+  const animateRef = useRef<number>(0);
+  useEffect(() => {
+    if (isInView) animateRef.current += 1;
+  }, [isInView]);
 
   return (
     <div
@@ -100,59 +107,90 @@ const WhatView: FC<Props> = (props: Props) => {
       id={id}
       ref={ref}
     >
-      <motion.div
-        className="relative"
-        // {...animate()}
-      >
-        <div className="hidden lg:block h-full  z-0 ">
-          {whatContent.map((item, index) => {
-            return (
-              <ImageAnimation
-                imgRef={getImgRef(index)}
-                topPosition={0}
+      {animateRef.current > 1 ? (
+        <div className="sticky top-[5%] xl:top-[10%] flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14">
+          <div className="hidden lg:block h-full z-0 sticky top-[5%] xl:top-[12%]">
+            <Image
+              src={`/images/landing/${whatContent[2].src}`}
+              height={height}
+              width={width}
+              alt={whatContent[2].title}
+              priority
+            />
+          </div>
+          <div className="flex flex-col justify-around items-start gap-10 sticky top-[5%] xl:top-[10%]">
+            {whatContent.map((item, index) => (
+              <div
                 key={index}
-                startTopPosition={index * 200}
-                index={index}
+                className={`flex flex-col gap-4 items-center lg:items-start `}
               >
-                <Image
-                  src={`/images/landing/${item.src}`}
-                  height={height}
-                  width={width}
-                  alt={item.title}
-                  key={index}
-                  priority
-                  onLoadingComplete={() => {
-                    // console.log(`- what ${index + 1}`);
-                    setAssets &&
-                      setAssets((prevState) => [
-                        ...prevState.slice(0, index),
-                        true,
-                        ...prevState.slice(index + 1),
-                      ]);
-                  }}
-                />
-              </ImageAnimation>
-            );
-          })}
-          <div className="pb-[2950px] 3xl:pb-[3900px]" />
+                <p className="text-xl sm:text-3xl lg:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
+                  {item.title}
+                </p>
+                <div className="text-sm sm:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
+                  <p className="w-auto max-w-[800px]">{item.textOne}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="pb-[1000px]" />
         </div>
-      </motion.div>
+      ) : (
+        <>
+          <motion.div className="relative" {...animate()}>
+            <div className="hidden lg:block h-full z-0 ">
+              {whatContent.map((item, index) => {
+                return (
+                  <ImageAnimation
+                    imgRef={getImgRef(index)}
+                    topPosition={0}
+                    key={index}
+                    startTopPosition={index * 200}
+                    index={index}
+                  >
+                    <Image
+                      src={`/images/landing/${item.src}`}
+                      height={height}
+                      width={width}
+                      alt={item.title}
+                      key={index}
+                      priority
+                      onLoadingComplete={() => {
+                        // console.log(`- what ${index + 1}`);
+                        setAssets &&
+                          setAssets((prevState) => [
+                            ...prevState.slice(0, index),
+                            true,
+                            ...prevState.slice(index + 1),
+                          ]);
+                      }}
+                    />
+                  </ImageAnimation>
+                );
+              })}
+              {/* <div className="pb-[2950px] 3xl:pb-[3900px]" /> */}
+              <div className="pb-[1000px]" />
+            </div>
+          </motion.div>
 
-      <motion.div
-        className="sticky flex flex-col justify-around items-start gap-32"
-        // {...animate()}
-      >
-        {whatContent.map((item, index) => (
-          <TextScroll
-            content={item}
-            key={item.title}
-            topPosition={getTopPosition(index)}
-            divRef={getRef(index)}
-            index={index}
-          />
-        ))}
-        <div className="pb-[3500px] 3xl:pb-[4400px]" />
-      </motion.div>
+          <motion.div
+            className="sticky flex flex-col justify-around items-start gap-32"
+            {...animate()}
+          >
+            {whatContent.map((item, index) => (
+              <TextScroll
+                content={item}
+                key={item.title}
+                topPosition={getTopPosition(index)}
+                divRef={getRef(index)}
+                index={index}
+              />
+            ))}
+            {/* <div className="pb-[3500px] 3xl:pb-[4400px]" /> */}
+            <div className="pb-[1600px]" />
+          </motion.div>
+        </>
+      )}
     </div>
   );
 };
@@ -187,15 +225,15 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
 
     const [winWidth, winHeight] = useWindowSize();
     const is3XL = winWidth >= 2160;
-    const startY = winHeight * 2;
+    const startY = winHeight * 1.4;
     const y: MotionValue<number> = useTransform(
       scrollY,
       [
-        startY - (is3XL ? winHeight * 2 : winHeight),
+        startY - (is3XL ? winHeight * 1.1 : winHeight),
         startY +
           winHeight +
           index * (is3XL ? winHeight * 0.75 : winHeight) +
-          index * (index > 1 ? 900 : 500),
+          index * (index === 0 ? 800 : index === 1 ? -200 : -200),
       ],
       [startY, topPosition]
     );
@@ -226,7 +264,7 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
 
     return (
       <motion.div
-        className={`sticky top-[6%] xl:top-[10%] ${className} `}
+        className={`hidden xl:block sticky top-[4%] xl:top-[10%] ${className} `}
         style={{
           y,
           // opacity,

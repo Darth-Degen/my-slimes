@@ -4,6 +4,7 @@ import {
   useTransform,
   motion,
   useMotionValueEvent,
+  useInView,
 } from "framer-motion";
 import {
   HTMLAttributes,
@@ -47,13 +48,22 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
     //   [startY, topPosition]
     // );
 
-    const startY = winHeight * 2;
+    const isInView = useInView(divRef);
+    const didAnimateRef = useRef<boolean>();
+    useEffect(() => {
+      if (isInView) didAnimateRef.current = true;
+    }, [isInView]);
+
+    const startY = winHeight * 1.8;
 
     const y: MotionValue<number> = useTransform(
       scrollY,
       [
         startY - (is3XL ? winHeight * 2 : winHeight),
-        startY + winHeight + index * (is3XL ? winHeight * 0.5 : winHeight),
+        startY +
+          winHeight * 0.4 +
+          index * (is3XL ? winHeight * 0.5 : winHeight) +
+          index * (index === 2 ? 0 : 0),
       ],
       [startY, topPosition]
     );
@@ -83,9 +93,8 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
         <p className="text-xl sm:text-3xl lg:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
           {content.title}
         </p>
-        <div className="text-sm sm:text-base flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-14 2xl:ml-20">
-          <p className="w-64">{content.textOne}</p>
-          <p className="w-64">{content.textTwo}</p>
+        <div className="text-sm sm:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
+          <p className="w-auto max-w-[800px]">{content.textOne}</p>
         </div>
       </motion.div>
     );
