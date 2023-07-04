@@ -155,7 +155,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
       },
     },
   };
-  if (isSelfInView) console.log("isSelfInView ", isSelfInView);
   return (
     <motion.div
       className="sticky top-0 md:top-[8%] lg:top-[20%] 4xl:top-1/4 flex items-center z-10"
