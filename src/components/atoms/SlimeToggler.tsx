@@ -19,7 +19,7 @@ const ThemeToggler: FC<Props> = ({ selectedNft, isDark, setIsDark }) => {
         type="checkbox"
         id="darkmode-toggle"
         checked={!!isDark}
-        onClick={toggleTheme}
+        onChange={toggleTheme}
       />
       <label htmlFor="darkmode-toggle" />
     </div>
