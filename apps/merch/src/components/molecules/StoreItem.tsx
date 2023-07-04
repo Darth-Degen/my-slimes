@@ -14,7 +14,7 @@ const StoreItem: FC<Props> = (props: Props) => {
   const { item, inStock, addToCart, handleImageClick } = props;
   const [didHover, setDidHover] = useState<boolean>(false);
 
-  const src = `/images/merch/${item.id}/image.png`;
+  const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`;
 
   const handleAddToCart = (cartItem: Merch) => {
     //set size & color if only one

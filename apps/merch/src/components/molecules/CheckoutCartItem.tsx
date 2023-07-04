@@ -44,7 +44,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
         {/* image */}
         <div className="">
           <Image
-            src={`/images/merch/${item.id}/image.png`}
+            src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`}
             width={90}
             height={90}
             alt="Merch"

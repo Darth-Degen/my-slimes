@@ -58,7 +58,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     target: parentRef,
   });
 
-  const src = `/images/sfc/${item.src}`;
+  const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/sfc/${item.src}`;
   // const isInView = useInView(childRef);
 
   const width = (type: DimensionType): string | number => {

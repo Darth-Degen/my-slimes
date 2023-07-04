@@ -1,5 +1,9 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from "react";
-import { midTapAnimation, fastExitAnimation } from "@constants";
+import {
+  midTapAnimation,
+  fastExitAnimation,
+  smallClickAnimation,
+} from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { LoadCircle } from "@components";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
@@ -23,6 +27,7 @@ const WalletButton: FC<Props> = (props: Props) => {
     <button
       className={`relative h-14 w-52 text-2xl rounded-full border font-neuebit-bold border-black bg-[#E8E8E8] ${className}`}
       {...componentProps}
+      {...smallClickAnimation}
     >
       <AnimatePresence mode="wait">
         {visible || connecting || isLoading ? (

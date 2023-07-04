@@ -27,6 +27,7 @@ module.exports = {
         bold: ["pangram-bold"],
         neuebit: ["neuebit"],
         "neuebit-bold": ["neuebit-bold"],
+        pangramLight: ["pangram-extraLight"],
       },
       colors: {
         //main
@@ -45,6 +46,9 @@ module.exports = {
         "ait-black": "#020102",
         "ait-gray": "#E8E8E8",
         shadow: "rgba(82, 82, 82, 0.25)",
+        // slimes hub
+        "slimes-black": "#2E2929",
+        "slimes-border": "#BDBDBD",
         //version 2 theme
         "v2-pink": "#FFB094",
         "v2-beige": "#F6EFD3", // "#F6EFD3",

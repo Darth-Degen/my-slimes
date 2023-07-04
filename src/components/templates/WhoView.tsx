@@ -7,7 +7,11 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { collections, fastExitAnimation, slideRight } from "@constants";
+import {
+  collection as collections,
+  fastExitAnimation,
+  slideRight,
+} from "@constants";
 import { Gallery, WordFall } from "@components";
 import { useWindowSize } from "@merch-hooks";
 interface Props {

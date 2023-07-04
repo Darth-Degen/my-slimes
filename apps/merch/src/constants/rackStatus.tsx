@@ -5,7 +5,7 @@ export const rackStatus: RackStatus[] = [
     name: RackStatusName.Buy,
     text: "BUY NOW!!!",
     endDate: new Date(2023, 6, 7, 9, 10, 50),
-    src: "/images/ait/pika.png",
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/pika.png`,
     caption:
       "RACKS = one raffle ticket for the newest <span class='link'><a href='' rel='noreferrer' target='_blank' >slime</a></span> and the currency used to buy  <span class='link'><a href='' rel='noreferrer' target='_blank'>all in time</a></span> clothes and items. ",
     timerCaption: "time left to buy racks",
@@ -14,7 +14,7 @@ export const rackStatus: RackStatus[] = [
     name: RackStatusName.Raffle,
     text: "RAFFLE LIVE ",
     endDate: new Date("6/5/23"),
-    src: "/images/ait/yoda.png",
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/yoda.png`,
     caption: "the lucky mfr who won a slime is:",
     timerCaption: "winner chosen in:",
   },
