@@ -111,7 +111,7 @@ const WhatView: FC<Props> = (props: Props) => {
         <div className="sticky top-[5%] xl:top-[10%] flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14">
           <div className="hidden lg:block h-full z-0 sticky top-[5%] xl:top-[12%]">
             <Image
-              src={`/images/landing/${whatContent[2].src}`}
+              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${whatContent[2].src}`}
               height={height}
               width={width}
               alt={whatContent[2].title}
@@ -149,7 +149,7 @@ const WhatView: FC<Props> = (props: Props) => {
                     index={index}
                   >
                     <Image
-                      src={`/images/landing/${item.src}`}
+                      src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${item.src}`}
                       height={height}
                       width={width}
                       alt={item.title}
