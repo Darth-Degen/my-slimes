@@ -3,9 +3,10 @@ import { toast } from "react-hot-toast";
 
 interface Props {
   imageUrl: string | undefined;
+  color: string;
 }
 
-const FullResolutionDownload: FC<Props> = ({ imageUrl }: Props) => {
+const FullResolutionDownload: FC<Props> = ({ imageUrl, color }: Props) => {
   if (!imageUrl) {
     toast.error("Error: No image found");
     return null;
@@ -18,7 +19,7 @@ const FullResolutionDownload: FC<Props> = ({ imageUrl }: Props) => {
       target="_blank"
     >
       <div className="flex flex-row text-center justif-center items-start gap-1">
-        <h3 className="text-sm font-bold text-v2-green">
+        <h3 className="text-sm font-bold" style={{ color: color }}>
           Download Full Resolution Image
         </h3>
       </div>

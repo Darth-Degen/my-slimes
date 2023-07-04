@@ -131,15 +131,14 @@ const YourSlimes: FC<Props> = () => {
 
   return (
     <motion.div
-      className="relative w-full max-w-[1200px] mx-auto"
+      className="relative w-full max-w-[1200px] mx-auto overflow-x-hidden"
       {...enterAnimation}
     >
       {/* <Scrollbar> */}
       <div
         className="w-full sm:w-fit lg:w-full mx-auto flex flex-col lg:flex-row 
-        items-center lg:items-start justify-center px-10 xl:px-0 pt-8"
+        items-center lg:items-start justify-center px-10 xl:px-0 pt-8 overflow-x-auto"
       >
-        {/* TODO: might need to axe */}
         {selectedNft && featuredImage && (
           <div className="flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
@@ -264,12 +263,15 @@ const YourSlimes: FC<Props> = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-            <FullResolutionDownload imageUrl={handleDownload()} />
+            <FullResolutionDownload
+              imageUrl={handleDownload()}
+              color={buttonColor}
+            />
           </div>
         )}
         <div className="w-full lg:w-[600px] h-full lg:ml-6 mt-3 lg:-mt-3">
           <div className="flex items-center gap-6">
-            <p className="hub-name uppercase text-slimes-black">
+            <p className="hub-name uppercase text-slimes-black -ml-1">
               {selectedNft?.name}
             </p>
             <SlimeToggler
@@ -279,7 +281,7 @@ const YourSlimes: FC<Props> = () => {
             />
           </div>
 
-          <p className="font-secondary w-full xl:max-w-[392px] min-h-[40px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
+          <p className="font-secondary w-full xl:max-w-[392px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
             {selectedNft?.description}
           </p>
           {/* CTA buttons */}
@@ -420,7 +422,7 @@ const YourSlimes: FC<Props> = () => {
             </div>
           </div>
           {/* asset library */}
-          <div className="pt-3">
+          <div className="pt-4">
             <p className="text-sm uppercase font-black text-slimes-black pb-4">
               Asset Library:
             </p>
