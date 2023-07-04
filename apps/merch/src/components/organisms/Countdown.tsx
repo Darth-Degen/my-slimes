@@ -68,7 +68,9 @@ const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
         <CountdownItem value={countdown.seconds} />
       </div>
       {caption === rackStatus[0].timerCaption && (
-        <p className="uppercase pb-1 flex justify-center text-xl">{caption}</p>
+        <p className="uppercase pb-1 flex justify-center translate-x-[50px] text-xl">
+          {caption}
+        </p>
       )}
     </div>
   );

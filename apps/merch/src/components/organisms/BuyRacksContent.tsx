@@ -188,7 +188,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
               <Countdown
                 futureDate={activeStatus.endDate}
                 caption={activeStatus.timerCaption}
-                className="pb-10 lg:pb-0 lg:absolute bottom-24"
+                className="pb-10 lg:pb-0 lg:absolute bottom-24 left-[46.9%] -translate-x-1/2 transform"
                 handleDateEnd={handleDateEnd}
               />
             </>
