@@ -87,8 +87,8 @@ const SFCGallery: FC<Props> = (props: Props) => {
   const text = "Meet the family";
   const containerVariants = {
     hidden: {
-      // opacity: animateRef.current < 1 ? 0 : 1,
-      opacity: 0,
+      opacity: animateRef.current < 1 ? 0 : 1,
+      // opacity: 0,
       // x: -150
     },
     visible: {
@@ -136,6 +136,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
       className="sticky top-[8%] w-full h-screen flex flex-col items-center gap-0"
       ref={ref}
       id="friends"
+      key="sfcgall"
     >
       <motion.div className="flex justify-center items-center">
         <div className="flex flex-col ">

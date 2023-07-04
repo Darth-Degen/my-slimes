@@ -54,8 +54,10 @@ const IndexView: FC<Props> = ({ setAssets }) => {
     if (
       // currentPage === pageIDs[0] ||
       // currentPage === pageIDs[1] ||
-      currentPage === pageIDs[2] ||
-      (currentPage === pageIDs[3] && !didMenuClick)
+      (currentPage === pageIDs[2] ||
+        currentPage === pageIDs[3] ||
+        currentPage === pageIDs[4]) &&
+      !didMenuClick
     )
       scrollToSection(currentPage);
   }, [currentPage, didMenuClick]);
@@ -78,6 +80,11 @@ const IndexView: FC<Props> = ({ setAssets }) => {
         setShowLoop={setShowLoop}
       />
       <div className="w-full h-full hidden lg:block">
+        <FriendsView
+          setAssets={setAssets}
+          id={pageIDs[4]}
+          setCurrentPage={setCurrentPage}
+        />
         <BuyRacksView
           setIsInView={setIsRacksInView}
           id={pageIDs[1]}
@@ -98,15 +105,16 @@ const IndexView: FC<Props> = ({ setAssets }) => {
           id={pageIDs[4]}
           setCurrentPage={setCurrentPage}
         />
-        {/* <WhereView
+        <WhereView
           setAssets={setAssets}
           id={pageIDs[5]}
           setCurrentPage={setCurrentPage}
-        /> */}
+          showLoop={showLoop}
+        />
       </div>
-      {/* <div className="w-full h-full lg:hidden"> */}
-      <LinkFire setAssets={setAssets} showLoop={showLoop} />
-      {/* </div> */}
+      <div className="w-full h-full lg:hidden">
+        <LinkFire setAssets={setAssets} showLoop={showLoop} />
+      </div>
     </>
   );
 };
