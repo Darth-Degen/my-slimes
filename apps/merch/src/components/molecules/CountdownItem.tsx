@@ -14,7 +14,9 @@ const CountdownItem: React.FC<CountdownItemProps> = (
       animate={{ scale: 1 }}
       transition={{ type: "spring", stiffness: 150 }}
     >
-      <div className="">{value > 0 ? value : 0}</div>
+      <div className="">
+        {value > 0 ? (value < 10 ? `0${value}` : value) : `00`}
+      </div>
     </motion.div>
   );
 };

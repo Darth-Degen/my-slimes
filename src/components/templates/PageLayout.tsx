@@ -40,7 +40,7 @@ const PageLayout: FC<Props> = (props: Props) => {
     footerAccentColor,
     footerTextColor,
     footerHex,
-    mainColor = "#f9f1d9", //"#F6EFD3",
+    mainColor = "#F9F1DA",
     className,
     ...componentProps
   } = props;

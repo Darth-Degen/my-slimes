@@ -5,6 +5,7 @@ import {
   motion,
   useInView,
   MotionValue,
+  Variant,
 } from "framer-motion";
 import {
   Dispatch,
@@ -30,6 +31,7 @@ interface GiProps {
   scrollDirection: string;
   isFixed?: boolean;
   // setIsFixed?: Dispatch<SetStateAction<boolean>>;
+  variant: Variant;
 }
 
 enum DimensionType {
@@ -48,6 +50,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     // startY,
     isFixed = false,
     // setIsFixed,
+    variant,
   } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
@@ -58,7 +61,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     target: parentRef,
   });
 
-  const src = `/images/sfc/${item.src}`;
+  const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/sfc/${item.src}`;
   // const isInView = useInView(childRef);
 
   const width = (type: DimensionType): string | number => {
@@ -67,16 +70,24 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     return "w-[280px]";
   };
 
+  // const height = (type: DimensionType): string | number => {
+  //   if (winHeight < 800 || winWidth < 600)
+  //     return type === DimensionType.String ? "h-[380px]" : 380;
+  //   else if (winWidth > 3000 && winHeight > 1500)
+  //     return type === DimensionType.String ? "h-[1000px]" : 1000;
+  //   else if (winWidth > 2000 && winHeight > 1200)
+  //     return type === DimensionType.String ? "h-[800px]" : 900;
+  //   return type === DimensionType.String ? "h-[500px]" : 500;
+  // };
   const height = (type: DimensionType): string | number => {
     if (winHeight < 800 || winWidth < 600)
-      return type === DimensionType.String ? "h-[380px]" : 380;
+      return type === DimensionType.String ? "h-[480px]" : 480;
     else if (winWidth > 3000 && winHeight > 1500)
-      return type === DimensionType.String ? "h-[1000px]" : 1000;
+      return type === DimensionType.String ? "h-[1200px]" : 1200;
     else if (winWidth > 2000 && winHeight > 1200)
-      return type === DimensionType.String ? "h-[800px]" : 900;
-    return type === DimensionType.String ? "h-[500px]" : 500;
+      return type === DimensionType.String ? "h-[900px]" : 900;
+    return type === DimensionType.String ? "h-[600px]" : 600;
   };
-
   // const width = (type: DimensionType): string | number => {
   //   if (winWidth > 3000) return "w-[160px]";
   //   else if (winWidth > 2000) return "w-[130px]";
@@ -106,31 +117,37 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
 
   return (
     <motion.div
-      onClick={() => setSFCModalId(item.id)}
-      // onMouseEnter={() => setDidHover(true)}
-      // onMouseLeave={() => setDidHover(false)}
-      ref={childRef}
-      className={`relative rounded-xl 
+      key={index}
+      //@ts-ignore
+      variants={variant}
+    >
+      <motion.div
+        onClick={() => setSFCModalId(item.id)}
+        // onMouseEnter={() => setDidHover(true)}
+        // onMouseLeave={() => setDidHover(false)}
+        ref={childRef}
+        className={`relative rounded-xl 
         ${width(DimensionType.String)} 
         ${height(DimensionType.String)} 
         ${isFixed ? "" : "cursor-pointer"}
       `}
-      // style={{ translateY: didLoad ? translateY : 0 }}
-      whileHover={{
-        width: hoverWidth(),
-      }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-    >
-      <Image
-        src={src}
-        alt={item.name}
-        fill
-        style={{ objectFit: "cover" }}
-        className="rounded-xl"
-        // imageClass="rounded-xl"
-        onLoadingComplete={() => setDidLoad(true)}
-        priority
-      />
+        // style={{ translateY: didLoad ? translateY : 0 }}
+        whileHover={{
+          width: hoverWidth(),
+        }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
+        <Image
+          src={src}
+          alt={item.name}
+          fill
+          style={{ objectFit: "cover" }}
+          className="rounded-xl"
+          // imageClass="rounded-xl"
+          onLoadingComplete={() => setDidLoad(true)}
+          priority
+        />
+      </motion.div>
     </motion.div>
   );
 };

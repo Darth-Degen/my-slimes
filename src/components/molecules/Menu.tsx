@@ -21,6 +21,12 @@ const Menu: FC<Props> = (props: Props) => {
 
   const menuData = [
     {
+      title: "slimes",
+      subtitle: "only",
+      src: "/hub",
+      isLanding: false,
+    },
+    {
       title: "what",
       subtitle: "we're doing",
       src: "/",
@@ -34,7 +40,7 @@ const Menu: FC<Props> = (props: Props) => {
     },
     {
       title: "friends",
-      subtitle: "with benifits",
+      subtitle: "with benefits",
       src: "/",
       isLanding: isLanding,
     },
@@ -43,12 +49,6 @@ const Menu: FC<Props> = (props: Props) => {
       subtitle: "to buy",
       src: "/",
       isLanding: isLanding,
-    },
-    {
-      title: "slimes",
-      subtitle: "only",
-      src: "/slimes",
-      isLanding: false,
     },
   ];
 
@@ -79,11 +79,10 @@ const Menu: FC<Props> = (props: Props) => {
             }}
             transition={{ duration: 0.7 }}
             className="fixed top-0 right-0 z-100 shadow-xl  overflow-y-auto bg-custom-tertiary"
-            onClick={() => toggleMenu(false)}
           >
             <motion.div className="flex flex-col justify-around px-4 sm:px-6 lg:px-10 py-6 h-screen overflow-x-hidden">
               {menuData.map((item, index) => (
-                <MenuItem key={index} item={item} />
+                <MenuItem key={index} item={item} toggleMenu={toggleMenu} />
               ))}
             </motion.div>
           </motion.aside>

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { FC, useContext, useState } from "react";
+import { Dispatch, FC, useContext, useState } from "react";
 import { ViewContext, midExitAnimation } from "@constants";
 import { useWindowSize } from "@hooks";
 import { useRouter } from "next/router";
@@ -12,9 +12,10 @@ interface MenuItems {
 }
 interface miProps {
   item: MenuItems;
+  toggleMenu: Dispatch<React.SetStateAction<boolean>>;
 }
 const MenuItem: FC<miProps> = (props: miProps) => {
-  const { item } = props;
+  const { item, toggleMenu } = props;
 
   const [hover, setHover] = useState<boolean>(false);
   const [winWidth, winHeight] = useWindowSize();
@@ -23,29 +24,33 @@ const MenuItem: FC<miProps> = (props: miProps) => {
   const { setDidMenuClick } = useContext(ViewContext);
 
   const handleClick = (): void => {
+    if (item.title !== "slimes" && winWidth < 1024) return;
     setDidMenuClick(true);
     if (!item.isLanding) router.push(item.src);
     else scrollToSection(item.title);
+    toggleMenu(false);
   };
 
   return (
     <div
       className="flex flex-col lg:flex-row lg:items-end lg:gap-1.5 cursor-pointer uppercase font-black"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => winWidth >= 1024 && setHover(true)}
+      onMouseLeave={() => winWidth >= 1024 && setHover(false)}
       onClick={() => handleClick()}
     >
       <div
         className={`responsive-font lg:text-9xl 2xl:text-[9rem] 3xl:text-[12rem] 4xl:text-[16rem] relative transition-colors duration-500 ${
           hover ? "text-v2-green" : "text-custom-primary "
-        }`}
+        } ${item.title !== "slimes" && winWidth < 1024 && "opacity-50"}`}
       >
         {item.title}
       </div>
       {winWidth < 1024 ? (
         <motion.p
           key="subtitle"
-          className="text-v2-green text-2xl whitespace-nowrap self-start -mt-4 ml-1 "
+          className={`text-v2-green text-2xl whitespace-nowrap self-start -mt-4 ml-1 ${
+            item.title !== "slimes" && "!opacity-50"
+          }`}
           {...midExitAnimation}
         >
           {item.subtitle}

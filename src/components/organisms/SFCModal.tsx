@@ -22,7 +22,9 @@ const SFCModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = sfc[imageId];
-  const mainImage = `/images/sfc/${item.highResSrc ?? item.src}`;
+  const mainImage = `${process.env.NEXT_PUBLIC_CDN_URL}/images/sfc/${
+    item.highResSrc ?? item.src
+  }`;
   //fetches id from context
   const { sfcModalId } = useContext(ViewContext);
 
@@ -60,7 +62,7 @@ const SFCModal: FC<Props> = (props: Props) => {
           {/* bg image */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <ImageShimmer
-              src={"/images/modal-backsplash.png"}
+              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/modal-backsplash.png`}
               alt="splash"
               width={300}
               height={300}

@@ -6,6 +6,7 @@ import {
   WhereView,
   ScrollProgress,
   LinkFire,
+  ExpIcon,
 } from "@components";
 import { BuyRacksView } from "apps/merch/src/components";
 import {
@@ -18,7 +19,7 @@ import {
 } from "react";
 import { scrollToSection } from "@helpers";
 import { ViewContext } from "@constants";
-import { useWindowSize } from "@merch-hooks";
+import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface Props {
   setAssets: Dispatch<SetStateAction<boolean[]>>;
@@ -40,9 +41,6 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   const [isLandingInView, setIsLandingInView] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<string>(pageIDs[0]);
   const [showLoop, setShowLoop] = useState<boolean>(false);
-  //refs
-
-  //hooks
 
   //context
   const { didMenuClick } = useContext(ViewContext);
@@ -50,14 +48,19 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   // views
   const [width] = useWindowSize();
   const mobileView = width <= 1024;
+  const scrollDirection = useScrollDirection();
 
   // handles auto scroll
   useEffect(() => {
+    // console.log("currentPage ", currentPage);
     if (
-      (currentPage === pageIDs[0] ||
-        currentPage === pageIDs[1] ||
-        currentPage === pageIDs[2]) &&
-      !didMenuClick
+      // currentPage === pageIDs[0] ||
+      // currentPage === pageIDs[1] ||
+      (currentPage === pageIDs[2] ||
+        currentPage === pageIDs[3] ||
+        currentPage === pageIDs[4]) &&
+      !didMenuClick &&
+      scrollDirection === "down"
     )
       scrollToSection(currentPage);
   }, [currentPage, didMenuClick]);
@@ -70,7 +73,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
 
   return (
     <>
-      <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} />
+      {/* <ScrollProgress backgroundColor={scrollColor} hidden={mobileView} /> */}
       <LandingView
         setAssets={setAssets}
         setIsInView={setIsLandingInView}
@@ -104,6 +107,7 @@ const IndexView: FC<Props> = ({ setAssets }) => {
           setAssets={setAssets}
           id={pageIDs[5]}
           setCurrentPage={setCurrentPage}
+          showLoop={showLoop}
         />
       </div>
       <div className="w-full h-full lg:hidden">

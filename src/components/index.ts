@@ -34,6 +34,10 @@ const WalletButton = dynamic(() => import("./atoms/WalletButton"));
 const ConnectButton = dynamic(() => import("./atoms/ConnectButton"));
 const GalleryArrowButton = dynamic(() => import("./atoms/GalleryArrowButton"));
 const MobileLink = dynamic(() => import("./atoms/MobileLink"));
+const FullResolutionDownload = dynamic(
+  () => import("./atoms/FullResolutionDownload")
+);
+const SlimeToggler = dynamic(() => import("./atoms/SlimeToggler"));
 //molecules
 const PageHead = dynamic(() => import("./molecules/PageHead"));
 const Logo = dynamic(() => import("./molecules/Logo"));
@@ -51,6 +55,9 @@ const TextScroll = dynamic(() => import("./molecules/TextScroll"));
 const ModalV2 = dynamic(() => import("./molecules/ModalV2"));
 const GalleryItem = dynamic(() => import("./molecules/GalleryItem"));
 const SFCGalleryItem = dynamic(() => import("./molecules/SFCGalleryItem"));
+const SlimesHubFooter = dynamic(() => import("./molecules/SlimesHubFooter"));
+const Scrollbar = dynamic(() => import("./atoms/Scrollbar"));
+const AssetLibrary = dynamic(() => import("./molecules/AssetLibrary"));
 //organisms
 const Header = dynamic(() => import("./organisms/Header"));
 const Footer = dynamic(() => import("./organisms/Footer"));
@@ -61,6 +68,8 @@ const GalleryModal = dynamic(() => import("./organisms/GalleryModal"));
 const SFCModal = dynamic(() => import("./organisms/SFCModal"));
 const Gallery = dynamic(() => import("./organisms/Gallery"));
 const SFCGallery = dynamic(() => import("./organisms/SFCGallery"));
+const YourSlimes = dynamic(() => import("./organisms/YourSlimes"));
+const SlimesGrid = dynamic(() => import("./organisms/SlimesGrid"));
 //templates
 const PageLayout = dynamic(() => import("./templates/PageLayout"));
 const LandingView = dynamic(() => import("./templates/LandingView"));
@@ -68,6 +77,7 @@ const WhatView = dynamic(() => import("./templates/WhatView"));
 const WhoView = dynamic(() => import("./templates/WhoView"));
 const FriendsView = dynamic(() => import("./templates/FriendsView"));
 const WhereView = dynamic(() => import("./templates/WhereView"));
+const SlimesHubView = dynamic(() => import("./templates/SlimesHubView"));
 const IndexView = dynamic(() => import("./templates/IndexView"));
 const LinkFire = dynamic(() => import("./templates/LinkFire"));
 
@@ -120,6 +130,7 @@ export {
   TextScroll,
   GalleryModal,
   ModalV2,
+  SlimesHubView,
   Gallery,
   GalleryItem,
   WordScroll,
@@ -128,10 +139,17 @@ export {
   WordFall,
   GalleryArrowButton,
   MobileLink,
+  FullResolutionDownload,
+  SlimeToggler,
   VideoScroll,
   IndexView,
   LinkFire,
   SFCGallery,
+  YourSlimes,
+  SlimesGrid,
   SFCGalleryItem,
+  AssetLibrary,
+  SlimesHubFooter,
+  Scrollbar,
   SFCModal,
 };

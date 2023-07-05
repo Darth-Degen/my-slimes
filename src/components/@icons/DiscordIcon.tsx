@@ -11,7 +11,12 @@ const DiscordIcon: FC = () => {
       rel="noreferrer"
       target="_blank"
     >
-      <Image src="/images/discord.png" width={37} height={41} alt="discord" />
+      <Image
+        src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/discord.png`}
+        width={37}
+        height={41}
+        alt="discord"
+      />
     </motion.a>
   );
 };

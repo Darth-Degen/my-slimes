@@ -3,7 +3,11 @@ import { FC, HTMLAttributes, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Dropdown, AssetDisplay, Modal } from "@components";
-import { collections, assets, midExitAnimation } from "@constants";
+import {
+  collection as collections,
+  assets,
+  midExitAnimation,
+} from "@constants";
 import type { Collection, Asset } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
@@ -13,6 +17,7 @@ const darkKai: Collection = {
   name: "Dark Kai",
   tag: "dark-kai",
   color: "#242424",
+  mintAddress: "GhfmfuTG4zqtf1bPuJA655jgM1DSaMQyhq6wttsc4m29",
   topValue: 10,
 };
 
@@ -75,7 +80,7 @@ const MySlimes: NextPage = () => {
       showHeader={true}
       headerType={"absolute"}
       showFooter={true}
-      mainColor={collection?.color ?? "#F6EFD3"}
+      mainColor={collection?.color ?? "#F9F1DA"}
       stopScroll={imageModal.length > 0}
     >
       {didMount && (
@@ -145,7 +150,7 @@ const MySlimes: NextPage = () => {
                       disabled={false}
                       onClick={() =>
                         downloadAsset(
-                          `/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
+                          `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/${asset?.tag}/${collection?.tag}.png`
                         )
                       }
                     >

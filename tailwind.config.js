@@ -27,10 +27,11 @@ module.exports = {
         bold: ["pangram-bold"],
         neuebit: ["neuebit"],
         "neuebit-bold": ["neuebit-bold"],
+        pangramLight: ["pangram-extraLight"],
       },
       colors: {
         //main
-        "custom-primary": "#f9f1d9", // "#F6EFD3",
+        "custom-primary": "#F9F1DA", // "#F6EFD3",
         "custom-secondary": "#8BD2B9",
         "custom-tertiary": "#312A29",
         //custom
@@ -45,9 +46,12 @@ module.exports = {
         "ait-black": "#020102",
         "ait-gray": "#E8E8E8",
         shadow: "rgba(82, 82, 82, 0.25)",
+        // slimes hub
+        "slimes-black": "#2E2929",
+        "slimes-border": "#BDBDBD",
         //version 2 theme
         "v2-pink": "#FFB094",
-        "v2-beige": "#F6EFD3", // "#F6EFD3",
+        "v2-beige": "#F9F1DA", // "#F6EFD3",
         "v2-green": "#73EEC5",
         "v2-dark-green": "#5CBE9D",
         "v2-dark": "#2C2524",
