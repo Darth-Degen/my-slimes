@@ -1,9 +1,9 @@
 import { FC } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useWindowSize } from "src/hooks";
 import DiscordIcon from "../@icons/DiscordIcon";
 import TwitterIcon from "../@icons/TwitterIcon";
+import ExpIcon from "../@icons/ExpIcon";
 
 interface Props {
   color: string;
@@ -52,7 +52,12 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
             </p>
           </motion.button>
         </div>
-        <div className="hidden xl:block w-1/3" />
+        <div className="hidden xl:block w-1/3">
+          <div className="w-fit ml-auto flex flex-col items-center">
+            <ExpIcon color="white" />
+            <p className={`text-white text-center mt-1.5`}>powered by EXP</p>
+          </div>
+        </div>
       </div>
     </div>
   );

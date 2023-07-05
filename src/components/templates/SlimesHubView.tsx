@@ -8,7 +8,7 @@ const SlimesHubView: FC<Props> = () => {
   return (
     <div className="relative w-full min-h-screen flex flex-col items-center">
       <YourSlimes />
-      <SlimesHubFooter />
+      <SlimesHubFooter color="#73EEC5" />
     </div>
   );
 };
