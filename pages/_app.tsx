@@ -30,8 +30,10 @@ const App = ({ Component, pageProps }: AppProps) => {
   // You can also provide a custom RPC endpoint.
   // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
-  const endpoint =
-    "https://devnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613"; //https://api.devnet.solana.com";
+  const endpoint = "https://mainnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
+
+  // const endpoint =
+  //   "https://rpc-devnet.helius.xyz/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613"; //https://api.devnet.solana.com";
 
   const wallets = useMemo(
     () => [
