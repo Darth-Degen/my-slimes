@@ -18,7 +18,9 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
     >
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between">
         <p className="w-1/2 xl:w-1/3 text-lg sm:text-2xl xl:text-4xl text-white font-black uppercase">
-          Connect with your slimes here
+          All in Time.
+          <br />
+          With my Slimes.
         </p>
         <div className="w-1/2 xl:w-1/3 flex items-center justify-end xl:justify-center gap-6 lg:gap-14">
           <motion.button
