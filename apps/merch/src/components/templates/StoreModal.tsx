@@ -182,9 +182,9 @@ const StoreModal: FC<Props> = (props: Props) => {
         {/* close icon */}
 
         <div
-          className="absolute top-2 right-2 cursor-pointer lg:hidden scale-80"
+          className="absolute top-2 right-2 cursor-pointer scale-75 lg:scale-50 z-10"
           onClick={() => {
-            setShowExitModal(false);
+            setShowExitModal(true);
           }}
         >
           <Image src={ExitIcon} alt="esc" width={35} height={35} />
