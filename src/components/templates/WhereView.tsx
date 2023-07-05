@@ -28,11 +28,11 @@ const WhereView: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className="relative w-full flex flex-col items-center lg:pb-20 h-screen z-10"
+      className="relative w-full flex flex-col items-center h-full z-10"
       id="where"
       ref={ref}
     >
-      <div className="sticky top-[12%]">
+      <div className="sticky w-full top-[12%]">
         <LinkFire setAssets={setAssets} showLoop={showLoop} />
       </div>
     </div>

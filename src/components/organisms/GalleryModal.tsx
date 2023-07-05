@@ -8,7 +8,12 @@ import {
   useContext,
 } from "react";
 import { ImageShimmer, LogoIcon, ModalV2 } from "@components";
-import { collection as collections, ViewContext } from "@constants";
+import {
+  collection as collections,
+  exitAnimation,
+  smallClickAnimation,
+  ViewContext,
+} from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
 import Image from "next/image";
@@ -22,7 +27,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = collections[imageId];
-  const mainImage = `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${item.tag}.png`;
+  const mainImage = `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${item.tag}.png`;
   //fetches id from context
   const { galleryModalId } = useContext(ViewContext);
 
@@ -47,7 +52,6 @@ const GalleryModal: FC<Props> = (props: Props) => {
             src={mainImage}
             alt={`Slime ${imageId}`}
             fill
-            // imageClass="!rounded-3xl"
             className="rounded-3xl"
           />
         </motion.div>
@@ -59,12 +63,49 @@ const GalleryModal: FC<Props> = (props: Props) => {
             width={300}
             height={300}
           />
-          <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-black uppercase text-4xl lg:text-8xl whitespace-nowrap">
+          <h3
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+            ${
+              item.name.length > 7 ? "lg:text-7xl" : "lg:text-8xl"
+            } font-black uppercase text-4xl whitespace-nowrap`}
+          >
             {item.name}
           </h3>
           <div className="absolute bottom-2 left-4">
-            My Slime #{formatId(galleryModalId + 1)}
+            My Slime #{formatId(galleryModalId)}
           </div>
+          {!!!item.burned && (
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+              <motion.button
+                {...smallClickAnimation}
+                onClick={() => {
+                  window.open(
+                    `https://exchange.art/single/${item?.mintAddress}`,
+                    "_blank",
+                    "noopener noreferrer"
+                  );
+                }}
+                className="flex flex-col items-center justify-center gap-2"
+              >
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/exchangeArt.png`}
+                  alt="exchange art"
+                  width={30}
+                  height={30}
+                />
+              </motion.button>
+            </div>
+          )}
+          {item?.burned && (
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-20 text-center">
+              <p className="text-lg" {...exitAnimation}>
+                In Loving Memory
+              </p>
+              <p className="text-lg" {...exitAnimation}>
+                1/26/23 - 6/29/23
+              </p>
+            </div>
+          )}
           <div className="absolute bottom-2 right-4">
             <LogoIcon fill={"#F6EFD3"} width={40} height={40} animate={false} />
           </div>

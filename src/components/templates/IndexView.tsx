@@ -103,15 +103,14 @@ const IndexView: FC<Props> = ({ setAssets }) => {
           id={pageIDs[4]}
           setCurrentPage={setCurrentPage}
         />
+      </div>
+      <div className="w-full h-full">
         <WhereView
           setAssets={setAssets}
           id={pageIDs[5]}
           setCurrentPage={setCurrentPage}
           showLoop={showLoop}
         />
-      </div>
-      <div className="w-full h-full lg:hidden">
-        <LinkFire setAssets={setAssets} showLoop={showLoop} />
       </div>
     </>
   );
