@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { enterAnimation, smallClickAnimation } from "@constants";
@@ -33,6 +33,8 @@ const YourSlimes: FC<Props> = () => {
   const [imageLoading, setImageLoading] = useState<boolean>(true); // loading state of featured image
   const [isDark, setIsDark] = useState(false);
   const [buttonColor, setButtonColor] = useState<string>("black");
+
+  const imageToggleRef = useRef<number>(0);
 
   // fetch users nfts
   const getNfts = useCallback(async () => {
@@ -131,6 +133,15 @@ const YourSlimes: FC<Props> = () => {
     }
   }, [isDark, selectedNft]);
 
+  useEffect(() => {
+    imageToggleRef.current += 1;
+    console.log(
+      "imageToggleRef ",
+      imageToggleRef.current,
+      imageToggleRef.current % 2
+    );
+  }, [featuredImage]);
+
   return (
     <motion.div
       className="relative w-full max-w-[1200px] mx-auto overflow-x-hidden"
@@ -145,30 +156,56 @@ const YourSlimes: FC<Props> = () => {
         {selectedNft && featuredImage && (
           <div className="flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
-              {selectedAssetType === "full-res" && (
-                <motion.div
-                  className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
-                  key={0}
-                  {...enterAnimation}
-                >
-                  <Image
-                    src={
-                      isDark
-                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
-                        : featuredImage
-                    }
-                    width={500}
-                    height={500}
-                    alt="featured slime asset"
-                    className="rounded-xl overflow-hidden"
-                    onLoadingComplete={() => setImageLoading(false)}
-                    // style={{
-                    //   transition: "opacity 0.69s",
-                    //   opacity: imageLoading ? 0 : 1,
-                    // }}
-                  />
-                </motion.div>
-              )}
+              {selectedAssetType === "full-res" &&
+                imageToggleRef.current % 2 === 0 && (
+                  <motion.div
+                    className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                    key={"full-res"}
+                    {...enterAnimation}
+                  >
+                    <Image
+                      src={
+                        isDark
+                          ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
+                          : featuredImage
+                      }
+                      width={500}
+                      height={500}
+                      alt="featured slime asset"
+                      className="rounded-xl overflow-hidden"
+                      onLoadingComplete={() => setImageLoading(false)}
+                      // style={{
+                      //   transition: "opacity 0.69s",
+                      //   opacity: imageLoading ? 0 : 1,
+                      // }}
+                    />
+                  </motion.div>
+                )}{" "}
+              {selectedAssetType === "full-res" &&
+                imageToggleRef.current % 2 === 1 && (
+                  <motion.div
+                    className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
+                    key={"full-res-1"}
+                    {...enterAnimation}
+                  >
+                    <Image
+                      src={
+                        isDark
+                          ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
+                          : featuredImage
+                      }
+                      width={500}
+                      height={500}
+                      alt="featured slime asset"
+                      className="rounded-xl overflow-hidden"
+                      onLoadingComplete={() => setImageLoading(false)}
+                      // style={{
+                      //   transition: "opacity 0.69s",
+                      //   opacity: imageLoading ? 0 : 1,
+                      // }}
+                    />
+                  </motion.div>
+                )}
               {selectedAssetType === "desktop" && (
                 <motion.div
                   className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
@@ -284,7 +321,7 @@ const YourSlimes: FC<Props> = () => {
             />
           </div>
 
-          <p className="font-secondary w-full xl:max-w-[392px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
+          <p className="font-secondary w-full xl:max-w-[392px] min-h-[30px] text-xs text-[10px] leading-[12px] text-slimes-black -mt-1">
             {selectedNft?.description}
           </p>
           {/* CTA buttons */}
