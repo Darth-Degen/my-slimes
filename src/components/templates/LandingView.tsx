@@ -60,9 +60,9 @@ const LandingView: FC<Props> = (props: Props) => {
   const isChildInView = useInView(innerRef);
 
   //auto scroll
-  useEffect(() => {
-    if (isInView) setCurrentPage(id);
-  }, [id, isInView, setCurrentPage]);
+  // useEffect(() => {
+  //   if (isInView) setCurrentPage(id);
+  // }, [id, isInView, setCurrentPage]);
 
   // useEffect(() => {
   //   if (mobileView) {

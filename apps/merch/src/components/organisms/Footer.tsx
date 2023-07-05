@@ -28,7 +28,7 @@ const Footer: FC<Props> = (props: Props) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="lg:w-1/2 text-red-500 font-neuebit-bold text-lg">
+      <div className="lg:w-1/2 text-red-500 font-neuebit-bold text-lg sm:whitespace-nowrap lg:pt-10 xl:pt-0">
         NONE OF THESE ITEMS WILL BE MADE AGAIN. GET THEM NOW OR NEVER GET THEM.
       </div>
       <AnimatePresence mode="wait">

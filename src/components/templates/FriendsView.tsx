@@ -36,7 +36,7 @@ const FriendsView: FC<Props> = (props: Props) => {
     >
       {/* <div className="relative pb-20"> */}
 
-      <div className="sticky top-[8%]">
+      <div className="sticky top-[8%] lg:top-[4%]">
         <AnimatePresence mode="wait">
           {isInView && !videoEnded && (
             // <VideoScroll

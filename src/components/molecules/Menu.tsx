@@ -21,6 +21,12 @@ const Menu: FC<Props> = (props: Props) => {
 
   const menuData = [
     {
+      title: "slimes",
+      subtitle: "only",
+      src: "/hub",
+      isLanding: false,
+    },
+    {
       title: "what",
       subtitle: "we're doing",
       src: "/",
@@ -43,12 +49,6 @@ const Menu: FC<Props> = (props: Props) => {
       subtitle: "to buy",
       src: "/",
       isLanding: isLanding,
-    },
-    {
-      title: "slimes",
-      subtitle: "only",
-      src: "/hub",
-      isLanding: false,
     },
   ];
 

@@ -113,7 +113,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     else if (winWidth > 2000) return "w-[130px]";
     return "w-[100px]";
   };
-
+  console.log("winHeight ", winWidth, winHeight);
   const height = (type: DimensionType): string | number => {
     if (winHeight < 800 || winWidth < 600)
       return type === DimensionType.String ? "h-[480px]" : 480;
@@ -121,7 +121,9 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
       return type === DimensionType.String ? "h-[1200px]" : 1200;
     else if (winWidth > 2000 && winHeight > 1200)
       return type === DimensionType.String ? "h-[900px]" : 900;
-    return type === DimensionType.String ? "h-[600px]" : 600;
+    else if (winHeight > 950)
+      return type === DimensionType.String ? "h-[600px]" : 600;
+    return type === DimensionType.String ? "h-[500px]" : 500;
   };
 
   const hoverWidth = (): number => {

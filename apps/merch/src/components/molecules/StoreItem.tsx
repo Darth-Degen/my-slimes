@@ -12,7 +12,9 @@ interface Props {
 }
 const StoreItem: FC<Props> = (props: Props) => {
   const { item, inStock, addToCart, handleImageClick } = props;
-  const [didHover, setDidHover] = useState<boolean>(false);
+
+  //TODO: change to true
+  const [didHover, setDidHover] = useState<boolean>(true);
 
   const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`;
 
@@ -36,9 +38,10 @@ const StoreItem: FC<Props> = (props: Props) => {
       <div className="flex flex-col items-center gap-2">
         <div
           className="relative"
-          onMouseEnter={() => setDidHover(true)}
-          onMouseLeave={() => setDidHover(false)}
-          onClick={() => handleImageClick(item)}
+          //TODO: uncomment
+          // onMouseEnter={() => setDidHover(true)}
+          // onMouseLeave={() => setDidHover(false)}
+          // onClick={() => handleImageClick(item)}
         >
           <ImageShimmer
             src={src}
@@ -54,7 +57,9 @@ const StoreItem: FC<Props> = (props: Props) => {
                 key="more"
                 {...fastExitAnimation}
               >
-                <p>see more</p>
+                {/* TODO: uncomment */}
+                {/* <p>see more</p> */}
+                <p>available 7/7</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -63,7 +68,9 @@ const StoreItem: FC<Props> = (props: Props) => {
           className="uppercase font-neuebit-bold text-lg bg-m-green px-6 pt-1 text-white transition-colors duration-200 hover:bg-m-dark-green active:bg-opacity-90 shadow-md
           disabled:bg-red-500 disabled:bg-opacity-50 disabled:cursor-not-allowed disabled:shadow-none min-w-[127px]"
           onClick={() => handleAddToCart(item)}
-          disabled={!inStock}
+          //TODO: uncomment
+          // disabled={!inStock}
+          disabled={true}
         >
           {!inStock ? "sold out" : "add to cart"}
         </button>
