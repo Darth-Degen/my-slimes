@@ -187,7 +187,7 @@ const WhatView: FC<Props> = (props: Props) => {
               />
             ))}
             {/* <div className="pb-[3500px] 3xl:pb-[4400px]" /> */}
-            <div className="pb-[1600px]" />
+            <div className="pb-[1850px] 2xl:pb-[1700px]" />
           </motion.div>
         </>
       )}
