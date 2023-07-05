@@ -48,10 +48,10 @@ const WhatView: FC<Props> = (props: Props) => {
   const scrollDirection = useScrollDirection();
   const isInView = useInView(ref);
   // const didViewRef = useRef<boolean>(false);
-  //auto scroll
-  useEffect(() => {
-    if (isInView) setCurrentPage(id);
-  }, [id, isInView, setCurrentPage]);
+  // //auto scroll
+  // useEffect(() => {
+  //   if (isInView) setCurrentPage(id);
+  // }, [id, isInView, setCurrentPage]);
 
   // const { scrollYProgress, scrollY } = useScroll({
   //   target: ref,
@@ -108,8 +108,8 @@ const WhatView: FC<Props> = (props: Props) => {
       ref={ref}
     >
       {animateRef.current > 1 ? (
-        <div className="sticky top-[5%] xl:top-[10%] flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14">
-          <div className="hidden lg:block h-full z-0 sticky top-[5%] xl:top-[12%]">
+        <div className="top-[5%] 2xl:top-[10%] flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14">
+          <div className="hidden lg:block h-full z-0 top-[4%] 2xl:top-[10%]">
             <Image
               src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${whatContent[2].src}`}
               height={height}
@@ -118,7 +118,7 @@ const WhatView: FC<Props> = (props: Props) => {
               priority
             />
           </div>
-          <div className="flex flex-col justify-around items-start gap-6 xl:gap-10 sticky top-[5%] 2xl:top-[10%] pt-20 2xl:pt-0">
+          <div className="flex flex-col justify-around items-start gap-6 xl:gap-10 top-[5%] 2xl:top-[10%] pt-20 2xl:pt-0">
             {whatContent.map((item, index) => (
               <div
                 key={index}
@@ -127,13 +127,13 @@ const WhatView: FC<Props> = (props: Props) => {
                 <p className="text-xl sm:text-3xl lg:text-6xl 2xl:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
                   {item.title}
                 </p>
-                <div className="text-xs 2xl:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
+                <div className="text-xs xl:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
                   <p className="w-auto max-w-[800px]">{item.textOne}</p>
                 </div>
               </div>
             ))}
           </div>
-          <div className="pb-[1000px]" />
+          {/* <div className="pb-[1000px]" /> */}
         </div>
       ) : (
         <>
@@ -264,7 +264,7 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
 
     return (
       <motion.div
-        className={`hidden xl:block sticky top-[4%] xl:top-[10%] ${className} `}
+        className={`hidden xl:block sticky top-[8%] 2xl:top-[10%] ${className} `}
         style={{
           y,
           // opacity,

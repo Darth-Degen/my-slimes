@@ -23,20 +23,20 @@ const FriendsView: FC<Props> = (props: Props) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(parentRef);
   const videoRef = useRef<HTMLVideoElement>(null);
-  //auto scroll
-  useEffect(() => {
-    if (isInView) setCurrentPage(id);
-  }, [id, isInView, setCurrentPage]);
+  // //auto scroll
+  // useEffect(() => {
+  //   if (isInView) setCurrentPage(id);
+  // }, [id, isInView, setCurrentPage]);
 
   return (
     <div
-      className="relative w-full min-h-screen flex flex-col items-center pb-20"
+      className="relative w-full  flex flex-col items-center pb-20"
       id={`friends`}
       ref={parentRef}
     >
       {/* <div className="relative pb-20"> */}
 
-      <div className="sticky top-[8%] lg:top-[4%]">
+      <div className="sticky top-[8%] lg:top-[4%] min-h-screen">
         <AnimatePresence mode="wait">
           {isInView && !videoEnded && (
             // <VideoScroll

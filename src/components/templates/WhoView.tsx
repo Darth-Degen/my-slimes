@@ -63,10 +63,10 @@ const WhoView: FC<Props> = (props: Props) => {
     },
   };
 
-  //auto scroll
-  useEffect(() => {
-    if (isInView) setCurrentPage(id);
-  }, [id, isInView, setCurrentPage]);
+  // //auto scroll
+  // useEffect(() => {
+  //   if (isInView) setCurrentPage(id);
+  // }, [id, isInView, setCurrentPage]);
 
   return (
     <div

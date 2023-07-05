@@ -51,19 +51,19 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   const scrollDirection = useScrollDirection();
 
   // handles auto scroll
-  useEffect(() => {
-    // console.log("currentPage ", currentPage);
-    if (
-      // currentPage === pageIDs[0] ||
-      // currentPage === pageIDs[1] ||
-      (currentPage === pageIDs[2] ||
-        currentPage === pageIDs[3] ||
-        currentPage === pageIDs[4]) &&
-      !didMenuClick &&
-      scrollDirection === "down"
-    )
-      scrollToSection(currentPage);
-  }, [currentPage, didMenuClick]);
+  // useEffect(() => {
+  //   // console.log("currentPage ", currentPage);
+  //   if (
+  //     // currentPage === pageIDs[0] ||
+  //     // currentPage === pageIDs[1] ||
+  //     (currentPage === pageIDs[2] ||
+  //       currentPage === pageIDs[3] ||
+  //       currentPage === pageIDs[4]) &&
+  //     !didMenuClick &&
+  //     scrollDirection === "down"
+  //   )
+  //     scrollToSection(currentPage);
+  // }, [currentPage, didMenuClick, scrollDirection]);
 
   //changes progress bar color over BuyRacksView
   useEffect(() => {
@@ -103,15 +103,14 @@ const IndexView: FC<Props> = ({ setAssets }) => {
           id={pageIDs[4]}
           setCurrentPage={setCurrentPage}
         />
+      </div>
+      <div className="w-full h-full">
         <WhereView
           setAssets={setAssets}
           id={pageIDs[5]}
           setCurrentPage={setCurrentPage}
           showLoop={showLoop}
         />
-      </div>
-      <div className="w-full h-full lg:hidden">
-        <LinkFire setAssets={setAssets} showLoop={showLoop} />
       </div>
     </>
   );

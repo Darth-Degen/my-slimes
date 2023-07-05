@@ -82,7 +82,7 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
     return (
       <motion.div
         className={`flex flex-col gap-4 items-center lg:items-start ${
-          isSticky ? "sticky top-[5%] xl:top-[10%] " : ""
+          isSticky ? "sticky top-[18%] 2xl:top-[10%] " : ""
         }`}
         style={{
           // opacity,
@@ -93,7 +93,7 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
         <p className="text-xl sm:text-3xl lg:text-6xl 2xl:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
           {content.title}
         </p>
-        <div className="text-xs 2xl:text-sm  flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
+        <div className="text-xs xl:text-sm  flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-3">
           <p className="w-auto max-w-[800px]">{content.textOne}</p>
         </div>
       </motion.div>
