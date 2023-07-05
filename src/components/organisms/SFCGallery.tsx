@@ -86,7 +86,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
   //one time animation
   const animateRef = useRef<number>(0);
   useEffect(() => {
-    console.log("isInView ", isInView, animateRef.current);
+    // console.log("isInView ", isInView, animateRef.current);
     if (isInView) animateRef.current += 1;
   }, [isInView]);
 
@@ -164,7 +164,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-black px-2 responsive-text whitespace-nowrap uppercase"
+            className="font-black px-2 responsive-text-2 whitespace-nowrap uppercase"
           >
             {text.split("").map((letter, index) => (
               <motion.span key={index} variants={letterVariants}>
@@ -179,7 +179,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
                 key="we-eatin"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, ease: "easeInOut", delay: 1.25 }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 0.9 }}
               >
                 <div className="w-1/3 uppercase">slimes</div>
                 <div className="w-1/3 uppercase flex justify-center">
@@ -217,7 +217,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
             ref={ref}
           >
             <motion.div
-              className="relative flex gap-5 py-4 px-4 md:px-0"
+              className="relative flex gap-5 pb-4 px-4 md:px-0"
               variants={galleryVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}

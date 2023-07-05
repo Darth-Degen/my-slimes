@@ -80,7 +80,7 @@ const MySlimes: NextPage = () => {
       showHeader={true}
       headerType={"absolute"}
       showFooter={true}
-      mainColor={collection?.color ?? "#F6EFD3"}
+      mainColor={collection?.color ?? "#F9F1DA"}
       stopScroll={imageModal.length > 0}
     >
       {didMount && (
