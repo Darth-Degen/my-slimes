@@ -22,7 +22,9 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
-import "dotenv/config";
+// import "dotenv/config";
+import Image from "next/image";
+import ExitIcon from "../../../images/icons/close.svg";
 
 interface Props {
   cart: Merch[];
@@ -177,6 +179,16 @@ const StoreModal: FC<Props> = (props: Props) => {
       className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2 z-50"
     >
       <div className="flex flex-col items-center justify-between xl:h-full w-full text-3xl">
+        {/* close icon */}
+
+        <div
+          className="absolute top-2 right-2 cursor-pointer lg:hidden scale-80"
+          onClick={() => {
+            setShowExitModal(false);
+          }}
+        >
+          <Image src={ExitIcon} alt="esc" width={35} height={35} />
+        </div>
         <Header
           step={step}
           nfts={nfts.length}
