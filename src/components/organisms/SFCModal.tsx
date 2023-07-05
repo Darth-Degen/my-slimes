@@ -68,7 +68,7 @@ const SFCModal: FC<Props> = (props: Props) => {
               </div>
             </div>
           </div>
-          <p className="text-2xl text-center">Artist: {item.artist}</p>
+          <p className="z-20 text-2xl text-center">Artist: {item.artist}</p>
           <div className="absolute bottom-4 left-4">
             <motion.button
               {...smallClickAnimation}
