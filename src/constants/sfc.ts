@@ -116,11 +116,11 @@ export const sfc: SFC[] = [
   {
     id: 9,
     twitter: ["https://twitter.com/calltoddy"],
-    src: "slimes:-bear-market-brawl.webp",
+    src: "brawler.png",
     name: "SlIMES: BEAR MARKET BRAWL",
     description:
       "A short comic created by @calltoddy - he adapted a storyboard for a short video into this incredible piece that now lives forever on the blockchain. Scum faces off against the Bear Market, hoping to bring back the bull by any means necessary.",
-    artist: ["Toddy"],
+    artist: ["Todd"],
     url: "https://exchange.art/editions/3p6C9JAoVwbyhWriWvtYXBGx9PeijncNgAkoYhzzNaw6",
     width: 4800 / 10,
     height: 6000 / 10,
@@ -128,7 +128,7 @@ export const sfc: SFC[] = [
   {
     id: 10,
     twitter: ["https://twitter.com/joiceloo_art"],
-    src: "sanctuary.webp",
+    src: "sanctuary.gif",
     name: "Sanctuary",
     description:
       "Amid danger's clutch, sanctuary's embrace; A haven found, where fear's erased. In collaboration with Joice Loo.",
