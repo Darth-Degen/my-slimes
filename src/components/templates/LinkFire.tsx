@@ -20,8 +20,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://exchange.art/series/Slimes/nfts"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/slimes_secondary.png`}
-                width={1952 / 5.5}
-                height={1164 / 5.5}
+                width={1952 / 4}
+                height={1164 / 4}
                 alt="slimes secondary marketplace link"
                 index={0}
               />
@@ -31,8 +31,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://exchange.art/series/Slimes%20Family%20Collection/nfts"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/sfc_secondary.png`}
-                width={1952 / 5.5}
-                height={1164 / 5.5}
+                width={1952 / 4}
+                height={1164 / 4}
                 alt="sfc secondary marketplace link"
                 index={1}
               />
@@ -42,8 +42,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://twitter.com/myslimes_"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/slimes_twitter.png`}
-                width={1952 / 5.5}
-                height={1164 / 5.5}
+                width={1952 / 4}
+                height={1164 / 4}
                 alt="slimes twitter link"
                 index={2}
               />
@@ -53,8 +53,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://twitter.com/scumsol"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/scum_twitter.png`}
-                width={1952 / 5.5}
-                height={1164 / 5.5}
+                width={1952 / 4}
+                height={1164 / 4}
                 alt="scum twitter link"
                 index={3}
               />
@@ -64,8 +64,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://discord.gg/scumsol"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/scum_discord.png`}
-                width={1952 / 5.5}
-                height={1164 / 5.5}
+                width={1952 / 4}
+                height={1164 / 4}
                 alt="scum discord link"
                 index={4}
               />
@@ -75,8 +75,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://allintime.xyz/"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/allintime.png`}
-                width={1952 / 5.5}
-                height={1164 / 5.5}
+                width={1952 / 4}
+                height={1164 / 4}
                 alt="all in time link"
                 index={5}
               />
@@ -86,8 +86,8 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
                 setAssets={setAssets}
                 href="https://aether.so/space/Slimes"
                 image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/slimes_family_gallery.png`}
-                width={4008 / 3.61}
-                height={1002 / 3.61}
+                width={4008 / 3}
+                height={1002 / 3}
                 alt="slimes family gallery link"
                 index={6}
               />
