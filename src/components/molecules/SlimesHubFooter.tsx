@@ -53,8 +53,11 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
           </motion.button>
         </div>
         <div className="hidden xl:block w-1/3">
-          <div className="w-fit ml-auto flex flex-col items-center">
-            <ExpIcon color="white" />
+          <div className="w-fit mx-auto flex flex-col items-center">
+            <div className="bg-white w-20 h-12 mb-1 rounded-lg flex items-center justify-center">
+              <ExpIcon color={color} />
+            </div>
+
             <p className={`text-white text-center mt-1.5`}>powered by EXP</p>
           </div>
         </div>
