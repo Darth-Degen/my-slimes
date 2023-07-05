@@ -13,16 +13,16 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
   const [winWidth, _] = useWindowSize();
   return (
     <div
-      className="absolute bottom-0 w-full py-9 px-4 sm:px-10 xl:px-0"
+      className="absolute bottom-0 w-full py-9 px-4 sm:px-10 xl:px-8"
       style={{ backgroundColor: color }}
     >
-      <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between">
-        <p className="w-1/2 xl:w-1/3 text-lg sm:text-2xl xl:text-4xl text-white font-black uppercase">
+      <div className="w-full 3xl:max-w-[1800px] mx-auto flex items-center justify-between">
+        <p className="w-1/2 lg:w-1/3 text-lg sm:text-2xl xl:text-4xl text-white font-black uppercase">
           All in Time.
           <br />
           With my Slimes.
         </p>
-        <div className="w-1/2 xl:w-1/3 flex items-center justify-end xl:justify-center gap-6 lg:gap-14">
+        <div className="w-1/2 lg:w-1/3 flex items-center justify-center xl:justify-center gap-6 lg:gap-14">
           <motion.button
             className="flex flex-col items-center justify-center gap-2"
             onClick={() => {
@@ -54,9 +54,9 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
             </p>
           </motion.button>
         </div>
-        <div className="hidden xl:block w-1/3">
+        <div className="hidden lg:flex justify-end items-end w-1/3">
           <motion.button
-            className="w-fit mx-auto flex flex-col items-center"
+            className="w-fit flex flex-col items-center"
             onClick={() => {
               window.open(
                 "https://twitter.com/sol_exp",
@@ -73,7 +73,7 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
           </motion.button>
         </div>
       </div>
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 xl:hidden">
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 lg:hidden">
         <a href="https://twitter.com/sol_exp" target="_blank" rel="noreferrer">
           <p className="text-center text-xs text-white uppercase">
             Powered by EXP

@@ -210,7 +210,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           // </a>
         )}
       </div>
-      {/* <div className="pt-20  lg:pb-[500px]" /> */}
+      <div className="lg:pb-[500px]" />
     </div>
   );
 };
