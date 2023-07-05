@@ -68,7 +68,32 @@ const SFCModal: FC<Props> = (props: Props) => {
               </div>
             </div>
           </div>
-          <p className="z-20 text-2xl text-center">Artist: {item.artist}</p>
+          <div className="flex gap-1 items-center">
+            <p className="z-20 text-2xl">{`Artist${
+              item.artist.length > 1 ? "s" : ""
+            }: `}</p>
+            {item.artist.map((artist, index) => {
+              const isLast = index === item.artist.length - 1;
+              return (
+                <>
+                  <p
+                    className="cursor-pointer z-20 text-2xl text-center"
+                    onClick={() =>
+                      window.open(
+                        item.twitter[index],
+                        "_blank",
+                        "noopener noreferrer"
+                      )
+                    }
+                    key={index}
+                  >
+                    {artist}
+                  </p>
+                  {!isLast && ", "}
+                </>
+              );
+            })}
+          </div>
           <div className="absolute bottom-4 left-4">
             <motion.button
               {...smallClickAnimation}
