@@ -1,16 +1,7 @@
-import {
-  Dispatch,
-  SetStateAction,
-  FC,
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-} from "react";
+import { Dispatch, SetStateAction, FC, useContext } from "react";
 import { ImageShimmer, LogoIcon, ModalV2 } from "@components";
-import { sfc, ViewContext } from "@constants";
-import { AnimatePresence, motion } from "framer-motion";
-import download from "downloadjs";
+import { sfc, smallClickAnimation, ViewContext } from "@constants";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 interface Props {
@@ -28,17 +19,15 @@ const SFCModal: FC<Props> = (props: Props) => {
   //fetches id from context
   const { sfcModalId } = useContext(ViewContext);
 
-  const formatId = (id: number): string => `${id < 10 ? "00" : "0"}${id}`;
-
   return (
     <ModalV2
       show={sfcModalId !== -1}
       onClick={() => {
         setImageId(-1);
       }}
-      className="w-[98%] h-[98%]  lg:h-[70vh] lg:w-[100vh] xl:w-[130vh] "
+      className="w-[98%] h-[98%] lg:h-[70vh] lg:w-[100vh] xl:w-[130vh] "
     >
-      <div className="flex flex-col-reverse md:flex-row justify-evenly items-center bg-v2-dark !bg-opacity-100 h-full w-full gap-4 p-10">
+      <div className="relative flex flex-col-reverse md:flex-row justify-evenly items-center bg-v2-dark !bg-opacity-100 h-full w-full gap-4 px-10">
         {/* image */}
         <motion.div
           transition={{ duration: 1 }}
@@ -49,7 +38,7 @@ const SFCModal: FC<Props> = (props: Props) => {
         >
           <Image
             src={mainImage}
-            alt={`Slime ${imageId}`}
+            alt={`SFC ${imageId}`}
             // style={{ objectFit: "contain" }}
             // fill
             width={item.width}
@@ -58,32 +47,47 @@ const SFCModal: FC<Props> = (props: Props) => {
           />
         </motion.div>
         {/* info */}
-        <div className="relative flex flex-col items-center justify-center w-full md:w-1/2 h-full lg:px-6 py-4 lg:py-20 text-custom-primary ">
-          {/* bg image */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <ImageShimmer
-              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/modal-backsplash.png`}
-              alt="splash"
-              width={300}
-              height={300}
-              className="opacity-40"
-            />
-          </div>
-          {/* text */}
-          <div className="flex flex-col z-10 gap-8 text-center items-center">
-            <h3 className="font-black uppercase text-4xl lg:text-6xl  text-v2-green">
-              {item.name}
-            </h3>
-            <div className="text-2xl lg:px-12 text-center">
-              {item.description}
+        <div className="relative flex flex-col items-center justify-center w-full md:w-1/2 h-full gap-8 lg:px-6 text-custom-primary">
+          <h3 className="z-30 text-center font-black uppercase text-4xl lg:text-6xl  text-v2-green">
+            {item.name}
+          </h3>
+          <div className="relative">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <ImageShimmer
+                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/modal-backsplash.png`}
+                alt="splash"
+                width={300}
+                height={300}
+                className="opacity-40"
+              />
+            </div>
+            {/* text */}
+            <div className="flex flex-col z-10 gap-6 text-center items-center">
+              <div className="z-20 text-xl lg:px-12 text-center">
+                {item.description}
+              </div>
             </div>
           </div>
-          <div className="hidden lg:block absolute bottom-2 left-4 text-xl">
-            Artist: {item.artist}
+          <p className="text-2xl text-center">Artist: {item.artist}</p>
+          <div className="absolute bottom-4 left-4">
+            <motion.button
+              {...smallClickAnimation}
+              onClick={() => {
+                window.open(`${item?.url}`, "_blank", "noopener noreferrer");
+              }}
+              className="flex flex-col items-center justify-center gap-2"
+            >
+              <Image
+                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/exchangeArt.png`}
+                alt="exchange art"
+                width={35}
+                height={35}
+              />
+            </motion.button>
           </div>
-          <div className="hidden lg:block absolute bottom-2 right-4">
-            <LogoIcon fill={"#F6EFD3"} width={40} height={40} animate={false} />
-          </div>
+        </div>
+        <div className="hidden lg:block absolute bottom-4 right-4">
+          <LogoIcon fill={"#F6EFD3"} width={40} height={40} animate={false} />
         </div>
       </div>
     </ModalV2>
