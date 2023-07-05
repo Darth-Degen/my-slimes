@@ -10,7 +10,7 @@ interface Props {
 
 const DropdownItem: FC<Props> = (props: Props) => {
   const { item, handleSelect, variants } = props;
-  const styles: string = "w-56 h-10 bg-dark text-xs z-50";
+  const styles: string = "w-56 h-10 bg-dark text-xs z-20";
 
   return (
     <li

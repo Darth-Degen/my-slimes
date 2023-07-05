@@ -129,12 +129,6 @@ const Footer: FC<Props> = (props: Props) => {
                 className={`${backgroundAccentColor} rounded-l-2xl rounded-r-2xl text-3xl ${text()} w-min px-5`}
               >
                 <ExpIcon color={mainColor} />
-                {/* <Image
-                src="/images/exp/logo-white.png"
-                height={50}
-                width={50}
-                alt="EXP"
-              /> */}
               </div>
               <p className={`${textColor} mt-1.5`}>powered by EXP</p>
             </div>

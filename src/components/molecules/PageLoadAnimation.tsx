@@ -9,7 +9,7 @@ interface Props {
 const PageLoadAnimation: FC<Props> = (props: Props) => {
   return (
     <motion.div
-      className="absolute inset-0 z-50"
+      className="absolute inset-0 z-20"
       key="page-load-animation"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

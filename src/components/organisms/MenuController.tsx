@@ -1,13 +1,8 @@
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { MenuIcon, Menu } from "@components";
+import { FC, useEffect, useRef, useState } from "react";
+import { MenuIcon, Menu, CloseIcon } from "@components";
 import { useOutsideAlerter } from "@hooks";
+import { AnimatePresence, motion } from "framer-motion";
+import { menuAnimation } from "@constants";
 
 interface Props {}
 
@@ -23,10 +18,28 @@ const MenuController: FC<Props> = (props: Props) => {
   }, [openMenu]);
 
   return (
-    <div className="w-full h-full flex items-end justify-end " ref={wrapperRef}>
-      <div key="menu-icon" onClick={() => setOpenMenu(true)}>
-        <MenuIcon />
-      </div>
+    <div className="w-full h-full items-end justify-end flex" ref={wrapperRef}>
+      <AnimatePresence mode="wait">
+        {!openMenu ? (
+          <motion.div key="open" {...menuAnimation}>
+            <MenuIcon
+              className="cursor-pointer"
+              onClick={() => setOpenMenu(true)}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="close"
+            className="cursor-pointer z-30"
+            {...menuAnimation}
+          >
+            <CloseIcon
+              className="cursor-pointer"
+              onClick={() => setOpenMenu(false)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <Menu toggleMenu={setOpenMenu} open={openMenu} />
     </div>
   );

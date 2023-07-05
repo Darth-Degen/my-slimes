@@ -1,62 +1,39 @@
 import { FC, SVGProps } from "react";
-import { motion } from "framer-motion";
 
-interface Props extends SVGProps<SVGSVGElement> {
-  fillHover?: string;
-}
+interface Props extends SVGProps<SVGSVGElement> {}
 
 const MenuIcon: FC<Props> = (props: Props) => {
-  const { fillHover = "#121212", className, fill = "white" } = props;
-
-  const menuAnimation = {
-    // whileHover: { scale: 1.05 },
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-    // whileTap: { scale: 0.9 },
-    // whileHover: {
-    //   boxShadow: "0 6px 10px 0 rgba(0, 0, 0, 0.19) ",
-    // },
-    transition: { duration: 0.3, ease: "easeInOut" },
-  };
+  const { className, ...componentProps } = props;
 
   return (
-    <motion.div
-      className="cursor-pointer p-3 transition-all duration-200 rounded"
-      // {...menuAnimation}
+    <svg
+      width="226"
+      height="142"
+      viewBox="0 0 226 142"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={` w-9 h-9 ${className}`}
+      onClick={componentProps.onClick}
     >
-      <svg
-        width="83"
-        height="52"
-        viewBox="0 0 83 52"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={`${className} w-[41.5px] h-[26px]`}
-        id="exit-icon"
-      >
-        <path
-          d="M2.69633 3.03906H80.302"
-          stroke="#F3F1EA"
-          strokeWidth="3"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
-        />
-        <path
-          d="M2.69633 26.354H80.302"
-          stroke="#F3F1EA"
-          strokeWidth="3"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
-        />
-        <path
-          d="M2.69633 49.6748H80.302"
-          stroke="#F3F1EA"
-          strokeWidth="3"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
-        />
-      </svg>
-    </motion.div>
+      <path
+        d="M13 13H213"
+        stroke="#312A29"
+        strokeWidth="25"
+        strokeLinecap="round"
+      />
+      <path
+        d="M13 70.8477H213"
+        stroke="#312A29"
+        strokeWidth="25"
+        strokeLinecap="round"
+      />
+      <path
+        d="M13 129.395H213"
+        stroke="#312A29"
+        strokeWidth="25"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 };
 

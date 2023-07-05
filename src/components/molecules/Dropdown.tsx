@@ -30,14 +30,14 @@ const Dropdown: FC<Props> = (props: Props) => {
           <motion.div
             {...fastExitAnimation}
             key="dropdown-list"
-            className="absolute z-50 pt-2"
+            className="absolute z-20 pt-2"
           >
             <motion.div
               variants={dropdownAnimations}
               initial="hidden"
               animate="show"
             >
-              <motion.ul className="rounded-xl divide-y divide-custom-dark border-2 border-custom-dark shadow max-h-[240px] overflow-y-scroll z-50 bg-custom-light">
+              <motion.ul className="rounded-xl divide-y divide-custom-dark border-2 border-custom-dark shadow max-h-[240px] overflow-y-scroll z-20 bg-custom-light">
                 {items &&
                   items.map((item: Collection | Asset) => (
                     <DropdownItem

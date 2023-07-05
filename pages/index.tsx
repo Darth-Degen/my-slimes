@@ -1,31 +1,22 @@
-import { PageLayout, LandingPage } from "@components";
-import { useEffect, useRef, useState } from "react";
+import { PageLayout, IndexView } from "@components";
+import { useState } from "react";
 import { NextPage } from "next";
+import { useWindowSize } from "@hooks";
 
 const Home: NextPage = () => {
-  const [didMount, setDidMount] = useState<boolean>(false);
-  const [showPage, setShowPage] = useState<boolean>(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  //state
+  const [assets, setAssets] = useState<boolean[]>([]);
 
-  useEffect(() => {
-    const milliseconds = Math.floor(Math.random() * (3000 - 2000 + 1) + 2000);
-    timeoutRef.current = setTimeout(() => {
-      setShowPage(true);
-    }, milliseconds);
+  const [width] = useWindowSize();
+  const mobileView = width <= 1024;
 
-    return () => {
-      clearTimeout(timeoutRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    setDidMount(true);
-    console.log("MY SLIMES");
-  }, []);
+  // useEffect(() => {
+  //   console.log("assets", assets);
+  // }, [assets]);
 
   return (
-    <PageLayout showPage={showPage} headerType="fixed">
-      {didMount && <LandingPage showPage={showPage} />}
+    <PageLayout headerType={mobileView ? "absolute" : "scroll"} assets={assets}>
+      <IndexView setAssets={setAssets} />
     </PageLayout>
   );
 };

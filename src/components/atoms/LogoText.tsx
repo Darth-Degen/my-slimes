@@ -1,22 +1,14 @@
 import { FC, SVGProps } from "react";
 import { motion } from "framer-motion";
-import { useWindowSize } from "@hooks";
 
 interface Props extends SVGProps<SVGSVGElement> {
   showAnimation?: boolean;
 }
 
 const LogoText: FC<Props> = (props: Props) => {
-  const { color = "white" } = props;
+  const { showAnimation = false, className, ...componentProps } = props;
 
-  const [winWidth, winHeight] = useWindowSize();
-  const {
-    showAnimation = true,
-    className,
-    fill = "white",
-    width = winWidth < 640 ? 269 : 400,
-    height = winWidth < 640 ? 125 : 200,
-  } = props;
+  const fill = componentProps.fill ?? "white";
 
   const transitionValues = {
     duration: 0.4,
@@ -27,8 +19,8 @@ const LogoText: FC<Props> = (props: Props) => {
   return (
     <svg
       id="slimes-test"
-      width={width}
-      height={height}
+      width={componentProps.width ?? 269}
+      height={componentProps.height ?? 125}
       viewBox="0 0 1980 700"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

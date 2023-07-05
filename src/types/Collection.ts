@@ -1,8 +1,14 @@
-
 export interface Collection {
   id: number;
-  tag:string;
+  tag: string;
   name: string;
+  burned?: boolean;
+  image?: string;
+  description?: string;
   color: string;
-  doublePfp?: boolean
+  doublePfp?: boolean;
+  topValue: number;
+  mintAddress: string;
+  mobileView?: string;
+  desktopView?: string;
 }

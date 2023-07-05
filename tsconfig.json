@@ -6,6 +6,13 @@
       "@constants": ["src/constants/"],
       "@types": ["src/types/"],
       "@hooks": ["src/hooks/"], 
+      "@helpers": ["src/helpers/"], 
+      //merch TODO: needed for module reuse
+      "@merch-components": ["apps/merch/src/components"],
+      "@merch-constants": ["apps/merch/src/constants"],
+      "@merch-types": ["apps/merch/src/types"],
+      "@merch-hooks": ["apps/merch/src/hooks"], 
+      "@merch-helpers": ["apps/merch/src/helpers/"], 
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

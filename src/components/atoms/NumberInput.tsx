@@ -8,9 +8,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 const NumberInput: FC<Props> = (props: Props) => {
   const { supply, handleInput, className, ...componentProps } = props;
-  const debouncer = debounce((value) => handleInput(value), 1000);
-
-  const styles: string = "w-56 h-10 bg-dark text-xs";
+  const debouncer = debounce((value) => handleInput(value), 0);
 
   //prevent keys
   const onKeyPress = (event: React.KeyboardEvent): void => {
@@ -31,12 +29,12 @@ const NumberInput: FC<Props> = (props: Props) => {
   return (
     <div>
       <input
-        className={`${className} relative flex justify-between ${styles} transition-all duration-500 border border-dark hover:border-orange-300 focus:border-red-400 active:outline-none focus:outline-none rounded items-center p-2 ${
+        className={`${className} relative flex items-center w-40 h-10 pl-4 pr-1 pt-1 text-4xl text-black rounded focus:outline-ait-teal ${
           componentProps.disabled ? "cursor-not-allowed" : ""
         }`}
         onKeyPress={(e) => onKeyPress(e)}
         onInput={(e) => onInput(e)}
-        placeholder="Enter ID"
+        placeholder="23"
         type="number"
         min={1}
         max={supply}
