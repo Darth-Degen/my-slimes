@@ -133,7 +133,7 @@ const WhatView: FC<Props> = (props: Props) => {
               </div>
             ))}
           </div>
-          <div className="pb-[1000px]" />
+          {/* <div className="pb-[1000px]" /> */}
         </div>
       ) : (
         <>
