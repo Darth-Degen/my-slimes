@@ -11,6 +11,7 @@ import { ImageShimmer, LogoIcon, ModalV2 } from "@components";
 import {
   collection as collections,
   exitAnimation,
+  smallClickAnimation,
   ViewContext,
 } from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
@@ -72,6 +73,29 @@ const GalleryModal: FC<Props> = (props: Props) => {
           <div className="absolute bottom-2 left-4">
             My Slime #{formatId(galleryModalId + 1)}
           </div>
+          {!!!item.burned && (
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+              <motion.button
+                {...smallClickAnimation}
+                onClick={() => {
+                  window.open(
+                    `https://exchange.art/single/${item?.mintAddress}`,
+                    "_blank",
+                    "noopener noreferrer"
+                  );
+                }}
+                className="flex flex-col items-center justify-center gap-2"
+              >
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/exchangeArt.png`}
+                  alt="exchange art"
+                  width={30}
+                  height={30}
+                />
+              </motion.button>
+            </div>
+          )}
+
           <div className="absolute bottom-2 right-4">
             <LogoIcon fill={"#F6EFD3"} width={40} height={40} animate={false} />
           </div>
