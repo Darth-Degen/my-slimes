@@ -1,15 +1,26 @@
 import { FC } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useWindowSize } from "src/hooks";
+import DiscordIcon from "../@icons/DiscordIcon";
+import TwitterIcon from "../@icons/TwitterIcon";
 
-const SlimesHubFooter: FC = () => {
+interface Props {
+  color: string;
+}
+
+const SlimesHubFooter: FC<Props> = ({ color }) => {
+  const [winWidth, _] = useWindowSize();
   return (
-    <div className="absolute bottom-0 w-full py-9 bg-v2-green px-10 xl:px-0">
+    <div
+      className="absolute bottom-0 w-full py-9 px-4 sm:px-10 xl:px-0"
+      style={{ backgroundColor: color }}
+    >
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between">
-        <p className="w-1/2 xl:w-1/3 text-2xl xl:text-4xl text-white font-black uppercase">
+        <p className="w-1/2 xl:w-1/3 text-lg sm:text-2xl xl:text-4xl text-white font-black uppercase">
           Connect with your slimes here
         </p>
-        <div className="w-1/2 xl:w-1/3 flex items-center justify-center gap-14">
+        <div className="w-1/2 xl:w-1/3 flex items-center justify-end xl:justify-center gap-6 lg:gap-14">
           <motion.button
             className="flex flex-col items-center justify-center gap-2"
             onClick={() => {
@@ -20,13 +31,8 @@ const SlimesHubFooter: FC = () => {
               );
             }}
           >
-            <Image
-              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/discord.svg`}
-              width={40}
-              height={40}
-              alt="slimes social icon"
-            />
-            <p className="text-white text-lg font-black underline uppercase">
+            <DiscordIcon color={color} width={winWidth < 640 ? "20" : "40"} />
+            <p className="text-white text-sm sm:text-lg font-black underline uppercase">
               Discord
             </p>
           </motion.button>
@@ -40,13 +46,8 @@ const SlimesHubFooter: FC = () => {
               );
             }}
           >
-            <Image
-              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/icons/twitter.svg`}
-              width={40}
-              height={40}
-              alt="slimes social icon"
-            />
-            <p className="text-white text-lg font-black underline uppercase">
+            <TwitterIcon color={color} width={winWidth < 640 ? "20" : "40"} />
+            <p className="text-white text-sm sm:text-lg font-black underline uppercase">
               Twitter
             </p>
           </motion.button>

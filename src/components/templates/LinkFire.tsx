@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MobileLink } from "@components";
+import { MobileLink, SlimesHubFooter } from "@components";
 import { slideUp } from "src/constants";
 
 interface Props {
@@ -13,7 +13,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
   return (
     <AnimatePresence mode="wait">
       {showLoop && (
-        <motion.div {...slideUpAnimation} className="md:mt-0 md:mx-10">
+        <motion.div {...slideUpAnimation} className="md:mt-0 md:mx-10 pb-40">
           <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-5 pb-10 items-center">
             <div className="col-span-1 w-full h-full overflow-hidden rounded-xl">
               <MobileLink
@@ -95,6 +95,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
           </div>
         </motion.div>
       )}
+      <SlimesHubFooter color="#FFB094" />
     </AnimatePresence>
   );
 };
