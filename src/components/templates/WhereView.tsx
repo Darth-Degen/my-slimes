@@ -21,10 +21,10 @@ const WhereView: FC<Props> = (props: Props) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref);
-  //auto scroll
-  useEffect(() => {
-    if (isInView) setCurrentPage(id);
-  }, [id, isInView, setCurrentPage]);
+  // //auto scroll
+  // useEffect(() => {
+  //   if (isInView) setCurrentPage(id);
+  // }, [id, isInView, setCurrentPage]);
 
   return (
     <div

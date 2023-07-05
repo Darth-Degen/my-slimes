@@ -48,10 +48,10 @@ const WhatView: FC<Props> = (props: Props) => {
   const scrollDirection = useScrollDirection();
   const isInView = useInView(ref);
   // const didViewRef = useRef<boolean>(false);
-  //auto scroll
-  useEffect(() => {
-    if (isInView) setCurrentPage(id);
-  }, [id, isInView, setCurrentPage]);
+  // //auto scroll
+  // useEffect(() => {
+  //   if (isInView) setCurrentPage(id);
+  // }, [id, isInView, setCurrentPage]);
 
   // const { scrollYProgress, scrollY } = useScroll({
   //   target: ref,

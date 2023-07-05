@@ -51,19 +51,19 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   const scrollDirection = useScrollDirection();
 
   // handles auto scroll
-  useEffect(() => {
-    // console.log("currentPage ", currentPage);
-    if (
-      // currentPage === pageIDs[0] ||
-      // currentPage === pageIDs[1] ||
-      (currentPage === pageIDs[2] ||
-        currentPage === pageIDs[3] ||
-        currentPage === pageIDs[4]) &&
-      !didMenuClick &&
-      scrollDirection === "down"
-    )
-      scrollToSection(currentPage);
-  }, [currentPage, didMenuClick]);
+  // useEffect(() => {
+  //   // console.log("currentPage ", currentPage);
+  //   if (
+  //     // currentPage === pageIDs[0] ||
+  //     // currentPage === pageIDs[1] ||
+  //     (currentPage === pageIDs[2] ||
+  //       currentPage === pageIDs[3] ||
+  //       currentPage === pageIDs[4]) &&
+  //     !didMenuClick &&
+  //     scrollDirection === "down"
+  //   )
+  //     scrollToSection(currentPage);
+  // }, [currentPage, didMenuClick, scrollDirection]);
 
   //changes progress bar color over BuyRacksView
   useEffect(() => {
