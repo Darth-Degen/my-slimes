@@ -33,7 +33,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   // const endpoint =
   //   "https://bold-cosmological-daylight.solana-mainnet.discover.quiknode.pro/d6b580eb3a983f95fece05b014d36fe7708d9dea/";
 
-  const endpoint = "https://rpc.helius.xyz/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
+  const endpoint = "https://mainnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
 
   // const endpoint =
   //   "https://rpc-devnet.helius.xyz/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613"; //https://api.devnet.solana.com";
