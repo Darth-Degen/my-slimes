@@ -13,9 +13,7 @@ const SFCModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = sfc[imageId];
-  const mainImage = `${process.env.NEXT_PUBLIC_CDN_URL}/images/sfc/${
-    item.highResSrc ?? item.src
-  }`;
+  const mainImage = `${process.env.NEXT_PUBLIC_CDN_URL}/images/sfc/${item.src}`;
   //fetches id from context
   const { sfcModalId } = useContext(ViewContext);
 
@@ -77,7 +75,7 @@ const SFCModal: FC<Props> = (props: Props) => {
               return (
                 <>
                   <p
-                    className="cursor-pointer z-20 text-2xl text-center"
+                    className="cursor-pointer z-20 text-2xl text-center underline text-v2-green"
                     onClick={() =>
                       window.open(
                         item.twitter[index],
@@ -89,7 +87,7 @@ const SFCModal: FC<Props> = (props: Props) => {
                   >
                     {artist}
                   </p>
-                  {!isLast && ", "}
+                  {!isLast && "& "}
                 </>
               );
             })}

@@ -8,7 +8,7 @@ export const sfc: SFC[] = [
     name: "Slime Time",
     description:
       "Saturday Morning Cartoons smashed through the Trev Nostalgia machine, sprinkled with Slime's lore and blasted through web3 technology into your wallet.",
-    artist: ["Trev"],
+    artist: ["Trev El. Viz"],
     url: "https://exchange.art/editions/CgDCwz9adaZnMBJvY6eCptUw42KYAe9qF2seFaA1PtFa",
     width: 3840,
     height: 2160,
@@ -67,7 +67,7 @@ export const sfc: SFC[] = [
   {
     id: 5,
     twitter: ["https://twitter.com/lateduke"],
-    src: "mirada-dorada.webp", //gif
+    src: "mirada-dorada.gif",
     name: "Mirada Dorada",
     description:
       "Mirada Dorada 'Golden Gaze' is an original piece by the accomplished artist Duke +1. Duke took inspiration from the Slimes universe created by Scum. Duke then took further steps to deepen his understanding and appreciation of indigenous Mexican culture, resulting in this piece that feels both timeless and new.",
@@ -91,8 +91,7 @@ export const sfc: SFC[] = [
   {
     id: 7,
     twitter: ["https://twitter.com/artikudee"],
-    src: "five-entities.webp", //gif
-    highResSrc: "five-entities.gif",
+    src: "five-entities.gif",
     name: "Five Entities",
     description:
       "I've left forevermore, And I'm floating in a most peculiar way, And the stars look very different today",
@@ -134,7 +133,7 @@ export const sfc: SFC[] = [
       "Amid danger's clutch, sanctuary's embrace; A haven found, where fear's erased. In collaboration with Joice Loo.",
     artist: ["Joice Loo"],
     url: "https://exchange.art/editions/62j1c6EmNqrrq4fSWGxDXGFddaNTYTVmx1kB6DNjNein",
-    width: 4800 / 10,
-    height: 6000 / 10,
+    width: 348,
+    height: 539,
   },
 ];
