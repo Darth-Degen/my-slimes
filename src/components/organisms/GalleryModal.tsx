@@ -8,7 +8,11 @@ import {
   useContext,
 } from "react";
 import { ImageShimmer, LogoIcon, ModalV2 } from "@components";
-import { collection as collections, ViewContext } from "@constants";
+import {
+  collection as collections,
+  exitAnimation,
+  ViewContext,
+} from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
 import download from "downloadjs";
 import Image from "next/image";
@@ -59,7 +63,10 @@ const GalleryModal: FC<Props> = (props: Props) => {
             width={300}
             height={300}
           />
-          <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-black uppercase text-4xl lg:text-8xl whitespace-nowrap">
+          <h3
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+            font-black uppercase text-4xl lg:text-8xl whitespace-nowrap`}
+          >
             {item.name}
           </h3>
           <div className="absolute bottom-2 left-4">
@@ -68,6 +75,11 @@ const GalleryModal: FC<Props> = (props: Props) => {
           <div className="absolute bottom-2 right-4">
             <LogoIcon fill={"#F6EFD3"} width={40} height={40} animate={false} />
           </div>
+          {item?.burned && (
+            <p className="text-lg" {...exitAnimation}>
+              R.I.P.
+            </p>
+          )}
         </div>
       </div>
     </ModalV2>

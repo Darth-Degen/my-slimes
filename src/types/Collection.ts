@@ -2,6 +2,7 @@ export interface Collection {
   id: number;
   tag: string;
   name: string;
+  burned?: boolean;
   image?: string;
   description?: string;
   color: string;
