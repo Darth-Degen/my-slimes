@@ -53,14 +53,30 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
           </motion.button>
         </div>
         <div className="hidden xl:block w-1/3">
-          <div className="w-fit mx-auto flex flex-col items-center">
+          <motion.button
+            className="w-fit mx-auto flex flex-col items-center"
+            onClick={() => {
+              window.open(
+                "https://twitter.com/sol_exp",
+                "_blank",
+                "noopener noreferrer"
+              );
+            }}
+          >
             <div className="bg-white w-20 h-12 mb-1 rounded-lg flex items-center justify-center">
               <ExpIcon color={color} />
             </div>
 
             <p className={`text-white text-center mt-1.5`}>powered by EXP</p>
-          </div>
+          </motion.button>
         </div>
+      </div>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 xl:hidden">
+        <a href="https://twitter.com/sol_exp" target="_blank" rel="noreferrer">
+          <p className="text-center text-xs text-white uppercase">
+            Powered by EXP
+          </p>
+        </a>
       </div>
     </div>
   );
