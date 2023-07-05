@@ -62,7 +62,7 @@ const AssetLibrary: FC<Props> = ({
   }, [selectedNft, selectedAssetType, isDark]);
 
   return (
-    <div className="w-full h-[100px] flex items-start gap-3 overflow-x-auto">
+    <div className="w-full flex flex-wrap items-start gap-3 overflow-x-auto">
       <Image
         src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${
           selectedNft?.name === "Kai" && isDark ? "dark-" : ""
@@ -70,7 +70,7 @@ const AssetLibrary: FC<Props> = ({
         height={100}
         width={100}
         alt={selectedNft?.name}
-        className={`cursor-pointer rounded-lg shadow-lg border ${
+        className={`cursor-pointer rounded-lg shadow-lg border w-[75px] md:w-[100px] h-[75px] md:h-[100px] ${
           selectedAssetType === "full-res"
             ? "border-black"
             : "border-slimes-border"
@@ -78,7 +78,7 @@ const AssetLibrary: FC<Props> = ({
         onClick={() => setSelectedAssetType("full-res")}
       />
       <div
-        className={`relative flex items-center justify-center w-[100px] h-[100px] 
+        className={`relative flex items-center justify-center w-[75px] md:w-[100px] h-[75px] md:h-[100px] 
         overflow-hidden border rounded-lg shadow-lg cursor-pointer
         ${
           selectedAssetType === "desktop"
@@ -99,7 +99,7 @@ const AssetLibrary: FC<Props> = ({
         />
       </div>
       <div
-        className={`relative flex items-center justify-center w-[100px] h-[100px] 
+        className={`relative flex items-center justify-center w-[75px] md:w-[100px] h-[75px] md:h-[100px] 
         overflow-hidden border rounded-lg shadow-lg cursor-pointer 
         ${
           selectedAssetType === "mobile"
@@ -115,12 +115,12 @@ const AssetLibrary: FC<Props> = ({
             selectedNft?.name === "Kai" && isDark ? "dark-" : ""
           }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
           alt={`${selectedNft?.name} mobile wallpaper`}
-          height={100}
-          width={50}
+          height={75}
+          width={40}
         />
       </div>
       <div
-        className={`relative w-[100px] h-[100px] overflow-hidden rounded-lg 
+        className={`relative w-[75px] md:w-[100px] h-[75px] md:h-[100px] overflow-hidden rounded-lg 
         border shadow-lg cursor-pointer ${
           selectedAssetType === "pfp" ? "border-black" : "border-slimes-border"
         }`}
@@ -141,7 +141,7 @@ const AssetLibrary: FC<Props> = ({
       </div>
       {/* banner */}
       <div
-        className={`relative w-[100px] h-[100px] overflow-hidden rounded-lg 
+        className={`relative w-[75px] md:w-[100px] h-[75px] md:h-[100px] overflow-hidden rounded-lg 
         border shadow-lg cursor-pointer flex items-center justify-center ${
           selectedAssetType === "banner"
             ? "border-black"

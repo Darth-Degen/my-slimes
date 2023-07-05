@@ -56,9 +56,9 @@ const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
       className={`flex flex-col justify-center text-ait-teal whitespace-nowrap ${className}`}
     >
       {caption === rackStatus[1].timerCaption && (
-        <p className="uppercase pb-1 flex justify-center text-xl">{caption}</p>
+        <p className="uppercase pb-1 flex justify-start text-xl">{caption}</p>
       )}
-      <div className="flex justify-start items-start gap-0 text-7xl max-w-[290px]">
+      <div className="flex justify-start items-start gap-0 text-5xl md:text-7xl max-w-[290px]">
         <CountdownItem value={countdown.days} />
         {":"}
         <CountdownItem value={countdown.hours} />
@@ -68,7 +68,7 @@ const Countdown: FC<CountdownProps> = (props: CountdownProps) => {
         <CountdownItem value={countdown.seconds} />
       </div>
       {caption === rackStatus[0].timerCaption && (
-        <p className="uppercase pb-1 flex justify-center translate-x-[50px] text-xl">
+        <p className="uppercase pb-1 flex justify-center lg:translate-x-[50px] text-xl">
           {caption}
         </p>
       )}

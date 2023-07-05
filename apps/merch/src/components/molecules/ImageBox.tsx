@@ -29,11 +29,12 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
           width={303}
           height={151}
           alt="All in Time"
+          className="scale-90 lg:scale-100"
         />
         {isRaffle ? (
           <>
             <div
-              className="absolute top-14 left-3.5 w-[285px] uppercase font-bold text-[15px]"
+              className="absolute top-14 left-3.5 w-[285px] uppercase font-bold text-[15px] scale-90 lg:scale-100"
               dangerouslySetInnerHTML={{ __html: caption }}
             />
             <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold text-[15px] break-all">
@@ -49,7 +50,7 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
           </>
         ) : (
           <div
-            className="absolute top-12 left-3.5 w-[285px] uppercase font-bold"
+            className="absolute top-12 left-3.5 w-[285px] uppercase font-bold scale-90 lg:scale-100"
             dangerouslySetInnerHTML={{ __html: caption }}
           />
         )}

@@ -11,7 +11,7 @@ const NftIndicator: FC<Props> = (props: Props) => {
 
   return (
     <div className="relative flex items-center justify-center uppercase font-neuebit-bold">
-      <p className="text-xl text-m-black">
+      <p className="text-lg md:text-xl text-m-black">
         racks in your wallet -
         <motion.span
           className="text-xl text-m-black pl-1"
