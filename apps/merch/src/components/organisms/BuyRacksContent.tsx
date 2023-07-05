@@ -146,7 +146,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] md:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
           ref={innerRef}
         >
-          <div className="absolute -top-16 lg:-top-20 right-10 lg:right-10">
+          <div className="absolute -top-16 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
             <WalletMultiButton
               startIcon={undefined}
               className="  !text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
@@ -188,20 +188,26 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
               <Countdown
                 futureDate={activeStatus.endDate}
                 caption={activeStatus.timerCaption}
-                className="pb-10 lg:pb-0 lg:absolute bottom-24 left-[46.9%] -translate-x-1/2 transform"
+                className="pb-10  self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
                 handleDateEnd={handleDateEnd}
               />
             </>
           )}
         </div>
         {activeStatus.name !== RackStatusName.End && (
+          // <a
+          //   href="https://allintime.xyz/"
+          //   rel="noreferrer"
+          //   target="_blank"
+          //   className="link uppercase font-bold py-10 self-center"
+          // >
           <div
-            // className="link uppercase absolute -bottom-10 font-bold"
             className="link uppercase font-bold py-10 self-center"
             onClick={() => setShowStore(true)}
           >
             see ticket value
           </div>
+          // </a>
         )}
       </div>
       <div className="pt-20  lg:pb-[500px]" />

@@ -15,7 +15,7 @@ const Store: FC<Props> = (props: Props) => {
 
   return (
     <motion.div
-      className="flex flex-col items-start justify-between lg:justify-around h-full w-full"
+      className="flex flex-col items-center xl:items-start justify-between lg:justify-around h-full w-full pt-10 2xl:pt-0"
       {...midExitAnimation}
     >
       {/* body */}
