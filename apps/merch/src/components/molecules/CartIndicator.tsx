@@ -15,10 +15,8 @@ const CartIndicator: FC<Props> = (props: Props) => {
 
   return (
     <div
-      //TODO: uncomment
-      className="relative flex justify-end w-16 mt-0 cursor-not-allowed"
-      // className="relative flex justify-end w-16 mt-0 cursor-pointer"
-      // onClick={() => handleCartClick()}
+      className="relative flex justify-end w-16 mt-0 cursor-pointer"
+      onClick={() => handleCartClick()}
     >
       <Image
         src={cartIcon}

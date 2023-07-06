@@ -113,7 +113,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
   //   // //scrolling right
   //   // if (index > scrollXRef.current) setGallery((prevState => [...prevState, galler ]))
   //   // scrollXRef.current = index
-  //   // //TODO: fix logic to show when track pad scrolls
   //   // if (index === 0) setIsFirstInView(true);
   //   // else setIsFirstInView(false);
   //   // if (index === collections.length - 1) setIsLastInView(true);

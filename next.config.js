@@ -20,7 +20,7 @@ const nextConfig = {
     apiKey: "SHMxG54Cyd@hU",
     apiUrl: "https://slimes.expapi.link",
     //TODO: needed for merch
-    editionUpdateAuthority: "3wP5sQ8E5vkGaWU3FLFX9fXibDjTt56BUGAMP8pe33FX",
+    editionUpdateAuthority: "9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f",
     editionName: "exp edition",
     NEXT_PUBLIC_CDN_URL: "https://storage.googleapis.com/slimes-assets",
   },
