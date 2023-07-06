@@ -1,8 +1,17 @@
-import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
+import {
+  FC,
+  HTMLAttributes,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { StoreModal, ExitModal, OrderModal } from "@merch-components";
 import { AnimatePresence } from "framer-motion";
 import { StoreContext } from "@merch-constants";
-import { Merch } from "@merch-types";
+import { getBearerToken } from "@merch-helpers";
+import { Merch, Response, ResponseType } from "@merch-types";
+import axios from "axios";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -16,6 +25,9 @@ const MerchModule: FC<Props> = (props: Props) => {
   const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false);
   const [cart, setCart] = useState<Merch[]>([]);
+  const [bearerToken, setBearerToken] = useState<
+    string | unknown | undefined
+  >();
   const [step, setStep] = useState<number>(0);
   const value = {
     showStore,
@@ -33,6 +45,18 @@ const MerchModule: FC<Props> = (props: Props) => {
     if (step > 4) setShowOrderModal(true);
     else setShowOrderModal(false);
   }, [setShowOrderModal, step]);
+
+  //fetch bearer token
+  const handleAuthToken = useCallback(async () => {
+    const token = await getBearerToken();
+    if (token && token.type === ResponseType.Success) {
+      setBearerToken(token.data);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleAuthToken();
+  }, [handleAuthToken]);
 
   return (
     <StoreContext.Provider value={value}>

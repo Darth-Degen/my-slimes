@@ -8,7 +8,7 @@ import {
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
 import { Merch, Quantity } from "@merch-types";
-import { getNftsByOwner } from "@merch-helpers";
+import { getNftsByOwner, getBearerToken } from "@merch-helpers";
 import {
   Dispatch,
   FC,
@@ -25,6 +25,8 @@ import toast from "react-hot-toast";
 // import "dotenv/config";
 import Image from "next/image";
 import ExitIcon from "../../../images/icons/close.svg";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import debounce from "lodash.debounce";
 
 interface Props {
   cart: Merch[];
@@ -49,6 +51,10 @@ const StoreModal: FC<Props> = (props: Props) => {
   //solana wallet
   const { publicKey } = useWallet();
   const { connection } = useConnection();
+  const { setVisible } = useWalletModal();
+
+  const debounceWalletModal = debounce((value) => setVisible(value), 1000);
+
   //add to cart
   const addToCart = (item: Merch) => {
     setCart((prevState) => [...prevState, item]);
@@ -65,7 +71,10 @@ const StoreModal: FC<Props> = (props: Props) => {
 
   //fetch users nfts
   const getNfts = useCallback(async () => {
-    if (!connection || !publicKey) return;
+    if (!connection || !publicKey) {
+      debounceWalletModal(true);
+      return;
+    }
 
     try {
       //fetch tokens
@@ -78,17 +87,6 @@ const StoreModal: FC<Props> = (props: Props) => {
       //fetch metadata
       await Promise.all(
         tokens.map(async (token, index) => {
-          // console.log(
-          //   "nft \n",
-          //   token?.updateAuthorityAddress.toBase58(),
-          //   "\n",
-          //   token?.address.toBase58(),
-          //   "\n",
-          //   //@ts-ignore
-          //   token?.mintAddress.toBase58(),
-          //   token
-          // );
-
           if (
             token?.updateAuthorityAddress?.toBase58() ===
               editionUpdateAuthority &&
@@ -96,27 +94,26 @@ const StoreModal: FC<Props> = (props: Props) => {
           ) {
             setNfts((prevState) => [...prevState, token]);
           }
-          // const uri = token.uri;
-          // try {
-          //   await axios.get(uri).then((r) => {
-          //     // @ts-ignore
-          //     r.data.mintAddress = token.mintAddress;
-          //     jsonArr.push(r.data);
-          //   });
-          // } catch (e: any) {
-          //   console.error(e.message);
-          // }
         })
       );
     } catch (e: any) {
       console.error(e.message);
       toast.error(`Error ${e.message}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connection, publicKey]);
 
   useEffect(() => {
     getNfts();
   }, [getNfts]);
+
+  //unmount debounce
+  useEffect(() => {
+    return () => {
+      debounceWalletModal.cancel();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //fetch merch quantities
   const getQuantities = useCallback(() => {
@@ -161,14 +158,6 @@ const StoreModal: FC<Props> = (props: Props) => {
   useEffect(() => {
     if (step === 0) setStoreItem(undefined);
   }, [step]);
-
-  //console outputs
-  useEffect(() => {
-    if (cart.length > 0) console.log("cart ", cart);
-  }, [cart]);
-  useEffect(() => {
-    if (nfts.length > 0) console.log("racks ", nfts.length);
-  }, [nfts]);
 
   return (
     <Modal
