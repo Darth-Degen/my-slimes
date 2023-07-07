@@ -2,22 +2,30 @@ import { motion } from "framer-motion";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { midExitAnimation, countries } from "@merch-constants";
 import { TextInput, Dropdown } from "@merch-components";
-import { Country, ShippingInfo } from "@merch-types";
+import { Country, ShippingInfo, ShippingSession } from "@merch-types";
+import { updateUserSession } from "@merch-helpers";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Props {
   shipping: ShippingInfo;
   setStep: (value: number) => void;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
+  bearerToken: string | unknown | undefined;
 }
 
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const ShippingForm: FC<Props> = (props: Props) => {
-  const { setStep, shipping, setShipping } = props;
+  const { setStep, shipping, setShipping, bearerToken } = props;
 
   const [countryDropdown, setCountryDropdown] = useState<boolean>(false);
   const [stateDropdown, setStateDropdown] = useState<boolean>(false);
   const [validEmail, setValidEmail] = useState<boolean>();
+
+  const { setVisible } = useWalletModal();
+  const { publicKey } = useWallet();
 
   const countryNames: string[] = countries.map((country) => country.name);
 
@@ -51,7 +59,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
   const handleZip = (zip: string) => {
     setShipping((prevState) => ({ ...prevState, zip }));
   };
-  const handleCheckout = (): void => {
+  const handleCheckout = async () => {
     //verify all input fields
     if (
       shipping.name.trim().length < 2 ||
@@ -68,6 +76,14 @@ const ShippingForm: FC<Props> = (props: Props) => {
       toast.error("All fields required");
       return;
     }
+
+    // if (!publicKey) {
+    //   setVisible(true)
+    //   return
+    // }
+
+    // const shipSesh:ShippingSession = {}
+    // const response = await updateUserSession(publicKey.toBase58(), bearerToken as string, shipping)
 
     setStep(4);
   };

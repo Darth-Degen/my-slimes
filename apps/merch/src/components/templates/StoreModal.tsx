@@ -8,7 +8,7 @@ import {
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
 import { Merch, Quantity } from "@merch-types";
-import { getNftsByOwner, getBearerToken } from "@merch-helpers";
+import { getNftsByOwner } from "@merch-helpers";
 import {
   Dispatch,
   FC,
@@ -19,21 +19,21 @@ import {
   useState,
 } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
 import axios from "axios";
 import toast from "react-hot-toast";
-// import "dotenv/config";
 import Image from "next/image";
-import ExitIcon from "../../../images/icons/close.svg";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import debounce from "lodash.debounce";
+
+import ExitIcon from "../../../images/icons/close.svg";
 
 interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
+  bearerToken: string | unknown | undefined;
 }
 const StoreModal: FC<Props> = (props: Props) => {
-  const { cart, setCart } = props;
+  const { cart, setCart, bearerToken } = props;
   const {
     showStore,
     showOrderModal,
@@ -53,7 +53,7 @@ const StoreModal: FC<Props> = (props: Props) => {
   const { connection } = useConnection();
   const { setVisible } = useWalletModal();
 
-  const debounceWalletModal = debounce((value) => setVisible(value), 1000);
+  const debounceWalletModal = debounce((value) => setVisible(value), 1500);
 
   //add to cart
   const addToCart = (item: Merch) => {
@@ -210,6 +210,7 @@ const StoreModal: FC<Props> = (props: Props) => {
             step={step}
             setStep={setStep}
             updateCart={setCart}
+            bearerToken={bearerToken}
           />
         )}
         <Footer step={step} />

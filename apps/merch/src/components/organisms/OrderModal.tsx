@@ -9,9 +9,10 @@ import OrderIcon from "../../../images/icons/close.svg";
 interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
+  bearerToken: string | unknown | undefined;
 }
 const OrderModal: FC<Props> = (props: Props) => {
-  const { cart, setCart } = props;
+  const { cart, setCart, bearerToken } = props;
   const { showOrderModal, step, setStep } = useContext(StoreContext);
 
   const [isOrdering, setIsOrdering] = useState<boolean>(false);

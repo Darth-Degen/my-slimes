@@ -15,10 +15,11 @@ interface Props {
   step: number;
   setStep: (value: number) => void;
   updateCart: Dispatch<SetStateAction<Merch[]>>;
+  bearerToken: string | unknown | undefined;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
-  const { cart, step, setStep, updateCart } = props;
+  const { cart, step, setStep, updateCart, bearerToken } = props;
 
   const [shipping, setShipping] = useState<ShippingInfo>({
     name: "",
@@ -82,7 +83,7 @@ const Checkout: FC<Props> = (props: Props) => {
             {step > 3 && (
               <motion.div
                 key="orderinfo"
-                className="flex flex-col items-center xl:items-start justify-start gap-3"
+                className="flex flex-col items-center xl:items-start justify-start gap-3 w-full"
                 {...fastExitAnimation}
               >
                 <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
@@ -116,6 +117,7 @@ const Checkout: FC<Props> = (props: Props) => {
               setStep={setStep}
               shipping={shipping}
               setShipping={setShipping}
+              bearerToken={bearerToken}
             />
           )}
           {step > 3 && (

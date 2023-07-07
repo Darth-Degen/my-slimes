@@ -16,7 +16,7 @@ const DropdownButton: FC<Props> = (props: Props) => {
   return (
     <button
       className={`relative flex justify-between ${styles} uppercase  border-custom-dark items-center px-3 cursor-pointer bg-white transition-colors duration-300 
-      disabled:cursor-auto ${className}`}
+      disabled:cursor-auto whitespace-nowrap ${className}`}
       {...componentProps}
     >
       {label}

@@ -20,7 +20,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
       key="shipping"
       {...midExitAnimation}
     >
-      <h3 className="text-4xl lg:absolute lg:-top-[51px] -left-0.5 whitespace-nowrap">
+      <h3 className="text-4xl xl:absolute xl:-top-[51px] -left-0.5 whitespace-nowrap">
         shipping info
       </h3>
       <div className="flex flex-col items-center xl:items-start justify-start">
