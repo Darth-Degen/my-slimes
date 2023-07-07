@@ -18,14 +18,24 @@ interface Props {
   shipping: ShippingInfo;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
   racks: number;
+  // const shippingFee = 2;
+  shippingFee: number;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
-  const { cart, step, setStep, updateCart, shipping, setShipping, racks } =
-    props;
+  const {
+    cart,
+    step,
+    setStep,
+    updateCart,
+    shipping,
+    setShipping,
+    racks,
+    shippingFee,
+  } = props;
 
   //TODO: what id shipping fee
-  const shippingFee = 2;
+  // const shippingFee = 2;
 
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
@@ -89,7 +99,7 @@ const Checkout: FC<Props> = (props: Props) => {
                 </div>
                 <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>shipping</p>
-                  <p>{shippingFee} sol</p>
+                  <p>${shippingFee} USDC</p>
                 </div>
               </motion.div>
             )}

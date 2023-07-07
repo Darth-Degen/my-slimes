@@ -23,7 +23,7 @@ export const getAllProducts = async (
   await axios
     .request(config)
     .then((response) => {
-      console.log("getAllProducts Success : ", response.data);
+      // console.log("getAllProducts Success : ", response.data);
       value.type = ResponseType.Success;
       value.data = response.data;
      

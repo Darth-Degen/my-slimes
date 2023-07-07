@@ -34,6 +34,7 @@ interface Props {
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
   quantities: Quantity[];
   getQuantities: () => Promise<void>;
+  shippingFee: number;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -44,6 +45,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     setShipping,
     quantities,
     getQuantities,
+    shippingFee,
   } = props;
   const {
     showStore,
@@ -61,10 +63,30 @@ const StoreModal: FC<Props> = (props: Props) => {
   const { connected, publicKey } = useWallet();
   const { setVisible } = useWalletModal();
 
+  const atMerchItemCapacity = (id: string) => {
+    let count = 0;
+
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].id === id) {
+        count++;
+
+        if (count === 3) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  };
+
   //add to cart
   const addToCart = async (item: Merch) => {
     if (!publicKey || !connected) {
       setVisible(true);
+      return;
+    }
+    if (atMerchItemCapacity(item.id)) {
+      toast.error("Only three of each item");
       return;
     }
     // console.log(item);
@@ -149,7 +171,8 @@ const StoreModal: FC<Props> = (props: Props) => {
             updateCart={setCart}
             shipping={shipping}
             setShipping={setShipping}
-            racks={nfts.length}
+            racks={100} //TODO: {nfts.length}
+            shippingFee={shippingFee}
           />
         )}
         <Footer step={step} />

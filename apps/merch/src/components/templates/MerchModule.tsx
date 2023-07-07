@@ -54,6 +54,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   const [nfts, setNfts] = useState<unknown[]>([]);
   const [quantities, setQuantities] = useState<Quantity[]>([]);
   const [shipping, setShipping] = useState<ShippingInfo>(_shipping);
+  const [shippingFee, setShippingFee] = useState<number>(0);
 
   const [bearerToken, setBearerToken] = useState<
     string | unknown | undefined
@@ -290,6 +291,57 @@ const MerchModule: FC<Props> = (props: Props) => {
     }
   }, [showStore]);
 
+  //calculate shipping fee
+  /*
+    US Domestic: 
+      Crewneck  14$
+      T Shirts / Hat / Culture Builder 9$
+      Multiple + 4$ for 1st additional, 1$ for 2nd
+
+      So i.e. Crewneck + Tshirt = 18
+      Tshirt + Hat = 13
+      Crewneck + T + Hat = 19
+      T + Hat + culture = 14
+
+    Intl
+      Crewneck  19$
+      T Shirts / Hat / Culture Builder 16$
+      Multiple + 7$ for 1st additional, 2$ for 2nd
+
+      So i.e. Crewneck + Tshirt = 26
+      Tshirt + Hat = 23
+      Crewneck + T + Hat = 28
+      T + Hat + culture = 25
+*/
+  useEffect(() => {
+    if (shipping?.country && cart.length > 0) {
+      const isUS = shipping?.country.code === "US";
+      let _fee: number = 0;
+      console.log("cart ", cart);
+      cart.map((item, index) => {
+        // console.log("item. ", item);
+        switch (item.id) {
+          case "crewneck":
+            _fee += isUS ? 14 : 19;
+            break;
+          case "tee":
+            _fee += isUS ? 9 : 16;
+            break;
+          case "pack":
+            _fee += isUS ? 9 : 16;
+            break;
+          case "hat":
+            _fee += isUS ? 9 : 16;
+            break;
+        }
+        if (index === 1) _fee += isUS ? 4 : 7;
+        if (index > 1) _fee += isUS ? 1 : 2;
+      });
+
+      setShippingFee(_fee);
+    }
+  }, [cart, shipping]);
+
   return (
     <StoreContext.Provider value={value}>
       {children}
@@ -304,6 +356,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             setShipping={setShipping}
             quantities={quantities}
             getQuantities={getQuantities}
+            shippingFee={shippingFee}
           />
         )}
       </AnimatePresence>
