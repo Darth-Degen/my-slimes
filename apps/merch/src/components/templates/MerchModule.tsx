@@ -165,7 +165,6 @@ const MerchModule: FC<Props> = (props: Props) => {
     handleSession();
   }, [handleSession]);
 
-  //TODO: add shipping cost
   //update user session (cart + shipping + stage)
   const updateSessionCart = async (racks: number): Promise<void> => {
     if (typeof bearerToken !== "string" || !publicKey || !shipping?.address)
