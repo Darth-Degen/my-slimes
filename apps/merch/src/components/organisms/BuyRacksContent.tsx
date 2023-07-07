@@ -80,36 +80,36 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     EDITIONS_PROGRAM_ID
   );
 
-  const winnerWallet = "H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf";
+  const winnerWallet = "62fFigHfUyhToRZuRGwcn9f87SqPt2ztU8zWUWPugMga";
   const shopURL = `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png`;
 
-  useEffect(() => {
-    (async function () {
-      try {
-        const editionInfo = await fetch(COLLECTION_API_URL).then((data) =>
-          data.json()
-        );
-        // console.log('editionInfo: ', editionInfo);
+  // useEffect(() => {
+  //   (async function () {
+  //     try {
+  //       const editionInfo = await fetch(COLLECTION_API_URL).then((data) =>
+  //         data.json()
+  //       );
+  //       // console.log('editionInfo: ', editionInfo);
 
-        if (
-          editionInfo?.contractGroups.length &&
-          editionInfo?.contractGroups[0].availableContracts.editionSales.length
-        ) {
-          setEditionSaleData(
-            editionInfo?.contractGroups[0].availableContracts.editionSales[0]
-          );
-        } else {
-          // TODO error toast
-          toast.error("Error fetching edition sale data. Data is wrong");
-          console.error("Error fetching edition sale data. Data is wrong");
-        }
-      } catch (e) {
-        // TODO error toast
-        toast.error("Error fetching edition sale data");
-        console.error("Error fetching edition sale data.: ", e);
-      }
-    })();
-  }, []);
+  //       if (
+  //         editionInfo?.contractGroups.length &&
+  //         editionInfo?.contractGroups[0].availableContracts.editionSales.length
+  //       ) {
+  //         setEditionSaleData(
+  //           editionInfo?.contractGroups[0].availableContracts.editionSales[0]
+  //         );
+  //       } else {
+  //         // TODO error toast
+  //         toast.error("Error fetching edition sale data. Data is wrong");
+  //         console.error("Error fetching edition sale data. Data is wrong");
+  //       }
+  //     } catch (e) {
+  //       // TODO error toast
+  //       toast.error("Error fetching edition sale data");
+  //       console.error("Error fetching edition sale data.: ", e);
+  //     }
+  //   })();
+  // }, []);
 
   //auto scroll
   const isInView = useInView(innerRef);
@@ -130,24 +130,24 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   };
 
   const handleMint = async (amountToMint: number) => {
-    if (!connected) {
-      setVisible(true);
-      return;
-    }
-    if (!editionSaleData) {
-      // TODO error toast
-      toast.error("Cannot get edition sale data.");
-      console.error("Cannot get edition sale data.");
-      return;
-    }
-    // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
-    const metaplex = new Metaplex(connection);
-    const nftToBurn = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey(
-        "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
-      ),
-    });
-    await slimesPayment.pay(connection, wallet, [nftToBurn], 0.05, 1);
+    // if (!connected) {
+    //   setVisible(true);
+    //   return;
+    // }
+    // if (!editionSaleData) {
+    //   // TODO error toast
+    //   toast.error("Cannot get edition sale data.");
+    //   console.error("Cannot get edition sale data.");
+    //   return;
+    // }
+    // // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    // const metaplex = new Metaplex(connection);
+    // const nftToBurn = await metaplex.nfts().findByMint({
+    //   mintAddress: new PublicKey(
+    //     "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
+    //   ),
+    // });
+    // await slimesPayment.pay(connection, wallet, [nftToBurn], 0.05, 1);
   };
 
   return (
@@ -194,7 +194,9 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                         YOU WON!
                       </p>
                     ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU LOST
+                      </p>
                     )}
                   </div>
                 )}
@@ -202,6 +204,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                   src={activeStatus.src}
                   caption={activeStatus.caption}
                   activeStatus={activeStatus}
+                  wallet={winnerWallet}
                 />
                 {activeStatus.name === RackStatusName.Buy && (
                   <BuyRacksForm
@@ -219,7 +222,10 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                         YOU WON!
                       </p>
                     ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        {" "}
+                        YOU LOST
+                      </p>
                     )}
                   </div>
                 )}
