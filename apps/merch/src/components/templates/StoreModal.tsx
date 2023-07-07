@@ -33,9 +33,18 @@ interface Props {
   shipping: ShippingInfo;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
   quantities: Quantity[];
+  getQuantities: () => Promise<void>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
-  const { cart, setCart, nfts, shipping, setShipping, quantities } = props;
+  const {
+    cart,
+    setCart,
+    nfts,
+    shipping,
+    setShipping,
+    quantities,
+    getQuantities,
+  } = props;
   const {
     showStore,
     showOrderModal,
@@ -53,11 +62,14 @@ const StoreModal: FC<Props> = (props: Props) => {
   const { setVisible } = useWalletModal();
 
   //add to cart
-  const addToCart = (item: Merch) => {
+  const addToCart = async (item: Merch) => {
     if (!publicKey || !connected) {
       setVisible(true);
       return;
     }
+    // console.log(item);
+    await getQuantities();
+    // console.log("quantities ", quantities);
     setCart((prevState) => [...prevState, item]);
   };
   //open cart

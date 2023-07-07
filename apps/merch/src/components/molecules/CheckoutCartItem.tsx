@@ -76,6 +76,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           items={item.colors}
           className="!w-48 !h-8 bg-m-light-gray !text-base"
           disabled={item.colors.length === 1 || step > 2}
+          expandUI={true}
         />
         {/* </div>
         <div

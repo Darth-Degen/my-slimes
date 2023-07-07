@@ -7,6 +7,7 @@ export interface ShippingCart {
   productId: string;
   color: string;
   size: string;
+  quantity: number;
 }
 
 export interface PreSession {

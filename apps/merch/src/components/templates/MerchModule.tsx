@@ -143,7 +143,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     );
 
     if (response && response.type === ResponseType.Success) {
-      console.log("response ", response.data);
+      // console.log("response ", response.data);
 
       //step 1: save session
       //@ts-ignore
@@ -175,6 +175,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         productId: item.id,
         color: item.color as string,
         size: item.size as string,
+        quantity: 1,
       };
     });
 
@@ -202,7 +203,7 @@ const MerchModule: FC<Props> = (props: Props) => {
       sessionData
     );
 
-    console.log("response ", response);
+    // console.log("response ", response);
     if (response.type === ResponseType.Success) {
       toast.success("Systems updated. 1/3 complete");
       //TODO: ANSEL send racks to wallet (racks are param in this function)
@@ -265,7 +266,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         });
       });
     }
-    console.log("_quantities ", _quantities);
+    // console.log("_quantities ", _quantities);
     setQuantities(_quantities);
     // });
   }, [bearerToken]);
@@ -302,6 +303,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             shipping={shipping}
             setShipping={setShipping}
             quantities={quantities}
+            getQuantities={getQuantities}
           />
         )}
       </AnimatePresence>
