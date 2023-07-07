@@ -24,6 +24,7 @@ import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import debounce from "lodash.debounce";
 
 import ExitIcon from "../../../images/icons/close.svg";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Props {
   cart: Merch[];
@@ -48,10 +49,15 @@ const StoreModal: FC<Props> = (props: Props) => {
   const [storeItem, setStoreItem] = useState<Merch>();
 
   //solana wallet
-  // const { setVisible } = useWalletModal();
+  const { connected, publicKey } = useWallet();
+  const { setVisible } = useWalletModal();
 
   //add to cart
   const addToCart = (item: Merch) => {
+    if (!publicKey || !connected) {
+      setVisible(true);
+      return;
+    }
     setCart((prevState) => [...prevState, item]);
   };
   //open cart
@@ -90,7 +96,7 @@ const StoreModal: FC<Props> = (props: Props) => {
         {/* close icon */}
 
         <div
-          className="absolute top-2 right-2 cursor-pointer scale-75 lg:scale-50 z-10"
+          className="absolute top-2 right-2 cursor-pointer scale-75 lg:scale-50 z-10 lg:hidden"
           onClick={() => {
             setShowExitModal(true);
           }}

@@ -7,6 +7,8 @@ import { ImagePicker, Dropdown } from "@merch-components";
 import { verifyItemInStock } from "@merch-helpers";
 
 import arrows from "../../../images/icons/three-right-arrows.svg";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 interface Props {
   item: Merch;
   quantities: Quantity[];
@@ -26,6 +28,10 @@ const ItemDetail: FC<Props> = (props: Props) => {
   const [failedSize, setFailedSize] = useState<boolean>(false);
   const [cartItem, setCartItem] = useState<Merch>(item);
   const [isInStock, setIsInStock] = useState<boolean>(false);
+
+  //solana wallet
+  const { connected, publicKey } = useWallet();
+  const { setVisible } = useWalletModal();
 
   //handle drop downs
   const handleColorSelect = (color: string): void => {
@@ -57,6 +63,10 @@ const ItemDetail: FC<Props> = (props: Props) => {
     if (verifySelections()) addToCart(cartItem);
   };
   const handleBuyNow = (): void => {
+    if (!publicKey || !connected) {
+      setVisible(true);
+      return;
+    }
     if (verifySelections()) {
       setStep(3);
       addToCart(cartItem);

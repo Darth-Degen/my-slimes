@@ -23,9 +23,6 @@ const ShippingForm: FC<Props> = (props: Props) => {
   const [stateDropdown, setStateDropdown] = useState<boolean>(false);
   const [validEmail, setValidEmail] = useState<boolean>();
 
-  const { setVisible } = useWalletModal();
-  const { publicKey } = useWallet();
-
   const countryNames: string[] = countries.map((country) => country.name);
 
   //handle inputs
