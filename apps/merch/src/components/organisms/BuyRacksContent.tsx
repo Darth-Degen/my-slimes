@@ -32,6 +32,8 @@ import toast from "react-hot-toast";
 import * as slimesPayment from "src/lib/slimes-payment";
 import { Metaplex, Nft } from "@metaplex-foundation/js";
 import { PublicKey } from "@solana/web3.js";
+import Image from "next/image";
+import splashIcon from "../../../images/raffle_splash.png";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -79,6 +81,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   );
 
   const winnerWallet = "H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf";
+  const shopURL = `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png`;
 
   useEffect(() => {
     (async function () {
@@ -149,7 +152,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
+      className={`relative w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
       id={id}
       ref={ref}
     >
@@ -182,7 +185,21 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
             <>
               {/* content */}
               <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
-                <TextBox text={activeStatus.text} className="hidden lg:flex" />
+                {activeStatus.name === RackStatusName.Raffle && (
+                  <div className="w-[250px]">
+                    {!publicKey ? (
+                      ""
+                    ) : publicKey?.toBase58() === winnerWallet ? (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU WON!
+                      </p>
+                    ) : (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU LOST
+                      </p>
+                    )}
+                  </div>
+                )}
                 <ImageBox
                   src={activeStatus.src}
                   caption={activeStatus.caption}
@@ -196,35 +213,32 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                   />
                 )}
                 {activeStatus.name === RackStatusName.Raffle && (
-                  <TextBox text={activeStatus.text} />
-                )}
-                {activeStatus.name === RackStatusName.End && (
-                  <div className="flex flex-col items-center justify-center gap-4">
-                    <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-neuebit-bold">
-                      {publicKey?.toBase58() === winnerWallet
-                        ? "YOU WON!"
-                        : "YOU LOST"}
-                    </p>
-                    <a
-                      href="https://twitter.com"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="text-custom-primary underline uppercase self-center"
-                    >
-                      tweet it
-                    </a>
+                  <div className="w-[250px]">
+                    {!publicKey ? (
+                      ""
+                    ) : publicKey?.toBase58() === winnerWallet ? (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU WON!
+                      </p>
+                    ) : (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU LOST
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
-              <Countdown
-                futureDate={activeStatus.endDate}
-                caption={activeStatus.timerCaption}
-                className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
-                handleDateEnd={handleDateEnd}
-              />
+              {activeStatus.name === RackStatusName.Buy && (
+                <Countdown
+                  futureDate={activeStatus.endDate}
+                  caption={activeStatus.timerCaption}
+                  className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+                  handleDateEnd={handleDateEnd}
+                />
+              )}
             </>
           ) : (
-            <></>
+            <div className="w-full bg-[url:()]"></div>
           )}
         </div>
         {activeStatus.name !== RackStatusName.End && (
@@ -241,6 +255,11 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
             see ticket value
           </div>
           // </a>
+        )}
+        {activeStatus.name === RackStatusName.Raffle && (
+          <div className="absolute bottom-20 left-20 hidden md:block ">
+            <Image src={splashIcon} width={300} height={300} alt="splash" />
+          </div>
         )}
       </div>
       <div className="lg:pb-[500px]" />

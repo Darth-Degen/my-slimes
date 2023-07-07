@@ -31,7 +31,7 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
           width={303}
           height={151}
           alt="All in Time"
-          className="scale-90 lg:scale-100"
+          className="relative scale-90 lg:scale-100"
         />
         {isRaffle ? (
           <>
