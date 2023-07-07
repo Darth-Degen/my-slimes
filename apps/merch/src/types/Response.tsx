@@ -4,7 +4,7 @@ export enum ResponseType {
 }
 
 export interface ShippingCart {
-  productId: string;
+  productid: string;
   color: string;
   size: string;
   quantity: number;

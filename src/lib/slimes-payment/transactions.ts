@@ -43,8 +43,8 @@ export async function sendSignedTransactions(
 ): Promise<string> {
 
   // TODO @darth need to update the toasts text 🤝 (this wont impact the rest of the app)
-  const toastId = toast.loading(`Rack #${transactionNumber + 1}  minting...`);
-  console.log(`Rack #${transactionNumber} minting...`);
+  // const toastId = toast.loading(`Rack #${transactionNumber + 1}  minting...`);
+  console.log(`TX `);
 
   const transactionSignature = await connection.sendRawTransaction(
     signedTransactionv0.serialize(),
@@ -74,8 +74,8 @@ export async function sendSignedTransactions(
     //   title: `Transaction failed`,
     // });
 
-    toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
-    console.error(`Rack #${transactionNumber} failed.`);
+    // toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
+    console.error(` failed.`);
   }
 
   if (status?.err) {
@@ -83,12 +83,12 @@ export async function sendSignedTransactions(
     // this.uinService.showError({ message: errors.join(','), title: `Transaction failed` });
 
     // throw new Error(`Raw transaction ${transactionSignature} failed (${JSON.stringify(status)})`);
-    toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
-    console.error(`Rack #${transactionNumber} failed.`);
+    // toast.error(`Rack #${transactionNumber + 1} failed.`, { id: toastId })
+    console.error(`failed.`);
   }
 
   // console.log('versioned transactionSignature >> ', transactionSignature);
-  toast.success(`Rack #${transactionNumber + 1} success.`, { id: toastId })
-  console.log(`Rack #${transactionNumber} success.`);
+  // toast.success(`Rack #${transactionNumber + 1} success.`, { id: toastId })
+  console.log(`success.`);
   return transactionSignature;
 }

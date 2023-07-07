@@ -50,7 +50,7 @@ const Checkout: FC<Props> = (props: Props) => {
       toast.error("No items in cart");
       return;
     }
-    console.log(calculateRacks(), racks);
+    // console.log(calculateRacks(), racks);
     if (racks < calculateRacks()) {
       toast.error("Not enough racks");
       return;
@@ -93,18 +93,18 @@ const Checkout: FC<Props> = (props: Props) => {
                 className="flex flex-col items-center xl:items-start justify-start gap-3 w-full"
                 {...fastExitAnimation}
               >
-                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>Cost</p>
                   <p>{calculateRacks()} racks</p>
                 </div>
-                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>shipping</p>
                   <p>${shippingFee} USDC</p>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-          <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+          <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
             <p>total</p>
             <p>
               {calculateRacks()} racks {step > 3 && "+ SOL"}
