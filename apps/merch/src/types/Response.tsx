@@ -22,9 +22,9 @@ export interface ShippingSession {
   email: string;
   first_name: string;
   geo_state: string;
-  last_name: string;
+  last_name?: string;
   nft_send_txn_id?: string | null;
-  phone: number;
+  phone?: number;
   session_id?: string;
   sol_send_txn_id?: string | null;
   stage_completed: number;

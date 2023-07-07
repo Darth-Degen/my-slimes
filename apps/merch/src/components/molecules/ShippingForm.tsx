@@ -145,13 +145,18 @@ const ShippingForm: FC<Props> = (props: Props) => {
         handleInput={handleCity}
       />
       {/* TODO: states */}
-      <Dropdown
+      {/* <Dropdown
         handleSelect={handleState}
         setShowDropdown={setStateDropdown}
         showDropdown={stateDropdown}
         label={shipping.state.length > 0 ? shipping.state : `State`}
         items={countryNames}
         className="text-m-mid-gray whitespace-nowrap text-ellipsis"
+      /> */}
+
+      <TextInput
+        placeholder={shipping.state.length > 0 ? shipping.state : "State"}
+        handleInput={handleAddress2}
       />
       <TextInput
         placeholder={shipping.zip.length > 0 ? shipping.zip : "zip"}

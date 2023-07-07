@@ -7,8 +7,7 @@ import {
   Footer,
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
-import { Merch, Quantity } from "@merch-types";
-import { getNftsByOwner } from "@merch-helpers";
+import { Merch, Quantity, ShippingInfo } from "@merch-types";
 import {
   Dispatch,
   FC,
@@ -18,7 +17,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
@@ -31,9 +29,12 @@ interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
   bearerToken: string | unknown | undefined;
+  nfts: unknown[];
+  shipping: ShippingInfo;
+  setShipping: Dispatch<SetStateAction<ShippingInfo>>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
-  const { cart, setCart, bearerToken } = props;
+  const { cart, setCart, bearerToken, nfts, shipping, setShipping } = props;
   const {
     showStore,
     showOrderModal,
@@ -45,12 +46,9 @@ const StoreModal: FC<Props> = (props: Props) => {
 
   //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
   const [storeItem, setStoreItem] = useState<Merch>();
-  const [nfts, setNfts] = useState<unknown[]>([]);
   const [quantities, setQuantities] = useState<Quantity[]>([]);
 
   //solana wallet
-  const { publicKey } = useWallet();
-  const { connection } = useConnection();
   const { setVisible } = useWalletModal();
 
   const debounceWalletModal = debounce((value) => setVisible(value), 1500);
@@ -68,44 +66,6 @@ const StoreModal: FC<Props> = (props: Props) => {
     setStoreItem(item);
     setStep(1);
   };
-
-  //fetch users nfts
-  const getNfts = useCallback(async () => {
-    if (!connection || !publicKey) {
-      debounceWalletModal(true);
-      return;
-    }
-
-    try {
-      //fetch tokens
-      const tokens = await getNftsByOwner(connection, publicKey);
-      if (!tokens || typeof tokens === "string") return;
-
-      const editionUpdateAuthority = process.env.editionUpdateAuthority;
-      const editionName = process.env.editionName;
-
-      //fetch metadata
-      await Promise.all(
-        tokens.map(async (token, index) => {
-          if (
-            token?.updateAuthorityAddress?.toBase58() ===
-              editionUpdateAuthority &&
-            token?.name === editionName
-          ) {
-            setNfts((prevState) => [...prevState, token]);
-          }
-        })
-      );
-    } catch (e: any) {
-      console.error(e.message);
-      toast.error(`Error ${e.message}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connection, publicKey]);
-
-  useEffect(() => {
-    getNfts();
-  }, [getNfts]);
 
   //unmount debounce
   useEffect(() => {
@@ -211,6 +171,8 @@ const StoreModal: FC<Props> = (props: Props) => {
             setStep={setStep}
             updateCart={setCart}
             bearerToken={bearerToken}
+            shipping={shipping}
+            setShipping={setShipping}
           />
         )}
         <Footer step={step} />

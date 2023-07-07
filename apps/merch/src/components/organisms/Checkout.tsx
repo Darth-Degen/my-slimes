@@ -16,21 +16,20 @@ interface Props {
   setStep: (value: number) => void;
   updateCart: Dispatch<SetStateAction<Merch[]>>;
   bearerToken: string | unknown | undefined;
+  shipping: ShippingInfo;
+  setShipping: Dispatch<SetStateAction<ShippingInfo>>;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
-  const { cart, step, setStep, updateCart, bearerToken } = props;
-
-  const [shipping, setShipping] = useState<ShippingInfo>({
-    name: "",
-    email: "",
-    address: "",
-    address2: "",
-    country: { name: "", code: "" },
-    city: "",
-    state: "",
-    zip: "",
-  });
+  const {
+    cart,
+    step,
+    setStep,
+    updateCart,
+    bearerToken,
+    shipping,
+    setShipping,
+  } = props;
 
   //TODO: what id shipping fee
   const shippingFee = 2;

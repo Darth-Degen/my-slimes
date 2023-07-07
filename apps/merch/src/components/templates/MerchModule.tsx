@@ -9,16 +9,24 @@ import {
 import { StoreModal, ExitModal, OrderModal } from "@merch-components";
 import { AnimatePresence } from "framer-motion";
 import { StoreContext } from "@merch-constants";
-import { getBearerToken, getUserSession } from "@merch-helpers";
+import {
+  getBearerToken,
+  getNftsByOwner,
+  getUserSession,
+  updateUserSession,
+} from "@merch-helpers";
 import {
   Merch,
   Response,
   ResponseType,
   PreSession,
   ShippingSession,
+  ShippingInfo,
+  ShippingCart,
 } from "@merch-types";
 import axios from "axios";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import toast from "react-hot-toast";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -28,6 +36,20 @@ const MerchModule: FC<Props> = (props: Props) => {
   const { children, className, ...componentProps } = props;
 
   //state
+  const [cart, setCart] = useState<Merch[]>([]);
+  const [step, setStep] = useState<number>(0);
+  const [nfts, setNfts] = useState<unknown[]>([]);
+  const [shipping, setShipping] = useState<ShippingInfo>({
+    name: "",
+    email: "",
+    address: "",
+    address2: "",
+    country: { name: "", code: "" },
+    city: "",
+    state: "",
+    zip: "",
+  });
+
   const [bearerToken, setBearerToken] = useState<
     string | unknown | undefined
   >();
@@ -43,8 +65,6 @@ const MerchModule: FC<Props> = (props: Props) => {
   const [showStore, setShowStore] = useState<boolean>(false);
   const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false);
-  const [cart, setCart] = useState<Merch[]>([]);
-  const [step, setStep] = useState<number>(0);
   const value = {
     showStore,
     setShowStore,
@@ -57,12 +77,44 @@ const MerchModule: FC<Props> = (props: Props) => {
   };
 
   const { publicKey } = useWallet();
+  const { connection } = useConnection();
 
-  //handle order modal
+  //fetch users nfts
+  const getNfts = useCallback(async () => {
+    if (!connection || !publicKey) {
+      return;
+    }
+
+    try {
+      //fetch tokens
+      const tokens = await getNftsByOwner(connection, publicKey);
+      if (!tokens || typeof tokens === "string") return;
+
+      const editionUpdateAuthority = process.env.editionUpdateAuthority;
+      const editionName = process.env.editionName;
+
+      //fetch metadata
+      await Promise.all(
+        tokens.map(async (token, index) => {
+          if (
+            token?.updateAuthorityAddress?.toBase58() ===
+              editionUpdateAuthority &&
+            token?.name === editionName
+          ) {
+            setNfts((prevState) => [...prevState, token]);
+          }
+        })
+      );
+    } catch (e: any) {
+      console.error(e.message);
+      toast.error(`Error ${e.message}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connection, publicKey]);
+
   useEffect(() => {
-    if (step > 4) setShowOrderModal(true);
-    else setShowOrderModal(false);
-  }, [setShowOrderModal, step]);
+    getNfts();
+  }, [getNfts]);
 
   //fetch bearer token
   const handleAuthToken = useCallback(async () => {
@@ -76,7 +128,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     handleAuthToken();
   }, [handleAuthToken]);
 
-  //fetch bearer token
+  //fetch user session info
   const handleSession = useCallback(async () => {
     if (typeof bearerToken !== "string" || !publicKey) return;
 
@@ -86,7 +138,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     );
 
     if (response && response.type === ResponseType.Success) {
-      console.log("response ", response);
+      console.log("response ", response.data);
 
       //step 1: save session
       //@ts-ignore
@@ -107,15 +159,90 @@ const MerchModule: FC<Props> = (props: Props) => {
     handleSession();
   }, [handleSession]);
 
+  //TODO: add shipping cost
+  //update user session (cart + shipping + stage)
+  const updateSessionCart = async (racks: number): Promise<void> => {
+    if (typeof bearerToken !== "string" || !publicKey || !shipping?.address)
+      return;
+    const toastId = toast.loading("Running it");
+    const _cart: ShippingCart[] = cart.map((item) => {
+      return {
+        productId: item.id,
+        color: item.color as string,
+        size: item.size as string,
+      };
+    });
+
+    const sessionData: ShippingSession = {
+      address: shipping.address,
+      city: shipping.city,
+      country: shipping.country.code,
+      email: shipping.email,
+      first_name: shipping.name,
+      geo_state: shipping.state,
+      // last_name: shipping.last_name,
+      // nft_send_txn_id?: null,
+      // phone: shipping.number,
+      session_id: shippingSession?.session_id ?? preSession?.session_id,
+      // sol_send_txn_id?: null,
+      stage_completed: 0,
+      wallet_address: publicKey.toBase58(),
+      zip: shipping.zip,
+      cart: _cart,
+    };
+    console.log("sessionData ", sessionData);
+    const response = await updateUserSession(
+      bearerToken as string,
+      publicKey.toBase58(),
+      sessionData
+    );
+
+    console.log("response ", response);
+    if (response.type === ResponseType.Success) {
+      toast.success("Systems updated. 1/3 complete");
+      //TODO: ANSEL send racks to wallet (racks are param in this function)
+      //TODO: on success update stage_1 completed
+      sessionData.stage_completed = 1;
+      sessionData.nft_send_txn_id = "12345"; //TODO: add txn id
+      const stageOneResponse = await updateUserSession(
+        bearerToken as string,
+        publicKey.toBase58(),
+        sessionData
+      );
+      if (stageOneResponse.type === ResponseType.Success) {
+        toast.success("Racks burned. 2/3 complete");
+        //TODO: ANSEL send sol to wallet, if racks and sol can be sent in same tx then we can jump straight to "sessionData.stage_completed = 2"
+        //TODO: on success update stage_1 completed
+        sessionData.stage_completed = 2;
+        sessionData.sol_send_txn_id = "12345"; //TODO: add txn id
+        const stageTwoResponse = await updateUserSession(
+          bearerToken as string,
+          publicKey.toBase58(),
+          sessionData
+        );
+        if (stageTwoResponse.type === ResponseType.Success) {
+          console.log("stageTwoResponse ", stageTwoResponse);
+          toast.success("Sol sent. 3/3 complete", { id: toastId });
+        } else {
+          toast.error(response.data as string, { id: toastId });
+        }
+      } else {
+        toast.error(response.data as string, { id: toastId });
+      }
+    } else {
+      toast.error(response.data as string, { id: toastId });
+    }
+  };
+
   useEffect(() => {
-    if (sessionId) console.log("sessionId ", sessionId);
-  }, [sessionId]);
+    getNfts();
+  }, [getNfts]);
+
+  //handle order modal
   useEffect(() => {
-    if (preSession) console.log("preSession ", preSession);
-  }, [preSession]);
-  useEffect(() => {
-    if (shippingSession) console.log("shippingSession ", shippingSession);
-  }, [shippingSession]);
+    if (step > 4) setShowOrderModal(true);
+    else setShowOrderModal(false);
+  }, [setShowOrderModal, step]);
 
   return (
     <StoreContext.Provider value={value}>
@@ -123,13 +250,24 @@ const MerchModule: FC<Props> = (props: Props) => {
       {/* store */}
       <AnimatePresence mode="wait">
         {showStore && (
-          <StoreModal cart={cart} setCart={setCart} bearerToken={bearerToken} />
+          <StoreModal
+            cart={cart}
+            setCart={setCart}
+            bearerToken={bearerToken}
+            nfts={nfts}
+            shipping={shipping}
+            setShipping={setShipping}
+          />
         )}
       </AnimatePresence>
       {/* order */}
       <AnimatePresence mode="wait">
         {showOrderModal && (
-          <OrderModal cart={cart} setCart={setCart} bearerToken={bearerToken} />
+          <OrderModal
+            cart={cart}
+            setCart={setCart}
+            updateSessionCart={updateSessionCart}
+          />
         )}
       </AnimatePresence>
       {/* exit */}

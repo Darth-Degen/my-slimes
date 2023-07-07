@@ -2,17 +2,17 @@ import { Modal } from "@merch-components";
 import { StoreContext, midExitAnimation } from "@merch-constants";
 import { Dispatch, FC, SetStateAction, useContext, useState } from "react";
 import Image from "next/image";
-import { Merch } from "@merch-types";
+import { Merch, ShippingSession } from "@merch-types";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import OrderIcon from "../../../images/icons/close.svg";
 interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
-  bearerToken: string | unknown | undefined;
+  updateSessionCart: (racks: number) => Promise<void>;
 }
 const OrderModal: FC<Props> = (props: Props) => {
-  const { cart, setCart, bearerToken } = props;
+  const { cart, setCart, updateSessionCart } = props;
   const { showOrderModal, step, setStep } = useContext(StoreContext);
 
   const [isOrdering, setIsOrdering] = useState<boolean>(false);
@@ -29,6 +29,7 @@ const OrderModal: FC<Props> = (props: Props) => {
   };
 
   const handleOrder = (): void => {
+    updateSessionCart(calculateRacks());
     // const toastId = setIsOrdering(true);
     // toast.loading("Ordering...");
     // toast.dismiss();

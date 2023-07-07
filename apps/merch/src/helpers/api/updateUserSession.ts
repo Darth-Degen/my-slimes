@@ -23,9 +23,8 @@ export const updateUserSession = async (
     type: ResponseType.Fail,
     data: "Error",
   };
-  
-  console.log("updateUserSession ", data)
-  return value;
+
+  // console.log("updateUserSession ", data)
 
   await axios
     .request(config)
