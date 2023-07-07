@@ -8,8 +8,9 @@ import {
 } from "react";
 import { StoreModal, ExitModal, OrderModal } from "@merch-components";
 import { AnimatePresence } from "framer-motion";
-import { StoreContext } from "@merch-constants";
+import { StoreContext, merch } from "@merch-constants";
 import {
+  getAllProducts,
   getBearerToken,
   getNftsByOwner,
   getUserSession,
@@ -23,6 +24,7 @@ import {
   ShippingSession,
   ShippingInfo,
   ShippingCart,
+  Quantity,
 } from "@merch-types";
 import axios from "axios";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -39,6 +41,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   const [cart, setCart] = useState<Merch[]>([]);
   const [step, setStep] = useState<number>(0);
   const [nfts, setNfts] = useState<unknown[]>([]);
+  const [quantities, setQuantities] = useState<Quantity[]>([]);
   const [shipping, setShipping] = useState<ShippingInfo>({
     name: "",
     email: "",
@@ -233,10 +236,40 @@ const MerchModule: FC<Props> = (props: Props) => {
       toast.error(response.data as string, { id: toastId });
     }
   };
+  //fetch merch quantities
+  const getQuantities = useCallback(async (): Promise<void> => {
+    if (typeof bearerToken !== "string") return;
+
+    const response = await getAllProducts(bearerToken as string);
+
+    let _quantities: Quantity[] = [];
+    if (response && response.type === ResponseType.Success) {
+      response.data.forEach((item) => {
+        _quantities.push({
+          productid: item.productid,
+          name: item.name,
+          cost: item.cost,
+          sizes: item.sizes,
+        });
+      });
+    } else {
+      merch.forEach((item: Merch) => {
+        _quantities.push({
+          productid: item.id,
+          name: item.name,
+          cost: item.cost,
+          sizes: item.sizes,
+        });
+      });
+    }
+    console.log("_quantities ", _quantities);
+    setQuantities(_quantities);
+    // });
+  }, [bearerToken]);
 
   useEffect(() => {
-    getNfts();
-  }, [getNfts]);
+    getQuantities();
+  }, [getQuantities]);
 
   //handle order modal
   useEffect(() => {
@@ -257,6 +290,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             nfts={nfts}
             shipping={shipping}
             setShipping={setShipping}
+            quantities={quantities}
           />
         )}
       </AnimatePresence>

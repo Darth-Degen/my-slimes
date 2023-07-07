@@ -32,9 +32,18 @@ interface Props {
   nfts: unknown[];
   shipping: ShippingInfo;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
+  quantities: Quantity[];
 }
 const StoreModal: FC<Props> = (props: Props) => {
-  const { cart, setCart, bearerToken, nfts, shipping, setShipping } = props;
+  const {
+    cart,
+    setCart,
+    bearerToken,
+    nfts,
+    shipping,
+    setShipping,
+    quantities,
+  } = props;
   const {
     showStore,
     showOrderModal,
@@ -46,12 +55,9 @@ const StoreModal: FC<Props> = (props: Props) => {
 
   //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
   const [storeItem, setStoreItem] = useState<Merch>();
-  const [quantities, setQuantities] = useState<Quantity[]>([]);
 
   //solana wallet
-  const { setVisible } = useWalletModal();
-
-  const debounceWalletModal = debounce((value) => setVisible(value), 1500);
+  // const { setVisible } = useWalletModal();
 
   //add to cart
   const addToCart = (item: Merch) => {
@@ -67,52 +73,14 @@ const StoreModal: FC<Props> = (props: Props) => {
     setStep(1);
   };
 
-  //unmount debounce
-  useEffect(() => {
-    return () => {
-      debounceWalletModal.cancel();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  //fetch merch quantities
-  const getQuantities = useCallback(() => {
-    if (!process.env.apiKey || !process.env.apiUrl) return;
-
-    const apiKey = process.env.apiKey;
-    const apiUrl = process.env.apiUrl;
-
-    // axios
-    //   .get(`${apiUrl}/products`, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Access-Control-Allow-Origin": "*",
-    //       access_token: apiKey,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     // Handle the response data
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     // Handle the error
-    let _quantities: Quantity[] = [];
-    merch.forEach((item: Merch) => {
-      _quantities.push({
-        productid: item.id,
-        name: item.name,
-        cost: item.cost,
-        sizes: item.sizes,
-      });
-    });
-    setQuantities(_quantities);
-    // });
-  }, []);
-
-  useEffect(() => {
-    getQuantities();
-  }, [getQuantities]);
+  // const debounceWalletModal = debounce((value) => setVisible(value), 1500);
+  // //unmount debounce
+  // useEffect(() => {
+  //   return () => {
+  //     debounceWalletModal.cancel();
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   //reset selected item
   useEffect(() => {
