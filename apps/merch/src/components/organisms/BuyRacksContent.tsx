@@ -29,6 +29,9 @@ import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
 import { COLLECTION_API_URL } from "src/constants";
 import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
 import toast from "react-hot-toast";
+import * as slimesPayment from "src/lib/slimes-payment";
+import { Metaplex, Nft } from "@metaplex-foundation/js";
+import { PublicKey } from "@solana/web3.js";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -120,7 +123,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     }
   };
 
-  const handleMint = (amountToMint: number) => {
+  const handleMint = async (amountToMint: number) => {
     if (!connected) {
       setVisible(true);
       return;
@@ -131,7 +134,18 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
       console.error("Cannot get edition sale data.");
       return;
     }
-    editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    const metaplex = new Metaplex(connection);
+    const nftToBurn = await metaplex.nfts().findByMint({
+      mintAddress: new PublicKey("3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP")
+    });
+    await slimesPayment.pay(
+      connection,
+      wallet,
+      [nftToBurn],
+      0.05,
+      1
+    );
   };
   // console.log("id ", id);
   return (
@@ -153,8 +167,8 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
-                  ".." +
-                  publicKey.toBase58().slice(-4)
+                ".." +
+                publicKey.toBase58().slice(-4)
                 : "Connect"}
             </WalletMultiButton>
           </div>
