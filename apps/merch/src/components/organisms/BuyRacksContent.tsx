@@ -81,7 +81,6 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   );
 
   const winnerWallet = "H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf";
-  const shopURL = `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png`;
 
   useEffect(() => {
     (async function () {
@@ -159,7 +158,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
       <div className="py-20" />
       <div className="sticky lg:top-[10%] xl:top-[15%] justify-center flex flex-col gap-0 w-full items-center">
         <div
-          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] md:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
+          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] md:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
         >
           <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
@@ -181,7 +180,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           >
             all in time
           </h2>
-          {!storeOpenView ? (
+          {storeOpenView ? (
             <>
               {/* content */}
               <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
@@ -234,7 +233,51 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
               )}
             </>
           ) : (
-            <div className="w-full bg-[url:()]"></div>
+            <div
+              className="relative w-full h-full"
+              style={{
+                position: "relative",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100%",
+                  width: "100%",
+                  backgroundImage: `url(${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png)`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  opacity: 0.5, // Adjust this value as needed
+                }}
+              ></div>
+
+              <p
+                className="absolute top-[25%] -translate-y-[75%] left-1/2 -translate-x-1/2
+              text-white font-neuebit-bold text-8xl"
+              >
+                !!!
+              </p>
+              <p
+                className="absolute top-[30%] -translate-y-[70%] left-1/2 -translate-x-1/2 
+              text-white font-neuebit-bold text-5xl"
+              >
+                STORE OPEN
+              </p>
+              <div
+                className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 
+                py-4 px-8 bg-white flex justify-center items-center"
+              >
+                <a
+                  href=""
+                  className="underline text-[#2764FF] font-neuebit-bold text-5xl"
+                >
+                  SHOP NOW
+                </a>
+              </div>
+            </div>
           )}
         </div>
         {activeStatus.name !== RackStatusName.End && (
