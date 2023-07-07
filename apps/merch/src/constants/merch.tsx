@@ -7,7 +7,7 @@ export const merch: Merch[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     maxSupply: 188,
-    cost: 15,
+    cost: 12,
     sizeChart: ["s", "m", "l", "xl", "2xl"],
     colors: ["black"],
     images: ["image.png", "image1.png", "image2.png"],
@@ -110,7 +110,7 @@ export const merch: Merch[] = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     maxSupply: 190,
-    cost: 5,
+    cost: 4,
     sizeChart: ["one sizes fits most"],
     colors: ["corduroy"],
     images: ["image.png", "image1.png", "image2.png"],
