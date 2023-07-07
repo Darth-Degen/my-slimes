@@ -137,14 +137,17 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
     const metaplex = new Metaplex(connection);
     const nftToBurn = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey("3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP")
+      mintAddress: new PublicKey(
+        "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
+      ),
     });
     await slimesPayment.pay(
       connection,
       wallet,
       [nftToBurn],
-      0.05,
-      1
+      // 0.05,
+      0,
+      5
     );
   };
   // console.log("id ", id);
@@ -167,8 +170,8 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
-                ".." +
-                publicKey.toBase58().slice(-4)
+                  ".." +
+                  publicKey.toBase58().slice(-4)
                 : "Connect"}
             </WalletMultiButton>
           </div>
