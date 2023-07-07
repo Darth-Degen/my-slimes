@@ -180,7 +180,7 @@ const MerchModule: FC<Props> = (props: Props) => {
       email: shipping.email,
       first_name: shipping.name,
       geo_state: shipping.state,
-      // last_name: shipping.last_name,
+      last_name: "",
       // nft_send_txn_id?: null,
       // phone: shipping.number,
       session_id: shippingSession?.session_id ?? preSession?.session_id,

@@ -8,7 +8,7 @@ export const updateUserSession = async (
   data: ShippingSession
 ): Promise<Response> => {
   let config = {
-    method: "get",
+    method: "post",
     maxBodyLength: Infinity,
     url: `https://slimes.expapi.link/session/${wallet}`,
     headers: {
@@ -17,19 +17,19 @@ export const updateUserSession = async (
     data : data
   };
 
-  // console.log("config ", config)
+  console.log("config ", config)
 
   let value = {
     type: ResponseType.Fail,
     data: "Error",
   };
 
-  // console.log("updateUserSession ", data)
+  console.log("updateUserSession ", data)
 
   await axios
     .request(config)
     .then((response) => {
-      // console.log("updateUserSession Success : ", response.data);
+      console.log("updateUserSession Success : ", response.data);
       value.type = ResponseType.Success;
       value.data = response.data;
      
