@@ -53,6 +53,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<RackStatus>(rackStatus[0]);
   const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
+  const [storeOpenView, setStoreOpenView] = useState<boolean>(false);
 
   const { connection } = useConnection();
 
@@ -76,6 +77,8 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     editionsContractIdl,
     EDITIONS_PROGRAM_ID
   );
+
+  const winnerWallet = "H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf";
 
   useEffect(() => {
     (async function () {
@@ -137,17 +140,13 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
     const metaplex = new Metaplex(connection);
     const nftToBurn = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey("3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP")
+      mintAddress: new PublicKey(
+        "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
+      ),
     });
-    await slimesPayment.pay(
-      connection,
-      wallet,
-      [nftToBurn],
-      0.05,
-      1
-    );
+    await slimesPayment.pay(connection, wallet, [nftToBurn], 0.05, 1);
   };
-  // console.log("id ", id);
+
   return (
     <div
       className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
@@ -167,26 +166,27 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
-                ".." +
-                publicKey.toBase58().slice(-4)
+                  ".." +
+                  publicKey.toBase58().slice(-4)
                 : "Connect"}
             </WalletMultiButton>
           </div>
           {/* header */}
           <h2
             className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
-    text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
+            text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
           >
             all in time
           </h2>
-          {activeStatus.name !== RackStatusName.End && (
+          {!storeOpenView ? (
             <>
               {/* content */}
-              <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
+              <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
                 <TextBox text={activeStatus.text} className="hidden lg:flex" />
                 <ImageBox
                   src={activeStatus.src}
                   caption={activeStatus.caption}
+                  activeStatus={activeStatus}
                 />
                 {activeStatus.name === RackStatusName.Buy && (
                   <BuyRacksForm
@@ -198,14 +198,33 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                 {activeStatus.name === RackStatusName.Raffle && (
                   <TextBox text={activeStatus.text} />
                 )}
+                {activeStatus.name === RackStatusName.End && (
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-neuebit-bold">
+                      {publicKey?.toBase58() === winnerWallet
+                        ? "YOU WON!"
+                        : "YOU LOST"}
+                    </p>
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="text-custom-primary underline uppercase self-center"
+                    >
+                      tweet it
+                    </a>
+                  </div>
+                )}
               </div>
               <Countdown
                 futureDate={activeStatus.endDate}
                 caption={activeStatus.timerCaption}
-                className="pb-10  self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+                className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
                 handleDateEnd={handleDateEnd}
               />
             </>
+          ) : (
+            <></>
           )}
         </div>
         {activeStatus.name !== RackStatusName.End && (
@@ -228,5 +247,23 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     </div>
   );
 };
+
+// {
+//   activeStatus.name === RackStatusName.End && (
+//     <>
+//       {/* content */}
+//       <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] border border-red-500">
+//         <TextBox text={activeStatus.text} className="hidden lg:flex" />
+//         <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
+//       </div>
+//       <Countdown
+//         futureDate={activeStatus.endDate}
+//         caption={activeStatus.timerCaption}
+//         className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+//         handleDateEnd={handleDateEnd}
+//       />
+//     </>
+//   );
+// }
 
 export default BuyRacksContent;
