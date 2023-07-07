@@ -244,6 +244,7 @@ const MerchModule: FC<Props> = (props: Props) => {
 
     let _quantities: Quantity[] = [];
     if (response && response.type === ResponseType.Success) {
+      //@ts-ignore
       response.data.forEach((item) => {
         _quantities.push({
           productid: item.productid,
