@@ -78,7 +78,6 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   //[3904, ]
 
   const [show, setShow] = useState<boolean>(false);
-  //TODO:uncomment if need to revert
   // const translateY: MotionValue<number> = useTransform(
   //   scrollY,
   //   [startY, startY + winHeight],

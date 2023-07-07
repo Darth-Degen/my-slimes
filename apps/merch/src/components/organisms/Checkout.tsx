@@ -15,24 +15,27 @@ interface Props {
   step: number;
   setStep: (value: number) => void;
   updateCart: Dispatch<SetStateAction<Merch[]>>;
+  shipping: ShippingInfo;
+  setShipping: Dispatch<SetStateAction<ShippingInfo>>;
+  racks: number;
+  // const shippingFee = 2;
+  shippingFee: number;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
-  const { cart, step, setStep, updateCart } = props;
-
-  const [shipping, setShipping] = useState<ShippingInfo>({
-    name: "",
-    email: "",
-    address: "",
-    address2: "",
-    country: { name: "", code: "" },
-    city: "",
-    state: "",
-    zip: "",
-  });
+  const {
+    cart,
+    step,
+    setStep,
+    updateCart,
+    shipping,
+    setShipping,
+    racks,
+    shippingFee,
+  } = props;
 
   //TODO: what id shipping fee
-  const shippingFee = 2;
+  // const shippingFee = 2;
 
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
@@ -45,6 +48,11 @@ const Checkout: FC<Props> = (props: Props) => {
   const handleCartCheckout = (): void => {
     if (cart.length === 0) {
       toast.error("No items in cart");
+      return;
+    }
+    // console.log(calculateRacks(), racks);
+    if (racks < calculateRacks()) {
+      toast.error("Not enough racks");
       return;
     }
     //verify all sizes & colors
@@ -82,21 +90,21 @@ const Checkout: FC<Props> = (props: Props) => {
             {step > 3 && (
               <motion.div
                 key="orderinfo"
-                className="flex flex-col items-center xl:items-start justify-start gap-3"
+                className="flex flex-col items-center xl:items-start justify-start gap-3 w-full"
                 {...fastExitAnimation}
               >
-                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>Cost</p>
                   <p>{calculateRacks()} racks</p>
                 </div>
-                <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>shipping</p>
-                  <p>{shippingFee} sol</p>
+                  <p>${shippingFee} USDC</p>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-          <div className="w-full xl:w-1/2 lg:min-w-[580px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+          <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
             <p>total</p>
             <p>
               {calculateRacks()} racks {step > 3 && "+ SOL"}

@@ -13,7 +13,7 @@ interface Props {
 const StoreItem: FC<Props> = (props: Props) => {
   const { item, inStock, addToCart, handleImageClick } = props;
 
-  //TODO: change to true
+  //TODO: change to false
   const [didHover, setDidHover] = useState<boolean>(true);
 
   const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`;

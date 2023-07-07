@@ -12,16 +12,16 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
   const { step, storeItem, setStep } = props;
 
   return (
-    <div className="flex flex-wrap gap-1.5 tracking-wide text-base md:text-xl text-m-black font-neuebit-bold uppercase">
+    <div className="flex flex-wrap gap-1.5 tracking-wide text-base md:text-lg text-m-black font-neuebit-bold uppercase">
       {/* main */}
       <motion.div
-        className="cursor-pointer"
+        className="cursor-pointer underline"
         onClick={() => {
           setStep(0);
         }}
         {...fastExitAnimation}
       >
-        all in time
+        {step > 0 ? "back to store" : "all in time"}
       </motion.div>
 
       {/* detail view */}
@@ -29,7 +29,7 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
       <AnimatePresence mode="wait">
         {step > 0 && storeItem && (
           <motion.div
-            className="cursor-pointer"
+            className="cursor-pointer underline"
             onClick={() => {
               setStep(1);
             }}
@@ -45,7 +45,7 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
       <AnimatePresence mode="wait">
         {step > 1 && (
           <motion.div
-            className="cursor-pointer"
+            className="cursor-pointer underline"
             onClick={() => {
               setStep(2);
             }}
@@ -61,7 +61,7 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
       <AnimatePresence mode="wait">
         {step > 2 && (
           <motion.div
-            className="cursor-pointer"
+            className="cursor-pointer underline"
             onClick={() => {
               setStep(3);
             }}
@@ -77,7 +77,7 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
       <AnimatePresence mode="wait">
         {step > 3 && (
           <motion.div
-            className="cursor-pointer"
+            className="cursor-pointer underline"
             onClick={() => {
               setStep(4);
             }}
@@ -101,7 +101,7 @@ const Carrot: FC<CarrotProps> = (props: CarrotProps) => {
   return (
     <AnimatePresence mode="wait">
       {step > index && secondCondition && (
-        <motion.div className="cursor-pointer" {...fastExitAnimation}>
+        <motion.div className="" {...fastExitAnimation}>
           {">"}
         </motion.div>
       )}

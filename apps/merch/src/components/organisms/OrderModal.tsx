@@ -2,22 +2,21 @@ import { Modal } from "@merch-components";
 import { StoreContext, midExitAnimation } from "@merch-constants";
 import { Dispatch, FC, SetStateAction, useContext, useState } from "react";
 import Image from "next/image";
-import { Merch } from "@merch-types";
+import { Merch, ShippingSession } from "@merch-types";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import OrderIcon from "../../../images/icons/close.svg";
 interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
+  updateSessionCart: (racks: number) => Promise<void>;
+  shippingFee: number;
 }
 const OrderModal: FC<Props> = (props: Props) => {
-  const { cart, setCart } = props;
+  const { cart, setCart, updateSessionCart, shippingFee } = props;
   const { showOrderModal, step, setStep } = useContext(StoreContext);
 
   const [isOrdering, setIsOrdering] = useState<boolean>(false);
-
-  //TODO: what is shipping fee
-  const shippingFee = 2;
 
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
@@ -28,6 +27,7 @@ const OrderModal: FC<Props> = (props: Props) => {
   };
 
   const handleOrder = (): void => {
+    updateSessionCart(calculateRacks());
     // const toastId = setIsOrdering(true);
     // toast.loading("Ordering...");
     // toast.dismiss();
@@ -83,8 +83,8 @@ const OrderModal: FC<Props> = (props: Props) => {
             >
               <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-4xl lg:w-full gap-10">
                 <p key="step-6">
-                  You will now be deducted ({calculateRacks()}) NFTs & (
-                  {shippingFee}) sol
+                  You will now be deducted ({calculateRacks()}) NFTs & ( $
+                  {shippingFee}) USDC
                 </p>
                 <p className="text-m-red text-lg">all sales are final</p>
               </div>

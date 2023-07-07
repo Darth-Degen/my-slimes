@@ -11,7 +11,7 @@ interface Props {
 const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
   const slideUpAnimation = slideUp(true, 150, 1.3, 0);
   return (
-    <AnimatePresence mode="wait">
+    <>
       <motion.div
         {...slideUpAnimation}
         className="md:mt-0 md:mx-10 pb-40 lg:mx-[10%] xl:mx-[20%]"
@@ -109,7 +109,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
         </div>
       </motion.div>
       <SlimesHubFooter color="#FFB094" />
-    </AnimatePresence>
+    </>
   );
 };
 

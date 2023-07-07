@@ -2,8 +2,12 @@ import { motion } from "framer-motion";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { midExitAnimation, countries } from "@merch-constants";
 import { TextInput, Dropdown } from "@merch-components";
-import { Country, ShippingInfo } from "@merch-types";
+import { Country, ShippingInfo, ShippingSession } from "@merch-types";
+import { updateUserSession } from "@merch-helpers";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Props {
   shipping: ShippingInfo;
@@ -51,7 +55,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
   const handleZip = (zip: string) => {
     setShipping((prevState) => ({ ...prevState, zip }));
   };
-  const handleCheckout = (): void => {
+  const handleCheckout = async () => {
     //verify all input fields
     if (
       shipping.name.trim().length < 2 ||
@@ -68,6 +72,14 @@ const ShippingForm: FC<Props> = (props: Props) => {
       toast.error("All fields required");
       return;
     }
+
+    // if (!publicKey) {
+    //   setVisible(true)
+    //   return
+    // }
+
+    // const shipSesh:ShippingSession = {}
+    // const response = await updateUserSession(publicKey.toBase58(), bearerToken as string, shipping)
 
     setStep(4);
   };
@@ -129,13 +141,18 @@ const ShippingForm: FC<Props> = (props: Props) => {
         handleInput={handleCity}
       />
       {/* TODO: states */}
-      <Dropdown
+      {/* <Dropdown
         handleSelect={handleState}
         setShowDropdown={setStateDropdown}
         showDropdown={stateDropdown}
         label={shipping.state.length > 0 ? shipping.state : `State`}
         items={countryNames}
         className="text-m-mid-gray whitespace-nowrap text-ellipsis"
+      /> */}
+
+      <TextInput
+        placeholder={shipping.state.length > 0 ? shipping.state : "State"}
+        handleInput={handleState}
       />
       <TextInput
         placeholder={shipping.zip.length > 0 ? shipping.zip : "zip"}

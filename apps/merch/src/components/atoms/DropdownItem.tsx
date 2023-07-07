@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { motion, Variants } from "framer-motion";
-import { Merch } from "@merch-types";
 
 interface Props {
   item: string;

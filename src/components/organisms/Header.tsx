@@ -100,23 +100,47 @@ const Header: FC<Props> = (props: Props) => {
     </div>
   );
 
+  // return (
+  //   <header
+  //     className={`top-0 z-20 transition-all duration-500 ${
+  //       headerType === "scroll" ? "fixed" : headerType
+  //     } `}
+  //   >
+  //     {headerType !== "scroll" ? (
+  //       <Content />
+  //     ) : (
+  //       <motion.aside
+  //         variants={headerVariants}
+  //         initial={"show"}
+  //         animate={header ? "show" : "hidden"}
+  //       >
+  //         <Content />
+  //       </motion.aside>
+  //     )}
+  //   </header>
+  // );
+
+  if (headerType === "scroll") {
+    return (
+      <motion.header
+        variants={headerVariants}
+        initial={"show"}
+        animate={header ? "show" : "hidden"}
+        className={`top-0 z-20 transition-all duration-500 ${
+          headerType === "scroll" ? "fixed" : headerType
+        } `}
+      >
+        <Content />
+      </motion.header>
+    );
+  }
   return (
     <header
       className={`top-0 z-20 transition-all duration-500 ${
         headerType === "scroll" ? "fixed" : headerType
       } `}
     >
-      {headerType !== "scroll" ? (
-        <Content />
-      ) : (
-        <motion.aside
-          variants={headerVariants}
-          initial={"show"}
-          animate={header ? "show" : "hidden"}
-        >
-          <Content />
-        </motion.aside>
-      )}
+      <Content />
     </header>
   );
 };

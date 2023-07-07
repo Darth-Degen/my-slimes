@@ -29,6 +29,11 @@ import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
 import { COLLECTION_API_URL } from "src/constants";
 import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
 import toast from "react-hot-toast";
+import * as slimesPayment from "src/lib/slimes-payment";
+import { Metaplex, Nft } from "@metaplex-foundation/js";
+import { PublicKey } from "@solana/web3.js";
+import Image from "next/image";
+import splashIcon from "../../../images/raffle_splash.png";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -50,6 +55,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<RackStatus>(rackStatus[0]);
   const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
+  const [storeOpenView, setStoreOpenView] = useState<boolean>(false);
 
   const { connection } = useConnection();
 
@@ -73,6 +79,9 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     editionsContractIdl,
     EDITIONS_PROGRAM_ID
   );
+
+  const winnerWallet = "H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf";
+  const shopURL = `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png`;
 
   useEffect(() => {
     (async function () {
@@ -120,7 +129,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     }
   };
 
-  const handleMint = (amountToMint: number) => {
+  const handleMint = async (amountToMint: number) => {
     if (!connected) {
       setVisible(true);
       return;
@@ -131,12 +140,19 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
       console.error("Cannot get edition sale data.");
       return;
     }
-    editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    const metaplex = new Metaplex(connection);
+    const nftToBurn = await metaplex.nfts().findByMint({
+      mintAddress: new PublicKey(
+        "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
+      ),
+    });
+    await slimesPayment.pay(connection, wallet, [nftToBurn], 0.05, 1);
   };
-  // console.log("id ", id);
+
   return (
     <div
-      className={`w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
+      className={`relative w-full min-h-screen flex flex-col items-center justify-center bg-ait-teal`}
       id={id}
       ref={ref}
     >
@@ -161,18 +177,31 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           {/* header */}
           <h2
             className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
-    text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
+            text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
           >
             all in time
           </h2>
-          {activeStatus.name !== RackStatusName.End && (
+          {!storeOpenView ? (
             <>
               {/* content */}
-              <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%]">
-                <TextBox text={activeStatus.text} className="hidden lg:flex" />
+              <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
+                {activeStatus.name === RackStatusName.Raffle && (
+                  <div className="w-[250px]">
+                    {!publicKey ? (
+                      ""
+                    ) : publicKey?.toBase58() === winnerWallet ? (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU WON!
+                      </p>
+                    ) : (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
+                    )}
+                  </div>
+                )}
                 <ImageBox
                   src={activeStatus.src}
                   caption={activeStatus.caption}
+                  activeStatus={activeStatus}
                 />
                 {activeStatus.name === RackStatusName.Buy && (
                   <BuyRacksForm
@@ -182,16 +211,30 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                   />
                 )}
                 {activeStatus.name === RackStatusName.Raffle && (
-                  <TextBox text={activeStatus.text} />
+                  <div className="w-[250px]">
+                    {!publicKey ? (
+                      ""
+                    ) : publicKey?.toBase58() === winnerWallet ? (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        YOU WON!
+                      </p>
+                    ) : (
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
+                    )}
+                  </div>
                 )}
               </div>
-              <Countdown
-                futureDate={activeStatus.endDate}
-                caption={activeStatus.timerCaption}
-                className="pb-10  self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
-                handleDateEnd={handleDateEnd}
-              />
+              {activeStatus.name === RackStatusName.Buy && (
+                <Countdown
+                  futureDate={activeStatus.endDate}
+                  caption={activeStatus.timerCaption}
+                  className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+                  handleDateEnd={handleDateEnd}
+                />
+              )}
             </>
+          ) : (
+            <div className="w-full bg-[url:()]"></div>
           )}
         </div>
         {activeStatus.name !== RackStatusName.End && (
@@ -209,10 +252,33 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           </div>
           // </a>
         )}
+        {activeStatus.name === RackStatusName.Raffle && (
+          <div className="absolute bottom-20 left-20 hidden md:block ">
+            <Image src={splashIcon} width={300} height={300} alt="splash" />
+          </div>
+        )}
       </div>
       <div className="lg:pb-[500px]" />
     </div>
   );
 };
+
+// {
+//   activeStatus.name === RackStatusName.End && (
+//     <>
+//       {/* content */}
+//       <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] border border-red-500">
+//         <TextBox text={activeStatus.text} className="hidden lg:flex" />
+//         <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
+//       </div>
+//       <Countdown
+//         futureDate={activeStatus.endDate}
+//         caption={activeStatus.timerCaption}
+//         className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+//         handleDateEnd={handleDateEnd}
+//       />
+//     </>
+//   );
+// }
 
 export default BuyRacksContent;

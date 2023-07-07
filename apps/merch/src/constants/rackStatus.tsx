@@ -4,7 +4,6 @@ export const rackStatus: RackStatus[] = [
   {
     name: RackStatusName.Buy,
     text: "BUY NOW!!!",
-    // endDate: new Date(2023, 6, 7, 16, 0, 0),
     endDate: new Date(Date.UTC(2023, 6, 7, 23, 0, 0)),
     src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/pika.png`,
     caption:
@@ -13,18 +12,18 @@ export const rackStatus: RackStatus[] = [
   },
   {
     name: RackStatusName.Raffle,
-    text: "RAFFLE LIVE ",
-    endDate: new Date("6/5/23"),
+    text: "RAFFLE LIVE",
+    endDate: new Date(Date.UTC(2023, 6, 14, 23, 0, 0)),
     src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/yoda.png`,
-    caption: "the lucky mfr who won a slime is:",
+    caption: "Being chosen a winner is.",
     timerCaption: "winner chosen in:",
   },
   {
     name: RackStatusName.End,
-    text: "",
+    text: "RAFFLE LIVE",
     endDate: new Date(),
-    src: "",
-    caption: "",
+    src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/yoda.png`,
+    caption: "the lucky mfr who won a slime is:",
     timerCaption: "",
   },
 ];
