@@ -13,12 +13,11 @@ interface Props {
   shipping: ShippingInfo;
   setStep: (value: number) => void;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
-  bearerToken: string | unknown | undefined;
 }
 
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const ShippingForm: FC<Props> = (props: Props) => {
-  const { setStep, shipping, setShipping, bearerToken } = props;
+  const { setStep, shipping, setShipping } = props;
 
   const [countryDropdown, setCountryDropdown] = useState<boolean>(false);
   const [stateDropdown, setStateDropdown] = useState<boolean>(false);
@@ -156,7 +155,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
 
       <TextInput
         placeholder={shipping.state.length > 0 ? shipping.state : "State"}
-        handleInput={handleAddress2}
+        handleInput={handleState}
       />
       <TextInput
         placeholder={shipping.zip.length > 0 ? shipping.zip : "zip"}

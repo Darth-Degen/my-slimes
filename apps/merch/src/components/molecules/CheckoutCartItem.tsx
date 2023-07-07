@@ -91,6 +91,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           items={item.sizeChart}
           className="!w-48 !h-8 bg-m-light-gray !text-base"
           disabled={item.sizeChart.length === 1 || step > 2}
+          expandUI={true}
         />
         {/* </div> */}
       </div>

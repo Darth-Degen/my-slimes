@@ -34,6 +34,17 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
+const _shipping: ShippingInfo = {
+  name: "",
+  email: "",
+  address: "",
+  address2: "",
+  country: { name: "", code: "" },
+  city: "",
+  state: "",
+  zip: "",
+};
+
 const MerchModule: FC<Props> = (props: Props) => {
   const { children, className, ...componentProps } = props;
 
@@ -42,16 +53,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   const [step, setStep] = useState<number>(0);
   const [nfts, setNfts] = useState<unknown[]>([]);
   const [quantities, setQuantities] = useState<Quantity[]>([]);
-  const [shipping, setShipping] = useState<ShippingInfo>({
-    name: "",
-    email: "",
-    address: "",
-    address2: "",
-    country: { name: "", code: "" },
-    city: "",
-    state: "",
-    zip: "",
-  });
+  const [shipping, setShipping] = useState<ShippingInfo>(_shipping);
 
   const [bearerToken, setBearerToken] = useState<
     string | unknown | undefined
@@ -278,6 +280,15 @@ const MerchModule: FC<Props> = (props: Props) => {
     else setShowOrderModal(false);
   }, [setShowOrderModal, step]);
 
+  //empty state on modal close
+  useEffect(() => {
+    if (!showStore) {
+      setShipping(_shipping);
+      setCart([]);
+      setStep(0);
+    }
+  }, [showStore]);
+
   return (
     <StoreContext.Provider value={value}>
       {children}
@@ -287,7 +298,6 @@ const MerchModule: FC<Props> = (props: Props) => {
           <StoreModal
             cart={cart}
             setCart={setCart}
-            bearerToken={bearerToken}
             nfts={nfts}
             shipping={shipping}
             setShipping={setShipping}

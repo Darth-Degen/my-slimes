@@ -15,21 +15,14 @@ interface Props {
   step: number;
   setStep: (value: number) => void;
   updateCart: Dispatch<SetStateAction<Merch[]>>;
-  bearerToken: string | unknown | undefined;
   shipping: ShippingInfo;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
+  racks: number;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
-  const {
-    cart,
-    step,
-    setStep,
-    updateCart,
-    bearerToken,
-    shipping,
-    setShipping,
-  } = props;
+  const { cart, step, setStep, updateCart, shipping, setShipping, racks } =
+    props;
 
   //TODO: what id shipping fee
   const shippingFee = 2;
@@ -45,6 +38,11 @@ const Checkout: FC<Props> = (props: Props) => {
   const handleCartCheckout = (): void => {
     if (cart.length === 0) {
       toast.error("No items in cart");
+      return;
+    }
+    console.log(calculateRacks(), racks);
+    if (racks < calculateRacks()) {
+      toast.error("Not enough racks");
       return;
     }
     //verify all sizes & colors
@@ -116,7 +114,6 @@ const Checkout: FC<Props> = (props: Props) => {
               setStep={setStep}
               shipping={shipping}
               setShipping={setShipping}
-              bearerToken={bearerToken}
             />
           )}
           {step > 3 && (

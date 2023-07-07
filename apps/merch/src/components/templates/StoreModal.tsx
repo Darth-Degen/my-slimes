@@ -28,22 +28,13 @@ import ExitIcon from "../../../images/icons/close.svg";
 interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
-  bearerToken: string | unknown | undefined;
   nfts: unknown[];
   shipping: ShippingInfo;
   setShipping: Dispatch<SetStateAction<ShippingInfo>>;
   quantities: Quantity[];
 }
 const StoreModal: FC<Props> = (props: Props) => {
-  const {
-    cart,
-    setCart,
-    bearerToken,
-    nfts,
-    shipping,
-    setShipping,
-    quantities,
-  } = props;
+  const { cart, setCart, nfts, shipping, setShipping, quantities } = props;
   const {
     showStore,
     showOrderModal,
@@ -138,9 +129,9 @@ const StoreModal: FC<Props> = (props: Props) => {
             step={step}
             setStep={setStep}
             updateCart={setCart}
-            bearerToken={bearerToken}
             shipping={shipping}
             setShipping={setShipping}
+            racks={nfts.length}
           />
         )}
         <Footer step={step} />
