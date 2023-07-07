@@ -194,9 +194,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                         YOU WON!
                       </p>
                     ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU LOST
-                      </p>
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
                     )}
                   </div>
                 )}
@@ -221,9 +219,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                         YOU WON!
                       </p>
                     ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU LOST
-                      </p>
+                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
                     )}
                   </div>
                 )}
