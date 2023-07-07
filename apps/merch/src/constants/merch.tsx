@@ -5,12 +5,12 @@ export const merch: Merch[] = [
     id: "crewneck",
     name: "All in time Crewneck",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Slightly oversized fit. Boxy shoulders. Embroidery 3 locations, custom tags inside and out. 100% cotton",
     maxSupply: 188,
     cost: 12,
     sizeChart: ["s", "m", "l", "xl", "2xl"],
     colors: ["black"],
-    images: ["image.png", "image1.png", "image2.png"],
+    images: ["image.png", "image1.png", "image2.png", "image3.png"],
     sizes: [
       {
         color: "black",
@@ -43,12 +43,12 @@ export const merch: Merch[] = [
     id: "tee",
     name: "skullface tee",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    maxSupply: 214,
+      "Slightly oversized fit. Graphic designed by Skullface. Available in black and white. 100% cotton.",
+    maxSupply: 221,
     cost: 5,
     sizeChart: ["s", "m", "lg", "xl", "2xl"],
     colors: ["black", "white"],
-    images: ["image.png", "image1.png", "image2.png"],
+    images: ["image.png", "image1.png", "image2.png", "image3.png"],
     sizes: [
       //white
       {
@@ -108,12 +108,12 @@ export const merch: Merch[] = [
     id: "hat",
     name: "corduroy dad hat",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Golden Brown, recycled cotton/poly blend. Embroidery and custom tag. Dad swag not included.",
     maxSupply: 190,
     cost: 4,
     sizeChart: ["one sizes fits most"],
     colors: ["corduroy"],
-    images: ["image.png", "image1.png", "image2.png"],
+    images: ["image.png"],
     sizes: [
       {
         color: "corduroy",
@@ -126,12 +126,12 @@ export const merch: Merch[] = [
     id: "pack",
     name: "culture builder pack",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Custom LAMY pen (made in germany), custom vanity box, Recycled paper sketchbook, Stickers (5x), Hard enamel pin. Paper/Metal/Plastic.",
     maxSupply: 190,
     cost: 5,
     sizeChart: ["one pack to rule them all"],
     colors: ["pack"],
-    images: ["image.png", "image1.png", "image2.png"],
+    images: ["image.png", "image1.png", "image2.png", "image3.png"],
     sizes: [
       {
         color: "pack",
