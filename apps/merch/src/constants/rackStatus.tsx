@@ -13,7 +13,7 @@ export const rackStatus: RackStatus[] = [
   {
     name: RackStatusName.Raffle,
     text: "RAFFLE LIVE ",
-    endDate: new Date("7/8/23"),
+    endDate: new Date("6/8/23"),
     src: `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/yoda.png`,
     caption: "the lucky mfr who won a slime is:",
     timerCaption: "winner chosen in:",
