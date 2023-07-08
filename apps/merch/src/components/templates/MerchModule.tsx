@@ -125,7 +125,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         tokens.map(async (token, index) => {
           if (
             token?.updateAuthorityAddress?.toBase58() ===
-              editionUpdateAuthority &&
+            editionUpdateAuthority &&
             token?.name === editionName
           ) {
             //@ts-ignore
@@ -282,7 +282,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     await slimesPayment.pay(connection, wallet, nftsToBurn, 0.05, 5);
   }, [connection, nfts, wallet]);
   useEffect(() => {
-    transactPayment();
+    // transactPayment();
   }, [transactPayment]);
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {

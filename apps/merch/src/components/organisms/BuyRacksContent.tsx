@@ -158,13 +158,15 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
         "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
       ),
     });
-    await slimesPayment.pay(
+    const txsSignatures = await slimesPayment.pay(
       connection,
       wallet,
       [nftToBurn, nftToBurn2],
       0.05,
       1
     );
+
+    console.log('txsSignatures: ', txsSignatures);
   };
 
   return (
