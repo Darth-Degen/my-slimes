@@ -1,10 +1,11 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { Merch, Quantity } from "@merch-types";
+import { Merch, Quantity, ShippingSession } from "@merch-types";
 import Image from "next/image";
 import { midExitAnimation } from "@merch-constants";
 import { motion } from "framer-motion";
 import { ImagePicker, Dropdown } from "@merch-components";
 import { verifyItemInStock } from "@merch-helpers";
+import toast from "react-hot-toast";
 
 import arrows from "../../../images/icons/three-right-arrows.svg";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -14,9 +15,20 @@ interface Props {
   quantities: Quantity[];
   addToCart: (item: Merch) => void;
   setStep: (value: number) => void;
+  atMerchItemCapacity: (id: string) => boolean;
+  shippingSession: ShippingSession | undefined;
+  setShowWarningModal: Dispatch<SetStateAction<boolean>>;
 }
 const ItemDetail: FC<Props> = (props: Props) => {
-  const { item, quantities, addToCart, setStep } = props;
+  const {
+    item,
+    quantities,
+    addToCart,
+    setStep,
+    atMerchItemCapacity,
+    shippingSession,
+    setShowWarningModal,
+  } = props;
   const path = `${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/`;
 
   const [selected, setSelected] = useState<number>(0);
@@ -67,7 +79,17 @@ const ItemDetail: FC<Props> = (props: Props) => {
       setVisible(true);
       return;
     }
+
     if (verifySelections()) {
+      if (atMerchItemCapacity(item.id)) {
+        toast.error("Only three of each item");
+        return;
+      }
+      if (shippingSession && shippingSession?.stage_completed === "2") {
+        setShowWarningModal(true);
+        return;
+      }
+
       setStep(3);
       addToCart(cartItem);
     }

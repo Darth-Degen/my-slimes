@@ -6,7 +6,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { StoreModal, ExitModal, OrderModal } from "@merch-components";
+import {
+  StoreModal,
+  ExitModal,
+  OrderModal,
+  WarningModal,
+} from "@merch-components";
 import { AnimatePresence } from "framer-motion";
 import { StoreContext, merch } from "@merch-constants";
 import {
@@ -48,13 +53,14 @@ const _shipping: ShippingInfo = {
 const MerchModule: FC<Props> = (props: Props) => {
   const { children, className, ...componentProps } = props;
 
-  //state
+  //stateWarningModal
   const [cart, setCart] = useState<Merch[]>([]);
   const [step, setStep] = useState<number>(0);
   const [nfts, setNfts] = useState<unknown[]>([]);
   const [quantities, setQuantities] = useState<Quantity[]>([]);
   const [shipping, setShipping] = useState<ShippingInfo>(_shipping);
   const [shippingFee, setShippingFee] = useState<number>(0);
+  const [showWarningModal, setShowWarningModal] = useState<boolean>(false);
 
   const [bearerToken, setBearerToken] = useState<
     string | unknown | undefined
@@ -355,6 +361,8 @@ const MerchModule: FC<Props> = (props: Props) => {
             quantities={quantities}
             getQuantities={getQuantities}
             shippingFee={shippingFee}
+            setShowWarningModal={setShowWarningModal}
+            shippingSession={shippingSession}
           />
         )}
       </AnimatePresence>
@@ -372,6 +380,15 @@ const MerchModule: FC<Props> = (props: Props) => {
       {/* exit */}
       <AnimatePresence mode="wait">
         {showExitModal && <ExitModal />}
+      </AnimatePresence>
+      {/* exit */}
+      <AnimatePresence mode="wait">
+        {showWarningModal && (
+          <WarningModal
+            showWarningModal={showWarningModal}
+            setShowWarningModal={setShowWarningModal}
+          />
+        )}
       </AnimatePresence>
     </StoreContext.Provider>
   );

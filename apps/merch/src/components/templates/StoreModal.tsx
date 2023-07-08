@@ -7,7 +7,7 @@ import {
   Footer,
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
-import { Merch, Quantity, ShippingInfo } from "@merch-types";
+import { Merch, Quantity, ShippingInfo, ShippingSession } from "@merch-types";
 import {
   Dispatch,
   FC,
@@ -35,6 +35,8 @@ interface Props {
   quantities: Quantity[];
   getQuantities: () => Promise<void>;
   shippingFee: number;
+  setShowWarningModal: Dispatch<SetStateAction<boolean>>;
+  shippingSession: ShippingSession | undefined;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -46,6 +48,8 @@ const StoreModal: FC<Props> = (props: Props) => {
     quantities,
     getQuantities,
     shippingFee,
+    setShowWarningModal,
+    shippingSession,
   } = props;
   const {
     showStore,
@@ -89,11 +93,21 @@ const StoreModal: FC<Props> = (props: Props) => {
       toast.error("Only three of each item");
       return;
     }
+    console.log(
+      "shippingSession ",
+      shippingSession?.stage_completed,
+      shippingSession?.stage_completed === 2
+    );
+    if (shippingSession && shippingSession?.stage_completed === "2") {
+      setShowWarningModal(true);
+      return;
+    }
     // console.log(item);
     await getQuantities();
     // console.log("quantities ", quantities);
     setCart((prevState) => [...prevState, item]);
   };
+
   //open cart
   const handleCartClick = (): void => {
     setStep(2);
@@ -164,6 +178,9 @@ const StoreModal: FC<Props> = (props: Props) => {
             item={storeItem}
             addToCart={addToCart}
             setStep={setStep}
+            atMerchItemCapacity={atMerchItemCapacity}
+            shippingSession={shippingSession}
+            setShowWarningModal={setShowWarningModal}
           />
         )}
         {/* cart + checkout process */}
