@@ -82,7 +82,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
 
     if (verifySelections()) {
       if (atMerchItemCapacity(item.id)) {
-        toast.error("Only three of each item");
+        toast.error("Only two of each item");
         return;
       }
       if (shippingSession && shippingSession?.stage_completed === "2") {
