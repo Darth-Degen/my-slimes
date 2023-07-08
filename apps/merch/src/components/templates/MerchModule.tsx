@@ -308,23 +308,55 @@ const MerchModule: FC<Props> = (props: Props) => {
     if (!connection || !publicKey) {
       setVisible(true);
     }
-    //TODO: replace with actual racks
+
     const _racks = calculateRacks();
 
-    const nftsToBurn = nfts.slice(0, _racks);
     // console.log("nftsToBurn ", nftsToBurn);
+    //TODO: cahnge to 30
+    const dividend = 5;
 
-    const txsSignatures = await slimesPayment.pay(
-      connection,
-      wallet,
-      nftsToBurn,
-      shippingCurrency === "sol"
-        ? Number((shippingFee / solPrice).toFixed(2))
-        : 0,
-      shippingCurrency === "usdc" ? shippingFee : 0
-    );
-    console.log("txsSignatures: ", txsSignatures);
-    return txsSignatures;
+    if (_racks > dividend) {
+      const numBatches = Math.ceil(_racks / dividend);
+      const txsSignatures: string[] = [];
+
+      for (let i = 0; i < numBatches; i++) {
+        const startIndex = i * dividend;
+        const endIndex = Math.min(startIndex + dividend, _racks);
+
+        const nftsToBurn = nfts.slice(startIndex, endIndex);
+
+        const isLastBatch = i === numBatches - 1;
+
+        const txs = await slimesPayment.pay(
+          connection,
+          wallet,
+          nftsToBurn,
+          shippingCurrency === "sol"
+            ? Number((shippingFee / solPrice).toFixed(2))
+            : 0,
+          shippingCurrency === "usdc" ? shippingFee : 0,
+          !isLastBatch
+        );
+
+        txsSignatures.push(txs);
+      }
+
+      console.log("txsSignatures: ", txsSignatures);
+      return txsSignatures.join(",");
+    } else {
+      const nftsToBurn = nfts.slice(0, _racks);
+      const txsSignatures = await slimesPayment.pay(
+        connection,
+        wallet,
+        nftsToBurn,
+        shippingCurrency === "sol"
+          ? Number((shippingFee / solPrice).toFixed(2))
+          : 0,
+        shippingCurrency === "usdc" ? shippingFee : 0
+      );
+      console.log("txsSignatures: ", txsSignatures);
+      return txsSignatures;
+    }
   };
 
   //fetch merch quantities
@@ -450,6 +482,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             setShowWarningModal={setShowWarningModal}
             shippingSession={shippingSession}
             solPrice={solPrice}
+            getNfts={getNfts}
           />
         )}
       </AnimatePresence>

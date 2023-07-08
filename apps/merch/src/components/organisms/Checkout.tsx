@@ -21,6 +21,7 @@ interface Props {
   // const shippingFee = 2;
   shippingFee: number;
   solPrice: number;
+  getNfts: () => Promise<void>;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
@@ -34,6 +35,7 @@ const Checkout: FC<Props> = (props: Props) => {
     racks,
     shippingFee,
     solPrice,
+    getNfts,
   } = props;
 
   //TODO: what id shipping fee
@@ -47,11 +49,12 @@ const Checkout: FC<Props> = (props: Props) => {
     }, 0);
   };
 
-  const handleCartCheckout = (): void => {
+  const handleCartCheckout = async () => {
     if (cart.length === 0) {
       toast.error("No items in cart");
       return;
     }
+    await getNfts();
     // console.log(calculateRacks(), racks);
     if (racks < calculateRacks()) {
       toast.error("Not enough racks");

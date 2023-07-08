@@ -39,6 +39,7 @@ interface Props {
   shippingSession: ShippingSession | undefined;
   // transactPayment: () => Promise<string>;
   solPrice: number;
+  getNfts: () => Promise<void>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -54,6 +55,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     shippingSession,
     // transactPayment,
     solPrice,
+    getNfts,
   } = props;
   const {
     showStore,
@@ -201,6 +203,7 @@ const StoreModal: FC<Props> = (props: Props) => {
             racks={nfts.length} //TODO: hardcode for testing
             shippingFee={shippingFee}
             solPrice={solPrice}
+            getNfts={getNfts}
           />
         )}
         <Footer step={step} />
