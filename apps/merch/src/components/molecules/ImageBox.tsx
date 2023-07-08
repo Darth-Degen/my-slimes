@@ -7,9 +7,10 @@ interface ImageProps {
   src: string;
   caption: string;
   activeStatus: RackStatus;
+  wallet: string;
 }
 const ImageBox: FC<ImageProps> = (props: ImageProps) => {
-  const { src, caption, activeStatus } = props;
+  const { src, caption, activeStatus, wallet } = props;
 
   const isRaffle = src.includes("yoda");
 
@@ -41,15 +42,15 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
             />
             <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold text-[15px] break-all">
               {/* TODO: update url and display to winner address */}
-              {activeStatus.name === RackStatusName.End && (
-                <a
-                  href="https://solana.fm/address/H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf?cluster=mainnet-qn1"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  H1fnjEg9pobH5k74eb3nfDDThHfGganjuABABUeebpGf
-                </a>
-              )}
+              {/* {activeStatus.name === RackStatusName.Raffle && ( */}
+              <a
+                href={`https://solana.fm/address/${wallet}?cluster=mainnet-qn1`}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {wallet}
+              </a>
+              {/* )} */}
             </div>
           </>
         ) : (

@@ -118,7 +118,6 @@ const StoreModal: FC<Props> = (props: Props) => {
     if (step === 0) setStoreItem(undefined);
   }, [step]);
 
-  console.log(step);
   return (
     <Modal
       show={showStore}

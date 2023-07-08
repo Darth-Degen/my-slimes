@@ -98,7 +98,6 @@ const MerchModule: FC<Props> = (props: Props) => {
 
       const editionUpdateAuthority = process.env.editionUpdateAuthority;
       const editionName = process.env.editionName;
-
       //fetch metadata
       await Promise.all(
         tokens.map(async (token, index) => {
@@ -172,7 +171,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     const toastId = toast.loading("Running it");
     const _cart: ShippingCart[] = cart.map((item) => {
       return {
-        productId: item.id,
+        productid: item.id,
         color: item.color as string,
         size: item.size as string,
         quantity: 1,
@@ -366,6 +365,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             cart={cart}
             setCart={setCart}
             updateSessionCart={updateSessionCart}
+            shippingFee={shippingFee}
           />
         )}
       </AnimatePresence>

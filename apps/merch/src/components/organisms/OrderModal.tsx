@@ -10,15 +10,13 @@ interface Props {
   cart: Merch[];
   setCart: Dispatch<SetStateAction<Merch[]>>;
   updateSessionCart: (racks: number) => Promise<void>;
+  shippingFee: number;
 }
 const OrderModal: FC<Props> = (props: Props) => {
-  const { cart, setCart, updateSessionCart } = props;
+  const { cart, setCart, updateSessionCart, shippingFee } = props;
   const { showOrderModal, step, setStep } = useContext(StoreContext);
 
   const [isOrdering, setIsOrdering] = useState<boolean>(false);
-
-  //TODO: what is shipping fee
-  const shippingFee = 2;
 
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
@@ -85,8 +83,8 @@ const OrderModal: FC<Props> = (props: Props) => {
             >
               <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-4xl lg:w-full gap-10">
                 <p key="step-6">
-                  You will now be deducted ({calculateRacks()}) NFTs & (
-                  {shippingFee}) sol
+                  You will now be deducted ({calculateRacks()}) NFTs & ( $
+                  {shippingFee}) USDC
                 </p>
                 <p className="text-m-red text-lg">all sales are final</p>
               </div>

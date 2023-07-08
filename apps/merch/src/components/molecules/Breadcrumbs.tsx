@@ -21,7 +21,7 @@ const Breadcrumbs: FC<Props> = (props: Props) => {
         }}
         {...fastExitAnimation}
       >
-        all in time
+        {step > 0 ? "back to store" : "all in time"}
       </motion.div>
 
       {/* detail view */}
