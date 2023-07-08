@@ -1,13 +1,16 @@
 import { BuyRacksView, ImageShimmer } from "apps/merch/src/components";
 import { FC } from "react";
 import Image from "next/image";
+import { RackStatus, RackStatusName } from "../../types/RackStatus";
 
 interface ImageProps {
   src: string;
   caption: string;
+  activeStatus: RackStatus;
+  wallet: string;
 }
 const ImageBox: FC<ImageProps> = (props: ImageProps) => {
-  const { src, caption } = props;
+  const { src, caption, activeStatus, wallet } = props;
 
   const isRaffle = src.includes("yoda");
 
@@ -29,7 +32,7 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
           width={303}
           height={151}
           alt="All in Time"
-          className="scale-90 lg:scale-100"
+          className="relative scale-90 lg:scale-100"
         />
         {isRaffle ? (
           <>
@@ -39,13 +42,15 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
             />
             <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold text-[15px] break-all">
               {/* TODO: update url and display to winner address */}
+              {/* {activeStatus.name === RackStatusName.Raffle && ( */}
               <a
-                href="https://solana.fm/address/yxJHJXqmo5vmJUGqizHRJyPezrGsv8Ze7YyQr3sKpf3?cluster=mainnet-qn1"
+                href={`https://solana.fm/address/${wallet}?cluster=mainnet-qn1`}
                 rel="noreferrer"
                 target="_blank"
               >
-                yxJHJXqmo5vmJUGqizHRJyPezrGsv8Ze7YyQr3sKpf3
+                {wallet}
               </a>
+              {/* )} */}
             </div>
           </>
         ) : (
