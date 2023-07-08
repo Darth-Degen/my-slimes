@@ -111,13 +111,13 @@ export const merch: Merch[] = [
       "Golden Brown, recycled cotton/poly blend. Embroidery and custom tag. Dad swag not included.",
     maxSupply: 190,
     cost: 4,
-    sizeChart: ["one sizes fits most"],
+    sizeChart: ["one size fits most"],
     colors: ["corduroy"],
     images: ["image.png"],
     sizes: [
       {
         color: "corduroy",
-        size: "one sizes fits most",
+        size: "one size fits most",
         quantity: 190,
       },
     ],

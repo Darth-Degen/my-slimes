@@ -12,7 +12,7 @@ import {
   useWalletModal,
 } from "@solana/wallet-adapter-react-ui";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 //local
 import {
   ImageBox,
@@ -26,12 +26,12 @@ import { RackStatus, RackStatusName } from "@merch-types";
 import { EditionSaleContract } from "src/lib/exchange-art/types/contract.interfaces";
 import { EditionsContractService } from "src/lib/exchange-art";
 import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
-import { COLLECTION_API_URL } from "src/constants";
+// import { COLLECTION_API_URL } from "src/constants";
 import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
-import toast from "react-hot-toast";
-import * as slimesPayment from "src/lib/slimes-payment";
-import { Metaplex, Nft } from "@metaplex-foundation/js";
-import { PublicKey } from "@solana/web3.js";
+// import toast from "react-hot-toast";
+// import * as slimesPayment from "src/lib/slimes-payment";
+// import { Metaplex, Nft } from "@metaplex-foundation/js";
+// import { PublicKey } from "@solana/web3.js";
 import Image from "next/image";
 import splashIcon from "../../../images/raffle_splash.png";
 
@@ -55,7 +55,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<RackStatus>(rackStatus[0]);
   const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
-  const [storeOpenView, setStoreOpenView] = useState<boolean>(false);
+  const [storeOpenView, setStoreOpenView] = useState<boolean>(true);
 
   const { connection } = useConnection();
 
@@ -81,7 +81,6 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   );
 
   const winnerWallet = "62fFigHfUyhToRZuRGwcn9f87SqPt2ztU8zWUWPugMga";
-  const shopURL = `${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png`;
 
   // useEffect(() => {
   //   (async function () {
@@ -141,32 +140,32 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     //   return;
     // }
     // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
-    const metaplex = new Metaplex(connection);
+    // const metaplex = new Metaplex(connection);
 
     // mainnet edition - 9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
     // https://exchange.art/editions/9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
     // devnet edition - D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
     // https://ssr.staging.exchange.art/editions/D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
 
-    const nftToBurn = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey(
-        "7CV3uRPstbVu31irQiZb5FymkEc9DCUd18zCg53zifSQ"
-      ),
-    });
-    const nftToBurn2 = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey(
-        "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
-      ),
-    });
-    const txsSignatures = await slimesPayment.pay(
-      connection,
-      wallet,
-      [nftToBurn, nftToBurn2],
-      0.05,
-      1
-    );
+    // const nftToBurn = await metaplex.nfts().findByMint({
+    //   mintAddress: new PublicKey(
+    //     "7CV3uRPstbVu31irQiZb5FymkEc9DCUd18zCg53zifSQ"
+    //   ),
+    // });
+    // const nftToBurn2 = await metaplex.nfts().findByMint({
+    //   mintAddress: new PublicKey(
+    //     "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
+    //   ),
+    // });
+    // const txsSignatures = await slimesPayment.pay(
+    //   connection,
+    //   wallet,
+    //   [nftToBurn, nftToBurn2],
+    //   0.05,
+    //   1
+    // );
 
-    console.log('txsSignatures: ', txsSignatures);
+    // console.log('txsSignatures: ', txsSignatures);
   };
 
   return (
@@ -177,108 +176,206 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     >
       <div className="py-20" />
       <div className="sticky lg:top-[10%] xl:top-[15%] justify-center flex flex-col gap-0 w-full items-center">
+        <div className="absolute z-[50] -top-20 lg:-top-10 left-1/2 lg:left-auto lg:right-0 -translate-x-1/2">
+          <WalletMultiButton
+            startIcon={undefined}
+            className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] lg:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
+          >
+            {publicKey
+              ? publicKey.toBase58().slice(0, 4) +
+                ".." +
+                publicKey.toBase58().slice(-4)
+              : "Connect"}
+          </WalletMultiButton>
+        </div>
         <div
-          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] md:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black"
+          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
         >
-          <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
-            <WalletMultiButton
+          {/* <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10"> */}
+          {/* <WalletMultiButton
               startIcon={undefined}
               className="  !text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
-                ".." +
-                publicKey.toBase58().slice(-4)
+                  ".." +
+                  publicKey.toBase58().slice(-4)
                 : "Connect"}
-            </WalletMultiButton>
-          </div>
+            </WalletMultiButton> */}
+          {/* </div> */}
           {/* header */}
           <h2
-            className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
+            className="z-10 text-ait-teal text-center pt-10 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
             text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
           >
             all in time
           </h2>
-          {!storeOpenView ? (
-            <>
-              {/* content */}
-              <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
-                {activeStatus.name === RackStatusName.Raffle && (
-                  <div className="w-[250px]">
-                    {!publicKey ? (
-                      ""
-                    ) : publicKey?.toBase58() === winnerWallet ? (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU WON!
-                      </p>
-                    ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU LOST
-                      </p>
-                    )}
+          <AnimatePresence mode="wait">
+            {!storeOpenView ? (
+              // TODO: set up framer motion slide in animations for outgoing & incoming
+              <motion.div className="relative w-full h-full">
+                {/* content */}
+                <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
+                  {activeStatus.name === RackStatusName.Raffle && (
+                    <div className="w-[250px]">
+                      {!publicKey ? (
+                        ""
+                      ) : publicKey?.toBase58() === winnerWallet ? (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                          YOU WON!
+                        </p>
+                      ) : (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                          YOU LOST
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  <ImageBox
+                    src={activeStatus.src}
+                    caption={activeStatus.caption}
+                    activeStatus={activeStatus}
+                    wallet={winnerWallet}
+                  />
+                  {activeStatus.name === RackStatusName.Buy && (
+                    <BuyRacksForm
+                      handleMint={(amountToMint: number) =>
+                        handleMint(amountToMint)
+                      }
+                    />
+                  )}
+                  {activeStatus.name === RackStatusName.Raffle && (
+                    <div className="w-[250px]">
+                      {!publicKey ? (
+                        ""
+                      ) : publicKey?.toBase58() === winnerWallet ? (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                          YOU WON!
+                        </p>
+                      ) : (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                          YOU LOST
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  <div
+                    className="absolute bottom-20 lg:top-1/2 lg:-translate-y-1/2 right-4
+                    px-3 py-1 flex items-center gap-3 cursor-pointer"
+                    onClick={() => setStoreOpenView(true)}
+                  >
+                    <p className="text-white font-neuebit-bold text-3xl leading-6 text-center">
+                      SHOP
+                      <br />
+                      NOW
+                    </p>
+                    <svg
+                      width="16"
+                      height="29.4"
+                      viewBox="0 0 107 196"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="rotate-180"
+                    >
+                      <path
+                        d="M102 5L9 98L102 191"
+                        stroke="#E5E5E5"
+                        strokeWidth="12"
+                      />
+                    </svg>
                   </div>
-                )}
-                <ImageBox
-                  src={activeStatus.src}
-                  caption={activeStatus.caption}
-                  activeStatus={activeStatus}
-                  wallet={winnerWallet}
-                />
+                </div>
                 {activeStatus.name === RackStatusName.Buy && (
-                  <BuyRacksForm
-                    handleMint={(amountToMint: number) =>
-                      handleMint(amountToMint)
-                    }
+                  <Countdown
+                    futureDate={activeStatus.endDate}
+                    caption={activeStatus.timerCaption}
+                    className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+                    handleDateEnd={handleDateEnd}
                   />
                 )}
-                {activeStatus.name === RackStatusName.Raffle && (
-                  <div className="w-[250px]">
-                    {!publicKey ? (
-                      ""
-                    ) : publicKey?.toBase58() === winnerWallet ? (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU WON!
-                      </p>
-                    ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        {" "}
-                        YOU LOST
-                      </p>
-                    )}
+              </motion.div>
+            ) : (
+              <div className="relative w-full h-[640px] lg:h-full">
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    height: "100%",
+                    width: "100%",
+                    backgroundImage: `url(${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png)`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    opacity: 0.5,
+                  }}
+                ></div>
+
+                <p
+                  className="absolute top-[25%] -translate-y-[75%] left-1/2 -translate-x-1/2
+                  text-white font-neuebit-bold text-6xl lg:text-8xl"
+                >
+                  !!!
+                </p>
+                <p
+                  className="absolute top-[30%] -translate-y-[70%] left-1/2 -translate-x-1/2 
+                  text-white font-neuebit-bold text-3xl lg:text-5xl"
+                >
+                  STORE OPEN
+                </p>
+                <div
+                  className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 
+                  py-4 px-8 bg-white flex justify-center items-center"
+                >
+                  <div
+                    className="underline text-[#2764FF] font-neuebit-bold text-3xl lg:text-5xl cursor-pointer"
+                    onClick={() => setShowStore(true)}
+                  >
+                    SHOP NOW
                   </div>
-                )}
+                </div>
+                <div
+                  className="absolute bottom-20 lg:top-1/2 lg:-translate-y-1/2 left-4
+                  px-3 py-1 flex items-center gap-3 cursor-pointer"
+                  onClick={() => setStoreOpenView(false)}
+                >
+                  <svg
+                    width="16"
+                    height="29.4"
+                    viewBox="0 0 107 196"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M102 5L9 98L102 191"
+                      stroke="#E5E5E5"
+                      strokeWidth="12"
+                    />
+                  </svg>
+
+                  <p className="text-white font-neuebit-bold text-3xl leading-6 text-center">
+                    RAFFLE
+                    <br />
+                    WINNER
+                  </p>
+                </div>
               </div>
-              {activeStatus.name === RackStatusName.Buy && (
-                <Countdown
-                  futureDate={activeStatus.endDate}
-                  caption={activeStatus.timerCaption}
-                  className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
-                  handleDateEnd={handleDateEnd}
-                />
-              )}
-            </>
-          ) : (
-            <div className="w-full bg-[url:()]"></div>
-          )}
+            )}
+          </AnimatePresence>
         </div>
         {activeStatus.name !== RackStatusName.End && (
-          // <a
-          //   href="https://allintime.xyz/"
-          //   rel="noreferrer"
-          //   target="_blank"
-          //   className="link uppercase font-bold py-10 self-center"
-          // >
           <div
-            className="link uppercase font-bold py-10 self-center"
+            className={`${
+              storeOpenView && "invisible"
+            } link uppercase font-bold py-10 self-center`}
             onClick={() => setShowStore(true)}
           >
             see ticket value
           </div>
-          // </a>
         )}
-        {activeStatus.name === RackStatusName.Raffle && (
-          <div className="absolute bottom-20 left-20 hidden md:block ">
+        {activeStatus.name === RackStatusName.Raffle && !storeOpenView && (
+          <div className="absolute bottom-[3%] left-[3%] hidden lg:block ">
             <Image src={splashIcon} width={300} height={300} alt="splash" />
           </div>
         )}
@@ -287,23 +384,5 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     </div>
   );
 };
-
-// {
-//   activeStatus.name === RackStatusName.End && (
-//     <>
-//       {/* content */}
-//       <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] border border-red-500">
-//         <TextBox text={activeStatus.text} className="hidden lg:flex" />
-//         <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
-//       </div>
-//       <Countdown
-//         futureDate={activeStatus.endDate}
-//         caption={activeStatus.timerCaption}
-//         className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
-//         handleDateEnd={handleDateEnd}
-//       />
-//     </>
-//   );
-// }
 
 export default BuyRacksContent;
