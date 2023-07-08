@@ -86,7 +86,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   >();
 
   //context variables
-  const [showStore, setShowStore] = useState<boolean>(false);
+  const [showStore, setShowStore] = useState<boolean>(true);
   const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false);
   const value = {
@@ -117,15 +117,15 @@ const MerchModule: FC<Props> = (props: Props) => {
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
 
-      const editionUpdateAuthority = process.env.editionUpdateAuthority;
-      const editionName = process.env.editionName;
+      const editionUpdateAuthority = "8vizj4VUCM44RJgkPgzm6oG852KgVN5iFfYyFq9HBAFR"; // process.env.editionUpdateAuthority;
+      const editionName = "RACKS"; //process.env.editionName;
       console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
       await Promise.all(
         tokens.map(async (token, index) => {
           if (
             token?.updateAuthorityAddress?.toBase58() ===
-              editionUpdateAuthority &&
+            editionUpdateAuthority &&
             token?.name === editionName
           ) {
             //@ts-ignore

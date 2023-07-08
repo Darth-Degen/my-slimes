@@ -26,21 +26,41 @@ export async function pay(
   // 1. Build tx to send NFTs
   if (nfts.length) {
     for await (let nft of nfts) {
-      const transferInstruction = transferNftBuilder(metaplex, {
-        nftOrSft: nft,
+      console.log("nft:", nft)
+      // const transferInstruction = transferNftBuilder(metaplex, {
+      //   nftOrSft: nft,
+      //   // @ts-ignore
+      //   authority: wallet,
+      //   // fromOwner: wallet.publicKey!,
+      //   toOwner: GRAVEYARD_DOON_DOON,
+      //   amount: token(1),
+      // }, {
+      //   // @ts-ignore
+      //   payer: wallet,
+      // });
+      const nftToBurn = await metaplex.nfts().findByMint({
         // @ts-ignore
-        authority: wallet,
-        fromOwner: wallet.publicKey!,
-        toOwner: GRAVEYARD_DOON_DOON,
-        amount: token(1),
-      }, {
-        // @ts-ignore
-        payer: wallet
+        mintAddress: nft.mintAddress,
       });
+      const testtx = metaplex
+        .nfts()
+        .builders()
+        .transfer({
+          nftOrSft: nftToBurn,
+          // @ts-ignore
+          authority: wallet!,
+          fromOwner: wallet.publicKey!,
+          toOwner: GRAVEYARD_DOON_DOON,
+          amount: token(1)
+        }, {
+          // @ts-ignore
+          payer: wallet,
+        });
+
       const nftTransferTx = await prepareVersionTx(
         connection,
         wallet.publicKey!,
-        transferInstruction.getInstructions()
+        testtx.getInstructions()
       );
       transactions.push(nftTransferTx);
     };
