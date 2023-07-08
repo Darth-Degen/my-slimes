@@ -129,24 +129,43 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   };
 
   const handleMint = async (amountToMint: number) => {
-    // if (!connected) {
-    //   setVisible(true);
-    //   return;
-    // }
+    if (!connected) {
+      setVisible(true);
+      return;
+    }
     // if (!editionSaleData) {
     //   // TODO error toast
     //   toast.error("Cannot get edition sale data.");
     //   console.error("Cannot get edition sale data.");
     //   return;
     // }
-    // // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
-    // const metaplex = new Metaplex(connection);
-    // const nftToBurn = await metaplex.nfts().findByMint({
-    //   mintAddress: new PublicKey(
-    //     "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
-    //   ),
-    // });
-    // await slimesPayment.pay(connection, wallet, [nftToBurn], 0.05, 1);
+    // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    const metaplex = new Metaplex(connection);
+
+    // mainnet edition - 9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
+    // https://exchange.art/editions/9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
+    // devnet edition - D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
+    // https://ssr.staging.exchange.art/editions/D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
+
+    const nftToBurn = await metaplex.nfts().findByMint({
+      mintAddress: new PublicKey(
+        "7CV3uRPstbVu31irQiZb5FymkEc9DCUd18zCg53zifSQ"
+      ),
+    });
+    const nftToBurn2 = await metaplex.nfts().findByMint({
+      mintAddress: new PublicKey(
+        "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
+      ),
+    });
+    const txsSignatures = await slimesPayment.pay(
+      connection,
+      wallet,
+      [nftToBurn, nftToBurn2],
+      0.05,
+      1
+    );
+
+    console.log('txsSignatures: ', txsSignatures);
   };
 
   return (
@@ -173,6 +192,18 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
         >
+          <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
+            <WalletMultiButton
+              startIcon={undefined}
+              className="  !text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
+            >
+              {publicKey
+                ? publicKey.toBase58().slice(0, 4) +
+                ".." +
+                publicKey.toBase58().slice(-4)
+                : "Connect"}
+            </WalletMultiButton>
+          </div>
           {/* header */}
           <h2
             className="z-10 text-ait-teal text-center pt-10 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none

@@ -28,7 +28,7 @@ export interface ShippingSession {
   phone?: number;
   session_id?: string;
   sol_send_txn_id?: string | null;
-  stage_completed: number;
+  stage_completed: number | string;
   updated_at?: Date;
   wallet_address?: string;
   zip: string;

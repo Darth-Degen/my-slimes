@@ -112,7 +112,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     else if (winWidth > 2000) return "w-[130px]";
     return "w-[100px]";
   };
-  console.log("winHeight ", winWidth, winHeight);
+  // console.log("winHeight ", winWidth, winHeight);
   const height = (type: DimensionType): string | number => {
     if (winHeight < 800 || winWidth < 600)
       return type === DimensionType.String ? "h-[480px]" : 480;

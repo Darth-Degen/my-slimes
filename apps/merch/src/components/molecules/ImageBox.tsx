@@ -40,8 +40,8 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
               className="absolute top-10 md:top-14 left-3.5 w-[285px] uppercase font-bold text-xs sm:text-[15px] scale-40 md:scale-90 lg:scale-100"
               dangerouslySetInnerHTML={{ __html: caption }}
             />
-            <div className="link absolute top-24 left-3.5 uppercase font-bold break-all">
-              {/* TODO: update url and display to winner address */}
+            <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold text-[15px] break-all">
+              {/* {activeStatus.name === RackStatusName.Raffle && ( */}
               <a
                 href={`https://solana.fm/address/${wallet}?cluster=mainnet-qn1`}
                 rel="noreferrer"

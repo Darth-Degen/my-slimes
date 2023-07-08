@@ -34,6 +34,7 @@ const Header = dynamic(()=> import("./organisms/Header"))
 const Footer = dynamic(()=> import("./organisms/Footer"))
 const CheckoutCart = dynamic(()=> import("./organisms/CheckoutCart"))
 const OrderModal = dynamic(()=> import("./organisms/OrderModal"))
+const WarningModal = dynamic(()=> import("./organisms/WarningModal"))
 //templates
 const BuyRacksView = dynamic(()=> import("./templates/BuyRacksView"))
 const MerchModule = dynamic(()=> import("./templates/MerchModule"))
@@ -72,5 +73,6 @@ export {
   ShippingForm,
   TextInput,
   ShippingDetails,
-  OrderModal
+  OrderModal,
+  WarningModal
 }
