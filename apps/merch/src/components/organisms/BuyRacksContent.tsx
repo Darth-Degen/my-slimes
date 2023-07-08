@@ -12,7 +12,7 @@ import {
   useWalletModal,
 } from "@solana/wallet-adapter-react-ui";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 //local
 import {
   ImageBox,
@@ -164,7 +164,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
             <WalletMultiButton
               startIcon={undefined}
-              className="  !text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
+              className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
@@ -180,123 +180,171 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           >
             all in time
           </h2>
-          {storeOpenView ? (
-            <>
-              {/* content */}
-              <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
-                {activeStatus.name === RackStatusName.Raffle && (
-                  <div className="w-[250px]">
-                    {!publicKey ? (
-                      ""
-                    ) : publicKey?.toBase58() === winnerWallet ? (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU WON!
-                      </p>
-                    ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
-                    )}
+          <AnimatePresence mode="wait">
+            {!storeOpenView ? (
+              // TODO: set up framer motion slide in animations for outgoing & incoming
+              <motion.div className="relative w-full h-full">
+                {/* content */}
+                <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] overflow-hidden">
+                  {activeStatus.name === RackStatusName.Raffle && (
+                    <div className="w-[250px]">
+                      {!publicKey ? (
+                        ""
+                      ) : publicKey?.toBase58() === winnerWallet ? (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                          YOU WON!
+                        </p>
+                      ) : (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
+                      )}
+                    </div>
+                  )}
+                  <ImageBox
+                    src={activeStatus.src}
+                    caption={activeStatus.caption}
+                    activeStatus={activeStatus}
+                  />
+                  {activeStatus.name === RackStatusName.Buy && (
+                    <BuyRacksForm
+                      handleMint={(amountToMint: number) =>
+                        handleMint(amountToMint)
+                      }
+                    />
+                  )}
+                  {activeStatus.name === RackStatusName.Raffle && (
+                    <div className="w-[250px]">
+                      {!publicKey ? (
+                        ""
+                      ) : publicKey?.toBase58() === winnerWallet ? (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                          YOU WON!
+                        </p>
+                      ) : (
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
+                      )}
+                    </div>
+                  )}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 right-4
+                    px-3 py-1 flex items-center gap-3 cursor-pointer"
+                    onClick={() => setStoreOpenView(true)}
+                  >
+                    <p className="text-white font-neuebit-bold text-3xl leading-6">
+                      SHOP
+                      <br />
+                      NOW
+                    </p>
+                    <svg
+                      width="16"
+                      height="29.4"
+                      viewBox="0 0 107 196"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="rotate-180"
+                    >
+                      <path
+                        d="M102 5L9 98L102 191"
+                        stroke="#E5E5E5"
+                        stroke-width="12"
+                      />
+                    </svg>
                   </div>
-                )}
-                <ImageBox
-                  src={activeStatus.src}
-                  caption={activeStatus.caption}
-                  activeStatus={activeStatus}
-                />
+                </div>
                 {activeStatus.name === RackStatusName.Buy && (
-                  <BuyRacksForm
-                    handleMint={(amountToMint: number) =>
-                      handleMint(amountToMint)
-                    }
+                  <Countdown
+                    futureDate={activeStatus.endDate}
+                    caption={activeStatus.timerCaption}
+                    className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
+                    handleDateEnd={handleDateEnd}
                   />
                 )}
-                {activeStatus.name === RackStatusName.Raffle && (
-                  <div className="w-[250px]">
-                    {!publicKey ? (
-                      ""
-                    ) : publicKey?.toBase58() === winnerWallet ? (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
-                        YOU WON!
-                      </p>
-                    ) : (
-                      <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center"></p>
-                    )}
-                  </div>
-                )}
-              </div>
-              {activeStatus.name === RackStatusName.Buy && (
-                <Countdown
-                  futureDate={activeStatus.endDate}
-                  caption={activeStatus.timerCaption}
-                  className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
-                  handleDateEnd={handleDateEnd}
-                />
-              )}
-            </>
-          ) : (
-            <div
-              className="relative w-full h-full"
-              style={{
-                position: "relative",
-              }}
-            >
+              </motion.div>
+            ) : (
               <div
+                className="relative w-full h-full"
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "100%",
-                  width: "100%",
-                  backgroundImage: `url(${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png)`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  opacity: 0.5, // Adjust this value as needed
+                  position: "relative",
                 }}
-              ></div>
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    height: "100%",
+                    width: "100%",
+                    backgroundImage: `url(${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png)`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    opacity: 0.5, // Adjust this value as needed
+                  }}
+                ></div>
 
-              <p
-                className="absolute top-[25%] -translate-y-[75%] left-1/2 -translate-x-1/2
-              text-white font-neuebit-bold text-8xl"
-              >
-                !!!
-              </p>
-              <p
-                className="absolute top-[30%] -translate-y-[70%] left-1/2 -translate-x-1/2 
-              text-white font-neuebit-bold text-5xl"
-              >
-                STORE OPEN
-              </p>
-              <div
-                className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 
-                py-4 px-8 bg-white flex justify-center items-center"
-              >
-                <a
-                  href=""
-                  className="underline text-[#2764FF] font-neuebit-bold text-5xl"
+                <p
+                  className="absolute top-[25%] -translate-y-[75%] left-1/2 -translate-x-1/2
+                  text-white font-neuebit-bold text-8xl"
                 >
-                  SHOP NOW
-                </a>
+                  !!!
+                </p>
+                <p
+                  className="absolute top-[30%] -translate-y-[70%] left-1/2 -translate-x-1/2 
+                  text-white font-neuebit-bold text-5xl"
+                >
+                  STORE OPEN
+                </p>
+                <div
+                  className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 
+                  py-4 px-8 bg-white flex justify-center items-center"
+                >
+                  <div
+                    className="underline text-[#2764FF] font-neuebit-bold text-5xl cursor-pointer"
+                    onClick={() => setShowStore(true)}
+                  >
+                    SHOP NOW
+                  </div>
+                </div>
+                <div
+                  className="absolute top-1/2 -translate-y-1/2 left-4
+                  px-3 py-1 flex items-center gap-3 cursor-pointer"
+                  onClick={() => setStoreOpenView(false)}
+                >
+                  <svg
+                    width="16"
+                    height="29.4"
+                    viewBox="0 0 107 196"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M102 5L9 98L102 191"
+                      stroke="#E5E5E5"
+                      stroke-width="12"
+                    />
+                  </svg>
+
+                  <p className="text-white font-neuebit-bold text-3xl leading-6">
+                    RAFFLE
+                    <br />
+                    WINNER
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </AnimatePresence>
         </div>
         {activeStatus.name !== RackStatusName.End && (
-          // <a
-          //   href="https://allintime.xyz/"
-          //   rel="noreferrer"
-          //   target="_blank"
-          //   className="link uppercase font-bold py-10 self-center"
-          // >
           <div
-            className="link uppercase font-bold py-10 self-center"
+            className={`${
+              storeOpenView && "invisible"
+            } link uppercase font-bold py-10 self-center`}
             onClick={() => setShowStore(true)}
           >
             see ticket value
           </div>
-          // </a>
         )}
-        {activeStatus.name === RackStatusName.Raffle && (
-          <div className="absolute bottom-20 left-20 hidden md:block ">
+        {activeStatus.name === RackStatusName.Raffle && !storeOpenView && (
+          <div className="absolute bottom-[3%] left-[3%] hidden md:block ">
             <Image src={splashIcon} width={300} height={300} alt="splash" />
           </div>
         )}
@@ -305,23 +353,5 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     </div>
   );
 };
-
-// {
-//   activeStatus.name === RackStatusName.End && (
-//     <>
-//       {/* content */}
-//       <div className="flex flex-col lg:flex-row justify-between items-center w-full h-full px-[10%] border border-red-500">
-//         <TextBox text={activeStatus.text} className="hidden lg:flex" />
-//         <ImageBox src={activeStatus.src} caption={activeStatus.caption} />
-//       </div>
-//       <Countdown
-//         futureDate={activeStatus.endDate}
-//         caption={activeStatus.timerCaption}
-//         className="pb-10 self-center lg:pb-0 lg:absolute lg:bottom-24 lg:left-[46.9%] lg:-translate-x-1/2 lg:transform"
-//         handleDateEnd={handleDateEnd}
-//       />
-//     </>
-//   );
-// }
 
 export default BuyRacksContent;
