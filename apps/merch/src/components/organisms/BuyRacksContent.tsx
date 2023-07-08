@@ -229,7 +229,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                     px-3 py-1 flex items-center gap-3 cursor-pointer"
                     onClick={() => setStoreOpenView(true)}
                   >
-                    <p className="text-white font-neuebit-bold text-3xl leading-6">
+                    <p className="text-white font-neuebit-bold text-3xl leading-6 text-center">
                       SHOP
                       <br />
                       NOW
@@ -323,7 +323,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                     />
                   </svg>
 
-                  <p className="text-white font-neuebit-bold text-3xl leading-6">
+                  <p className="text-white font-neuebit-bold text-3xl leading-6 text-center">
                     RAFFLE
                     <br />
                     WINNER
