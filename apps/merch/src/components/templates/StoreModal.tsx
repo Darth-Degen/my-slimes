@@ -37,6 +37,9 @@ interface Props {
   shippingFee: number;
   setShowWarningModal: Dispatch<SetStateAction<boolean>>;
   shippingSession: ShippingSession | undefined;
+  // transactPayment: () => Promise<string>;
+  solPrice: number;
+  getNfts: () => Promise<void>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -50,6 +53,9 @@ const StoreModal: FC<Props> = (props: Props) => {
     shippingFee,
     setShowWarningModal,
     shippingSession,
+    // transactPayment,
+    solPrice,
+    getNfts,
   } = props;
   const {
     showStore,
@@ -85,6 +91,8 @@ const StoreModal: FC<Props> = (props: Props) => {
 
   //add to cart
   const addToCart = async (item: Merch) => {
+    // transactPayment();
+    // return;
     if (!publicKey || !connected) {
       setVisible(true);
       return;
@@ -194,6 +202,8 @@ const StoreModal: FC<Props> = (props: Props) => {
             setShipping={setShipping}
             racks={nfts.length} //TODO: hardcode for testing
             shippingFee={shippingFee}
+            solPrice={solPrice}
+            getNfts={getNfts}
           />
         )}
         <Footer step={step} />

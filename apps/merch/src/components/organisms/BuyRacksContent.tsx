@@ -130,24 +130,43 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   };
 
   const handleMint = async (amountToMint: number) => {
-    // if (!connected) {
-    //   setVisible(true);
-    //   return;
-    // }
+    if (!connected) {
+      setVisible(true);
+      return;
+    }
     // if (!editionSaleData) {
     //   // TODO error toast
     //   toast.error("Cannot get edition sale data.");
     //   console.error("Cannot get edition sale data.");
     //   return;
     // }
-    // // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
-    // const metaplex = new Metaplex(connection);
-    // const nftToBurn = await metaplex.nfts().findByMint({
-    //   mintAddress: new PublicKey(
-    //     "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
-    //   ),
-    // });
-    // await slimesPayment.pay(connection, wallet, [nftToBurn], 0.05, 1);
+    // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
+    const metaplex = new Metaplex(connection);
+
+    // mainnet edition - 9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
+    // https://exchange.art/editions/9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
+    // devnet edition - D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
+    // https://ssr.staging.exchange.art/editions/D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
+
+    const nftToBurn = await metaplex.nfts().findByMint({
+      mintAddress: new PublicKey(
+        "7CV3uRPstbVu31irQiZb5FymkEc9DCUd18zCg53zifSQ"
+      ),
+    });
+    const nftToBurn2 = await metaplex.nfts().findByMint({
+      mintAddress: new PublicKey(
+        "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
+      ),
+    });
+    const txsSignatures = await slimesPayment.pay(
+      connection,
+      wallet,
+      [nftToBurn, nftToBurn2],
+      0.05,
+      1
+    );
+
+    console.log('txsSignatures: ', txsSignatures);
   };
 
   return (
@@ -169,8 +188,8 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
-                  ".." +
-                  publicKey.toBase58().slice(-4)
+                ".." +
+                publicKey.toBase58().slice(-4)
                 : "Connect"}
             </WalletMultiButton>
           </div>

@@ -44,7 +44,6 @@ export async function sendSignedTransactions(
 
   // TODO @darth need to update the toasts text 🤝 (this wont impact the rest of the app)
   // const toastId = toast.loading(`Rack #${transactionNumber + 1}  minting...`);
-  console.log(`TX `);
 
   const transactionSignature = await connection.sendRawTransaction(
     signedTransactionv0.serialize(),
