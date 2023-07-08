@@ -26,12 +26,12 @@ import { RackStatus, RackStatusName } from "@merch-types";
 import { EditionSaleContract } from "src/lib/exchange-art/types/contract.interfaces";
 import { EditionsContractService } from "src/lib/exchange-art";
 import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
-import { COLLECTION_API_URL } from "src/constants";
+// import { COLLECTION_API_URL } from "src/constants";
 import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solana.json";
-import toast from "react-hot-toast";
-import * as slimesPayment from "src/lib/slimes-payment";
-import { Metaplex, Nft } from "@metaplex-foundation/js";
-import { PublicKey } from "@solana/web3.js";
+// import toast from "react-hot-toast";
+// import * as slimesPayment from "src/lib/slimes-payment";
+// import { Metaplex, Nft } from "@metaplex-foundation/js";
+// import { PublicKey } from "@solana/web3.js";
 import Image from "next/image";
 import splashIcon from "../../../images/raffle_splash.png";
 
@@ -170,12 +170,12 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
       <div className="py-20" />
       <div className="sticky lg:top-[10%] xl:top-[15%] justify-center flex flex-col gap-0 w-full items-center">
         <div
-          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] lg:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
+          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
         >
           {/* header */}
           <h2
-            className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
+            className="z-10 text-ait-teal text-center pt-10 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
             text-[70px] sm:text-[80px] lg:text-[100px] xl:text-[150px] lg:absolute lg:-top-[63px] xl:-top-[95px] "
           >
             all in time
@@ -191,11 +191,11 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                       {!publicKey ? (
                         ""
                       ) : publicKey?.toBase58() === winnerWallet ? (
-                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU WON!
                         </p>
                       ) : (
-                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU LOST
                         </p>
                       )}
@@ -219,11 +219,11 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                       {!publicKey ? (
                         ""
                       ) : publicKey?.toBase58() === winnerWallet ? (
-                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU WON!
                         </p>
                       ) : (
-                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU LOST
                         </p>
                       )}
@@ -265,7 +265,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                 )}
               </motion.div>
             ) : (
-              <div className="relative w-full h-[650px] lg:h-full">
+              <div className="relative w-full h-[640px] lg:h-full">
                 <div
                   style={{
                     position: "absolute",
@@ -283,13 +283,13 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
 
                 <p
                   className="absolute top-[25%] -translate-y-[75%] left-1/2 -translate-x-1/2
-                  text-white font-neuebit-bold text-5xl lg:text-8xl"
+                  text-white font-neuebit-bold text-6xl lg:text-8xl"
                 >
                   !!!
                 </p>
                 <p
                   className="absolute top-[30%] -translate-y-[70%] left-1/2 -translate-x-1/2 
-                  text-white font-neuebit-bold text-2xl lg:text-5xl"
+                  text-white font-neuebit-bold text-3xl lg:text-5xl"
                 >
                   STORE OPEN
                 </p>
