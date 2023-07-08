@@ -448,10 +448,13 @@ const MerchModule: FC<Props> = (props: Props) => {
         if (index > 1) _fee += isUS ? 1 : 2;
       });
 
+      if (cart.length > 7) {
+        _fee += 10;
+      }
+
       setShippingFee(_fee);
     }
   }, [cart, shipping]);
-  console.log("shipping ", shippingFee);
 
   //reset store after purchase
   useEffect(() => {
