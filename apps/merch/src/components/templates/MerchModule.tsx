@@ -89,7 +89,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   >();
 
   //context variables
-  const [showStore, setShowStore] = useState<boolean>(true);
+  const [showStore, setShowStore] = useState<boolean>(false);
   const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false);
   const value = {
