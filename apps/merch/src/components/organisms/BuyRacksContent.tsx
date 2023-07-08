@@ -142,9 +142,15 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     // }
     // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
     const metaplex = new Metaplex(connection);
+
+    // mainnet edition - 9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
+    // https://exchange.art/editions/9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
+    // devnet edition - D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
+    // https://ssr.staging.exchange.art/editions/D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
+
     const nftToBurn = await metaplex.nfts().findByMint({
       mintAddress: new PublicKey(
-        "3YKQW6sA2q9rn85HrC8aueYH1BhYL6GN6etGkaoXL2sP"
+        "9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f"
       ),
     });
     console.log("nftToBurn ", nftToBurn);
