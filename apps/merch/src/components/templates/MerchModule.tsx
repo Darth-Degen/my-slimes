@@ -267,7 +267,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     console.log("transactPayment ");
 
     //TODO: replace with actual racks
-    const _racks = 2;
+    const _racks = 5;
 
     const nftsToBurn = nfts.slice(0, _racks);
 
@@ -279,7 +279,14 @@ const MerchModule: FC<Props> = (props: Props) => {
     // });
     console.log("1. nftsToBurn ", nftsToBurn);
     // console.log("2. nftToBurn ", nftToBurn);
-    await slimesPayment.pay(connection, wallet, nftsToBurn, 0.05, 5);
+    const txsSignatures = await slimesPayment.pay(
+      connection,
+      wallet,
+      nftsToBurn,
+      0.05,
+      5
+    );
+    console.log("txsSignatures: ", txsSignatures);
   }, [connection, nfts, wallet]);
   // useEffect(() => {
   //   // transactPayment();
