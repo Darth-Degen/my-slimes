@@ -37,20 +37,19 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
         {isRaffle ? (
           <>
             <div
-              className="absolute top-14 left-3.5 w-[285px] uppercase font-bold text-[15px] scale-90 lg:scale-100"
+              className="absolute top-14 left-3.5 w-[285px] uppercase font-bold text-[10px] sm:text-[15px] scale-90 lg:scale-100"
               dangerouslySetInnerHTML={{ __html: caption }}
             />
-            <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold text-[15px] break-all">
+            <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold break-all">
               {/* TODO: update url and display to winner address */}
-              {/* {activeStatus.name === RackStatusName.Raffle && ( */}
               <a
                 href={`https://solana.fm/address/${wallet}?cluster=mainnet-qn1`}
                 rel="noreferrer"
                 target="_blank"
+                className="text-[10px] sm:text-[15px]"
               >
-                {wallet}
+                {`${wallet.slice(0, 4)}...${wallet.slice(-4)}`}
               </a>
-              {/* )} */}
             </div>
           </>
         ) : (
