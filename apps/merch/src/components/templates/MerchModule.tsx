@@ -34,6 +34,16 @@ import {
 import axios from "axios";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import toast from "react-hot-toast";
+import {
+  Metaplex,
+  Nft,
+  NftWithToken,
+  Sft,
+  SftWithToken,
+} from "@metaplex-foundation/js";
+import { PublicKey } from "@solana/web3.js";
+import * as slimesPayment from "src/lib/slimes-payment";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -56,7 +66,9 @@ const MerchModule: FC<Props> = (props: Props) => {
   //stateWarningModal
   const [cart, setCart] = useState<Merch[]>([]);
   const [step, setStep] = useState<number>(0);
-  const [nfts, setNfts] = useState<unknown[]>([]);
+  const [nfts, setNfts] = useState<(Nft | Sft | SftWithToken | NftWithToken)[]>(
+    []
+  );
   const [quantities, setQuantities] = useState<Quantity[]>([]);
   const [shipping, setShipping] = useState<ShippingInfo>(_shipping);
   const [shippingFee, setShippingFee] = useState<number>(0);
@@ -88,7 +100,10 @@ const MerchModule: FC<Props> = (props: Props) => {
     setStep,
   };
 
-  const { publicKey } = useWallet();
+  //wallet
+  const wallet = useWallet();
+  const { connected, publicKey } = wallet;
+  const { setVisible } = useWalletModal();
   const { connection } = useConnection();
 
   //fetch users nfts
@@ -104,6 +119,7 @@ const MerchModule: FC<Props> = (props: Props) => {
 
       const editionUpdateAuthority = process.env.editionUpdateAuthority;
       const editionName = process.env.editionName;
+      console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
       await Promise.all(
         tokens.map(async (token, index) => {
@@ -112,6 +128,7 @@ const MerchModule: FC<Props> = (props: Props) => {
               editionUpdateAuthority &&
             token?.name === editionName
           ) {
+            //@ts-ignore
             setNfts((prevState) => [...prevState, token]);
           }
         })
@@ -245,6 +262,28 @@ const MerchModule: FC<Props> = (props: Props) => {
       toast.error(response.data as string, { id: toastId });
     }
   };
+
+  const transactPayment = useCallback(async () => {
+    console.log("transactPayment ");
+
+    //TODO: replace with actual racks
+    const _racks = 2;
+
+    const nftsToBurn = nfts.slice(0, _racks);
+
+    const metaplex = new Metaplex(connection);
+    // const nftToBurn = await metaplex.nfts().findByMint({
+    //   mintAddress: new PublicKey(
+    //     "AWVBCiNHrwUsKx2hMuchw7dVp4EfEU3rPnA56fW7hGwC"
+    //   ),
+    // });
+    console.log("1. nftsToBurn ", nftsToBurn);
+    // console.log("2. nftToBurn ", nftToBurn);
+    await slimesPayment.pay(connection, wallet, nftsToBurn, 0.05, 5);
+  }, [connection, nfts, wallet]);
+  useEffect(() => {
+    transactPayment();
+  }, [transactPayment]);
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
     if (typeof bearerToken !== "string") return;
@@ -292,6 +331,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     setCart([]);
     setShippingFee(0);
   }, []);
+
   //empty state on modal close
   useEffect(() => {
     if (!showStore) {
@@ -301,32 +341,11 @@ const MerchModule: FC<Props> = (props: Props) => {
   }, [showStore, resetStore]);
 
   //calculate shipping fee
-  /*
-    US Domestic: 
-      Crewneck  14$
-      T Shirts / Hat / Culture Builder 9$
-      Multiple + 4$ for 1st additional, 1$ for 2nd
-
-      So i.e. Crewneck + Tshirt = 18
-      Tshirt + Hat = 13
-      Crewneck + T + Hat = 19
-      T + Hat + culture = 14
-
-    Intl
-      Crewneck  19$
-      T Shirts / Hat / Culture Builder 16$
-      Multiple + 7$ for 1st additional, 2$ for 2nd
-
-      So i.e. Crewneck + Tshirt = 26
-      Tshirt + Hat = 23
-      Crewneck + T + Hat = 28
-      T + Hat + culture = 25
-*/
   useEffect(() => {
     if (shipping?.country && cart.length > 0) {
       const isUS = shipping?.country.code === "US";
       let _fee: number = 0;
-      console.log("cart ", cart);
+      // console.log("cart ", cart);
       cart.map((item, index) => {
         // console.log("item. ", item);
         switch (item.id) {
