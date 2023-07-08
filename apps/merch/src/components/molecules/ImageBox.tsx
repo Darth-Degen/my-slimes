@@ -32,21 +32,21 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
           width={303}
           height={151}
           alt="All in Time"
-          className="relative scale-90 lg:scale-100"
+          className="relative scale-40 md:scale-90 lg:scale-100"
         />
         {isRaffle ? (
           <>
             <div
-              className="absolute top-14 left-3.5 w-[285px] uppercase font-bold text-[10px] sm:text-[15px] scale-90 lg:scale-100"
+              className="absolute top-10 md:top-14 left-3.5 w-[285px] uppercase font-bold text-xs sm:text-[15px] scale-40 md:scale-90 lg:scale-100"
               dangerouslySetInnerHTML={{ __html: caption }}
             />
-            <div className="link absolute top-24 left-3.5 w-[285px] uppercase font-bold break-all">
+            <div className="link absolute top-24 left-3.5 uppercase font-bold break-all">
               {/* TODO: update url and display to winner address */}
               <a
                 href={`https://solana.fm/address/${wallet}?cluster=mainnet-qn1`}
                 rel="noreferrer"
                 target="_blank"
-                className="text-[10px] sm:text-[15px]"
+                className="text-xs sm:text-[15px]"
               >
                 {`${wallet.slice(0, 4)}...${wallet.slice(-4)}`}
               </a>
@@ -54,7 +54,7 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
           </>
         ) : (
           <div
-            className="absolute top-12 left-3.5 w-[285px] uppercase font-bold scale-90 lg:scale-100"
+            className="absolute top-12 left-3.5 w-[285px] uppercase font-bold scale-40 md:scale-90 lg:scale-100"
             dangerouslySetInnerHTML={{ __html: caption }}
           />
         )}

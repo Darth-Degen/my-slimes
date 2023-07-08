@@ -155,24 +155,24 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
       id={id}
       ref={ref}
     >
+      <div className="absolute z-[50] top-20 lg:top-10 left-1/2 -translate-x-1/2">
+        <WalletMultiButton
+          startIcon={undefined}
+          className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] lg:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
+        >
+          {publicKey
+            ? publicKey.toBase58().slice(0, 4) +
+              ".." +
+              publicKey.toBase58().slice(-4)
+            : "Connect"}
+        </WalletMultiButton>
+      </div>
       <div className="py-20" />
       <div className="sticky lg:top-[10%] xl:top-[15%] justify-center flex flex-col gap-0 w-full items-center">
         <div
-          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] md:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
+          className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] lg:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
         >
-          <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
-            <WalletMultiButton
-              startIcon={undefined}
-              className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
-            >
-              {publicKey
-                ? publicKey.toBase58().slice(0, 4) +
-                  ".." +
-                  publicKey.toBase58().slice(-4)
-                : "Connect"}
-            </WalletMultiButton>
-          </div>
           {/* header */}
           <h2
             className="z-10 text-ait-teal text-center pt-20 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
@@ -191,11 +191,11 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                       {!publicKey ? (
                         ""
                       ) : publicKey?.toBase58() === winnerWallet ? (
-                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU WON!
                         </p>
                       ) : (
-                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU LOST
                         </p>
                       )}
@@ -219,18 +219,18 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                       {!publicKey ? (
                         ""
                       ) : publicKey?.toBase58() === winnerWallet ? (
-                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU WON!
                         </p>
                       ) : (
-                        <p className="text-ait-teal text-4xl md:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
+                        <p className="text-ait-teal text-4xl lg:text-5xl lg:text-4xl xl:text-7xl 2xl:text-8xl font-neuebit-bold text-center">
                           YOU LOST
                         </p>
                       )}
                     </div>
                   )}
                   <div
-                    className="absolute top-1/2 -translate-y-1/2 right-4
+                    className="absolute bottom-20 lg:top-1/2 lg:-translate-y-1/2 right-4
                     px-3 py-1 flex items-center gap-3 cursor-pointer"
                     onClick={() => setStoreOpenView(true)}
                   >
@@ -265,12 +265,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                 )}
               </motion.div>
             ) : (
-              <div
-                className="relative w-full h-full"
-                style={{
-                  position: "relative",
-                }}
-              >
+              <div className="relative w-full h-[650px] lg:h-full">
                 <div
                   style={{
                     position: "absolute",
@@ -282,19 +277,19 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    opacity: 0.5, // Adjust this value as needed
+                    opacity: 0.5,
                   }}
                 ></div>
 
                 <p
                   className="absolute top-[25%] -translate-y-[75%] left-1/2 -translate-x-1/2
-                  text-white font-neuebit-bold text-8xl"
+                  text-white font-neuebit-bold text-5xl lg:text-8xl"
                 >
                   !!!
                 </p>
                 <p
                   className="absolute top-[30%] -translate-y-[70%] left-1/2 -translate-x-1/2 
-                  text-white font-neuebit-bold text-5xl"
+                  text-white font-neuebit-bold text-2xl lg:text-5xl"
                 >
                   STORE OPEN
                 </p>
@@ -303,14 +298,14 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                   py-4 px-8 bg-white flex justify-center items-center"
                 >
                   <div
-                    className="underline text-[#2764FF] font-neuebit-bold text-5xl cursor-pointer"
+                    className="underline text-[#2764FF] font-neuebit-bold text-3xl lg:text-5xl cursor-pointer"
                     onClick={() => setShowStore(true)}
                   >
                     SHOP NOW
                   </div>
                 </div>
                 <div
-                  className="absolute top-1/2 -translate-y-1/2 left-4
+                  className="absolute bottom-20 lg:top-1/2 lg:-translate-y-1/2 left-4
                   px-3 py-1 flex items-center gap-3 cursor-pointer"
                   onClick={() => setStoreOpenView(false)}
                 >
@@ -349,7 +344,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
           </div>
         )}
         {activeStatus.name === RackStatusName.Raffle && !storeOpenView && (
-          <div className="absolute bottom-[3%] left-[3%] hidden md:block ">
+          <div className="absolute bottom-[3%] left-[3%] hidden lg:block ">
             <Image src={splashIcon} width={300} height={300} alt="splash" />
           </div>
         )}
