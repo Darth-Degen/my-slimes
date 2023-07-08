@@ -11,12 +11,27 @@ interface Props {
   setCart: Dispatch<SetStateAction<Merch[]>>;
   updateSessionCart: (racks: number) => Promise<void>;
   shippingFee: number;
+  solPrice: number;
+  shippingCurrency: string;
+  setShippingCurrency: Dispatch<SetStateAction<string>>;
 }
 const OrderModal: FC<Props> = (props: Props) => {
-  const { cart, setCart, updateSessionCart, shippingFee } = props;
+  const {
+    cart,
+    setCart,
+    updateSessionCart,
+    shippingFee,
+    solPrice,
+    shippingCurrency,
+    setShippingCurrency,
+  } = props;
   const { showOrderModal, step, setStep } = useContext(StoreContext);
 
   const [isOrdering, setIsOrdering] = useState<boolean>(false);
+
+  const handleToggle = () => {
+    setShippingCurrency((prevValue) => (prevValue === "sol" ? "usdc" : "sol"));
+  };
 
   const calculateRacks = (): number => {
     if (cart.length === 0) return 0;
@@ -57,15 +72,13 @@ const OrderModal: FC<Props> = (props: Props) => {
               <div className="flex flex-col items-center uppercase font-neuebit-bold text-xl md:text-3xl lg:w-full ">
                 <p className="text-m-red text-4xl pb-3">attention</p>
                 <p className="pb-5">
-                  Attention There will be two transactions to approve:
+                  we will now be collecting your racks and shipping fees
                 </p>
-                <p>1. collecting your RACKS </p>
-                <p>2. the shipping cost for your order (USDC). </p>
+
                 <p className="pt-5">
                   **you can only place 1 order per wallet. Future purchases must
                   be made from a different wallet.
                 </p>
-                {/* <p className="text-m-red text-lg">all sales are final</p> */}
               </div>
 
               <div className="flex flex-col items-center gap-2">
@@ -88,10 +101,46 @@ const OrderModal: FC<Props> = (props: Props) => {
             >
               <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-3xl lg:w-full gap-10">
                 <p key="step-6">
-                  You will now be deducted ({calculateRacks()}) NFTs & ( $
-                  {shippingFee}) USDC
+                  You will now be deducted ({calculateRacks()}) NFTs &
+                  <p key="step-6">
+                    {Math.round(
+                      (shippingFee / solPrice + Number.EPSILON) * 100
+                    ) / 100}{" "}
+                    SOL or ${shippingFee} USDC for shipping
+                  </p>
                 </p>
-                <p className="text-m-red text-lg">all sales are final</p>
+                <div className="flex items-center gap-2  uppercase font-neuebit-bold text-xl text-m-mid-gray">
+                  <span>usdc</span>
+                  <button
+                    onClick={handleToggle}
+                    className=" px-1 relative inline-flex flex-shrink-0 items-center h-[26px] w-[50px] rounded-full bg-gray-300 cursor-pointer focus:outline-none "
+                  >
+                    <span
+                      className={`${
+                        shippingCurrency === "sol"
+                          ? "translate-x-[22px] bg-indigo-500"
+                          : "translate-x-0 bg-indigo-500"
+                      } pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200`}
+                    />
+                  </button>
+                  <span>sol</span>
+                </div>
+                <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
+                  choose how you want to pay for shipping
+                </p>
+                {calculateRacks() > 30 ? (
+                  <>
+                    <p className="text-m-red text-2xl">
+                      since your order is over 30 racks
+                    </p>
+                    <p className="text-m-red text-2xl -mt-8">
+                      you will need to confirm (
+                      {Math.ceil(calculateRacks() / 30)}) Transactions <br />
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-m-red text-lg">all sales are final</p>
+                )}
               </div>
 
               <div className="flex flex-col items-center gap-2">

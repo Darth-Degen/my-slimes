@@ -38,6 +38,7 @@ interface Props {
   setShowWarningModal: Dispatch<SetStateAction<boolean>>;
   shippingSession: ShippingSession | undefined;
   transactPayment: () => Promise<void>;
+  solPrice: number;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -52,6 +53,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     setShowWarningModal,
     shippingSession,
     transactPayment,
+    solPrice,
   } = props;
   const {
     showStore,
@@ -87,8 +89,8 @@ const StoreModal: FC<Props> = (props: Props) => {
 
   //add to cart
   const addToCart = async (item: Merch) => {
-    transactPayment();
-    return;
+    // transactPayment();
+    // return;
     if (!publicKey || !connected) {
       setVisible(true);
       return;
@@ -198,6 +200,7 @@ const StoreModal: FC<Props> = (props: Props) => {
             setShipping={setShipping}
             racks={nfts.length} //TODO: hardcode for testing
             shippingFee={shippingFee}
+            solPrice={solPrice}
           />
         )}
         <Footer step={step} />

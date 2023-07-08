@@ -20,6 +20,7 @@ interface Props {
   racks: number;
   // const shippingFee = 2;
   shippingFee: number;
+  solPrice: number;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
@@ -32,6 +33,7 @@ const Checkout: FC<Props> = (props: Props) => {
     setShipping,
     racks,
     shippingFee,
+    solPrice,
   } = props;
 
   //TODO: what id shipping fee
@@ -99,7 +101,12 @@ const Checkout: FC<Props> = (props: Props) => {
                 </div>
                 <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>shipping</p>
-                  <p>${shippingFee} USDC</p>
+                  <p>
+                    {Math.round(
+                      (shippingFee / solPrice + Number.EPSILON) * 100
+                    ) / 100}{" "}
+                    SOL or ${shippingFee} USDC
+                  </p>
                 </div>
               </motion.div>
             )}

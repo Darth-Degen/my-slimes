@@ -15,6 +15,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { StoreContext, merch } from "@merch-constants";
 import {
+  fetchSolanaTokenPrice,
   getAllProducts,
   getBearerToken,
   getNftsByOwner,
@@ -63,7 +64,7 @@ const _shipping: ShippingInfo = {
 const MerchModule: FC<Props> = (props: Props) => {
   const { children, className, ...componentProps } = props;
 
-  //stateWarningModal
+  //state
   const [cart, setCart] = useState<Merch[]>([]);
   const [step, setStep] = useState<number>(0);
   const [nfts, setNfts] = useState<(Nft | Sft | SftWithToken | NftWithToken)[]>(
@@ -73,6 +74,8 @@ const MerchModule: FC<Props> = (props: Props) => {
   const [shipping, setShipping] = useState<ShippingInfo>(_shipping);
   const [shippingFee, setShippingFee] = useState<number>(0);
   const [showWarningModal, setShowWarningModal] = useState<boolean>(false);
+  const [solPrice, setSolPrice] = useState<number>(21.69);
+  const [shippingCurrency, setShippingCurrency] = useState("sol");
 
   const [bearerToken, setBearerToken] = useState<
     string | unknown | undefined
@@ -117,15 +120,17 @@ const MerchModule: FC<Props> = (props: Props) => {
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
 
-      const editionUpdateAuthority = "8vizj4VUCM44RJgkPgzm6oG852KgVN5iFfYyFq9HBAFR"; // process.env.editionUpdateAuthority;
-      const editionName = "RACKS"; //process.env.editionName;
-      console.log("mint info ", editionName, editionUpdateAuthority);
+      const editionUpdateAuthority = process.env.editionUpdateAuthority;
+      const editionName = process.env.editionName;
+      // console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
       await Promise.all(
         tokens.map(async (token, index) => {
+          // console.log("token ", token.name);
+          //fetch metadata
           if (
             token?.updateAuthorityAddress?.toBase58() ===
-            editionUpdateAuthority &&
+              editionUpdateAuthority &&
             token?.name === editionName
           ) {
             //@ts-ignore
@@ -264,10 +269,11 @@ const MerchModule: FC<Props> = (props: Props) => {
   };
 
   const transactPayment = useCallback(async () => {
-    console.log("transactPayment ");
-
+    if (!connection || !publicKey) {
+      setVisible(true);
+    }
     //TODO: replace with actual racks
-    const _racks = 5;
+    const _racks = 40;
 
     const nftsToBurn = nfts.slice(0, _racks);
 
@@ -287,10 +293,8 @@ const MerchModule: FC<Props> = (props: Props) => {
       5
     );
     console.log("txsSignatures: ", txsSignatures);
-  }, [connection, nfts, wallet]);
-  // useEffect(() => {
-  //   // transactPayment();
-  // }, [transactPayment]);
+  }, [connection, nfts, publicKey, setVisible, wallet]);
+
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
     if (typeof bearerToken !== "string") return;
@@ -384,6 +388,20 @@ const MerchModule: FC<Props> = (props: Props) => {
     }
   }, [resetStore, step]);
 
+  //fetch solana price
+  const fetchSolanaToken = useCallback(async (): Promise<void> => {
+    const sol = await fetchSolanaTokenPrice();
+    console.log("sol ", sol);
+    setSolPrice(sol);
+    // return sol;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
+  useEffect(() => {
+    fetchSolanaToken();
+  }, [fetchSolanaToken]);
+
   return (
     <StoreContext.Provider value={value}>
       {children}
@@ -402,6 +420,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             setShowWarningModal={setShowWarningModal}
             shippingSession={shippingSession}
             transactPayment={transactPayment}
+            solPrice={solPrice}
           />
         )}
       </AnimatePresence>
@@ -413,6 +432,9 @@ const MerchModule: FC<Props> = (props: Props) => {
             setCart={setCart}
             updateSessionCart={updateSessionCart}
             shippingFee={shippingFee}
+            solPrice={solPrice}
+            shippingCurrency={shippingCurrency}
+            setShippingCurrency={setShippingCurrency}
           />
         )}
       </AnimatePresence>
