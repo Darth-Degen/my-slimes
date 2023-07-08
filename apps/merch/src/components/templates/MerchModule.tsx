@@ -281,9 +281,10 @@ const MerchModule: FC<Props> = (props: Props) => {
     // console.log("2. nftToBurn ", nftToBurn);
     await slimesPayment.pay(connection, wallet, nftsToBurn, 0.05, 5);
   }, [connection, nfts, wallet]);
-  useEffect(() => {
-    transactPayment();
-  }, [transactPayment]);
+  // useEffect(() => {
+  //   transactPayment();
+  // }, [transactPayment]);
+
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
     if (typeof bearerToken !== "string") return;
@@ -394,6 +395,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             shippingFee={shippingFee}
             setShowWarningModal={setShowWarningModal}
             shippingSession={shippingSession}
+            transactPayment={transactPayment}
           />
         )}
       </AnimatePresence>

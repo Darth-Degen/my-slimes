@@ -37,6 +37,7 @@ interface Props {
   shippingFee: number;
   setShowWarningModal: Dispatch<SetStateAction<boolean>>;
   shippingSession: ShippingSession | undefined;
+  transactPayment: () => Promise<void>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -50,6 +51,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     shippingFee,
     setShowWarningModal,
     shippingSession,
+    transactPayment,
   } = props;
   const {
     showStore,
@@ -85,6 +87,8 @@ const StoreModal: FC<Props> = (props: Props) => {
 
   //add to cart
   const addToCart = async (item: Merch) => {
+    transactPayment();
+    return;
     if (!publicKey || !connected) {
       setVisible(true);
       return;
