@@ -37,7 +37,7 @@ interface Props {
   shippingFee: number;
   setShowWarningModal: Dispatch<SetStateAction<boolean>>;
   shippingSession: ShippingSession | undefined;
-  transactPayment: () => Promise<void>;
+  // transactPayment: () => Promise<string>;
   solPrice: number;
 }
 const StoreModal: FC<Props> = (props: Props) => {
@@ -52,7 +52,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     shippingFee,
     setShowWarningModal,
     shippingSession,
-    transactPayment,
+    // transactPayment,
     solPrice,
   } = props;
   const {

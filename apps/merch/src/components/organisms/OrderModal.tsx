@@ -103,10 +103,8 @@ const OrderModal: FC<Props> = (props: Props) => {
                 <p key="step-6">
                   You will now be deducted ({calculateRacks()}) NFTs &
                   <p key="step-6">
-                    {Math.round(
-                      (shippingFee / solPrice + Number.EPSILON) * 100
-                    ) / 100}{" "}
-                    SOL or ${shippingFee} USDC for shipping
+                    {Number((shippingFee / solPrice).toFixed(2))} SOL or $
+                    {shippingFee} USDC for shipping
                   </p>
                 </p>
                 <div className="flex items-center gap-2  uppercase font-neuebit-bold text-xl text-m-mid-gray">

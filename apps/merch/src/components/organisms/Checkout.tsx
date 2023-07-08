@@ -102,10 +102,8 @@ const Checkout: FC<Props> = (props: Props) => {
                 <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>shipping</p>
                   <p>
-                    {Math.round(
-                      (shippingFee / solPrice + Number.EPSILON) * 100
-                    ) / 100}{" "}
-                    SOL or ${shippingFee} USDC
+                    {Number((shippingFee / solPrice).toFixed(2))} SOL or $
+                    {shippingFee} USDC
                   </p>
                 </div>
               </motion.div>

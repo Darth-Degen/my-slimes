@@ -22,7 +22,7 @@ export async function pay(
   const isDevnet = connection.rpcEndpoint.startsWith("https://devnet.");
 
   const USDC_DECIMALS = isDevnet ? USDC_DECIMALS_DEVNET : USDC_DECIMALS_MAINNET;
-
+  console.log("pay ", solAmount, usdcAmount)
   // 1. Build tx to send NFTs
   if (nfts.length) {
     for await (let nft of nfts) {
@@ -67,41 +67,53 @@ export async function pay(
   }
 
   // 2. Add sol payment
-  if (solAmount) {
-    var solTransferTx: TransactionInstruction = SystemProgram.transfer({
-      fromPubkey: wallet.publicKey!,
-      toPubkey: GRAVEYARD_DOON_DOON,
-      lamports: solAmount * LAMPORTS_PER_SOL,
-    });
+  try {
+    if (solAmount) {
+      var solTransferTx: TransactionInstruction = SystemProgram.transfer({
+        fromPubkey: wallet.publicKey!,
+        toPubkey: GRAVEYARD_DOON_DOON,
+        lamports: solAmount * LAMPORTS_PER_SOL,
+      });
 
-    transactions.push(await prepareVersionTx(connection, wallet.publicKey!, [solTransferTx]));
+      transactions.push(await prepareVersionTx(connection, wallet.publicKey!, [solTransferTx]));
+    }
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Error with SOL, check balance and try again"
+    console.error("SOL ", message);
+    return "Error with SOL, check balance and try again";
   }
 
   // 3. Add USDC payment
-  if (usdcAmount) {
-    const fromUSDCTokenAccount = await getOrCreateAssociatedTokenAccount(
-      connection,
-      // @ts-ignore
-      wallet,
-      isDevnet ? USDC_MINT_DEVNET : USDC_MINT_MAINNET,
-      wallet.publicKey
-    );
-    const toUSDCTokenAccount = await getOrCreateAssociatedTokenAccount(
-      connection,
-      // @ts-ignore
-      wallet,
-      isDevnet ? USDC_MINT_DEVNET : USDC_MINT_MAINNET,
-      wallet.publicKey
-    );
+  try {
+    if (usdcAmount) {
+      const fromUSDCTokenAccount = await getOrCreateAssociatedTokenAccount(
+        connection,
+        // @ts-ignore
+        wallet,
+        isDevnet ? USDC_MINT_DEVNET : USDC_MINT_MAINNET,
+        wallet.publicKey
+      );
+      const toUSDCTokenAccount = await getOrCreateAssociatedTokenAccount(
+        connection,
+        // @ts-ignore
+        wallet,
+        isDevnet ? USDC_MINT_DEVNET : USDC_MINT_MAINNET,
+        wallet.publicKey
+      );
 
-    const USDCTransferTx = await createTransferInstruction(
-      fromUSDCTokenAccount.address,
-      toUSDCTokenAccount.address,
-      wallet.publicKey!,
-      Math.floor(usdcAmount * (10 ** USDC_DECIMALS))
-    );
+      const USDCTransferTx = await createTransferInstruction(
+        fromUSDCTokenAccount.address,
+        toUSDCTokenAccount.address,
+        wallet.publicKey!,
+        Math.floor(usdcAmount * (10 ** USDC_DECIMALS))
+      );
 
-    transactions.push(await prepareVersionTx(connection, wallet.publicKey!, [USDCTransferTx]));
+      transactions.push(await prepareVersionTx(connection, wallet.publicKey!, [USDCTransferTx]));
+    } 
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Error with USDC, check balance and try again"
+    console.error("USDC ", message);
+    return "Error with USDC, check balance and try again";
   }
 
   // 4. Sign all

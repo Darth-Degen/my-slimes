@@ -109,6 +109,15 @@ const MerchModule: FC<Props> = (props: Props) => {
   const { setVisible } = useWalletModal();
   const { connection } = useConnection();
 
+  //cost of cart in racks
+  const calculateRacks = (): number => {
+    if (cart.length === 0) return 0;
+    //calculate total
+    return cart.reduce((total, item) => {
+      return total + item.cost;
+    }, 0);
+  };
+
   //fetch users nfts
   const getNfts = useCallback(async () => {
     if (!connection || !publicKey) {
@@ -192,108 +201,131 @@ const MerchModule: FC<Props> = (props: Props) => {
     handleSession();
   }, [handleSession]);
 
+  // console.log("Error with USDC, check balance and try again".slice(0, 5));
+
   //update user session (cart + shipping + stage)
   const updateSessionCart = async (racks: number): Promise<void> => {
     if (typeof bearerToken !== "string" || !publicKey || !shipping?.address)
       return;
-    const toastId = toast.loading("Running it");
-    const _cart: ShippingCart[] = cart.map((item) => {
-      return {
-        productid: item.id,
-        color: item.color as string,
-        size: item.size as string,
-        quantity: 1,
+    const toastId = toast.loading("Running it...");
+
+    try {
+      const _cart: ShippingCart[] = cart.map((item) => {
+        return {
+          productid: item.id,
+          color: item.color as string,
+          size: item.size as string,
+          quantity: 1,
+        };
+      });
+
+      const sessionData: ShippingSession = {
+        address: shipping.address,
+        city: shipping.city,
+        country: shipping.country.code,
+        email: shipping.email,
+        first_name: shipping.name,
+        geo_state: shipping.state,
+        last_name: "",
+        // nft_send_txn_id?: null,
+        // phone: shipping.number,
+        session_id: shippingSession?.session_id ?? preSession?.session_id,
+        // sol_send_txn_id?: null,
+        stage_completed: 0,
+        wallet_address: publicKey.toBase58(),
+        zip: shipping.zip,
+        cart: _cart,
       };
-    });
-
-    const sessionData: ShippingSession = {
-      address: shipping.address,
-      city: shipping.city,
-      country: shipping.country.code,
-      email: shipping.email,
-      first_name: shipping.name,
-      geo_state: shipping.state,
-      last_name: "",
-      // nft_send_txn_id?: null,
-      // phone: shipping.number,
-      session_id: shippingSession?.session_id ?? preSession?.session_id,
-      // sol_send_txn_id?: null,
-      stage_completed: 0,
-      wallet_address: publicKey.toBase58(),
-      zip: shipping.zip,
-      cart: _cart,
-    };
-    console.log("sessionData ", sessionData);
-    const response = await updateUserSession(
-      bearerToken as string,
-      publicKey.toBase58(),
-      sessionData
-    );
-
-    // // console.log("response ", response);
-    if (response.type === ResponseType.Success) {
-      toast.success("Systems updated. 1/3 complete");
-      //TODO: ANSEL send racks to wallet (racks are param in this function)
-      //TODO: on success update stage_1 completed
-      sessionData.stage_completed = 1;
-      sessionData.nft_send_txn_id = "12345"; //TODO: add txn id
-      const stageOneResponse = await updateUserSession(
+      console.log("sessionData ", sessionData);
+      const response = await updateUserSession(
         bearerToken as string,
         publicKey.toBase58(),
         sessionData
       );
-      if (stageOneResponse.type === ResponseType.Success) {
-        toast.success("Racks burned. 2/3 complete");
+
+      // // console.log("response ", response);
+      // if (response.type === ResponseType.Success) {
+      //   toast.success("Systems updated. 1/3 complete");
+      //   //TODO: ANSEL send racks to wallet (racks are param in this function)
+      //   //TODO: on success update stage_1 completed
+      //   sessionData.stage_completed = 1;
+      //   sessionData.nft_send_txn_id = "12345"; //TODO: add txn id
+      //   const stageOneResponse = await updateUserSession(
+      //     bearerToken as string,
+      //     publicKey.toBase58(),
+      //     sessionData
+      //   );
+      if (response.type === ResponseType.Success) {
+        // toast.success("Racks burned. 2/3 complete");
         //TODO: ANSEL send sol to wallet, if racks and sol can be sent in same tx then we can jump straight to "sessionData.stage_completed = 2"
         //TODO: on success update stage_1 completed
-        sessionData.stage_completed = 2;
-        sessionData.sol_send_txn_id = "12345"; //TODO: add txn id
-        const stageTwoResponse = await updateUserSession(
-          bearerToken as string,
-          publicKey.toBase58(),
-          sessionData
-        );
-        if (stageTwoResponse.type === ResponseType.Success) {
-          console.log("stageTwoResponse ", stageTwoResponse);
-          toast.success("Sol sent. 3/3 complete", { id: toastId });
-          setStep(7);
+
+        const transactions = await transactPayment();
+        // console.log("transactions ", transactions);
+        if (transactions.slice(0, 5) === "Error") {
+          throw new Error(transactions);
         } else {
-          toast.error(response.data as string, { id: toastId });
+          sessionData.stage_completed = 2;
+          sessionData.nft_send_txn_id = transactions;
+          sessionData.sol_send_txn_id = "";
+
+          const stageTwoResponse = await updateUserSession(
+            bearerToken as string,
+            publicKey.toBase58(),
+            sessionData
+          );
+
+          if (stageTwoResponse.type === ResponseType.Success) {
+            toast.success("Success", { id: toastId });
+            setStep(7);
+          } else {
+            toast.error(("stage 2 " + response.data) as string, {
+              id: toastId,
+            });
+            console.log("stage 2 ", response.data as string);
+          }
         }
       } else {
-        toast.error(response.data as string, { id: toastId });
+        toast.error(("stage 0 " + response.data) as string, { id: toastId });
+        console.log("stage 0 ", response.data as string);
       }
-    } else {
-      toast.error(response.data as string, { id: toastId });
+      // } else {
+      //   toast.error(response.data as string, { id: toastId });
+      // }}
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Transaction Failed. Check balnaces and try again";
+      console.error("purchase ", message);
+      toast.error(message, {
+        id: toastId,
+      });
     }
   };
 
-  const transactPayment = useCallback(async () => {
+  const transactPayment = async (): Promise<string> => {
     if (!connection || !publicKey) {
       setVisible(true);
     }
     //TODO: replace with actual racks
-    const _racks = 40;
+    const _racks = calculateRacks();
 
     const nftsToBurn = nfts.slice(0, _racks);
+    // console.log("nftsToBurn ", nftsToBurn);
 
-    const metaplex = new Metaplex(connection);
-    // const nftToBurn = await metaplex.nfts().findByMint({
-    //   mintAddress: new PublicKey(
-    //     "AWVBCiNHrwUsKx2hMuchw7dVp4EfEU3rPnA56fW7hGwC"
-    //   ),
-    // });
-    console.log("1. nftsToBurn ", nftsToBurn);
-    // console.log("2. nftToBurn ", nftToBurn);
     const txsSignatures = await slimesPayment.pay(
       connection,
       wallet,
       nftsToBurn,
-      0.05,
-      5
+      shippingCurrency === "sol"
+        ? Number((shippingFee / solPrice).toFixed(2))
+        : 0,
+      shippingCurrency === "usdc" ? shippingFee : 0
     );
     console.log("txsSignatures: ", txsSignatures);
-  }, [connection, nfts, publicKey, setVisible, wallet]);
+    return txsSignatures;
+  };
 
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
@@ -391,9 +423,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   //fetch solana price
   const fetchSolanaToken = useCallback(async (): Promise<void> => {
     const sol = await fetchSolanaTokenPrice();
-    console.log("sol ", sol);
     setSolPrice(sol);
-    // return sol;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
@@ -419,7 +449,6 @@ const MerchModule: FC<Props> = (props: Props) => {
             shippingFee={shippingFee}
             setShowWarningModal={setShowWarningModal}
             shippingSession={shippingSession}
-            transactPayment={transactPayment}
             solPrice={solPrice}
           />
         )}
