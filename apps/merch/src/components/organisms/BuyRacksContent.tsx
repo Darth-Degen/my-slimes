@@ -55,7 +55,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const { setIsInView, id, setCurrentPage } = props;
   const [activeStatus, setActiveStatus] = useState<RackStatus>(rackStatus[0]);
   const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
-  const [storeOpenView, setStoreOpenView] = useState<boolean>(false);
+  const [storeOpenView, setStoreOpenView] = useState<boolean>(true);
 
   const { connection } = useConnection();
 
@@ -140,32 +140,32 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     //   return;
     // }
     // editionContract.buyMultipleEditions(editionSaleData, amountToMint);
-    const metaplex = new Metaplex(connection);
+    // const metaplex = new Metaplex(connection);
 
     // mainnet edition - 9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
     // https://exchange.art/editions/9D9UBwZ5L6Mr5JJJ8Y5cTvJJ6vGW4zCjDbPGmd6XTy7f
     // devnet edition - D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
     // https://ssr.staging.exchange.art/editions/D93LTqjTm8nww5dPnzAuPnWUrKw8d89fViwZvTPuWF35
 
-    const nftToBurn = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey(
-        "7CV3uRPstbVu31irQiZb5FymkEc9DCUd18zCg53zifSQ"
-      ),
-    });
-    const nftToBurn2 = await metaplex.nfts().findByMint({
-      mintAddress: new PublicKey(
-        "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
-      ),
-    });
-    const txsSignatures = await slimesPayment.pay(
-      connection,
-      wallet,
-      [nftToBurn, nftToBurn2],
-      0.05,
-      1
-    );
+    // const nftToBurn = await metaplex.nfts().findByMint({
+    //   mintAddress: new PublicKey(
+    //     "7CV3uRPstbVu31irQiZb5FymkEc9DCUd18zCg53zifSQ"
+    //   ),
+    // });
+    // const nftToBurn2 = await metaplex.nfts().findByMint({
+    //   mintAddress: new PublicKey(
+    //     "EsWCqKmgaY2aYVdtEWsz8juNSXqyTVwV5KBuZfdfULLk"
+    //   ),
+    // });
+    // const txsSignatures = await slimesPayment.pay(
+    //   connection,
+    //   wallet,
+    //   [nftToBurn, nftToBurn2],
+    //   0.05,
+    //   1
+    // );
 
-    console.log('txsSignatures: ', txsSignatures);
+    // console.log('txsSignatures: ', txsSignatures);
   };
 
   return (
@@ -174,36 +174,36 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
       id={id}
       ref={ref}
     >
-      <div className="absolute z-[50] top-20 lg:top-10 left-1/2 -translate-x-1/2">
-        <WalletMultiButton
-          startIcon={undefined}
-          className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] lg:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
-        >
-          {publicKey
-            ? publicKey.toBase58().slice(0, 4) +
-              ".." +
-              publicKey.toBase58().slice(-4)
-            : "Connect"}
-        </WalletMultiButton>
-      </div>
       <div className="py-20" />
       <div className="sticky lg:top-[10%] xl:top-[15%] justify-center flex flex-col gap-0 w-full items-center">
+        <div className="absolute z-[50] -top-20 lg:-top-10 left-1/2 lg:left-auto lg:right-0 -translate-x-1/2">
+          <WalletMultiButton
+            startIcon={undefined}
+            className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] lg:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
+          >
+            {publicKey
+              ? publicKey.toBase58().slice(0, 4) +
+                ".." +
+                publicKey.toBase58().slice(-4)
+              : "Connect"}
+          </WalletMultiButton>
+        </div>
         <div
           className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
         >
-          <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10">
-            <WalletMultiButton
+          {/* <div className="absolute -top-20 lg:-top-20 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-10"> */}
+          {/* <WalletMultiButton
               startIcon={undefined}
               className="  !text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] md:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
             >
               {publicKey
                 ? publicKey.toBase58().slice(0, 4) +
-                ".." +
-                publicKey.toBase58().slice(-4)
+                  ".." +
+                  publicKey.toBase58().slice(-4)
                 : "Connect"}
-            </WalletMultiButton>
-          </div>
+            </WalletMultiButton> */}
+          {/* </div> */}
           {/* header */}
           <h2
             className="z-10 text-ait-teal text-center pt-10 lg:pt-0 lg:text-transparent lg:bg-clip-text lg:bg-ait-gradient font-primary leading-none
@@ -281,7 +281,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                       <path
                         d="M102 5L9 98L102 191"
                         stroke="#E5E5E5"
-                        stroke-width="12"
+                        strokeWidth="12"
                       />
                     </svg>
                   </div>
@@ -350,7 +350,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                     <path
                       d="M102 5L9 98L102 191"
                       stroke="#E5E5E5"
-                      stroke-width="12"
+                      strokeWidth="12"
                     />
                   </svg>
 
