@@ -53,7 +53,8 @@ const OrderModal: FC<Props> = (props: Props) => {
     <Modal
       show={showOrderModal}
       onClick={() => {
-        setStep(4);
+        if (step !== 7) setStep(4);
+        else setStep(0);
       }}
       className="w-[80%] lg:w-2/3  3xl:w-1/2 h-[93%] xl:h-[800px]"
     >
@@ -126,10 +127,10 @@ const OrderModal: FC<Props> = (props: Props) => {
                 <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
                   choose how you want to pay for shipping
                 </p>
-                {calculateRacks() > 30 ? (
+                {calculateRacks() > 26 ? (
                   <>
                     <p className="text-m-red text-2xl">
-                      since your order is over 30 racks
+                      since your order is over 26 racks
                     </p>
                     <p className="text-m-red text-2xl -mt-8">
                       you will need to confirm (
@@ -162,7 +163,7 @@ const OrderModal: FC<Props> = (props: Props) => {
           )}
           {step === 7 && (
             <motion.div
-              key="step-6"
+              key="step-7"
               className="flex flex-col items-center gap-10"
               {...midExitAnimation}
             >

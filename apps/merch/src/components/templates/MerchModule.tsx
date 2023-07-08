@@ -312,8 +312,8 @@ const MerchModule: FC<Props> = (props: Props) => {
     const _racks = calculateRacks();
 
     // console.log("nftsToBurn ", nftsToBurn);
-    //TODO: cahnge to 30
-    const dividend = 5;
+    //TODO: cahnge to 26
+    const dividend = 26;
 
     if (_racks > dividend) {
       const numBatches = Math.ceil(_racks / dividend);
@@ -414,16 +414,20 @@ const MerchModule: FC<Props> = (props: Props) => {
       setStep(0);
     }
   }, [showStore, resetStore]);
-
+  console.log(cart);
   //calculate shipping fee
   useEffect(() => {
     if (shipping?.country && cart.length > 0) {
       const isUS = shipping?.country.code === "US";
       let _fee: number = 0;
       // console.log("cart ", cart);
-      cart.map((item, index) => {
-        // console.log("item. ", item);
-        switch (item.id) {
+
+      if (cart.length > 1) {
+        const hasCrewneck = cart.some((item) => item.id === "crewneck");
+        if (hasCrewneck) _fee += isUS ? 14 : 19;
+        else _fee += isUS ? 9 : 16;
+      } else {
+        switch (cart[0].id) {
           case "crewneck":
             _fee += isUS ? 14 : 19;
             break;
@@ -437,6 +441,9 @@ const MerchModule: FC<Props> = (props: Props) => {
             _fee += isUS ? 9 : 16;
             break;
         }
+      }
+
+      cart.map((item, index) => {
         if (index === 1) _fee += isUS ? 4 : 7;
         if (index > 1) _fee += isUS ? 1 : 2;
       });
@@ -444,6 +451,7 @@ const MerchModule: FC<Props> = (props: Props) => {
       setShippingFee(_fee);
     }
   }, [cart, shipping]);
+  console.log("shipping ", shippingFee);
 
   //reset store after purchase
   useEffect(() => {
