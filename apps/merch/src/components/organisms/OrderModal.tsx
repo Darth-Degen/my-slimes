@@ -44,7 +44,7 @@ const OrderModal: FC<Props> = (props: Props) => {
     >
       <div className="relative self-center flex flex-col items-center px-20 py-[30%] md:py-[15%] lg:justify-start h-full w-full  text-center gap-10">
         {/* content */}
-        <h2 className="text-4xl md:text-[80px] text-ait-teal pb-14 lowercase">
+        <h2 className="text-4xl md:text-[80px]  pb-10 lowercase">
           all in time
         </h2>
         <AnimatePresence mode="wait">
@@ -54,13 +54,18 @@ const OrderModal: FC<Props> = (props: Props) => {
               className="flex flex-col items-center gap-10"
               {...midExitAnimation}
             >
-              <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-4xl lg:w-1/2 gap-10">
-                <p>
-                  At this point of the checkout process we are going to be
-                  collecting your RACKS (nfts) + the shipping cost for your
-                  merch (sol).
+              <div className="flex flex-col items-center uppercase font-neuebit-bold text-xl md:text-3xl lg:w-full ">
+                <p className="text-m-red text-4xl pb-3">attention</p>
+                <p className="pb-5">
+                  Attention There will be two transactions to approve:
                 </p>
-                <p className="text-m-red text-lg">all sales are final</p>
+                <p>1. collecting your RACKS </p>
+                <p>2. the shipping cost for your order (USDC). </p>
+                <p className="pt-5">
+                  **you can only place 1 order per wallet. Future purchases must
+                  be made from a different wallet.
+                </p>
+                {/* <p className="text-m-red text-lg">all sales are final</p> */}
               </div>
 
               <div className="flex flex-col items-center gap-2">
@@ -81,7 +86,7 @@ const OrderModal: FC<Props> = (props: Props) => {
               className="flex flex-col items-center gap-10"
               {...midExitAnimation}
             >
-              <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-4xl lg:w-full gap-10">
+              <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-3xl lg:w-full gap-10">
                 <p key="step-6">
                   You will now be deducted ({calculateRacks()}) NFTs & ( $
                   {shippingFee}) USDC
@@ -99,9 +104,33 @@ const OrderModal: FC<Props> = (props: Props) => {
                 >
                   {isOrdering ? "running it..." : "run it"}
                 </button>
-                <p className="text-ait-teal uppercase font-neuebit-bold text-xl">
+                <p className=" uppercase font-neuebit-bold text-xl text-m-mid-gray pt-1">
                   (place order)
                 </p>
+                <p className=" uppercase font-neuebit-bold text-xl text-m-mid-gray -mt-2">
+                  (for real this time)
+                </p>
+              </div>
+            </motion.div>
+          )}
+          {step === 7 && (
+            <motion.div
+              key="step-6"
+              className="flex flex-col items-center gap-10"
+              {...midExitAnimation}
+            >
+              <div className="flex flex-col items-center uppercase font-neuebit-bold text-xl md:text-3xl lg:w-full gap-10">
+                <p>THANK YOU FOR YOUR ORDER!</p>
+
+                <p>WE WILL UPDATE WITH SHIPPING INFORMATION VIA YOUR EMAIL.</p>
+
+                <p>ALL IN TIME, MY SLIME.</p>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/hands.png`}
+                  width={300}
+                  height={300}
+                  alt="Handshake"
+                />
               </div>
             </motion.div>
           )}

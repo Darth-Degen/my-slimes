@@ -13,8 +13,8 @@ interface Props {
 const StoreItem: FC<Props> = (props: Props) => {
   const { item, inStock, addToCart, handleImageClick } = props;
 
-  //TODO: change to false
-  const [didHover, setDidHover] = useState<boolean>(true);
+  //TODO: change to true to disable
+  const [didHover, setDidHover] = useState<boolean>(false);
 
   const src = `${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`;
 
@@ -38,10 +38,10 @@ const StoreItem: FC<Props> = (props: Props) => {
       <div className="flex flex-col items-center gap-2">
         <div
           className="relative"
-          //TODO: uncomment
-          // onMouseEnter={() => setDidHover(true)}
-          // onMouseLeave={() => setDidHover(false)}
-          // onClick={() => handleImageClick(item)}
+          //TODO: comment to disable
+          onMouseEnter={() => setDidHover(true)}
+          onMouseLeave={() => setDidHover(false)}
+          onClick={() => handleImageClick(item)}
         >
           <ImageShimmer
             src={src}
@@ -57,9 +57,9 @@ const StoreItem: FC<Props> = (props: Props) => {
                 key="more"
                 {...fastExitAnimation}
               >
-                {/* TODO: uncomment */}
-                {/* <p>see more</p> */}
-                <p>available 7/7</p>
+                {/* TODO: comment to disable */}
+                <p>see more</p>
+                {/* <p>available 7/7</p> */}
               </motion.div>
             )}
           </AnimatePresence>
@@ -68,9 +68,9 @@ const StoreItem: FC<Props> = (props: Props) => {
           className="uppercase font-neuebit-bold text-lg bg-m-green px-6 pt-1 text-white transition-colors duration-200 hover:bg-m-dark-green active:bg-opacity-90 shadow-md
           disabled:bg-red-500 disabled:bg-opacity-50 disabled:cursor-not-allowed disabled:shadow-none min-w-[127px]"
           onClick={() => handleAddToCart(item)}
-          //TODO: uncomment
-          // disabled={!inStock}
-          disabled={true}
+          //TODO: comment to disable
+          disabled={!inStock}
+          // disabled={true}
         >
           {!inStock ? "sold out" : "add to cart"}
         </button>

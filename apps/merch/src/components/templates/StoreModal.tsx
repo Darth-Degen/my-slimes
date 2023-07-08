@@ -7,7 +7,7 @@ import {
   Footer,
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
-import { Merch, Quantity, ShippingInfo } from "@merch-types";
+import { Merch, Quantity, ShippingInfo, ShippingSession } from "@merch-types";
 import {
   Dispatch,
   FC,
@@ -35,6 +35,8 @@ interface Props {
   quantities: Quantity[];
   getQuantities: () => Promise<void>;
   shippingFee: number;
+  setShowWarningModal: Dispatch<SetStateAction<boolean>>;
+  shippingSession: ShippingSession | undefined;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -46,6 +48,8 @@ const StoreModal: FC<Props> = (props: Props) => {
     quantities,
     getQuantities,
     shippingFee,
+    setShowWarningModal,
+    shippingSession,
   } = props;
   const {
     showStore,
@@ -70,7 +74,7 @@ const StoreModal: FC<Props> = (props: Props) => {
       if (cart[i].id === id) {
         count++;
 
-        if (count === 3) {
+        if (count === 2) {
           return true;
         }
       }
@@ -86,16 +90,26 @@ const StoreModal: FC<Props> = (props: Props) => {
       return;
     }
     if (atMerchItemCapacity(item.id)) {
-      toast.error("Only three of each item");
+      toast.error("Only two of each item");
       return;
     }
+    //TODO: uncomment for shipping
+    // if (shippingSession && shippingSession?.stage_completed === "2") {
+    //   setShowWarningModal(true);
+    //   return;
+    // }
     // console.log(item);
     await getQuantities();
     // console.log("quantities ", quantities);
     setCart((prevState) => [...prevState, item]);
   };
+
   //open cart
   const handleCartClick = (): void => {
+    if (cart.length === 0) {
+      toast.error("Add items to cart");
+      return;
+    }
     setStep(2);
   };
   //open detail view and save clicked item
@@ -164,6 +178,9 @@ const StoreModal: FC<Props> = (props: Props) => {
             item={storeItem}
             addToCart={addToCart}
             setStep={setStep}
+            atMerchItemCapacity={atMerchItemCapacity}
+            shippingSession={shippingSession}
+            setShowWarningModal={setShowWarningModal}
           />
         )}
         {/* cart + checkout process */}

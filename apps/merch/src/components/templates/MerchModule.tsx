@@ -6,7 +6,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { StoreModal, ExitModal, OrderModal } from "@merch-components";
+import {
+  StoreModal,
+  ExitModal,
+  OrderModal,
+  WarningModal,
+} from "@merch-components";
 import { AnimatePresence } from "framer-motion";
 import { StoreContext, merch } from "@merch-constants";
 import {
@@ -48,13 +53,14 @@ const _shipping: ShippingInfo = {
 const MerchModule: FC<Props> = (props: Props) => {
   const { children, className, ...componentProps } = props;
 
-  //state
+  //stateWarningModal
   const [cart, setCart] = useState<Merch[]>([]);
   const [step, setStep] = useState<number>(0);
   const [nfts, setNfts] = useState<unknown[]>([]);
   const [quantities, setQuantities] = useState<Quantity[]>([]);
   const [shipping, setShipping] = useState<ShippingInfo>(_shipping);
   const [shippingFee, setShippingFee] = useState<number>(0);
+  const [showWarningModal, setShowWarningModal] = useState<boolean>(false);
 
   const [bearerToken, setBearerToken] = useState<
     string | unknown | undefined
@@ -202,7 +208,7 @@ const MerchModule: FC<Props> = (props: Props) => {
       sessionData
     );
 
-    // console.log("response ", response);
+    // // console.log("response ", response);
     if (response.type === ResponseType.Success) {
       toast.success("Systems updated. 1/3 complete");
       //TODO: ANSEL send racks to wallet (racks are param in this function)
@@ -228,6 +234,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         if (stageTwoResponse.type === ResponseType.Success) {
           console.log("stageTwoResponse ", stageTwoResponse);
           toast.success("Sol sent. 3/3 complete", { id: toastId });
+          setStep(7);
         } else {
           toast.error(response.data as string, { id: toastId });
         }
@@ -280,14 +287,18 @@ const MerchModule: FC<Props> = (props: Props) => {
     else setShowOrderModal(false);
   }, [setShowOrderModal, step]);
 
+  const resetStore = useCallback(() => {
+    setShipping(_shipping);
+    setCart([]);
+    setShippingFee(0);
+  }, []);
   //empty state on modal close
   useEffect(() => {
     if (!showStore) {
-      setShipping(_shipping);
-      setCart([]);
+      resetStore();
       setStep(0);
     }
-  }, [showStore]);
+  }, [showStore, resetStore]);
 
   //calculate shipping fee
   /*
@@ -340,6 +351,13 @@ const MerchModule: FC<Props> = (props: Props) => {
     }
   }, [cart, shipping]);
 
+  //reset store after purchase
+  useEffect(() => {
+    if (step === 7) {
+      resetStore();
+    }
+  }, [resetStore, step]);
+
   return (
     <StoreContext.Provider value={value}>
       {children}
@@ -355,6 +373,8 @@ const MerchModule: FC<Props> = (props: Props) => {
             quantities={quantities}
             getQuantities={getQuantities}
             shippingFee={shippingFee}
+            setShowWarningModal={setShowWarningModal}
+            shippingSession={shippingSession}
           />
         )}
       </AnimatePresence>
@@ -372,6 +392,15 @@ const MerchModule: FC<Props> = (props: Props) => {
       {/* exit */}
       <AnimatePresence mode="wait">
         {showExitModal && <ExitModal />}
+      </AnimatePresence>
+      {/* exit */}
+      <AnimatePresence mode="wait">
+        {showWarningModal && (
+          <WarningModal
+            showWarningModal={showWarningModal}
+            setShowWarningModal={setShowWarningModal}
+          />
+        )}
       </AnimatePresence>
     </StoreContext.Provider>
   );
