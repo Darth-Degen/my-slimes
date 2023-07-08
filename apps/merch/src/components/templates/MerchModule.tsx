@@ -414,7 +414,7 @@ const MerchModule: FC<Props> = (props: Props) => {
       setStep(0);
     }
   }, [showStore, resetStore]);
-  console.log(cart);
+
   //calculate shipping fee
   useEffect(() => {
     if (shipping?.country && cart.length > 0) {
