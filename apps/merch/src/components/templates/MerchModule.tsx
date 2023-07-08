@@ -282,9 +282,8 @@ const MerchModule: FC<Props> = (props: Props) => {
     await slimesPayment.pay(connection, wallet, nftsToBurn, 0.05, 5);
   }, [connection, nfts, wallet]);
   // useEffect(() => {
-  //   transactPayment();
+  //   // transactPayment();
   // }, [transactPayment]);
-
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
     if (typeof bearerToken !== "string") return;

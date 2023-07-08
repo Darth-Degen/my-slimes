@@ -1,6 +1,6 @@
 import { Metaplex, Nft, NftWithToken, Sft, SftWithToken, token, transferNftBuilder } from "@metaplex-foundation/js";
 import { WalletContextState } from "@solana/wallet-adapter-react";
-import { Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, TransactionInstruction, VersionedTransaction } from "@solana/web3.js";
+import { Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, TransactionInstruction, TransactionSignature, VersionedTransaction } from "@solana/web3.js";
 import { prepareVersionTx, sendSignedTransactions, signAllVersionTx } from "./transactions";
 import { createTransferInstruction, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 
@@ -16,7 +16,7 @@ export async function pay(
   nfts: (Sft | SftWithToken | Nft | NftWithToken)[],
   solAmount: number, /* Enter the "human readable" amount. Eg. 1.2 or 0.5 */
   usdcAmount: number /* Enter the "human readable" amount. Eg. 1.2 or 0.5 */
-) {
+): Promise<string> {
   const metaplex = new Metaplex(connection);
   const transactions: VersionedTransaction[] = [];
   const isDevnet = connection.rpcEndpoint.startsWith("https://devnet.");
@@ -88,9 +88,11 @@ export async function pay(
   const signedTransactions = await signAllVersionTx(transactions, wallet);
 
   // 5. Send and confirm all
-  await Promise.all(signedTransactions.map((tx, index) => sendSignedTransactions(
+  const transactionSignatures = await Promise.all(signedTransactions.map((tx, index) => sendSignedTransactions(
     tx,
     index,
     connection
   )));
+
+  return transactionSignatures.join(',');
 }
