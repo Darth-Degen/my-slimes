@@ -127,6 +127,9 @@ const MerchModule: FC<Props> = (props: Props) => {
     if (!connection || !publicKey) {
       return;
     }
+    if (step !== 0 && step !== 2) {
+      return;
+    }
     try {
       //fetch tokens
       const tokens = await getNftsByOwner(connection, publicKey);
@@ -136,6 +139,7 @@ const MerchModule: FC<Props> = (props: Props) => {
       const editionName = process.env.devEditionName; //TODO: remove dev
       // console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
+      const _nfts: (Nft | Sft | SftWithToken | NftWithToken)[] = [];
       await Promise.all(
         tokens.map(async (token, index) => {
           // console.log("token ", token.name);
@@ -146,16 +150,18 @@ const MerchModule: FC<Props> = (props: Props) => {
             token?.name === editionName
           ) {
             //@ts-ignore
-            setNfts((prevState) => [...prevState, token]);
+            _nfts.push(token);
+            // setNfts((prevState) => [...prevState, token]);
           }
         })
       );
+      setNfts(_nfts);
     } catch (e: any) {
       console.error(e.message);
       toast.error(`Error ${e.message}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connection, publicKey]);
+  }, [connection, publicKey, step]);
 
   useEffect(() => {
     getNfts();
@@ -390,7 +396,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         });
       });
     }
-    console.log("_quantities ", _quantities);
+    // console.log("_quantities ", _quantities);
     setQuantities(_quantities);
     // });
   }, [bearerToken, step]);

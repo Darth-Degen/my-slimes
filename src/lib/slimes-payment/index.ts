@@ -4,7 +4,7 @@ import { Connection, LAMPORTS_PER_SOL, PublicKey, SystemProgram, TransactionInst
 import { prepareVersionTx, sendSignedTransactions, signAllVersionTx } from "./transactions";
 import { createTransferInstruction, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 
-const GRAVEYARD_DOON_DOON = new PublicKey("CuhAmoz94KQBhVPeLH1topju9WEhW4RCzM8S1pcEx4S6");
+const GRAVEYARD_DOON_DOON = new PublicKey("3ck6mSS3pHEhYBEh7hWEEw1akRjkPbTGV7RbyH5g5hii"); //TODO: CuhAmoz94KQBhVPeLH1topju9WEhW4RCzM8S1pcEx4S6
 const USDC_MINT_MAINNET = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
 const USDC_MINT_DEVNET = new PublicKey("3rczAdopemKxscq7sG9rk6UxgfHNh87Etekqi32ZYDo8");
 const USDC_DECIMALS_MAINNET = 6;

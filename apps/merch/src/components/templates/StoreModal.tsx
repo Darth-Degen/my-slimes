@@ -15,6 +15,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import axios from "axios";
@@ -69,6 +70,18 @@ const StoreModal: FC<Props> = (props: Props) => {
   //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
   const [storeItem, setStoreItem] = useState<Merch>();
 
+  const cartDebouncer = debounce((value: Merch, toastId: string) => {
+    setCart((prevState) => [...prevState, value]);
+
+    toast.success("Success", { id: toastId });
+    isCartLoadingRef.current = false;
+  }, 350);
+  useEffect(() => {
+    return () => {
+      cartDebouncer.cancel();
+    };
+  }, []);
+
   //solana wallet
   const { connected, publicKey } = useWallet();
   const { setVisible } = useWalletModal();
@@ -90,31 +103,33 @@ const StoreModal: FC<Props> = (props: Props) => {
   };
 
   //add to cart
+  const isCartLoadingRef = useRef<boolean>(false);
   const addToCart = async (item: Merch) => {
-    // transactPayment();
-    // return;
-    if (!publicKey || !connected) {
-      setVisible(true);
-      return;
-    }
-    if (atMerchItemCapacity(item.id)) {
-      toast.error("Only two of each item");
-      return;
-    }
-
     //TODO: uncomment for shipping
     // if (shippingSession && shippingSession?.stage_completed === "2") {
     //   setShowWarningModal(true);
     //   return;
     // }
+    if (isCartLoadingRef.current) return;
+    if (!publicKey || !connected) {
+      setVisible(true);
+      return;
+    }
+
+    const toastId = toast.loading("Adding to cart...");
+    if (atMerchItemCapacity(item.id)) {
+      toast.error("Only two of each item", { id: toastId });
+      return;
+    }
+    isCartLoadingRef.current = true;
 
     // console.log(item);
-    await getQuantities();
     // console.log("quantities ", quantities);
-    setCart((prevState) => [...prevState, item]);
-    toast.success("Added to cart");
-  };
 
+    await getQuantities();
+    cartDebouncer(item, toastId);
+  };
+  atMerchItemCapacity;
   //open cart
   const handleCartClick = (): void => {
     if (cart.length === 0) {
