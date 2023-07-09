@@ -103,12 +103,11 @@ const OrderModal: FC<Props> = (props: Props) => {
               <div className="flex flex-col items-center uppercase font-neuebit-bold text-2xl md:text-3xl lg:w-full gap-10">
                 <p key="step-6">
                   You will now be deducted ({calculateRacks()}) NFTs &
-                  <p key="step-6">
-                    {Number((shippingFee / solPrice).toFixed(2))} SOL or $
-                    {shippingFee} USDC for shipping
-                  </p>
+                  {Number((shippingFee / solPrice).toFixed(2))} SOL
+                  {/* or $
+                    {shippingFee} USDC for shipping */}
                 </p>
-                <div className="flex items-center gap-2  uppercase font-neuebit-bold text-xl text-m-mid-gray">
+                {/* <div className="flex items-center gap-2  uppercase font-neuebit-bold text-xl text-m-mid-gray">
                   <span>usdc</span>
                   <button
                     onClick={handleToggle}
@@ -123,10 +122,10 @@ const OrderModal: FC<Props> = (props: Props) => {
                     />
                   </button>
                   <span>sol</span>
-                </div>
-                <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
+                </div> */}
+                {/* <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
                   choose how you want to pay for shipping
-                </p>
+                </p> */}
                 {calculateRacks() > 26 ? (
                   <>
                     <p className="text-m-red text-2xl">
