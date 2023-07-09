@@ -126,7 +126,8 @@ const OrderModal: FC<Props> = (props: Props) => {
                 {/* <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
                   choose how you want to pay for shipping
                 </p> */}
-                {calculateRacks() > 26 ? (
+
+                {/* {calculateRacks() > 26 ? (
                   <>
                     <p className="text-m-red text-2xl">
                       since your order is over 26 racks
@@ -136,9 +137,9 @@ const OrderModal: FC<Props> = (props: Props) => {
                       {Math.ceil(calculateRacks() / 30)}) Transactions <br />
                     </p>
                   </>
-                ) : (
-                  <p className="text-m-red text-lg">all sales are final</p>
-                )}
+                ) : ( */}
+                <p className="text-m-red text-lg">all sales are final</p>
+                {/* )} */}
               </div>
 
               <div className="flex flex-col items-center gap-2">

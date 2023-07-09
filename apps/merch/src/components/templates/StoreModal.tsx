@@ -103,10 +103,10 @@ const StoreModal: FC<Props> = (props: Props) => {
     }
 
     //TODO: uncomment for shipping
-    // if (shippingSession && shippingSession?.stage_completed === "2") {
-    //   setShowWarningModal(true);
-    //   return;
-    // }
+    if (shippingSession && shippingSession?.stage_completed === "2") {
+      setShowWarningModal(true);
+      return;
+    }
 
     // console.log(item);
     await getQuantities();

@@ -315,7 +315,8 @@ const MerchModule: FC<Props> = (props: Props) => {
     //TODO: cahnge to 26
     const dividend = 26;
 
-    if (_racks > dividend) {
+    // if (_racks > dividend) {
+    if (false) {
       const numBatches = Math.ceil(_racks / dividend);
       const txsSignatures: string[] = [];
 
