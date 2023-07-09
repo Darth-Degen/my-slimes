@@ -110,11 +110,13 @@ const ItemDetail: FC<Props> = (props: Props) => {
 
   //set size if only one
   useEffect(() => {
+    console.log("sizes ", item.sizeChart);
     if (item.sizeChart.length === 1) setSize(item.sizeChart[0]);
   }, [item.sizeChart]);
 
   //resets error indication
   useEffect(() => {
+    console.log("cartItem ", cartItem.sizeChart);
     if (cartItem?.size) setFailedSize(false);
   }, [cartItem?.size]);
   useEffect(() => {
@@ -123,6 +125,13 @@ const ItemDetail: FC<Props> = (props: Props) => {
 
   //check items in stock
   useEffect(() => {
+    // console.log(
+    //   "*** ",
+    //   cartItem?.size,
+    //   ",",
+    //   cartItem?.color,
+    //   verifyItemInStock(item, quantities, cartItem?.size, cartItem?.color)
+    // );
     if (item)
       setIsInStock(
         verifyItemInStock(item, quantities, cartItem?.size, cartItem?.color)
@@ -168,6 +177,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
               showDropdown={colorDropdown}
               label={color ?? "COLOR:"}
               items={item.colors}
+              expandUI={true}
             />
           </div>
           <div
@@ -181,6 +191,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
               showDropdown={sizeDropdown}
               label={size ?? "SIZE:"}
               items={item.sizeChart}
+              expandUI={true}
             />
           </div>
         </div>
