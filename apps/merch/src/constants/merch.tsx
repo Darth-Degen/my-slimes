@@ -46,7 +46,7 @@ export const merch: Merch[] = [
       "Slightly oversized fit. Graphic designed by Skullface. Available in black and white. 100% cotton.",
     maxSupply: 221,
     cost: 5,
-    sizeChart: ["s", "m", "lg", "xl", "2xl"],
+    sizeChart: ["s", "m", "l", "xl", "2xl"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png", "image3.png"],
     sizes: [
