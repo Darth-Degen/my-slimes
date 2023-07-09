@@ -87,7 +87,7 @@ const Checkout: FC<Props> = (props: Props) => {
         </h3>
       </div>
       {/* row */}
-      <div className="flex flex-col xl:flex-row gap-10">
+      <div className="flex flex-col xl:flex-row gap-48 lg:gap-10">
         {/* left side */}
         <div className="xl:h-[55vh] max-h-[550px] flex flex-col items-center xl:items-start justify-start gap-3">
           <CheckoutCart cart={cart} updateCart={updateCart} step={step} />
@@ -98,11 +98,11 @@ const Checkout: FC<Props> = (props: Props) => {
                 className="flex flex-col items-center xl:items-start justify-start gap-3 w-full"
                 {...fastExitAnimation}
               >
-                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                <div className="whitespace-no-wrap w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex flex-col md:flex-row justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>Cost</p>
                   <p>{calculateRacks()} racks</p>
                 </div>
-                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+                <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex flex-col md:flex-row justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
                   <p>shipping</p>
                   <p>
                     {Number((shippingFee / solPrice).toFixed(2))} SOL or $
@@ -112,7 +112,7 @@ const Checkout: FC<Props> = (props: Props) => {
               </motion.div>
             )}
           </AnimatePresence>
-          <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
+          <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex flex-col md:flex-row justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
             <p>total</p>
             <p>
               {calculateRacks()} racks {step > 3 && "+ SOL"}

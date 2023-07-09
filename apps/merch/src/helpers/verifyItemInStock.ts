@@ -14,7 +14,6 @@ export const verifyItemInStock = (
   //calculate total quantity
     const stock = quantities[index]?.sizes.reduce(
     (total, item) => {
-      console.log("--- ", item?.size, size,  size === item?.size);
        //has size and color param
        if (size && size === item?.size && color && color === item?.color) {
         // console.log("verifyItemInStock 1")

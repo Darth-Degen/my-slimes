@@ -101,11 +101,13 @@ const StoreModal: FC<Props> = (props: Props) => {
       toast.error("Only two of each item");
       return;
     }
+
     //TODO: uncomment for shipping
-    // if (shippingSession && shippingSession?.stage_completed === "2") {
-    //   setShowWarningModal(true);
-    //   return;
-    // }
+    if (shippingSession && shippingSession?.stage_completed === "2") {
+      setShowWarningModal(true);
+      return;
+    }
+
     // console.log(item);
     await getQuantities();
     // console.log("quantities ", quantities);
