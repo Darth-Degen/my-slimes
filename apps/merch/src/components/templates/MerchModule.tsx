@@ -46,7 +46,7 @@ import { PublicKey } from "@solana/web3.js";
 import * as slimesPayment from "src/lib/slimes-payment";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWindowSize } from "@merch-hooks";
-
+import mobile from "is-mobile";
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
@@ -111,7 +111,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   const { setVisible } = useWalletModal();
   const { connection } = useConnection();
 
-  const dividend = winWidth < 800 ? 10 : 26;
+  const dividend = mobile() ? 10 : 26;
 
   //cost of cart in racks
   const calculateRacks = (): number => {
@@ -245,7 +245,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         zip: shipping.zip,
         cart: _cart,
       };
-      console.log("sessionData ", sessionData);
+      // console.log("sessionData ", sessionData);
       const response = await updateUserSession(
         bearerToken as string,
         publicKey.toBase58(),
@@ -320,9 +320,6 @@ const MerchModule: FC<Props> = (props: Props) => {
 
     const _racks = calculateRacks();
 
-    // console.log("nftsToBurn ", nftsToBurn);
-    //TODO: cahnge to 26
-
     if (_racks > dividend) {
       const numBatches = Math.ceil(_racks / dividend);
       const txsSignatures: string[] = [];
@@ -333,8 +330,7 @@ const MerchModule: FC<Props> = (props: Props) => {
 
         const nftsToBurn = nfts.slice(startIndex, endIndex);
 
-        const isLastBatch = i === numBatches - 1;
-
+        const isFirstBatch = i === 0;
         const txs = await slimesPayment.pay(
           connection,
           wallet,
@@ -343,7 +339,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             ? Number((shippingFee / solPrice).toFixed(2))
             : 0,
           shippingCurrency === "usdc" ? shippingFee : 0,
-          !isLastBatch
+          isFirstBatch
         );
 
         txsSignatures.push(txs);

@@ -127,7 +127,7 @@ const OrderModal: FC<Props> = (props: Props) => {
                 {/* <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
                   choose how you want to pay for shipping
                 </p> */}
-                {calculateRacks() > 26 ? (
+                {calculateRacks() > txDividend ? (
                   <>
                     <p className="text-m-red text-2xl">
                       since your order is over {txDividend} racks
