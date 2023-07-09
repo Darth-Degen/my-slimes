@@ -45,6 +45,7 @@ import {
 import { PublicKey } from "@solana/web3.js";
 import * as slimesPayment from "src/lib/slimes-payment";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useWindowSize } from "@merch-hooks";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -103,11 +104,14 @@ const MerchModule: FC<Props> = (props: Props) => {
     setStep,
   };
 
+  const [winWidth, winHeight] = useWindowSize();
   //wallet
   const wallet = useWallet();
   const { connected, publicKey } = wallet;
   const { setVisible } = useWalletModal();
   const { connection } = useConnection();
+
+  const dividend = winWidth < 800 ? 10 : 26;
 
   //cost of cart in racks
   const calculateRacks = (): number => {
@@ -123,7 +127,6 @@ const MerchModule: FC<Props> = (props: Props) => {
     if (!connection || !publicKey) {
       return;
     }
-
     try {
       //fetch tokens
       const tokens = await getNftsByOwner(connection, publicKey);
@@ -313,10 +316,8 @@ const MerchModule: FC<Props> = (props: Props) => {
 
     // console.log("nftsToBurn ", nftsToBurn);
     //TODO: cahnge to 26
-    const dividend = 26;
 
-    // if (_racks > dividend) {
-    if (false) {
+    if (_racks > dividend) {
       const numBatches = Math.ceil(_racks / dividend);
       const txsSignatures: string[] = [];
 
@@ -363,7 +364,9 @@ const MerchModule: FC<Props> = (props: Props) => {
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
     if (typeof bearerToken !== "string") return;
+    // if (step > 3) return;
 
+    //TODO: check qtys right before final order
     const response = await getAllProducts(bearerToken as string);
 
     let _quantities: Quantity[] = [];
@@ -387,10 +390,10 @@ const MerchModule: FC<Props> = (props: Props) => {
         });
       });
     }
-    // console.log("_quantities ", _quantities);
+    console.log("_quantities ", _quantities);
     setQuantities(_quantities);
     // });
-  }, [bearerToken]);
+  }, [bearerToken, step]);
 
   useEffect(() => {
     getQuantities();
@@ -509,6 +512,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             solPrice={solPrice}
             shippingCurrency={shippingCurrency}
             setShippingCurrency={setShippingCurrency}
+            txDividend={dividend}
           />
         )}
       </AnimatePresence>

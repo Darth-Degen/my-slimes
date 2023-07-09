@@ -112,6 +112,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     await getQuantities();
     // console.log("quantities ", quantities);
     setCart((prevState) => [...prevState, item]);
+    toast.success("Added to cart");
   };
 
   //open cart

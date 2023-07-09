@@ -54,7 +54,8 @@ const Checkout: FC<Props> = (props: Props) => {
       toast.error("No items in cart");
       return;
     }
-    await getNfts();
+    //TODO: add getQuantities: () => Promise<void>;
+
     // console.log(calculateRacks(), racks);
     if (racks < calculateRacks()) {
       toast.error("Not enough racks");

@@ -23,7 +23,7 @@ export async function pay(
   const isDevnet = connection.rpcEndpoint.startsWith("https://devnet.");
 
   const USDC_DECIMALS = isDevnet ? USDC_DECIMALS_DEVNET : USDC_DECIMALS_MAINNET;
-  console.log("pay ", solAmount, usdcAmount)
+  console.log("pay ", solAmount, usdcAmount, firstTransaction)
   // 1. Build tx to send NFTs
   if (nfts.length) {
     for await (let nft of nfts) {
@@ -69,7 +69,7 @@ export async function pay(
 
   // 2. Add sol payment
   try {
-    if (solAmount ) {
+    if (solAmount && firstTransaction) {
       var solTransferTx: TransactionInstruction = SystemProgram.transfer({
         fromPubkey: wallet.publicKey!,
         toPubkey: GRAVEYARD_DOON_DOON,
@@ -86,7 +86,7 @@ export async function pay(
 
   // 3. Add USDC payment
   try {
-    if (usdcAmount ) {
+    if (usdcAmount && firstTransaction) {
       const fromUSDCTokenAccount = await getOrCreateAssociatedTokenAccount(
         connection,
         // @ts-ignore

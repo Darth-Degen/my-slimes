@@ -14,6 +14,7 @@ interface Props {
   solPrice: number;
   shippingCurrency: string;
   setShippingCurrency: Dispatch<SetStateAction<string>>;
+  txDividend: number;
 }
 const OrderModal: FC<Props> = (props: Props) => {
   const {
@@ -24,6 +25,7 @@ const OrderModal: FC<Props> = (props: Props) => {
     solPrice,
     shippingCurrency,
     setShippingCurrency,
+    txDividend,
   } = props;
   const { showOrderModal, step, setStep } = useContext(StoreContext);
 
@@ -126,20 +128,20 @@ const OrderModal: FC<Props> = (props: Props) => {
                 {/* <p className="uppercase font-neuebit-bold text-lg text-m-mid-gray -mt-9">
                   choose how you want to pay for shipping
                 </p> */}
-
-                {/* {calculateRacks() > 26 ? (
+                {calculateRacks() > 26 ? (
                   <>
                     <p className="text-m-red text-2xl">
-                      since your order is over 26 racks
+                      since your order is over {txDividend} racks
                     </p>
                     <p className="text-m-red text-2xl -mt-8">
                       you will need to confirm (
-                      {Math.ceil(calculateRacks() / 30)}) Transactions <br />
+                      {Math.ceil(calculateRacks() / txDividend)}) Transactions{" "}
+                      <br />
                     </p>
                   </>
-                ) : ( */}
-                <p className="text-m-red text-lg">all sales are final</p>
-                {/* )} */}
+                ) : (
+                  <p className="text-m-red text-lg">all sales are final</p>
+                )}
               </div>
 
               <div className="flex flex-col items-center gap-2">
