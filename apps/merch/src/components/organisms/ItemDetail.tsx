@@ -110,13 +110,11 @@ const ItemDetail: FC<Props> = (props: Props) => {
 
   //set size if only one
   useEffect(() => {
-    console.log("sizes ", item.sizeChart);
     if (item.sizeChart.length === 1) setSize(item.sizeChart[0]);
   }, [item.sizeChart]);
 
   //resets error indication
   useEffect(() => {
-    console.log("cartItem ", cartItem.sizeChart);
     if (cartItem?.size) setFailedSize(false);
   }, [cartItem?.size]);
   useEffect(() => {

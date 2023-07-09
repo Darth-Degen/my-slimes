@@ -22,10 +22,10 @@ const nextConfig = {
     //TODO: needed for merch
     //dev - 3wP5sQ8E5vkGaWU3FLFX9fXibDjTt56BUGAMP8pe33FX
     //prod - 8vizj4VUCM44RJgkPgzm6oG852KgVN5iFfYyFq9HBAFR
-    editionUpdateAuthority: "8vizj4VUCM44RJgkPgzm6oG852KgVN5iFfYyFq9HBAFR",
+    editionUpdateAuthority: "3wP5sQ8E5vkGaWU3FLFX9fXibDjTt56BUGAMP8pe33FX",
     //dev - exp edition
     //prod - RACKS
-    editionName: "RACKS",
+    editionName: "exp edition",
     NEXT_PUBLIC_CDN_URL: "https://storage.googleapis.com/slimes-assets",
   },
 };
