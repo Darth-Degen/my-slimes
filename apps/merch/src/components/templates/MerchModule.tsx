@@ -134,9 +134,15 @@ const MerchModule: FC<Props> = (props: Props) => {
       //fetch tokens
       const tokens = await getNftsByOwner(connection, publicKey);
       if (!tokens || typeof tokens === "string") return;
+      const isDevnet = connection.rpcEndpoint.startsWith("https://devnet.");
 
-      const editionUpdateAuthority = process.env.editionUpdateAuthority; //TODO: remove dev
-      const editionName = process.env.editionName; //TODO: remove dev
+      const editionUpdateAuthority = isDevnet
+        ? process.env.devEditionUpdateAuthority
+        : process.env.editionUpdateAuthority;
+      const editionName = isDevnet
+        ? process.env.devEditionName
+        : process.env.editionName;
+
       // console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
       const _nfts: (Nft | Sft | SftWithToken | NftWithToken)[] = [];
