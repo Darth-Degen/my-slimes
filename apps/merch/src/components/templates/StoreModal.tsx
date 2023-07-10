@@ -153,19 +153,15 @@ const StoreModal: FC<Props> = (props: Props) => {
   };
 
   const placeOrder = async () => {
-    //TODO: verify funds in wallet
-    const toastId = toast.loading("verifying funds");
     const _funds = (await fetchUserFunds()) as ReturnedFundsBalances;
-    if (typeof _funds === undefined) {
-      toast.error("Error verifying funds", { id: toastId });
-      return;
+    if (typeof _funds === undefined || !_funds?.sol) {
+      toast.error("Error verifying shipping funds");
     }
 
     if (Number((shippingFee / solPrice).toFixed(2)) > _funds?.sol) {
-      toast.error(`Not enough SOL`, { id: toastId });
+      toast.error("Not enough SOL for shipping");
       return;
     } else {
-      toast.success("Verified", { id: toastId });
       setStep(5);
     }
   };

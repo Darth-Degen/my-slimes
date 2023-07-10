@@ -21,6 +21,7 @@ import {
   getNftsByOwner,
   getUserSession,
   updateUserSession,
+  verifyItemInStock,
 } from "@merch-helpers";
 import {
   Merch,
@@ -145,7 +146,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         ? process.env.devEditionName
         : process.env.editionName;
 
-      console.log("mint info ", editionName, editionUpdateAuthority);
+      // console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
       const _nfts: (Nft | Sft | SftWithToken | NftWithToken)[] = [];
       await Promise.all(
@@ -224,10 +225,19 @@ const MerchModule: FC<Props> = (props: Props) => {
   const updateSessionCart = async (racks: number): Promise<void> => {
     if (typeof bearerToken !== "string" || !publicKey || !shipping?.address)
       return;
+
     const toastId = toast.loading("Running it...");
 
     try {
+      console.log("quantities ", quantities);
       const _cart: ShippingCart[] = cart.map((item) => {
+        //verify is in stock
+        const isInStock = verifyItemInStock(item, quantities);
+        if (!isInStock) {
+          console.log("isInStock ", item.name, isInStock);
+          throw new Error(`${item.name} is no longer in stock`);
+        }
+
         return {
           productid: item.id,
           color: item.color as string,
@@ -260,23 +270,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         sessionData
       );
 
-      // // console.log("response ", response);
-      // if (response.type === ResponseType.Success) {
-      //   toast.success("Systems updated. 1/3 complete");
-      //   //TODO: ANSEL send racks to wallet (racks are param in this function)
-      //   //TODO: on success update stage_1 completed
-      //   sessionData.stage_completed = 1;
-      //   sessionData.nft_send_txn_id = "12345"; //TODO: add txn id
-      //   const stageOneResponse = await updateUserSession(
-      //     bearerToken as string,
-      //     publicKey.toBase58(),
-      //     sessionData
-      //   );
       if (response.type === ResponseType.Success) {
-        // toast.success("Racks burned. 2/3 complete");
-        //TODO: ANSEL send sol to wallet, if racks and sol can be sent in same tx then we can jump straight to "sessionData.stage_completed = 2"
-        //TODO: on success update stage_1 completed
-
         const transactions = await transactPayment();
         // console.log("transactions ", transactions);
         if (transactions.slice(0, 5) === "Error") {
@@ -306,9 +300,6 @@ const MerchModule: FC<Props> = (props: Props) => {
         toast.error(("stage 0 " + response.data) as string, { id: toastId });
         console.log("stage 0 ", response.data as string);
       }
-      // } else {
-      //   toast.error(response.data as string, { id: toastId });
-      // }}
     } catch (error: unknown) {
       const message =
         error instanceof Error
@@ -376,33 +367,36 @@ const MerchModule: FC<Props> = (props: Props) => {
     if (typeof bearerToken !== "string") return;
     // if (step > 3) return;
 
-    //TODO: check qtys right before final order
-    const response = await getAllProducts(bearerToken as string);
+    if (step === 0 || step === 1 || step === 6) {
+      //TODO: check qtys right before final order
+      const response = await getAllProducts(bearerToken as string);
 
-    let _quantities: Quantity[] = [];
-    if (response && response.type === ResponseType.Success) {
-      //@ts-ignore
-      response.data.forEach((item) => {
-        _quantities.push({
-          productid: item.productid,
-          name: item.name,
-          cost: item.cost,
-          sizes: item.sizes,
+      let _quantities: Quantity[] = [];
+      // if (false) {
+      if (response && response.type === ResponseType.Success) {
+        //@ts-ignore
+        response.data.forEach((item) => {
+          _quantities.push({
+            productid: item.productid,
+            name: item.name,
+            cost: item.cost,
+            sizes: item.sizes,
+          });
         });
-      });
-    } else {
-      merch.forEach((item: Merch) => {
-        _quantities.push({
-          productid: item.id,
-          name: item.name,
-          cost: item.cost,
-          sizes: item.sizes,
+      } else {
+        merch.forEach((item: Merch) => {
+          _quantities.push({
+            productid: item.id,
+            name: item.name,
+            cost: item.cost,
+            sizes: item.sizes,
+          });
         });
-      });
+      }
+      // console.log("_quantities ", _quantities);
+      setQuantities(_quantities);
+      // });
     }
-    // console.log("_quantities ", _quantities);
-    setQuantities(_quantities);
-    // });
   }, [bearerToken, step]);
 
   useEffect(() => {
@@ -493,11 +487,10 @@ const MerchModule: FC<Props> = (props: Props) => {
   const fetchUserFunds = async (): Promise<
     string | ReturnedFundsBalances | undefined
   > => {
-    console.log("fetch funds step ", step);
+    // console.log("fetch funds step ", step);
     if (!connection || !publicKey) return;
 
     const _funds = await getUserFunds(connection, publicKey);
-    console.log("_funds ", _funds);
 
     return _funds;
   };

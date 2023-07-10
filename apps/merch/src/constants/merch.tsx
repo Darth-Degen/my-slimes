@@ -136,7 +136,7 @@ export const merch: Merch[] = [
       {
         color: "pack",
         size: "one pack to rule them all",
-        quantity: 190,
+        quantity: 0, //TODO: 190
       },
     ],
   },
