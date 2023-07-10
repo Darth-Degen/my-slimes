@@ -219,7 +219,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     handleSession();
   }, [handleSession]);
 
-  // console.log("Error with USDC, check balance and try again".slice(0, 5));
+  console.log("quantities ", quantities);
 
   //update user session (cart + shipping + stage)
   const updateSessionCart = async (racks: number): Promise<void> => {
@@ -229,7 +229,6 @@ const MerchModule: FC<Props> = (props: Props) => {
     const toastId = toast.loading("Running it...");
 
     try {
-      console.log("quantities ", quantities);
       const _cart: ShippingCart[] = cart.map((item) => {
         //verify is in stock
         const isInStock = verifyItemInStock(item, quantities);
@@ -365,7 +364,6 @@ const MerchModule: FC<Props> = (props: Props) => {
   //fetch merch quantities
   const getQuantities = useCallback(async (): Promise<void> => {
     if (typeof bearerToken !== "string") return;
-    // if (step > 3) return;
 
     if (step === 0 || step === 1 || step === 6) {
       //TODO: check qtys right before final order

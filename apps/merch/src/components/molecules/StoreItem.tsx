@@ -2,16 +2,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FC, useState } from "react";
 import { fastExitAnimation, midExitAnimation } from "@merch-constants";
 import { ImageShimmer } from "@merch-components";
-import { Merch } from "@merch-types";
+import { Merch, Quantity } from "@merch-types";
+import { calculateItemQuantity } from "@merch-helpers";
 
 interface Props {
   item: Merch;
   inStock: boolean;
   addToCart: (item: Merch) => void;
   handleImageClick: (item: Merch) => void;
+  quantities: Quantity[];
 }
 const StoreItem: FC<Props> = (props: Props) => {
-  const { item, inStock, addToCart, handleImageClick } = props;
+  const { item, inStock, addToCart, handleImageClick, quantities } = props;
 
   //TODO: change to true to disable
   const [didHover, setDidHover] = useState<boolean>(false);
@@ -82,7 +84,8 @@ const StoreItem: FC<Props> = (props: Props) => {
         </h3>
         <p className="font-neuebit-bold text-xl">cost - {item.cost} racks</p>
         <p className="font-neuebit-bold text-xl">
-          qty made - {item.maxSupply}*
+          qty remaining - {calculateItemQuantity(item.id, quantities)}
+          {/* {item.maxSupply} */}
         </p>
         <div className="flex gap-2 font-neuebit text-xl ">
           {item.sizeChart.map((item, index) => (

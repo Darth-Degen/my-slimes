@@ -27,6 +27,7 @@ const Store: FC<Props> = (props: Props) => {
             addToCart={addToCart}
             inStock={verifyItemInStock(item, quantities)}
             handleImageClick={handleImageClick}
+            quantities={quantities}
           />
         ))}
       </div>
