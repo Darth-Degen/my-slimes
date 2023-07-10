@@ -24,12 +24,12 @@ export const updateUserSession = async (
     data: "Error",
   };
 
-  console.log("updateUserSession ", data)
+  // console.log("updateUserSession ", data)
 
   await axios
     .request(config)
     .then((response) => {
-      console.log("updateUserSession Success : ", response.data);
+      // console.log("updateUserSession Success : ", response.data);
       value.type = ResponseType.Success;
       value.data = response.data;
      

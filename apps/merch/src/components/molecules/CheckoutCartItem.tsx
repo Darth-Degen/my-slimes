@@ -2,6 +2,8 @@ import { Dispatch, FC, SetStateAction, useState } from "react";
 import { Dropdown } from "@merch-components";
 import { Merch } from "@merch-types";
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { fastExitAnimation } from "@merch-constants";
 
 interface Props {
   item: Merch;
@@ -42,14 +44,27 @@ const CheckoutCart: FC<Props> = (props: Props) => {
     <div className="flex flex-col md:flex-row gap-3 font-neuebit-bold border-b divide-y-custom-gray w-full z-20">
       <div className="flex flex-col sm:flex-row gap-3 ">
         {/* image */}
-        <div className="">
-          <Image
-            src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`}
-            width={90}
-            height={90}
-            alt="Merch"
-          />
-        </div>
+        <AnimatePresence mode="wait">
+          {item?.color === "white" && item?.id === "tee" ? (
+            <motion.div className="" key="im1" {...fastExitAnimation}>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image2.png`}
+                width={90}
+                height={90}
+                alt="Merch"
+              />
+            </motion.div>
+          ) : (
+            <motion.div className="" key="im2" {...fastExitAnimation}>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`}
+                width={90}
+                height={90}
+                alt="Merch"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
         {/* info */}
         <div className="flex flex-col gap-0 text-m-mid-gray whitespace-nowrap uppercase w-[150px]">
           <p className="text-xl leading-none">{item.name}</p>

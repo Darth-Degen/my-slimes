@@ -61,7 +61,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
       shipping.name.trim().length < 2 ||
       shipping.email.length < 2 ||
       shipping.address.length < 2 ||
-      shipping.address2.length < 2 ||
+      // shipping.address2.length < 2 ||
       shipping.country.code.length < 2 ||
       shipping.city.length < 2 ||
       //TODO: finish zip
@@ -100,7 +100,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
   // }, [validZip]);
   return (
     <motion.div
-      className="flex flex-col items-center xl:items-start justify-between gap-3 uppercase font-neuebit-bold text-xl"
+      className="flex flex-col items-center xl:items-start justify-between gap-3 uppercase font-neuebit-bold text-xl "
       key="shipping"
       {...midExitAnimation}
     >

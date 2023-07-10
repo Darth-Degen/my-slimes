@@ -6,25 +6,30 @@ import {
   Header,
   Footer,
 } from "@merch-components";
-import { StoreContext, merch } from "@merch-constants";
-import { Merch, Quantity, ShippingInfo } from "@merch-types";
+import { StoreContext } from "@merch-constants";
+import {
+  Merch,
+  Quantity,
+  ReturnedFundsBalances,
+  ShippingInfo,
+  ShippingSession,
+} from "@merch-types";
 import {
   Dispatch,
   FC,
   SetStateAction,
-  useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 import debounce from "lodash.debounce";
 
 import ExitIcon from "../../../images/icons/close.svg";
-import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Props {
   cart: Merch[];
@@ -35,6 +40,12 @@ interface Props {
   quantities: Quantity[];
   getQuantities: () => Promise<void>;
   shippingFee: number;
+  setShowWarningModal: Dispatch<SetStateAction<boolean>>;
+  shippingSession: ShippingSession | undefined;
+  // transactPayment: () => Promise<string>;
+  solPrice: number;
+  getNfts: () => Promise<void>;
+  fetchUserFunds: () => Promise<string | ReturnedFundsBalances | undefined>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -46,6 +57,12 @@ const StoreModal: FC<Props> = (props: Props) => {
     quantities,
     getQuantities,
     shippingFee,
+    setShowWarningModal,
+    shippingSession,
+    // transactPayment,
+    solPrice,
+    getNfts,
+    fetchUserFunds,
   } = props;
   const {
     showStore,
@@ -59,6 +76,19 @@ const StoreModal: FC<Props> = (props: Props) => {
   //step 0 = store list, step 1 = item details, step 2 = cart, step 3 = shipping info, step 4 = review
   const [storeItem, setStoreItem] = useState<Merch>();
 
+  const cartDebouncer = debounce((value: Merch, toastId: string) => {
+    setCart((prevState) => [...prevState, value]);
+
+    toast.success("Success", { id: toastId });
+    isCartLoadingRef.current = false;
+  }, 350);
+  useEffect(() => {
+    return () => {
+      cartDebouncer.cancel();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   //solana wallet
   const { connected, publicKey } = useWallet();
   const { setVisible } = useWalletModal();
@@ -70,7 +100,7 @@ const StoreModal: FC<Props> = (props: Props) => {
       if (cart[i].id === id) {
         count++;
 
-        if (count === 3) {
+        if (count === 2) {
           return true;
         }
       }
@@ -80,22 +110,39 @@ const StoreModal: FC<Props> = (props: Props) => {
   };
 
   //add to cart
+  const isCartLoadingRef = useRef<boolean>(false);
   const addToCart = async (item: Merch) => {
+    //TODO: uncomment for shipping
+    if (shippingSession && shippingSession?.stage_completed === "2") {
+      setShowWarningModal(true);
+      return;
+    }
+    if (isCartLoadingRef.current) return;
     if (!publicKey || !connected) {
       setVisible(true);
       return;
     }
+
+    const toastId = toast.loading("Adding to cart...");
     if (atMerchItemCapacity(item.id)) {
-      toast.error("Only three of each item");
+      toast.error("Only two of each item", { id: toastId });
       return;
     }
+    isCartLoadingRef.current = true;
+
     // console.log(item);
-    await getQuantities();
     // console.log("quantities ", quantities);
-    setCart((prevState) => [...prevState, item]);
+
+    await getQuantities();
+    cartDebouncer(item, toastId);
   };
+
   //open cart
   const handleCartClick = (): void => {
+    if (cart.length === 0) {
+      toast.error("Add items to cart");
+      return;
+    }
     setStep(2);
   };
   //open detail view and save clicked item
@@ -104,14 +151,21 @@ const StoreModal: FC<Props> = (props: Props) => {
     setStep(1);
   };
 
-  // const debounceWalletModal = debounce((value) => setVisible(value), 1500);
-  // //unmount debounce
-  // useEffect(() => {
-  //   return () => {
-  //     debounceWalletModal.cancel();
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const placeOrder = async () => {
+    const _funds = (await fetchUserFunds()) as ReturnedFundsBalances;
+    if (typeof _funds === undefined || !_funds?.sol) {
+      toast.error("Error verifying shipping funds");
+      setVisible(true);
+      return;
+    }
+
+    if (Number((shippingFee / solPrice).toFixed(2)) > _funds?.sol) {
+      toast.error("Not enough SOL for shipping");
+      return;
+    } else {
+      setStep(5);
+    }
+  };
 
   //reset selected item
   useEffect(() => {
@@ -124,7 +178,7 @@ const StoreModal: FC<Props> = (props: Props) => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2 z-50"
+      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] lg:px-4 py-2 z-50"
     >
       <div
         className={`flex flex-col items-center justify-between w-full text-3xl ${
@@ -164,6 +218,9 @@ const StoreModal: FC<Props> = (props: Props) => {
             item={storeItem}
             addToCart={addToCart}
             setStep={setStep}
+            atMerchItemCapacity={atMerchItemCapacity}
+            shippingSession={shippingSession}
+            setShowWarningModal={setShowWarningModal}
           />
         )}
         {/* cart + checkout process */}
@@ -175,8 +232,11 @@ const StoreModal: FC<Props> = (props: Props) => {
             updateCart={setCart}
             shipping={shipping}
             setShipping={setShipping}
-            racks={nfts.length} //TODO: hardcode for testing
+            racks={nfts.length}
             shippingFee={shippingFee}
+            solPrice={solPrice}
+            getNfts={getNfts}
+            placeOrder={placeOrder}
           />
         )}
         <Footer step={step} />

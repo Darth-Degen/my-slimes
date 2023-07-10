@@ -1,18 +1,17 @@
 import { motion } from "framer-motion";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { midExitAnimation, countries } from "@merch-constants";
-import { TextInput, Dropdown } from "@merch-components";
-import { Country, ShippingInfo } from "@merch-types";
-import toast from "react-hot-toast";
+import { FC } from "react";
+import { midExitAnimation } from "@merch-constants";
+import { ShippingInfo } from "@merch-types";
 
 interface Props {
   shipping: ShippingInfo;
   setStep: (value: number) => void;
+  placeOrder: () => void;
 }
 
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const ShippingForm: FC<Props> = (props: Props) => {
-  const { setStep, shipping } = props;
+  const { setStep, shipping, placeOrder } = props;
 
   return (
     <motion.div
@@ -37,7 +36,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
       <div className="flex flex-col">
         <button
           className="h-12 w-60 bg-m-green rounded-full uppercase font-neuebit-bold text-xl text-white pt-0.5 tracking-wide mt-3.5"
-          onClick={() => setStep(5)}
+          onClick={() => placeOrder()}
         >
           place Order
         </button>

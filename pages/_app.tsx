@@ -17,7 +17,6 @@ import {
   SolletWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import { clusterApiUrl } from "@solana/web3.js";
 import { useMemo } from "react";
 import { Toaster } from "react-hot-toast";
 // Default styles that can be overridden by your app
@@ -33,7 +32,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   const endpoint =
     "https://mainnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
 
-  // const endpoint = "https://devnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
+  // const endpoint =
+  //   "https://devnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
 
   const wallets = useMemo(
     () => [

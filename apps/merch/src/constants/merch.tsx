@@ -46,7 +46,7 @@ export const merch: Merch[] = [
       "Slightly oversized fit. Graphic designed by Skullface. Available in black and white. 100% cotton.",
     maxSupply: 221,
     cost: 5,
-    sizeChart: ["s", "m", "lg", "xl", "2xl"],
+    sizeChart: ["s", "m", "l", "xl", "2xl"],
     colors: ["black", "white"],
     images: ["image.png", "image1.png", "image2.png", "image3.png"],
     sizes: [
@@ -111,13 +111,13 @@ export const merch: Merch[] = [
       "Golden Brown, recycled cotton/poly blend. Embroidery and custom tag. Dad swag not included.",
     maxSupply: 190,
     cost: 4,
-    sizeChart: ["one sizes fits most"],
+    sizeChart: ["one size fits most"],
     colors: ["corduroy"],
     images: ["image.png"],
     sizes: [
       {
         color: "corduroy",
-        size: "one sizes fits most",
+        size: "one size fits most",
         quantity: 190,
       },
     ],
@@ -136,7 +136,7 @@ export const merch: Merch[] = [
       {
         color: "pack",
         size: "one pack to rule them all",
-        quantity: 190,
+        quantity: 0, //TODO: 190
       },
     ],
   },
