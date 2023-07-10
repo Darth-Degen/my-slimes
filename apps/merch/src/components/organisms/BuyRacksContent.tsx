@@ -2,6 +2,7 @@ import {
   Dispatch,
   FC,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -21,8 +22,19 @@ import {
   Countdown,
   MerchModule,
 } from "@merch-components";
-import { rackStatus, StoreContext } from "@merch-constants";
-import { RackStatus, RackStatusName } from "@merch-types";
+import {
+  calculateItemQuantity,
+  getAllProducts,
+  getBearerToken,
+} from "@merch-helpers";
+import { merch, rackStatus, StoreContext } from "@merch-constants";
+import {
+  Merch,
+  Quantity,
+  RackStatus,
+  RackStatusName,
+  ResponseType,
+} from "@merch-types";
 import { EditionSaleContract } from "src/lib/exchange-art/types/contract.interfaces";
 import { EditionsContractService } from "src/lib/exchange-art";
 import { EDITIONS_PROGRAM_ID } from "src/lib/exchange-art/utils";
@@ -34,6 +46,7 @@ import editionsContractIdl from "src/lib/exchange-art/idl/editions_program_solan
 // import { PublicKey } from "@solana/web3.js";
 import Image from "next/image";
 import splashIcon from "../../../images/raffle_splash.png";
+import { connected } from "process";
 
 //SEARCH FOR "TODO: needed for merch module reuse" in my-slimes TO REUSE
 
@@ -56,6 +69,10 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   const [activeStatus, setActiveStatus] = useState<RackStatus>(rackStatus[0]);
   const [editionSaleData, setEditionSaleData] = useState<EditionSaleContract>();
   const [storeOpenView, setStoreOpenView] = useState<boolean>(true);
+  const [quantities, setQuantities] = useState<Quantity[]>([]);
+  const [bearerToken, setBearerToken] = useState<
+    string | unknown | undefined
+  >();
 
   const { connection } = useConnection();
 
@@ -81,6 +98,54 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
   );
 
   const winnerWallet = "62fFigHfUyhToRZuRGwcn9f87SqPt2ztU8zWUWPugMga";
+
+  //fetch bearer token
+  const handleAuthToken = useCallback(async () => {
+    const response = await getBearerToken();
+    if (response && response.type === ResponseType.Success) {
+      setBearerToken(response.data);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleAuthToken();
+  }, [handleAuthToken]);
+  //fetch merch quantities
+  const getQuantities = useCallback(async (): Promise<void> => {
+    if (typeof bearerToken !== "string") return;
+    //TODO: check qtys right before final order
+    const response = await getAllProducts(bearerToken as string);
+
+    let _quantities: Quantity[] = [];
+    // if (false) {
+    if (response && response.type === ResponseType.Success) {
+      //@ts-ignore
+      response.data.forEach((item) => {
+        _quantities.push({
+          productid: item.productid,
+          name: item.name,
+          cost: item.cost,
+          sizes: item.sizes,
+        });
+      });
+    } else {
+      merch.forEach((item: Merch) => {
+        _quantities.push({
+          productid: item.id,
+          name: item.name,
+          cost: item.cost,
+          sizes: item.sizes,
+        });
+      });
+    }
+    // console.log("_quantities ", _quantities);
+    setQuantities(_quantities);
+    // });
+  }, [bearerToken, showStore]);
+
+  useEffect(() => {
+    getQuantities();
+  }, [getQuantities]);
 
   // useEffect(() => {
   //   (async function () {
@@ -336,7 +401,35 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                   </div>
                 </div>
                 <div
-                  className="absolute bottom-20 lg:top-1/2 lg:-translate-y-1/2 left-4
+                  className="absolute bottom-20 md:bottom-4 left-1/2 -translate-x-1/2 text-m-ait-green
+                  font-neuebit-bold text-2xl md:text-3xl flex flex-col gap-0 items-center justify-center uppercase"
+                >
+                  <p className="leading-snug text-4xl md:text-[52px] pb-2 whitespace-nowrap">
+                    QTYs remaining
+                  </p>
+                  <div className="flex flex-col ">
+                    <p className="leading-none">
+                      crewneck..........{" "}
+                      {calculateItemQuantity("crewneck", quantities)}/188
+                    </p>
+                    <p className="leading-none">
+                      hat............................{" "}
+                      {calculateItemQuantity("hat", quantities)}/190
+                    </p>
+                    <p className="leading-none">
+                      Graphic tee......{" "}
+                      {calculateItemQuantity("tee", quantities)}
+                      /221
+                    </p>
+                    <p className="leading-none">
+                      builder pack....{" "}
+                      {calculateItemQuantity("pack", quantities)}
+                      /190
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="absolute bottom-0 lg:top-1/2 lg:-translate-y-1/2 left-4
                   px-3 py-1 flex items-center gap-3 cursor-pointer"
                   onClick={() => setStoreOpenView(false)}
                 >

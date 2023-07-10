@@ -62,6 +62,7 @@ module.exports = {
         "m-green": "#2E6636",
         "m-dark-green": "#24512b",
         "m-black": "#010206",
+        "m-ait-green": "#24FF00",
       },
       screens: {
         "3xl": "2160px",
