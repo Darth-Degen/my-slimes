@@ -1,3 +1,7 @@
+export type ReturnedFundsBalances = {
+  usdc: number;
+  sol: number;
+};
 export interface Country {
   name: string;
   code: string;

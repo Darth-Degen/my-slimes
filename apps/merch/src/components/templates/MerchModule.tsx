@@ -31,6 +31,7 @@ import {
   ShippingInfo,
   ShippingCart,
   Quantity,
+  ReturnedFundsBalances,
 } from "@merch-types";
 import axios from "axios";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -144,7 +145,7 @@ const MerchModule: FC<Props> = (props: Props) => {
         ? process.env.devEditionName
         : process.env.editionName;
 
-      // console.log("mint info ", editionName, editionUpdateAuthority);
+      console.log("mint info ", editionName, editionUpdateAuthority);
       //fetch metadata
       const _nfts: (Nft | Sft | SftWithToken | NftWithToken)[] = [];
       await Promise.all(
@@ -153,7 +154,7 @@ const MerchModule: FC<Props> = (props: Props) => {
           //fetch metadata
           if (
             token?.updateAuthorityAddress?.toBase58() ===
-            editionUpdateAuthority &&
+              editionUpdateAuthority &&
             token?.name === editionName
           ) {
             //@ts-ignore
@@ -420,10 +421,6 @@ const MerchModule: FC<Props> = (props: Props) => {
     setShippingFee(0);
   }, []);
 
-  useEffect(() => {
-    getUserFunds(connection, publicKey);
-  });
-
   //empty state on modal close
   useEffect(() => {
     if (!showStore) {
@@ -492,6 +489,22 @@ const MerchModule: FC<Props> = (props: Props) => {
     fetchSolanaToken();
   }, [fetchSolanaToken]);
 
+  //check wallet balance
+  const fetchUserFunds = async (): Promise<
+    string | ReturnedFundsBalances | undefined
+  > => {
+    console.log("fetch funds step ", step);
+    if (!connection || !publicKey) return;
+
+    const _funds = await getUserFunds(connection, publicKey);
+    console.log("_funds ", _funds);
+
+    return _funds;
+  };
+  // useEffect(() => {
+  //   fetchUserFunds();
+  // }, [fetchUserFunds]);
+
   return (
     <StoreContext.Provider value={value}>
       {children}
@@ -511,6 +524,7 @@ const MerchModule: FC<Props> = (props: Props) => {
             shippingSession={shippingSession}
             solPrice={solPrice}
             getNfts={getNfts}
+            fetchUserFunds={fetchUserFunds}
           />
         )}
       </AnimatePresence>

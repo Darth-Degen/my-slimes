@@ -6,7 +6,7 @@ import {
   ShippingForm,
   ShippingDetails,
 } from "@merch-components";
-import { Merch, ShippingInfo } from "@merch-types";
+import { Merch, ReturnedFundsBalances, ShippingInfo } from "@merch-types";
 import toast from "react-hot-toast";
 import { fastExitAnimation } from "@merch-constants";
 
@@ -22,6 +22,7 @@ interface Props {
   shippingFee: number;
   solPrice: number;
   getNfts: () => Promise<void>;
+  placeOrder: () => void;
 }
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const Checkout: FC<Props> = (props: Props) => {
@@ -36,6 +37,7 @@ const Checkout: FC<Props> = (props: Props) => {
     shippingFee,
     solPrice,
     getNfts,
+    placeOrder,
   } = props;
 
   //TODO: what id shipping fee
@@ -121,7 +123,9 @@ const Checkout: FC<Props> = (props: Props) => {
           <div className="w-full xl:w-1/2 lg:min-w-[580px] xl:min-w-[650px] flex flex-col md:flex-row justify-between px-8 py-3 bg-white font-neuebit-bold uppercase text-4xl text-m-mid-gray">
             <p>total</p>
             <p>
-              {calculateRacks()} racks {step > 3 && "+ SOL"}
+              {calculateRacks()} racks{" "}
+              {step > 3 &&
+                ` + ${Number((shippingFee / solPrice).toFixed(2))}  SOL`}
             </p>
           </div>
         </div>
@@ -141,7 +145,11 @@ const Checkout: FC<Props> = (props: Props) => {
             />
           )}
           {step > 3 && (
-            <ShippingDetails setStep={setStep} shipping={shipping} />
+            <ShippingDetails
+              setStep={setStep}
+              shipping={shipping}
+              placeOrder={placeOrder}
+            />
           )}
         </AnimatePresence>
       </div>

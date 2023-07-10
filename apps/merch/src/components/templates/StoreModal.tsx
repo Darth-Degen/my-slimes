@@ -7,7 +7,13 @@ import {
   Footer,
 } from "@merch-components";
 import { StoreContext, merch } from "@merch-constants";
-import { Merch, Quantity, ShippingInfo, ShippingSession } from "@merch-types";
+import {
+  Merch,
+  Quantity,
+  ReturnedFundsBalances,
+  ShippingInfo,
+  ShippingSession,
+} from "@merch-types";
 import {
   Dispatch,
   FC,
@@ -41,6 +47,7 @@ interface Props {
   // transactPayment: () => Promise<string>;
   solPrice: number;
   getNfts: () => Promise<void>;
+  fetchUserFunds: () => Promise<string | ReturnedFundsBalances | undefined>;
 }
 const StoreModal: FC<Props> = (props: Props) => {
   const {
@@ -57,6 +64,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     // transactPayment,
     solPrice,
     getNfts,
+    fetchUserFunds,
   } = props;
   const {
     showStore,
@@ -129,7 +137,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     await getQuantities();
     cartDebouncer(item, toastId);
   };
-  atMerchItemCapacity;
+
   //open cart
   const handleCartClick = (): void => {
     if (cart.length === 0) {
@@ -144,14 +152,23 @@ const StoreModal: FC<Props> = (props: Props) => {
     setStep(1);
   };
 
-  // const debounceWalletModal = debounce((value) => setVisible(value), 1500);
-  // //unmount debounce
-  // useEffect(() => {
-  //   return () => {
-  //     debounceWalletModal.cancel();
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const placeOrder = async () => {
+    //TODO: verify funds in wallet
+    const toastId = toast.loading("verifying funds");
+    const _funds = (await fetchUserFunds()) as ReturnedFundsBalances;
+    if (typeof _funds === undefined) {
+      toast.error("Error verifying funds", { id: toastId });
+      return;
+    }
+
+    if (Number((shippingFee / solPrice).toFixed(2)) > _funds?.sol) {
+      toast.error(`Not enough SOL`, { id: toastId });
+      return;
+    } else {
+      toast.success("Verified", { id: toastId });
+      setStep(5);
+    }
+  };
 
   //reset selected item
   useEffect(() => {
@@ -222,6 +239,7 @@ const StoreModal: FC<Props> = (props: Props) => {
             shippingFee={shippingFee}
             solPrice={solPrice}
             getNfts={getNfts}
+            placeOrder={placeOrder}
           />
         )}
         <Footer step={step} />

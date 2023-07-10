@@ -8,11 +8,12 @@ import toast from "react-hot-toast";
 interface Props {
   shipping: ShippingInfo;
   setStep: (value: number) => void;
+  placeOrder: () => void;
 }
 
 //step 2 = cart, step 3 = shipping info, step 4 = review
 const ShippingForm: FC<Props> = (props: Props) => {
-  const { setStep, shipping } = props;
+  const { setStep, shipping, placeOrder } = props;
 
   return (
     <motion.div
@@ -37,7 +38,7 @@ const ShippingForm: FC<Props> = (props: Props) => {
       <div className="flex flex-col">
         <button
           className="h-12 w-60 bg-m-green rounded-full uppercase font-neuebit-bold text-xl text-white pt-0.5 tracking-wide mt-3.5"
-          onClick={() => setStep(5)}
+          onClick={() => placeOrder()}
         >
           place Order
         </button>
