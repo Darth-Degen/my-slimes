@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import {
   CartActions,
   CheckoutCart,
   ShippingForm,
   ShippingDetails,
 } from "@merch-components";
-import { Merch, ReturnedFundsBalances, ShippingInfo } from "@merch-types";
+import { Merch, ShippingInfo } from "@merch-types";
 import toast from "react-hot-toast";
 import { fastExitAnimation } from "@merch-constants";
 

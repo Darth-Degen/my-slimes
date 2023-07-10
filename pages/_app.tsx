@@ -17,7 +17,6 @@ import {
   SolletWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import { clusterApiUrl } from "@solana/web3.js";
 import { useMemo } from "react";
 import { Toaster } from "react-hot-toast";
 // Default styles that can be overridden by your app

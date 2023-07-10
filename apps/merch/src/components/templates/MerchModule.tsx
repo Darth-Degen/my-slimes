@@ -25,7 +25,6 @@ import {
 } from "@merch-helpers";
 import {
   Merch,
-  Response,
   ResponseType,
   PreSession,
   ShippingSession,
@@ -34,17 +33,9 @@ import {
   Quantity,
   ReturnedFundsBalances,
 } from "@merch-types";
-import axios from "axios";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import toast from "react-hot-toast";
-import {
-  Metaplex,
-  Nft,
-  NftWithToken,
-  Sft,
-  SftWithToken,
-} from "@metaplex-foundation/js";
-import { PublicKey } from "@solana/web3.js";
+import { Nft, NftWithToken, Sft, SftWithToken } from "@metaplex-foundation/js";
 import * as slimesPayment from "src/lib/slimes-payment";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWindowSize } from "@merch-hooks";
@@ -130,7 +121,7 @@ const MerchModule: FC<Props> = (props: Props) => {
     if (!connection || !publicKey) {
       return;
     }
-    if (step !== 0 && step !== 2) {
+    if (step !== 0 && step !== 2 && step !== 4) {
       return;
     }
     try {
@@ -218,8 +209,6 @@ const MerchModule: FC<Props> = (props: Props) => {
   useEffect(() => {
     handleSession();
   }, [handleSession]);
-
-  console.log("quantities ", quantities);
 
   //update user session (cart + shipping + stage)
   const updateSessionCart = async (racks: number): Promise<void> => {

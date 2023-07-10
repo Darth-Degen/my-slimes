@@ -1,9 +1,7 @@
 import { motion } from "framer-motion";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { midExitAnimation, countries } from "@merch-constants";
-import { TextInput, Dropdown } from "@merch-components";
-import { Country, ShippingInfo } from "@merch-types";
-import toast from "react-hot-toast";
+import { FC } from "react";
+import { midExitAnimation } from "@merch-constants";
+import { ShippingInfo } from "@merch-types";
 
 interface Props {
   shipping: ShippingInfo;

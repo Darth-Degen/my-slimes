@@ -6,7 +6,7 @@ import {
   Header,
   Footer,
 } from "@merch-components";
-import { StoreContext, merch } from "@merch-constants";
+import { StoreContext } from "@merch-constants";
 import {
   Merch,
   Quantity,
@@ -18,20 +18,18 @@ import {
   Dispatch,
   FC,
   SetStateAction,
-  useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 import debounce from "lodash.debounce";
 
 import ExitIcon from "../../../images/icons/close.svg";
-import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Props {
   cart: Merch[];
@@ -88,6 +86,7 @@ const StoreModal: FC<Props> = (props: Props) => {
     return () => {
       cartDebouncer.cancel();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //solana wallet
@@ -231,7 +230,7 @@ const StoreModal: FC<Props> = (props: Props) => {
             updateCart={setCart}
             shipping={shipping}
             setShipping={setShipping}
-            racks={nfts.length} //TODO: hardcode for testing
+            racks={nfts.length}
             shippingFee={shippingFee}
             solPrice={solPrice}
             getNfts={getNfts}

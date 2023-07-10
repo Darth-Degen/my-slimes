@@ -2,7 +2,7 @@ import { Modal } from "@merch-components";
 import { StoreContext, midExitAnimation } from "@merch-constants";
 import { Dispatch, FC, SetStateAction, useContext, useState } from "react";
 import Image from "next/image";
-import { Merch, ShippingSession } from "@merch-types";
+import { Merch } from "@merch-types";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import OrderIcon from "../../../images/icons/close.svg";
