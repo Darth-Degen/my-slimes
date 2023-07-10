@@ -114,10 +114,10 @@ const StoreModal: FC<Props> = (props: Props) => {
   const isCartLoadingRef = useRef<boolean>(false);
   const addToCart = async (item: Merch) => {
     //TODO: uncomment for shipping
-    // if (shippingSession && shippingSession?.stage_completed === "2") {
-    //   setShowWarningModal(true);
-    //   return;
-    // }
+    if (shippingSession && shippingSession?.stage_completed === "2") {
+      setShowWarningModal(true);
+      return;
+    }
     if (isCartLoadingRef.current) return;
     if (!publicKey || !connected) {
       setVisible(true);
