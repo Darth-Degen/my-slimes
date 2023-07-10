@@ -155,6 +155,8 @@ const StoreModal: FC<Props> = (props: Props) => {
     const _funds = (await fetchUserFunds()) as ReturnedFundsBalances;
     if (typeof _funds === undefined || !_funds?.sol) {
       toast.error("Error verifying shipping funds");
+      setVisible(true);
+      return;
     }
 
     if (Number((shippingFee / solPrice).toFixed(2)) > _funds?.sol) {
