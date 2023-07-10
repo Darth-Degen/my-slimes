@@ -55,7 +55,7 @@ const OrderModal: FC<Props> = (props: Props) => {
     <Modal
       show={showOrderModal}
       onClick={() => {
-        setStep(0);
+        setStep(7);
       }}
       className="w-[80%] lg:w-2/3  3xl:w-1/2 h-[93%] xl:h-[800px]"
     >
@@ -131,11 +131,10 @@ const OrderModal: FC<Props> = (props: Props) => {
                   <>
                     <p className="text-m-red text-2xl">
                       since your order is over {txDividend} racks
-                    </p>
-                    <p className="text-m-red text-2xl -mt-8">
+                      <br />
                       you will need to confirm (
                       {Math.ceil(calculateRacks() / txDividend)}) Transactions{" "}
-                      <br />
+                      <br /> this will take a few minutes
                     </p>
                   </>
                 ) : (

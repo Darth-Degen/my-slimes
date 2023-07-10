@@ -111,7 +111,7 @@ const MerchModule: FC<Props> = (props: Props) => {
   const { setVisible } = useWalletModal();
   const { connection } = useConnection();
 
-  const dividend = mobile() ? 10 : 26;
+  const dividend = mobile() ? 9 : 2;
 
   //cost of cart in racks
   const calculateRacks = (): number => {

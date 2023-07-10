@@ -78,7 +78,7 @@ const Checkout: FC<Props> = (props: Props) => {
     }
     setStep(3);
   };
-
+  // console.log("step ", step);
   return (
     <div className="flex flex-col gap-3 lg:h-[76%] w-full px-12 mb-5 self-start z-10">
       {/* title */}
@@ -88,7 +88,11 @@ const Checkout: FC<Props> = (props: Props) => {
         </h3>
       </div>
       {/* row */}
-      <div className="flex flex-col xl:flex-row gap-48 lg:gap-10">
+      <div
+        className={`flex flex-col xl:flex-row h-dull ${
+          step === 4 ? "gap-48" : "gap-20"
+        } lg:gap-10`}
+      >
         {/* left side */}
         <div className="xl:h-[55vh] max-h-[550px] flex flex-col items-center xl:items-start justify-start gap-3">
           <CheckoutCart cart={cart} updateCart={updateCart} step={step} />
