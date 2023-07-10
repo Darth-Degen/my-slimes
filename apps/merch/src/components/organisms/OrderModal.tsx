@@ -55,7 +55,7 @@ const OrderModal: FC<Props> = (props: Props) => {
     <Modal
       show={showOrderModal}
       onClick={() => {
-        setStep(7);
+        setStep(4);
       }}
       className="w-[80%] lg:w-2/3  3xl:w-1/2 h-[93%] xl:h-[800px]"
     >
