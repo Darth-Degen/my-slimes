@@ -106,10 +106,10 @@ const StoreModal: FC<Props> = (props: Props) => {
   const isCartLoadingRef = useRef<boolean>(false);
   const addToCart = async (item: Merch) => {
     //TODO: uncomment for shipping
-    // if (shippingSession && shippingSession?.stage_completed === "2") {
-    //   setShowWarningModal(true);
-    //   return;
-    // }
+    if (shippingSession && shippingSession?.stage_completed === "2") {
+      setShowWarningModal(true);
+      return;
+    }
     if (isCartLoadingRef.current) return;
     if (!publicKey || !connected) {
       setVisible(true);
@@ -164,7 +164,7 @@ const StoreModal: FC<Props> = (props: Props) => {
       onClick={() => {
         setShowExitModal(true);
       }}
-      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] px-4 py-2 z-50"
+      className="w-[90%] lg:w-5/6 xl:w-[1285px] 3xl:w-1/2 h-[93%] xl:h-[800px] lg:px-4 py-2 z-50"
     >
       <div
         className={`flex flex-col items-center justify-between w-full text-3xl ${

@@ -80,7 +80,7 @@ const Checkout: FC<Props> = (props: Props) => {
   };
   // console.log("step ", step);
   return (
-    <div className="flex flex-col gap-3 lg:h-[76%] w-full px-12 mb-5 self-start z-10">
+    <div className="flex flex-col gap-3 lg:h-[76%] w-full px-6 lg:px-12 mb-5 self-start z-10">
       {/* title */}
       <div className="flex flex-col gap-1 text-m-mid-gray">
         <h3 className="font-neuebit-bold uppercase text-4xl">
