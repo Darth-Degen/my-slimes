@@ -47,6 +47,7 @@ import * as slimesPayment from "src/lib/slimes-payment";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWindowSize } from "@merch-hooks";
 import mobile from "is-mobile";
+import { getUserFunds } from "../../helpers/getUserFunds";
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
@@ -146,7 +147,7 @@ const MerchModule: FC<Props> = (props: Props) => {
           //fetch metadata
           if (
             token?.updateAuthorityAddress?.toBase58() ===
-              editionUpdateAuthority &&
+            editionUpdateAuthority &&
             token?.name === editionName
           ) {
             //@ts-ignore
@@ -412,6 +413,10 @@ const MerchModule: FC<Props> = (props: Props) => {
     setCart([]);
     setShippingFee(0);
   }, []);
+
+  useEffect(() => {
+    getUserFunds(connection, publicKey);
+  });
 
   //empty state on modal close
   useEffect(() => {
