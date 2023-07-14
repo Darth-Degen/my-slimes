@@ -27,11 +27,11 @@ const Home: NextPage = () => {
 
   return (
     <PageLayout headerType={mobileView ? "absolute" : "scroll"} assets={assets}>
-      <BuyRacksView
+      {/* <BuyRacksView
         setIsInView={setIsRacksInView}
         id={pageIDs[1]}
         setCurrentPage={setCurrentPage}
-      />
+      /> */}
     </PageLayout>
   );
 };
