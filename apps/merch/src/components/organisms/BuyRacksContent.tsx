@@ -241,7 +241,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
     >
       <div className="py-20" />
       <div className="sticky lg:top-[10%] xl:top-[15%] justify-center flex flex-col gap-0 w-full items-center">
-        <div className="absolute z-[50] -top-20 lg:-top-10 left-1/2 lg:left-auto lg:right-0 -translate-x-1/2">
+        {/* <div className="absolute z-[50] -top-20 lg:-top-10 left-1/2 lg:left-auto lg:right-0 -translate-x-1/2">
           <WalletMultiButton
             startIcon={undefined}
             className="!text-ait-black !flex !justify-center !px-0 !h-14 !w-[150px] lg:!w-[170px] !text-2xl !rounded-full !font-neuebit-bold !bg-[#E8E8E8]"
@@ -252,7 +252,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                 publicKey.toBase58().slice(-4)
               : "Connect"}
           </WalletMultiButton>
-        </div>
+        </div> */}
         <div
           className="flex flex-col gap-4 lg:flex-row justify-center items-center rounded-[1.75rem] lg:rounded-full h-auto lg:h-[75vh] w-[98%] md:w-[90%] lg:w-[95%] xl:w-[90%] bg-ait-black overflow-hidden"
           ref={innerRef}
@@ -393,12 +393,19 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                   className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 
                   py-4 px-8 bg-white flex justify-center items-center"
                 >
-                  <div
+                  {/* <div
                     className="underline text-[#2764FF] font-neuebit-bold text-3xl lg:text-5xl cursor-pointer"
                     onClick={() => setShowStore(true)}
+                  > */}
+                  <a
+                    href="https://allintime.xyz/"
+                    rel="noreferrer"
+                    target="_blank"
+                    className="underline text-[#2764FF] font-neuebit-bold text-3xl lg:text-5xl cursor-pointer"
                   >
                     SHOP NOW
-                  </div>
+                  </a>
+                  {/* </div> */}
                 </div>
                 <div
                   className="absolute bottom-20 md:bottom-4 left-1/2 -translate-x-1/2 text-m-ait-green
