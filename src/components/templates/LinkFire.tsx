@@ -20,13 +20,13 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
           <div className="col-span-2 lg:hidden w-full h-full overflow-hidden rounded-xl flex justify-center self-center">
             <MobileLink
               setAssets={setAssets}
-              href="mint"
+              href="https://allintime.xyz/"
               image={`${process.env.NEXT_PUBLIC_CDN_URL}/images/linkfire/mint.png`}
               width={4008 / 3.61}
               height={1002 / 3.61}
               alt="slimes family gallery link"
               index={6}
-              isInternal
+              // isInternal
             />
           </div>
           <div className="col-span-1 w-full h-full overflow-hidden rounded-xl">

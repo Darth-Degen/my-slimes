@@ -106,7 +106,7 @@ const Footer: FC<Props> = (props: Props) => {
           </a>
           <a
             className="cursor-pointer"
-            href="https://discord.gg/HXQ23Djjvw"
+            href="https://discord.gg/scumsol"
             target="_blank"
             rel="noreferrer"
           >

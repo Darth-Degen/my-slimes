@@ -27,7 +27,7 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
             className="flex flex-col items-center justify-center gap-2"
             onClick={() => {
               window.open(
-                "https://discord.gg/9fZqQ2p9",
+                "https://discord.gg/scumsol",
                 "_blank",
                 "noopener noreferrer"
               );
