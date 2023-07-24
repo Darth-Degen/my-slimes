@@ -1,7 +1,11 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { enterAnimation, smallClickAnimation } from "@constants";
+import {
+  midExitAnimation,
+  fastExitAnimation,
+  smallClickAnimation,
+} from "@constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -145,7 +149,7 @@ const YourSlimes: FC<Props> = () => {
   return (
     <motion.div
       className="relative w-full max-w-[1200px] mx-auto overflow-x-hidden"
-      {...enterAnimation}
+      {...midExitAnimation}
     >
       {/* <Scrollbar> */}
       <div
@@ -161,7 +165,7 @@ const YourSlimes: FC<Props> = () => {
                   <motion.div
                     className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
                     key={"full-res"}
-                    {...enterAnimation}
+                    {...fastExitAnimation}
                   >
                     <Image
                       src={
@@ -186,7 +190,7 @@ const YourSlimes: FC<Props> = () => {
                   <motion.div
                     className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
                     key={"full-res-1"}
-                    {...enterAnimation}
+                    {...fastExitAnimation}
                   >
                     <Image
                       src={
@@ -210,7 +214,7 @@ const YourSlimes: FC<Props> = () => {
                 <motion.div
                   className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
                   key={1}
-                  {...enterAnimation}
+                  {...fastExitAnimation}
                 >
                   <Image
                     src={
@@ -234,7 +238,7 @@ const YourSlimes: FC<Props> = () => {
                 <motion.div
                   className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
                   key={2}
-                  {...enterAnimation}
+                  {...fastExitAnimation}
                 >
                   <Image
                     src={
@@ -258,7 +262,7 @@ const YourSlimes: FC<Props> = () => {
                 <motion.div
                   className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
                   key={2}
-                  {...enterAnimation}
+                  {...fastExitAnimation}
                 >
                   <Image
                     src={
@@ -282,7 +286,7 @@ const YourSlimes: FC<Props> = () => {
                 <motion.div
                   className="relative flex items-center justify-center w-full lg:h-[500px] lg:w-[500px] lg:mr-6"
                   key={3}
-                  {...enterAnimation}
+                  {...fastExitAnimation}
                 >
                   <Image
                     src={
