@@ -228,14 +228,14 @@ export const collection: Collection[] = [
     topValue: -40,
     mintAddress: "CK1EsPaAHEsEadDAbzJsz5cGRKPU6Ejc1BuNcviih6Br",
   },
-  // {
-  //   id: 28,
-  //   name: "Ernie",
-  //   tag: "ernie",
-  //   color: "#FA9764",
-  //   topValue: -40,
-  //   mintAddress: "A8tfprbYBR6QMDmvfDDUdXVzc75tc2Kc7vteUetx2Acm",
-  // },
+  {
+    id: 28,
+    name: "Ernie",
+    tag: "ernie",
+    color: "#FA9764",
+    topValue: -40,
+    mintAddress: "25xQAcbdiSgCx8TUFM7Gxi8kqshvJfnxTrhvvfbFBpEL",
+  },
   // {
   //   id:26,
   //   name: "Dark Kai",
