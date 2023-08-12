@@ -139,11 +139,6 @@ const YourSlimes: FC<Props> = () => {
 
   useEffect(() => {
     imageToggleRef.current += 1;
-    console.log(
-      "imageToggleRef ",
-      imageToggleRef.current,
-      imageToggleRef.current % 2
-    );
   }, [featuredImage]);
 
   return (
