@@ -123,7 +123,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
   };
   const galleryVariants = {
     hidden: {
-      opacity: animateRef.current < 2 ? 0 : 1,
+      opacity: animateRef.current < 1 ? 0 : 1,
       // opacity: 0,
       // x: -150
     },
@@ -138,7 +138,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
   };
   const imageVariants = {
     hidden: {
-      opacity: animateRef.current < 2 ? 0 : 1,
+      opacity: animateRef.current < 1 ? 0 : 1,
       // opacity: 0,
       // x: -150,
     }, // Starting position outside the container
