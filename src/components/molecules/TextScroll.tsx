@@ -42,11 +42,6 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
       [1, 0.3, 0],
       [0, 1, 1]
     );
-    // const y: MotionValue<number> = useTransform(
-    //   scrollY,
-    //   [startY - winHeight, startY + winHeight + index * winHeight],
-    //   [startY, topPosition]
-    // );
 
     const isInView = useInView(divRef);
     const didAnimateRef = useRef<boolean>();
@@ -54,30 +49,21 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
       if (isInView) didAnimateRef.current = true;
     }, [isInView]);
 
-    const startY = winHeight * 1.8;
+    const startY = winHeight * 0.75;
 
     const y: MotionValue<number> = useTransform(
       scrollY,
       [
-        startY - (is3XL ? winHeight * 2 : winHeight),
+        startY - (is3XL ? winHeight * 5 : winHeight),
+        // startY,
         startY +
-          winHeight * 0.4 +
-          index * (is3XL ? winHeight * 0.5 : winHeight) +
-          index * (index === 2 ? 0 : 0),
+          // +
+          //   winHeight * 0.4 +
+          //   index * (is3XL ? winHeight * 0.5 : winHeight),
+          index * (index === 2 ? -200 : -400),
       ],
       [startY, topPosition]
     );
-
-    // const y: MotionValue<number> = useTransform(
-    //   scrollY,
-    //   [startY - winHeight, startY + winHeight + index * winHeight],
-    //   [startY, topPosition]
-    // );
-
-    // useMotionValueEvent(scrollY, "change", (latest) => {
-    //   if (content.title === "culture")
-    //     console.log("TextScroll ", latest, startY);
-    // });
 
     return (
       <motion.div
@@ -85,7 +71,6 @@ const TextScroll: FC<TextProps> = forwardRef<HTMLDivElement, TextProps>(
           isSticky ? "sticky top-[18%] 2xl:top-[10%] " : ""
         }`}
         style={{
-          // opacity,
           y,
         }}
         ref={divRef}

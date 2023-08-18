@@ -21,7 +21,7 @@ import {
 import { TextScroll } from "@components";
 import Image from "next/image";
 import { useWindowSize, useScrollDirection } from "@hooks";
-import { slideUp, whatContent } from "@constants";
+import { enterAnimation, slideUp, whatContent } from "@constants";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
   id: string;
@@ -88,53 +88,61 @@ const WhatView: FC<Props> = (props: Props) => {
 
   const animate = () => {
     // return slideUp(isInView && scrollDirection === "down", 500, 1, 0.5);
-    return slideUp(isInView, 1000, 1.25, 0.5);
+    return slideUp(isInView, 1200, 1.25, 0.5);
   };
-
-  // useEffect(() => {
-  //   if (isInView) didViewRef.current = true;
-  // }, [isInView]);
 
   //one time animation
   const animateRef = useRef<number>(0);
+  const isInViewRef = useRef<boolean>(false);
   useEffect(() => {
-    if (isInView) animateRef.current += 1;
+    if (isInView && isInViewRef.current === false) {
+      animateRef.current += 1;
+    }
+    isInViewRef.current = isInView;
+    console.log("isInView ", animateRef.current, isInView, isInViewRef.current);
   }, [isInView]);
+
+  // console.log("What View ", animateRef.current);
 
   return (
     <div
-      className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14 lg:p-10"
+      className="relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 mt-14 lg:p-10"
       id={id}
       ref={ref}
     >
-      {animateRef.current > 1 ? (
-        <div className="top-[5%] 2xl:top-[10%] flex flex-col lg:flex-row items-center lg:items-start lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14">
-          <div className="hidden lg:block h-full z-0 top-[4%] 2xl:top-[10%]">
+      {animateRef.current > 10 ? (
+        <motion.div
+          className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14"
+          // {...enterAnimation}
+        >
+          <div className="hidden lg:block h-full z-0 ">
             <Image
-              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${whatContent[2].src}`}
+              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${whatContent[1].src}`}
               height={height}
               width={width}
               alt={whatContent[2].title}
               priority
             />
           </div>
-          <div className="flex flex-col justify-around items-start gap-6 xl:gap-10 top-[5%] 2xl:top-[10%] pt-20 2xl:pt-0">
+          <div className="flex flex-col justify-around items-center gap-6 xl:gap-10">
             {whatContent.map((item, index) => (
               <div
                 key={index}
                 className={`flex flex-col gap-4 items-center lg:items-start `}
               >
-                <p className="text-xl sm:text-3xl lg:text-6xl 2xl:text-9xl 3xl:text-[10rem] 4xl:text-[12rem] font-black uppercase">
+                <p className="text-xl sm:text-3xl lg:text-6xl 2xl:text-9xl  font-black uppercase">
                   {item.title}
                 </p>
                 <div className="text-xs xl:text-sm flex flex-col md:flex-row items-center gap-4 lg:gap-10 lg:ml-6 pt-2">
-                  <p className="w-auto max-w-[800px]">{item.textOne}</p>
+                  <p className="w-auto max-w-[800px] text-start">
+                    {item.textOne}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
-          {/* <div className="pb-[1000px]" /> */}
-        </div>
+          {/* <div className="pb-[500px]" /> */}
+        </motion.div>
       ) : (
         <>
           <motion.div className="relative" {...animate()}>
@@ -168,7 +176,6 @@ const WhatView: FC<Props> = (props: Props) => {
                   </ImageAnimation>
                 );
               })}
-              {/* <div className="pb-[2950px] 3xl:pb-[3900px]" /> */}
               <div className="pb-[1000px]" />
             </div>
           </motion.div>
@@ -216,64 +223,36 @@ const ImageAnimation: FC<ImageProps> = forwardRef<HTMLDivElement, ImageProps>(
     const { scrollY } = useScroll({
       target: imgRef,
     });
-
-    // const y: MotionValue<number> = useTransform(
-    //   scrollY,
-    //   [startTopPosition, 3000],
-    //   [1000, topPosition]
-    // );
-
     const [winWidth, winHeight] = useWindowSize();
     const is3XL = winWidth >= 2160;
-    const startY = winHeight * 1.4;
+
+    // const startY = winHeight * 1.4;
+    const startY = winHeight * 0.75;
     const y: MotionValue<number> = useTransform(
       scrollY,
       [
         startY - (is3XL ? winHeight * 1.1 : winHeight),
         startY +
           winHeight +
-          index * (is3XL ? winHeight * 0.75 : winHeight) +
-          index * (index === 0 ? 800 : index === 1 ? -200 : -200),
+          // +
+          // index * (is3XL ? winHeight * 0.75 : winHeight)
+          index >
+        0
+          ? index
+          : 1 * (index === 0 ? -500 : index === 1 ? 800 : -200),
       ],
       [startY, topPosition]
     );
-
-    // const opacity: MotionValue<number> = useTransform(
-    //   scrollYProgress,
-    //   [1, 0],
-    //   [index === 0 ? 1 : 0, 1]
-    // );
-    // const imageScale = useTransform(scrollYProgress, [0.5, 1], [1, 0]);
-    // const imageClip = useTransform(
-    //   scrollYProgress,
-    //   [0, 0.5, 1],
-    //   ["0%, 100%", "0%, 50%", "0%, 0%"]
-    // );
-    // const clipPath = useTransform(
-    //   scrollY,
-    //   [0, 400],
-    //   [
-    //     "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-    //     "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%)",
-    //   ]
-    // );
-
-    // useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    //   console.log("scrollYProgress ", latest);
-    // });
 
     return (
       <motion.div
         className={`hidden xl:block sticky top-[8%] 2xl:top-[10%] ${className} `}
         style={{
           y,
-          // opacity,
           width: "100%",
           height: "100%",
           objectFit: "cover",
           position: "sticky",
-          // scale: imageScale,
-          // clipPath,
         }}
         ref={imgRef}
       >
