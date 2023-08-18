@@ -85,10 +85,14 @@ const WhatView: FC<Props> = (props: Props) => {
 
     return index * _base;
   };
-
+  // console.log("0 ", scrollDirection);
   const animate = () => {
-    // return slideUp(isInView && scrollDirection === "down", 500, 1, 0.5);
-    return slideUp(isInView, 1200, 1.25, 0.5);
+    // console.log(" 1", scrollDirection, scrollDirection === "up");
+    if (scrollDirection === "up") {
+      return slideUp(isInView, -10, 0, 0);
+    }
+    // return slideUp(isInView && scrollDirection === "down", 500, 1, 0);
+    return slideUp(isInView, 800, 1.25, 0, 1);
   };
 
   //one time animation
@@ -99,7 +103,7 @@ const WhatView: FC<Props> = (props: Props) => {
       animateRef.current += 1;
     }
     isInViewRef.current = isInView;
-    console.log("isInView ", animateRef.current, isInView, isInViewRef.current);
+    // console.log("isInView ", animateRef.current, isInView, isInViewRef.current);
   }, [isInView]);
 
   // console.log("What View ", animateRef.current);
@@ -110,7 +114,7 @@ const WhatView: FC<Props> = (props: Props) => {
       id={id}
       ref={ref}
     >
-      {animateRef.current > 10 ? (
+      {animateRef.current > 60 ? (
         <motion.div
           className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-center bg-custom-primary gap-10 2xl:gap-20 w-full p-8 pt-14"
           // {...enterAnimation}
@@ -176,7 +180,7 @@ const WhatView: FC<Props> = (props: Props) => {
                   </ImageAnimation>
                 );
               })}
-              <div className="pb-[1000px]" />
+              <div className="pb-[800px]" />
             </div>
           </motion.div>
 
@@ -193,8 +197,8 @@ const WhatView: FC<Props> = (props: Props) => {
                 index={index}
               />
             ))}
-            {/* <div className="pb-[3500px] 3xl:pb-[4400px]" /> */}
-            <div className="pb-[1850px] 2xl:pb-[1700px]" />
+            {/* <div className="pb-[3500px] 3xl:pb-[4400px]" />  2xl:pb-[1700px]*/}
+            <div className="pb-[1650px] 2xl:pb-[1500px] " />
           </motion.div>
         </>
       )}

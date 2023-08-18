@@ -200,12 +200,15 @@ const LandingView: FC<Props> = (props: Props) => {
 
       {!mobileView && (
         <>
-          <div
+          <motion.div
             className="uppercase font-black text-lg pb-6 3xl:pb-20"
             ref={innerRef}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ delay: 3, duration: 0.75, ease: "easeInOut" }}
           >
             scroll
-          </div>
+          </motion.div>
           <div className="hidden lg:flex justify-between w-full pb-4 px-4 sm:px-6">
             <div className="w-1/3 uppercase">the whole squad here</div>
             <div className="w-1/3 uppercase flex justify-center">and</div>
