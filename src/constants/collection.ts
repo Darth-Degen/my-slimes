@@ -252,11 +252,36 @@ export const collection: Collection[] = [
     topValue: 0,
     mintAddress: "DQSHtB8yr9PuDKbJsM7Bcb6Nd6kfpYjsDrHPNzeR5Dbi",
   },
+  {
+    id:31,
+    name: "Cuchillo",
+    tag: "cuchillo",
+    color: "#E4594E",
+    topValue: 0,
+    mintAddress:"NeP7eVJf84CnWWgRRKX4p9T2LNQryRcun3d3KBcqLQ1"
+  },
+  {
+    id:32,
+    name: "El Niño",
+    tag: "el-niño",
+    color: "#D79CF8",
+    topValue: 0,
+    mintAddress:"F3Yr87EKnFvPB9KuDMNNmHJDpRyz2tkYQswytEMnnoLo"
+  },
+  {
+    id:33,
+    name: "Cucuy",
+    tag: "cucuy",
+    color: "#8596A5",
+    topValue: 0,
+    mintAddress:"bevDnB96DULZBdtQAkHMqR1X1hAkrXSHiRkXEhNDdLa"
+  },
   // {
   //   id:,
   //   name: "",
   //   tag: "",
   //   color: "#",
   //   topValue: 0,
+  //   mintAddress : ""
   // },
 ];
