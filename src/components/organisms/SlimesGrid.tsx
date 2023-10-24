@@ -81,7 +81,7 @@ const SlimesGrid: FC<Props> = ({
                 <Image
                   src={
                     slime.image ||
-                    `${process.env.cloudflarestorage}/images/exp/logo-dark.svg`
+                    `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
                   }
                   width={250}
                   height={250}

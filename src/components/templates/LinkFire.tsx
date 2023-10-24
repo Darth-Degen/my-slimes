@@ -21,7 +21,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://allintime.xyz/"
-              image={`${process.env.cloudflarestorage}/images/linkfire/mint.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/mint.png`}
               width={4008 / 3.61}
               height={1002 / 3.61}
               alt="slimes family gallery link"
@@ -33,7 +33,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://exchange.art/series/Slimes/nfts"
-              image={`${process.env.cloudflarestorage}/images/linkfire/slimes_secondary.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/slimes_secondary.png`}
               width={1952 / 4}
               height={1164 / 4}
               alt="slimes secondary marketplace link"
@@ -44,7 +44,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://exchange.art/series/Slimes%20Family%20Collection/nfts"
-              image={`${process.env.cloudflarestorage}/images/linkfire/sfc_secondary.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/sfc_secondary.png`}
               width={1952 / 4}
               height={1164 / 4}
               alt="sfc secondary marketplace link"
@@ -55,7 +55,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://twitter.com/myslimes_"
-              image={`${process.env.cloudflarestorage}/images/linkfire/slimes_twitter.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/slimes_twitter.png`}
               width={1952 / 4}
               height={1164 / 4}
               alt="slimes twitter link"
@@ -66,7 +66,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://twitter.com/scumsol"
-              image={`${process.env.cloudflarestorage}/images/linkfire/scum_twitter.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/scum_twitter.png`}
               width={1952 / 4}
               height={1164 / 4}
               alt="scum twitter link"
@@ -77,7 +77,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://discord.gg/scumsol"
-              image={`${process.env.cloudflarestorage}/images/linkfire/scum_discord.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/scum_discord.png`}
               width={1952 / 4}
               height={1164 / 4}
               alt="scum discord link"
@@ -88,7 +88,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://allintime.xyz/"
-              image={`${process.env.cloudflarestorage}/images/linkfire/allintime.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/allintime.png`}
               width={1952 / 4}
               height={1164 / 4}
               alt="all in time link"
@@ -99,7 +99,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
             <MobileLink
               setAssets={setAssets}
               href="https://aether.so/space/Slimes"
-              image={`${process.env.cloudflarestorage}/images/linkfire/slimes_family_gallery.png`}
+              image={`${process.env.cloudflareStorage}/images/linkfire/slimes_family_gallery.png`}
               width={4008 / 3}
               height={1002 / 3}
               alt="slimes family gallery link"

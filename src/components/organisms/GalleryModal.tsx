@@ -27,7 +27,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = collections[imageId];
-  const mainImage = `${process.env.cloudflarestorage}/images/wallpapers/image/${item.tag}.png`;
+  const mainImage = `${process.env.cloudflareStorage}/images/wallpapers/image/${item.tag}.png`;
   //fetches id from context
   const { galleryModalId } = useContext(ViewContext);
 
@@ -58,7 +58,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
         {/* info */}
         <div className="relative flex flex-col items-center justify-center w-full md:w-1/2 h-full p-10 text-custom-primary ">
           <ImageShimmer
-            src={`${process.env.cloudflarestorage}/images/modal-backsplash.png`}
+            src={`${process.env.cloudflareStorage}/images/modal-backsplash.png`}
             alt="splash"
             width={300}
             height={300}
@@ -88,7 +88,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
                 className="flex flex-col items-center justify-center gap-2"
               >
                 <Image
-                  src={`${process.env.cloudflarestorage}/images/icons/exchangeArt.png`}
+                  src={`${process.env.cloudflareStorage}/images/icons/exchangeArt.png`}
                   alt="exchange art"
                   width={30}
                   height={30}

@@ -61,7 +61,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
     target: parentRef,
   });
 
-  const src = `${process.env.cloudflarestorage}/images/sfc/${item.src}`;
+  const src = `${process.env.cloudflareStorage}/images/sfc/${item.src}`;
   // const isInView = useInView(childRef);
 
   const width = (type: DimensionType): string | number => {

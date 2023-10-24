@@ -29,7 +29,7 @@ const ItemDetail: FC<Props> = (props: Props) => {
     shippingSession,
     setShowWarningModal,
   } = props;
-  const path = `${process.env.cloudflarestorage}/images/merch/${item.id}/`;
+  const path = `${process.env.cloudflareStorage}/images/merch/${item.id}/`;
 
   const [selected, setSelected] = useState<number>(0);
   const [colorDropdown, setColorDropdown] = useState<boolean>(false);

@@ -18,7 +18,7 @@ const StoreItem: FC<Props> = (props: Props) => {
   //TODO: change to true to disable
   const [didHover, setDidHover] = useState<boolean>(false);
 
-  const src = `${process.env.cloudflarestorage}/images/merch/${item.id}/image.png`;
+  const src = `${process.env.cloudflareStorage}/images/merch/${item.id}/image.png`;
 
   const handleAddToCart = (cartItem: Merch) => {
     //set size & color if only one

@@ -13,7 +13,7 @@ const SFCModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = sfc[imageId];
-  const mainImage = `${process.env.cloudflarestorage}/images/sfc/${item.src}`;
+  const mainImage = `${process.env.cloudflareStorage}/images/sfc/${item.src}`;
   //fetches id from context
   const { sfcModalId } = useContext(ViewContext);
 
@@ -52,7 +52,7 @@ const SFCModal: FC<Props> = (props: Props) => {
           <div className="relative">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <ImageShimmer
-                src={`${process.env.cloudflarestorage}/images/modal-backsplash.png`}
+                src={`${process.env.cloudflareStorage}/images/modal-backsplash.png`}
                 alt="splash"
                 width={300}
                 height={300}
@@ -101,7 +101,7 @@ const SFCModal: FC<Props> = (props: Props) => {
               className="flex flex-col items-center justify-center gap-2"
             >
               <Image
-                src={`${process.env.cloudflarestorage}/images/icons/exchangeArt.png`}
+                src={`${process.env.cloudflareStorage}/images/icons/exchangeArt.png`}
                 alt="exchange art"
                 width={35}
                 height={35}

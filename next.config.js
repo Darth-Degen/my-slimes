@@ -34,12 +34,14 @@ const nextConfig = {
     //dev
     devEditionName: "exp edition",
     devEditionUpdateAuthority: "3wP5sQ8E5vkGaWU3FLFX9fXibDjTt56BUGAMP8pe33FX",
-    cloudflarestorage:
+    cloudflareStorage:
       process.env.NODE_ENV === "production"
-        ? "https://pub-04e9733611a446c795c941ee1f33b86a.r2.dev"
+        ? "https://63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com/slimes"
         : "https://pub-04e9733611a446c795c941ee1f33b86a.r2.dev",
-    //"https://63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com/slimes"
     //https://storage.googleapis.com/slimes-assets
+    cloudflareAccessKey: "5c56370d0d5f43b672ad912a9ace06e7",
+    cloudlfareSecretKey:
+      "a83686fcdf878b66ba030f41a27b1da659eb1a4851a3c769d20e882413129084",
   },
 };
 
