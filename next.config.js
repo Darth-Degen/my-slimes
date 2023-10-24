@@ -36,8 +36,9 @@ const nextConfig = {
     devEditionUpdateAuthority: "3wP5sQ8E5vkGaWU3FLFX9fXibDjTt56BUGAMP8pe33FX",
     cloudflarestorage:
       process.env.NODE_ENV === "production"
-        ? "https://63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com/slimes"
+        ? "https://pub-04e9733611a446c795c941ee1f33b86a.r2.dev"
         : "https://pub-04e9733611a446c795c941ee1f33b86a.r2.dev",
+    //"https://63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com/slimes"
     //https://storage.googleapis.com/slimes-assets
   },
 };
