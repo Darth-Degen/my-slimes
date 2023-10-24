@@ -40,7 +40,7 @@ const FriendsView: FC<Props> = (props: Props) => {
         <AnimatePresence mode="wait">
           {isInView && !videoEnded && (
             // <VideoScroll
-            //   src={`${process.env.NEXT_PUBLIC_CDN_URL}/videos/handshake.mp4`}
+            //   src={`${process.env.cloudflarestorage}/videos/handshake.mp4`}
             //   parentRef={parentRef}
             //   paddingBottom={700}
             // />
@@ -56,7 +56,7 @@ const FriendsView: FC<Props> = (props: Props) => {
               {...midExitAnimation}
             >
               <source
-                src={`${process.env.NEXT_PUBLIC_CDN_URL}/videos/handshake.mp4`}
+                src={`${process.env.cloudflarestorage}/videos/handshake.mp4`}
                 type="video/mp4"
               />
             </motion.video>

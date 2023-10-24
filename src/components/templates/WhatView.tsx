@@ -121,7 +121,7 @@ const WhatView: FC<Props> = (props: Props) => {
         >
           <div className="hidden lg:block h-full z-0 ">
             <Image
-              src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${whatContent[1].src}`}
+              src={`${process.env.cloudflarestorage}/images/landing/${whatContent[1].src}`}
               height={height}
               width={width}
               alt={whatContent[2].title}
@@ -161,7 +161,7 @@ const WhatView: FC<Props> = (props: Props) => {
                     index={index}
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/landing/${item.src}`}
+                      src={`${process.env.cloudflarestorage}/images/landing/${item.src}`}
                       height={height}
                       width={width}
                       alt={item.title}

@@ -48,7 +48,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           {item?.color === "white" && item?.id === "tee" ? (
             <motion.div className="" key="im1" {...fastExitAnimation}>
               <Image
-                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image2.png`}
+                src={`${process.env.cloudflarestorage}/images/merch/${item.id}/image2.png`}
                 width={90}
                 height={90}
                 alt="Merch"
@@ -57,7 +57,7 @@ const CheckoutCart: FC<Props> = (props: Props) => {
           ) : (
             <motion.div className="" key="im2" {...fastExitAnimation}>
               <Image
-                src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/merch/${item.id}/image.png`}
+                src={`${process.env.cloudflarestorage}/images/merch/${item.id}/image.png`}
                 width={90}
                 height={90}
                 alt="Merch"

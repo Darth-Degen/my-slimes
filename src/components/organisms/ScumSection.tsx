@@ -8,7 +8,7 @@ const AboutSection: FC = () => {
     <div className="relative flex flex-col lg:flex-row items-center justify-start my-20">
       <div className="bg-custom-pink rounded-t-full lg:rounded-tr-none lg:rounded-l-full lg:h-[500px] flex items-center p-7 lg:p-12 sm:w-[484px] lg:w-auto">
         <Image
-          src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/scum.png`}
+          src={`${process.env.cloudflarestorage}/images/scum.png`}
           alt="Weapon"
           width={420}
           height={420}

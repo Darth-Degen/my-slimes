@@ -28,7 +28,7 @@ const ImageBox: FC<ImageProps> = (props: ImageProps) => {
         }`}
       >
         <Image
-          src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/speech-box.png`}
+          src={`${process.env.cloudflarestorage}/images/ait/speech-box.png`}
           width={303}
           height={151}
           alt="All in Time"

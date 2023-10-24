@@ -31,31 +31,31 @@ const AssetLibrary: FC<Props> = ({
       switch (selectedAssetType) {
         case "full-res":
           setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`
+            `${process.env.cloudflarestorage}/images/wallpapers/image/${imageName}.png`
           );
           break;
         case "desktop":
           setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/desktop-display/${imageName}.png`
+            `${process.env.cloudflarestorage}/images/wallpapers/desktop-display/${imageName}.png`
           );
           break;
         case "mobile":
           setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/mobile-display/${imageName}.png`
+            `${process.env.cloudflarestorage}/images/wallpapers/mobile-display/${imageName}.png`
           );
           break;
         case "pfp":
           setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${imageName}.png`
+            `${process.env.cloudflarestorage}/images/wallpapers/pfp-crop/${imageName}.png`
           );
           break;
         case "banner":
           setFeaturedImage(
-            `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/banner/${imageName}.png`
+            `${process.env.cloudflarestorage}/images/wallpapers/banner/${imageName}.png`
           );
           break;
         default:
-          `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`;
+          `${process.env.cloudflarestorage}/images/wallpapers/image/${imageName}.png`;
           break;
       }
     }
@@ -64,7 +64,7 @@ const AssetLibrary: FC<Props> = ({
   return (
     <div className="w-full flex flex-wrap items-start gap-3 overflow-x-auto">
       <Image
-        src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${
+        src={`${process.env.cloudflarestorage}/images/wallpapers/image/${
           selectedNft?.name === "Kai" && isDark ? "dark-" : ""
         }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
         height={100}
@@ -89,7 +89,7 @@ const AssetLibrary: FC<Props> = ({
       >
         <Image
           src={`${
-            process.env.NEXT_PUBLIC_CDN_URL
+            process.env.cloudflarestorage
           }/images/wallpapers/desktop-display/${
             selectedNft?.name === "Kai" && isDark ? "dark-" : ""
           }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
@@ -110,7 +110,7 @@ const AssetLibrary: FC<Props> = ({
       >
         <Image
           src={`${
-            process.env.NEXT_PUBLIC_CDN_URL
+            process.env.cloudflarestorage
           }/images/wallpapers/mobile-display/${
             selectedNft?.name === "Kai" && isDark ? "dark-" : ""
           }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
@@ -127,7 +127,7 @@ const AssetLibrary: FC<Props> = ({
         onClick={() => setSelectedAssetType("pfp")}
       >
         <Image
-          src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${
+          src={`${process.env.cloudflarestorage}/images/wallpapers/pfp-crop/${
             selectedNft?.name === "Kai" && isDark ? "dark-" : ""
           }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
           alt={`${selectedNft?.name} pfp crop`}
@@ -150,7 +150,7 @@ const AssetLibrary: FC<Props> = ({
         onClick={() => setSelectedAssetType("banner")}
       >
         <Image
-          src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/banner/${
+          src={`${process.env.cloudflarestorage}/images/wallpapers/banner/${
             selectedNft?.name === "Kai" && isDark ? "dark-" : ""
           }${selectedNft?.name.replaceAll(" ", "-").toLowerCase()}.png`}
           height={100}

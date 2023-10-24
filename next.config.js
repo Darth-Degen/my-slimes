@@ -3,6 +3,10 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   images: {
+    domains: [
+      "63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com",
+      "pub-04e9733611a446c795c941ee1f33b86a.r2.dev",
+    ],
     remotePatterns: [
       {
         protocol: "https",
@@ -12,6 +16,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "storage.googleapis.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com",
         pathname: "/**",
       },
     ],
@@ -25,7 +34,11 @@ const nextConfig = {
     //dev
     devEditionName: "exp edition",
     devEditionUpdateAuthority: "3wP5sQ8E5vkGaWU3FLFX9fXibDjTt56BUGAMP8pe33FX",
-    NEXT_PUBLIC_CDN_URL: "https://storage.googleapis.com/slimes-assets",
+    cloudflarestorage:
+      process.env.NODE_ENV === "production"
+        ? "https://63cba5a8b482d8503aeb7d5380687574.r2.cloudflarestorage.com/slimes"
+        : "https://pub-04e9733611a446c795c941ee1f33b86a.r2.dev",
+    //https://storage.googleapis.com/slimes-assets
   },
 };
 

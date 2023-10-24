@@ -21,16 +21,16 @@ interface Assets {
 }
 const _assets: Assets[] = [
   {
-    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/desktop_intro.mp4`,
+    src: `${process.env.cloudflarestorage}/videos/desktop_intro.mp4`,
   },
   {
-    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/desktop_loop.mp4`,
+    src: `${process.env.cloudflarestorage}/videos/desktop_loop.mp4`,
   },
   {
-    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/mobile_intro.mp4`,
+    src: `${process.env.cloudflarestorage}/videos/mobile_intro.mp4`,
   },
   {
-    src: `${process.env.NEXT_PUBLIC_CDN_URL}/videos/mobile_loop.mp4`,
+    src: `${process.env.cloudflarestorage}/videos/mobile_loop.mp4`,
   },
 ];
 
