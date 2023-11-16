@@ -132,6 +132,7 @@ const LandingView: FC<Props> = (props: Props) => {
         }`}
         style={{ objectFit: "cover" }}
         onLoadedData={() => {
+          console.log("--- onLoadedData");
           setAssets &&
             setAssets((prevState) => [
               ...prevState.slice(0, 0),
@@ -159,6 +160,7 @@ const LandingView: FC<Props> = (props: Props) => {
             }`}
             style={{ objectFit: "cover" }}
             onLoadedData={() => {
+              console.log("--- onLoadedData");
               setAssets &&
                 setAssets((prevState) => [
                   ...prevState.slice(0, 1),
