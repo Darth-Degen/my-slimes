@@ -174,7 +174,7 @@ const OrderModal: FC<Props> = (props: Props) => {
 
                 <p>ALL IN TIME, MY SLIME.</p>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_CDN_URL}/images/hands.png`}
+                  src={`${process.env.cloudflareStorage}/images/hands.png`}
                   width={300}
                   height={300}
                   alt="Handshake"

@@ -369,7 +369,7 @@ const BuyRacksContent: FC<Props> = (props: Props) => {
                     left: 0,
                     height: "100%",
                     width: "100%",
-                    backgroundImage: `url(${process.env.NEXT_PUBLIC_CDN_URL}/images/ait/shop.png)`,
+                    backgroundImage: `url(${process.env.cloudflareStorage}/images/ait/shop.png)`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",

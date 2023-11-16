@@ -108,17 +108,17 @@ const YourSlimes: FC<Props> = () => {
       .toLowerCase()}`;
     switch (selectedAssetType) {
       case "full-res":
-        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`;
+        return `${process.env.cloudflareStorage}/images/wallpapers/image/${imageName}.png`;
       case "desktop":
-        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/desktop/${imageName}.png`;
+        return `${process.env.cloudflareStorage}/images/wallpapers/desktop/${imageName}.png`;
       case "mobile":
-        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/mobile/${imageName}.png`;
+        return `${process.env.cloudflareStorage}/images/wallpapers/mobile/${imageName}.png`;
       case "pfp":
-        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/${imageName}.png`;
+        return `${process.env.cloudflareStorage}/images/wallpapers/pfp-crop/${imageName}.png`;
       case "banner":
-        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/banner/${imageName}.png`;
+        return `${process.env.cloudflareStorage}/images/wallpapers/banner/${imageName}.png`;
       default:
-        return `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/${imageName}.png`;
+        return `${process.env.cloudflareStorage}/images/wallpapers/image/${imageName}.png`;
     }
   };
 
@@ -165,7 +165,7 @@ const YourSlimes: FC<Props> = () => {
                     <Image
                       src={
                         isDark
-                          ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
+                          ? `${process.env.cloudflareStorage}/images/wallpapers/image/dark-kai.png`
                           : featuredImage
                       }
                       width={500}
@@ -190,7 +190,7 @@ const YourSlimes: FC<Props> = () => {
                     <Image
                       src={
                         isDark
-                          ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/image/dark-kai.png`
+                          ? `${process.env.cloudflareStorage}/images/wallpapers/image/dark-kai.png`
                           : featuredImage
                       }
                       width={500}
@@ -214,7 +214,7 @@ const YourSlimes: FC<Props> = () => {
                   <Image
                     src={
                       isDark
-                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/desktop-display/dark-kai.png`
+                        ? `${process.env.cloudflareStorage}/images/wallpapers/desktop-display/dark-kai.png`
                         : featuredImage
                     }
                     width={500}
@@ -238,7 +238,7 @@ const YourSlimes: FC<Props> = () => {
                   <Image
                     src={
                       isDark
-                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/mobile-display/dark-kai.png`
+                        ? `${process.env.cloudflareStorage}/images/wallpapers/mobile-display/dark-kai.png`
                         : featuredImage
                     }
                     width={300}
@@ -262,7 +262,7 @@ const YourSlimes: FC<Props> = () => {
                   <Image
                     src={
                       isDark
-                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/banner/dark-kai.png`
+                        ? `${process.env.cloudflareStorage}/images/wallpapers/banner/dark-kai.png`
                         : featuredImage
                     }
                     width={500}
@@ -286,7 +286,7 @@ const YourSlimes: FC<Props> = () => {
                   <Image
                     src={
                       isDark
-                        ? `${process.env.NEXT_PUBLIC_CDN_URL}/images/wallpapers/pfp-crop/dark-kai.png`
+                        ? `${process.env.cloudflareStorage}/images/wallpapers/pfp-crop/dark-kai.png`
                         : featuredImage
                     }
                     width={500}
@@ -411,7 +411,7 @@ const YourSlimes: FC<Props> = () => {
                       <Image
                         src={
                           slime.image ||
-                          `${process.env.NEXT_PUBLIC_CDN_URL}/images/exp/logo-dark.svg`
+                          `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
                         }
                         alt={slime.name}
                         height={100}
