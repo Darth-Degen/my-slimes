@@ -53,8 +53,8 @@ const Menu: FC<Props> = (props: Props) => {
   ];
 
   const getWidth = (): number => {
-    if (isXl) return winWidth * 0.55;
-    if (isLg) return winWidth * 0.69;
+    // if (isXl) return winWidth * 0.55;
+    if (isLg) return 790;
     if (isMd) return winWidth * 0.79;
     return winWidth - 15;
   };
@@ -68,7 +68,6 @@ const Menu: FC<Props> = (props: Props) => {
             // onMouseLeave={() => toggleMenu(false)}
             initial={{ width: 0, opacity: 0 }}
             animate={{
-              // width: isLg ? winWidth - 15 : winWidth * 0.55,
               width: getWidth(),
               opacity: 1,
             }}
