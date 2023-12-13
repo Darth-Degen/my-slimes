@@ -43,13 +43,16 @@ enum DimensionType {
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
   const { item, parentRef, index, isFixed, setIsFixed, variant } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
+  const [renderChildren, setRenderChildren] = useState(false);
 
+  const delayTimeoutRef = useRef<NodeJS.Timeout>();
   const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const childRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: parentRef,
   });
+  const isSelfInView = useInView(childRef);
 
   const src = `${process.env.cloudflareStorage}/images/wallpapers/image/${item.tag}.png`;
 
@@ -92,11 +95,27 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   };
 
   const hoverWidth = (): number => {
-    // console.log("isFixed ", isFixed);
-    return isFixed
+    return isFixed && renderChildren
       ? (height(DimensionType.Number) as number)
       : (width(DimensionType.Number) as number);
   };
+
+  // Delay rendering of children until the component is mounted
+  useEffect(() => {
+    if (isSelfInView) {
+      delayTimeoutRef.current = setTimeout(() => {
+        setRenderChildren(true);
+      }, 1000); // Adjust the delay as needed
+    }
+
+    return () => {
+      // Clear the timeout when the component is unmounted or open changes
+      setRenderChildren(false);
+      if (delayTimeoutRef.current) {
+        clearTimeout(delayTimeoutRef.current);
+      }
+    };
+  }, [isSelfInView]);
 
   return (
     <motion.div

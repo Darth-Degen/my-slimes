@@ -90,8 +90,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
 
   // Delay rendering of children until the component is mounted
   useEffect(() => {
-    // console.log("isSelfInView", isSelfInView);
-    // console.log("animateRefValue", animateRefValue);
     if (isSelfInView) {
       delayTimeoutRef.current = setTimeout(() => {
         setRenderChildren(true);
