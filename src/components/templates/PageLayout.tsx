@@ -64,12 +64,12 @@ const PageLayout: FC<Props> = (props: Props) => {
   const router = useRouter();
 
   //set body bg based on page
-  // useEffect(() => {
-  //   if (!router?.pathname) return;
-  //   if (mainColor) {
-  //     document.body.style.backgroundColor = mainColor;
-  //   }
-  // }, [router.pathname, mainColor]);
+  useEffect(() => {
+    if (!router?.pathname) return;
+    if (mainColor) {
+      document.body.style.backgroundColor = mainColor;
+    }
+  }, [router.pathname, mainColor]);
 
   //sets menu click back to false so that auto scroll can work
   const debouncer = debounce((value) => setDidMenuClick(value), 1000);

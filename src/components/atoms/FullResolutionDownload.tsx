@@ -20,7 +20,7 @@ const FullResolutionDownload: FC<Props> = ({ imageUrl, color }: Props) => {
     >
       <div className="flex flex-row text-center justif-center items-start gap-1">
         <h3 className="text-sm font-bold" style={{ color: color }}>
-          Download Full Resolution Image
+          Download
         </h3>
       </div>
     </a>
