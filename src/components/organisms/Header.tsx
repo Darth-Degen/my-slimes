@@ -76,10 +76,6 @@ const Header: FC<Props> = (props: Props) => {
     }
   });
 
-  // useEffect(() => {
-  //   setHeader(showHeader);
-  // }, [showHeader]);
-
   useEffect(() => {
     setHeader(true);
   }, []);
@@ -99,26 +95,6 @@ const Header: FC<Props> = (props: Props) => {
       </div>
     </div>
   );
-
-  // return (
-  //   <header
-  //     className={`top-0 z-20 transition-all duration-500 ${
-  //       headerType === "scroll" ? "fixed" : headerType
-  //     } `}
-  //   >
-  //     {headerType !== "scroll" ? (
-  //       <Content />
-  //     ) : (
-  //       <motion.aside
-  //         variants={headerVariants}
-  //         initial={"show"}
-  //         animate={header ? "show" : "hidden"}
-  //       >
-  //         <Content />
-  //       </motion.aside>
-  //     )}
-  //   </header>
-  // );
 
   if (headerType === "scroll") {
     return (

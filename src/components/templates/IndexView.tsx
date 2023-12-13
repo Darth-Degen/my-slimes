@@ -66,10 +66,10 @@ const IndexView: FC<Props> = ({ setAssets }) => {
   // }, [currentPage, didMenuClick, scrollDirection]);
 
   //changes progress bar color over BuyRacksView
-  useEffect(() => {
-    if (isRacksInView && !isLandingInView) setScrollColor("bg-v2-beige");
-    else setScrollColor("bg-v2-green");
-  }, [isLandingInView, isRacksInView]);
+  // useEffect(() => {
+  //   if (isRacksInView && !isLandingInView) setScrollColor("bg-v2-beige");
+  //   else setScrollColor("bg-v2-green");
+  // }, [isLandingInView, isRacksInView]);
 
   return (
     <>
@@ -83,11 +83,6 @@ const IndexView: FC<Props> = ({ setAssets }) => {
         setShowLoop={setShowLoop}
       />
       <div className="w-full h-full hidden lg:block">
-        {/* <BuyRacksView
-          setIsInView={setIsRacksInView}
-          id={pageIDs[1]}
-          setCurrentPage={setCurrentPage}
-        /> */}
         <WhatView
           setAssets={setAssets}
           id={pageIDs[2]}
