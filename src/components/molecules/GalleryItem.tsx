@@ -41,30 +41,17 @@ enum DimensionType {
 }
 
 const GalleryItem: FC<GiProps> = (props: GiProps) => {
-  const {
-    item,
-    parentRef,
-    index,
-    isFixed,
-    setIsFixed,
-    // handleIsInView,
-    setDidHover,
-    startY,
-    scrollDirection,
-    animateRefValue,
-    variant,
-  } = props;
+  const { item, parentRef, index, isFixed, setIsFixed, variant } = props;
   const [didLoad, setDidLoad] = useState<boolean>(false);
 
   const { setGalleryModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const childRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress, scrollY } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: parentRef,
   });
 
   const src = `${process.env.cloudflareStorage}/images/wallpapers/image/${item.tag}.png`;
-  const isInView = useInView(childRef);
 
   const translateY = useTransform(
     scrollYProgress,
@@ -72,35 +59,14 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     [item.topValue, winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0]
   );
 
-  // const startY = winHeight * 4;
-  // const startYAuto = scrollY.get();
-  // console.log("startYAuto ", startYAuto);
-  //[3904, ]
-
   const [show, setShow] = useState<boolean>(false);
-  // const translateY: MotionValue<number> = useTransform(
-  //   scrollY,
-  //   [startY, startY + winHeight],
-  //   [
-  //     scrollDirection === "down" && show ? item.topValue * 1.5 : 0,
-  //     scrollDirection === "down" ? item.topValue * 1.5 : 0,
-  //     winWidth > 3000 ? 200 : winWidth > 2000 ? 50 : 0,
-  //   ]
-  // );
 
-  // useMotionValueEvent(scrollY, "change", (latest) => {
-  //   if (index === 0) console.log("scrollY  ", latest, startY);
-  // });
-
-  // if (index === 0) console.log("scrollDirection ", scrollDirection);
   useMotionValueEvent(translateY, "change", (latest) => {
     if (Math.abs(latest) < 10) setIsFixed(true);
     else setIsFixed(false);
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // if (index === 0) console.log("YProgress  ", latest);
-
     //used to hide header on scroll down/up
     if (!show && latest < 0.8) setShow(true);
     if (latest > 0.96 || latest < 0.01) setIsFixed(false);
@@ -112,7 +78,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     else if (winWidth > 2000) return "w-[130px]";
     return "w-[100px]";
   };
-  // console.log("winHeight ", winWidth, winHeight);
+
   const height = (type: DimensionType): string | number => {
     if (winHeight < 800 || winWidth < 600)
       return type === DimensionType.String ? "h-[480px]" : 480;
@@ -140,19 +106,15 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
     >
       <motion.div
         onClick={() => setGalleryModalId(item.id)}
-        // onMouseEnter={() => setDidHover(true)}
-        // onMouseLeave={() => setDidHover(false)}
         ref={childRef}
         className={`relative rounded-xl 
         ${width(DimensionType.String)} 
         ${height(DimensionType.String)} 
         ${isFixed ? "cursor-pointer" : ""}
       `}
-        // style={{ translateY: didLoad ? translateY : 0 }}
         whileHover={{
           width: hoverWidth(),
         }}
-        // transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         <Image
           src={src}
@@ -160,7 +122,6 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
           fill
           style={{ objectFit: "cover" }}
           className="rounded-xl"
-          // imageClass="rounded-xl"
           onLoadingComplete={() => setDidLoad(true)}
           priority
         />

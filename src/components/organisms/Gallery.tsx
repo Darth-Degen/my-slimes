@@ -8,8 +8,7 @@ import {
 } from "react";
 import { GalleryItem, GalleryArrowButton } from "@components";
 import { Collection } from "@types";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { fastExitAnimation } from "@constants";
+import { motion, useInView, useScroll } from "framer-motion";
 import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface GProps {
@@ -38,7 +37,9 @@ const Gallery: FC<GProps> = (props: GProps) => {
   const [isLastInView, setIsLastInView] = useState<boolean>(false);
   const [didChildHover, setDidChildHover] = useState<boolean>(false);
   const [startY, setStartY] = useState<number>();
+  const [renderChildren, setRenderChildren] = useState(false);
 
+  const delayTimeoutRef = useRef<NodeJS.Timeout>();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(parentRef);
   const isSelfInView = useInView(ref);
@@ -49,16 +50,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
   const { scrollY } = useScroll({
     target: ref,
   });
-
-  //scroll direction
-  // const [scrollDirection, setScrollDirection] = useState("down");
-  // const prevScrollY = useRef<number>(0);
-  // useEffect(() => {
-  //   if (isInView) {
-  //     setScrollDirection(scrollY.get() > prevScrollY.current ? "down" : "up");
-  //   }
-  //   prevScrollY.current = scrollY.get();
-  // }, [isInView, scrollY]);
 
   //returns width of closed image in GalleryItem
   const imageWidth = (): number => {
@@ -92,65 +83,53 @@ const Gallery: FC<GProps> = (props: GProps) => {
     setScrollValue(currentIndex * scrollDistance);
   }, [collections.length, currentIndex, scrollDistance, winWidth]);
 
-  // const paginatedCollection = (): Collection[] => {
-  //   return collections;
-  // };
-
-  // const scrollXRef = useRef<number>(0);
-  // const inViewRef = useRef<number[]>([]);
-  // const [inViewState, setInViewState] = useState<number[]>([]);
-  //first or last child enters view
-  // const handleIsInView = (index: number) => {
-  //   // console.log("handleIsInView ", index);
-  //   //list of all indexes in view
-  //   //1. add index if in view
-  //   // setInViewState((prevState) => [...prevState, index]);
-  //   // console.log("inViewState ", inViewState);
-  //   // inViewRef.current.push(index);
-  //   // console.log("inViewRef ", inViewRef.current);
-  //   //2. get length
-  //   //3. remove opposite index if exceeds length
-  //   // //scrolling right
-  //   // if (index > scrollXRef.current) setGallery((prevState => [...prevState, galler ]))
-  //   // scrollXRef.current = index
-  //   // if (index === 0) setIsFirstInView(true);
-  //   // else setIsFirstInView(false);
-  //   // if (index === collections.length - 1) setIsLastInView(true);
-  //   // else setIsLastInView(false);
-  // };
-
   useEffect(() => {
     if (isInView) setStartY(scrollY.get());
     // else if (isInView && scrollDirection === "up") setStartY(0);
   }, [isInView, scrollY]);
 
+  // Delay rendering of children until the component is mounted
+  useEffect(() => {
+    // console.log("isSelfInView", isSelfInView);
+    // console.log("animateRefValue", animateRefValue);
+    if (isSelfInView) {
+      delayTimeoutRef.current = setTimeout(() => {
+        setRenderChildren(true);
+      }, 1000); // Adjust the delay as needed
+    }
+
+    return () => {
+      // Clear the timeout when the component is unmounted or open changes
+      setRenderChildren(false);
+      if (delayTimeoutRef.current) {
+        clearTimeout(delayTimeoutRef.current);
+      }
+    };
+  }, [isSelfInView]);
+
   const containerVariants = {
     hidden: {
       opacity: animateRefValue < 1 ? 0 : 1,
-      // x: -150
     },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        staggerChildren: 0.1, // Delay between staggered children
-        duration: 1,
-        delay: 2,
+        delay: 0.4,
+        staggerChildren: 0.15,
+        when: "beforeChildren", // Ensure children wait for parent's delay
       },
     },
   };
-  const letterVariants = {
+  const childVariants = {
     hidden: {
-      opacity: animateRefValue < 2 ? 0 : 1,
-      // opacity: 0,
+      opacity: animateRefValue < 1 ? 0 : 1,
       x: 0,
     }, // Starting position outside the container
     visible: {
       opacity: 1,
-      x: 0,
       transition: {
         duration: 0.5, // Duration of the animation
-        // delay: 2,
       },
     },
   };
@@ -158,21 +137,13 @@ const Gallery: FC<GProps> = (props: GProps) => {
     <motion.div
       className="sticky top-0 md:top-[8%] lg:top-[20%] 4xl:top-1/4 flex items-center z-10"
       key="gallery"
-      // {...fastExitAnimation}
-
-      // variants={containerVariants}
-      // initial="hidden"
-      // animate={isSelfInView ? "visible" : "hidden"}
     >
       <GalleryArrowButton
         direction="left"
         onClick={handlePrev}
-        // disabled={currentIndex === 0}
         disabled={!isFixed || currentIndex === 0}
-        // disabled={(!isFixed || currentIndex === 0) && !isFirstInView}
         className="z-10 w-16 hidden md:flex"
       />
-      {/* <div className="flex items-center overflow-x-scroll overflow-y-hidden"> */}
       <div className="flex items-center overflow-x-hidden overflow-y-hidden">
         <motion.div
           initial={{ x: 0 }}
@@ -184,7 +155,7 @@ const Gallery: FC<GProps> = (props: GProps) => {
             className="relative flex gap-3 3xl:gap-5  pt-0 pb-20  px-4 md:px-0"
             variants={containerVariants}
             initial="hidden"
-            animate={isSelfInView ? "visible" : "hidden"}
+            animate={renderChildren ? "visible" : "hidden"}
           >
             {startY &&
               gallery.map((slime, index) => (
@@ -195,14 +166,12 @@ const Gallery: FC<GProps> = (props: GProps) => {
                   index={index}
                   setIsFixed={setIsFixed}
                   isFixed={isFixed}
-                  // handleIsInView={handleIsInView}
-                  // didChildHover={didChildHover}
                   setDidHover={setDidChildHover}
                   startY={startY}
                   scrollDirection={scrollDirection}
                   animateRefValue={animateRefValue}
                   //@ts-ignore
-                  variant={letterVariants}
+                  variant={childVariants}
                 />
               ))}
           </motion.div>
@@ -211,7 +180,6 @@ const Gallery: FC<GProps> = (props: GProps) => {
       <GalleryArrowButton
         direction="right"
         onClick={handleNext}
-        // disabled={!isFixed || isLastInView}
         disabled={!isFixed}
         className="z-10 w-16 hidden md:flex"
       />

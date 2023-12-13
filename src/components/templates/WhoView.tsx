@@ -7,13 +7,8 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import {
-  collection as collections,
-  fastExitAnimation,
-  slideRight,
-} from "@constants";
+import { collection as collections } from "@constants";
 import { Gallery, WordFall } from "@components";
-import { useWindowSize } from "@merch-hooks";
 interface Props {
   setAssets?: Dispatch<SetStateAction<boolean[]>>;
   id: string;
@@ -23,9 +18,6 @@ const WhoView: FC<Props> = (props: Props) => {
   const { setAssets, id, setCurrentPage } = props;
   //state
   const [isGalleryFixed, setIsGalleryFixed] = useState<boolean>(false);
-  const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
-  //hooks
-  const [winWidth, winHeight] = useWindowSize();
   //refs
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref);
@@ -46,6 +38,7 @@ const WhoView: FC<Props> = (props: Props) => {
       opacity: 1,
       x: 0,
       transition: {
+        delay: 0,
         staggerChildren: 0.12, // Delay between staggered children
         duration: 1,
       },
@@ -63,21 +56,13 @@ const WhoView: FC<Props> = (props: Props) => {
     },
   };
 
-  // //auto scroll
-  // useEffect(() => {
-  //   if (isInView) setCurrentPage(id);
-  // }, [id, isInView, setCurrentPage]);
-
   return (
     <div
       className="relative w-full min-h-screen mt-32 bg-custom-primary"
       id="who"
       ref={ref}
     >
-      <motion.div
-        className="sticky top-[8%] lg:top-[4%]"
-        // {...slideRight(isInView, -1000, 1.5, 0.25)}
-      >
+      <motion.div className="sticky top-[8%] lg:top-[4%]">
         <motion.div className="flex justify-center items-center">
           <div className="flex flex-col ">
             <motion.div
@@ -92,12 +77,12 @@ const WhoView: FC<Props> = (props: Props) => {
                 </motion.span>
               ))}
             </motion.div>
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               {isInView && (
                 <motion.div
                   className="hidden md:flex justify-between w-full pb-4 px-7 xl:-mt-14"
                   key="we-eatin"
-                  initial={{ opacity: 0 }}
+                  initial={{ opacity: animateRef.current < 1 ? 0 : 1 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, ease: "easeInOut", delay: 0.9 }}
                 >

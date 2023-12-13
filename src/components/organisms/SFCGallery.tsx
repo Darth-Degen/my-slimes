@@ -1,27 +1,8 @@
-import {
-  Dispatch,
-  SetStateAction,
-  FC,
-  useState,
-  useRef,
-  useEffect,
-} from "react";
+import { FC, useState, useRef, useEffect } from "react";
 import { SFCGalleryItem, GalleryArrowButton } from "@components";
 import { SFC } from "@types";
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import {
-  fastExitAnimation,
-  sfc,
-  slideUp,
-  opacity,
-  midExitAnimation,
-} from "@constants";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { sfc, midExitAnimation } from "@constants";
 import { useScrollDirection, useWindowSize } from "@hooks";
 
 interface Props {}
@@ -31,7 +12,9 @@ const SFCGallery: FC<Props> = (props: Props) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [gallery, setGallery] = useState<SFC[]>(sfc);
   const [scrollValue, setScrollValue] = useState<number>(0);
+  const [renderChildren, setRenderChildren] = useState(false);
   //refs
+  const delayTimeoutRef = useRef<NodeJS.Timeout>();
   const ref = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLHeadingElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -39,7 +22,6 @@ const SFCGallery: FC<Props> = (props: Props) => {
   //hooks
   const isInView = useInView(ref);
   const headerIsInView = useInView(headerRef);
-  const galleryIsInView = useInView(galleryRef);
   const [winWidth, winHeight] = useWindowSize();
   const scrollDirection = useScrollDirection();
 
@@ -79,23 +61,33 @@ const SFCGallery: FC<Props> = (props: Props) => {
     if (headerIsInView) didAnimateRef.current = true;
   }, [headerIsInView]);
 
-  // useEffect(() => {
-  //   console.log("scrollDirection down", scrollDirection === "down");
-  // }, [scrollDirection]);
-
   //one time animation
   const animateRef = useRef<number>(0);
   useEffect(() => {
-    // console.log("isInView ", isInView, animateRef.current);
     if (isInView) animateRef.current += 1;
+  }, [isInView]);
+
+  // Delay rendering of children until the component is mounted
+  useEffect(() => {
+    if (isInView) {
+      delayTimeoutRef.current = setTimeout(() => {
+        setRenderChildren(true);
+      }, 1000); // Adjust the delay as needed
+    }
+
+    return () => {
+      // Clear the timeout when the component is unmounted or open changes
+      setRenderChildren(false);
+      if (delayTimeoutRef.current) {
+        clearTimeout(delayTimeoutRef.current);
+      }
+    };
   }, [isInView]);
 
   const text = "Meet the family";
   const containerVariants = {
     hidden: {
       opacity: animateRef.current < 1 ? 0 : 1,
-      // opacity: 0,
-      // x: -150
     },
     visible: {
       opacity: 1,
@@ -110,8 +102,6 @@ const SFCGallery: FC<Props> = (props: Props) => {
   const letterVariants = {
     hidden: {
       opacity: animateRef.current < 1 ? 0 : 1,
-      // opacity: 0,
-      // x: -150,
     }, // Starting position outside the container
     visible: {
       opacity: 1,
@@ -124,27 +114,24 @@ const SFCGallery: FC<Props> = (props: Props) => {
   const galleryVariants = {
     hidden: {
       opacity: animateRef.current < 1 ? 0 : 1,
-      // opacity: 0,
-      // x: -150
     },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        staggerChildren: 0.35, // Delay between staggered children
-        duration: 1,
+        delay: 0,
+        staggerChildren: 0.2,
+        when: "beforeChildren", // Ensure children wait for parent's delay
       },
     },
   };
-  const imageVariants = {
+  const childVariants = {
     hidden: {
       opacity: animateRef.current < 1 ? 0 : 1,
-      // opacity: 0,
-      // x: -150,
+      x: 0,
     }, // Starting position outside the container
     visible: {
       opacity: 1,
-      x: 0,
       transition: {
         duration: 0.5, // Duration of the animation
       },
@@ -177,7 +164,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
               <motion.div
                 className="hidden md:flex justify-between w-full pb-4 px-7 xl:-mt-14"
                 key="we-eatin"
-                initial={{ opacity: 0 }}
+                initial={{ opacity: animateRef.current < 1 ? 0 : 1 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, ease: "easeInOut", delay: 0.9 }}
               >
@@ -197,11 +184,6 @@ const SFCGallery: FC<Props> = (props: Props) => {
         className="w-screen flex justify-between items-center z-20"
         key="gallery"
         ref={ref}
-        // {...opacity(
-        //   headerIsInView && scrollDirection === "down", //(!didAnimateRef.current),
-        //   didAnimateRef.current ? 1 : 0,
-        //   1
-        // )}
       >
         <GalleryArrowButton
           direction="left"
@@ -220,7 +202,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
               className="relative flex gap-5 pb-4 px-4 md:px-0"
               variants={galleryVariants}
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
+              animate={renderChildren ? "visible" : "hidden"}
             >
               {gallery.map((sfc, index) => (
                 <SFCGalleryItem
@@ -230,7 +212,7 @@ const SFCGallery: FC<Props> = (props: Props) => {
                   index={index}
                   scrollDirection={scrollDirection}
                   //@ts-ignore
-                  variant={imageVariants}
+                  variant={childVariants}
                 />
               ))}
             </motion.div>

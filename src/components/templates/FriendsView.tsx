@@ -23,10 +23,6 @@ const FriendsView: FC<Props> = (props: Props) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(parentRef);
   const videoRef = useRef<HTMLVideoElement>(null);
-  // //auto scroll
-  // useEffect(() => {
-  //   if (isInView) setCurrentPage(id);
-  // }, [id, isInView, setCurrentPage]);
 
   return (
     <div
@@ -34,16 +30,9 @@ const FriendsView: FC<Props> = (props: Props) => {
       id={`friends`}
       ref={parentRef}
     >
-      {/* <div className="relative pb-20"> */}
-
       <div className="sticky top-[8%] lg:top-[4%] min-h-screen">
         <AnimatePresence mode="wait">
           {isInView && !videoEnded && (
-            // <VideoScroll
-            //   src={`${process.env.cloudflareStorage}/videos/handshake.mp4`}
-            //   parentRef={parentRef}
-            //   paddingBottom={700}
-            // />
             <motion.video
               key="vids"
               ref={videoRef}
@@ -61,13 +50,10 @@ const FriendsView: FC<Props> = (props: Props) => {
               />
             </motion.video>
           )}
-          {/* </div> */}
-          {/* <div className="relative pb-20"> */}
           {videoEnded && <SFCGallery />}
         </AnimatePresence>
       </div>
       <div className="pb-[600px]" />
-      {/* </div> */}
     </div>
   );
 };
