@@ -105,8 +105,8 @@ const SlimesGrid: FC<Props> = ({
                 </div>
                 <p className="text-slimes-black font-secondary">{slime.name}</p>
                 <p className="text-slimes-black font-bold text-sm">{`No. ${
-                  slime.id < 10 ? "00" : "0"
-                }${slime.id}`}</p>
+                  slime.id + 1 < 10 ? "00" : "0"
+                }${slime.id + 1}`}</p>
               </div>
             );
           })}

@@ -62,7 +62,7 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
             className="flex flex-col items-center justify-center gap-2 cursor-pointer"
             onClick={() => {
               window.open(
-                "https://twitter.com/scumsol",
+                "https://allintime.xyz/",
                 "_blank",
                 "noopener noreferrer"
               );
@@ -78,7 +78,7 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
             className="flex flex-col items-center justify-center gap-2 cursor-pointer"
             onClick={() => {
               window.open(
-                "https://twitter.com/scumsol",
+                "https://exchange.art/series/Slimes/",
                 "_blank",
                 "noopener noreferrer"
               );
