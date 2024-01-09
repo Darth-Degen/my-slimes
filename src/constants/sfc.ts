@@ -121,8 +121,8 @@ export const sfc: SFC[] = [
       "A short comic created by @calltoddy - he adapted a storyboard for a short video into this incredible piece that now lives forever on the blockchain. Scum faces off against the Bear Market, hoping to bring back the bull by any means necessary.",
     artist: ["Todd"],
     url: "https://exchange.art/editions/3p6C9JAoVwbyhWriWvtYXBGx9PeijncNgAkoYhzzNaw6",
-    width: 4800 / 10,
-    height: 6000 / 10,
+    width: 480,
+    height: 600,
   },
   {
     id: 10,
@@ -135,5 +135,17 @@ export const sfc: SFC[] = [
     url: "https://exchange.art/editions/62j1c6EmNqrrq4fSWGxDXGFddaNTYTVmx1kB6DNjNein",
     width: 348,
     height: 539,
+  },
+  {
+    id: 11,
+    twitter: ["https://twitter.com/septadenata"],
+    src: "borgias-echo.webp",
+    name: "Borgia's Echo",
+    description:
+      "Within Codex Borgia's ancient hue, Axolotl's plight takes center view, Jaguar guards with cosmic might, Transcending time, preserving the light.",
+    artist: ["septadenata"],
+    url: "https://exchange.art/editions/App4FLPecAFf2TFTPgeXrBD17DkhC2ysnbkiDnf8TKC9",
+    width: 500,
+    height: 295,
   },
 ];

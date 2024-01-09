@@ -143,7 +143,7 @@ const YourSlimes: FC<Props> = () => {
 
   return (
     <motion.div
-      className="relative w-full max-w-[1200px] mx-auto overflow-x-hidden"
+      className="relative w-full max-w-[1200px] mx-auto overflow-x-hidden pb-20"
       {...midExitAnimation}
     >
       {/* <Scrollbar> */}

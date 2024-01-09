@@ -78,27 +78,31 @@ const SlimesGrid: FC<Props> = ({
                 className="col-span-1 flex flex-col items-center"
                 key={slime.id}
               >
-                <Image
-                  src={
-                    slime.image ||
-                    `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
-                  }
-                  width={250}
-                  height={250}
-                  alt={slime.name}
-                  onClick={() => {
-                    setSelectedNft(slime);
-                    setIsDark(false);
-                    setSelectedAssetType("full-res");
-                    scroll({ top: 0, behavior: "smooth" });
-                  }}
+                <div
                   className={`${
                     selectedNft?.name === slime.name
                       ? "border-slimes-black"
                       : "border-transparent"
-                  }
-                  border-2 rounded-xl overflow-hidden cursor-pointer`}
-                />
+                  } relative border-2 rounded-xl overflow-hidden `}
+                >
+                  <Image
+                    src={
+                      slime.image ||
+                      `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
+                    }
+                    width={250}
+                    height={250}
+                    alt={slime.name}
+                    onClick={() => {
+                      setSelectedNft(slime);
+                      setIsDark(false);
+                      setSelectedAssetType("full-res");
+                      scroll({ top: 0, behavior: "smooth" });
+                    }}
+                    className="
+                  cursor-pointer transition-all duration-500 ease-in-out lg:hover:scale-125"
+                  />
+                </div>
                 <p className="text-slimes-black font-secondary">{slime.name}</p>
                 <p className="text-slimes-black font-bold text-sm">{`No. ${
                   slime.id < 10 ? "00" : "0"

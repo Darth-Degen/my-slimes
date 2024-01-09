@@ -1,19 +1,6 @@
-import {
-  ViewContext,
-  exitAnimation,
-  midExitAnimation,
-  fastExitAnimation,
-} from "@constants";
+import { exitAnimation } from "@constants";
 import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { useWindowSize } from "@hooks";
 
 interface Assets {
@@ -57,18 +44,6 @@ const LandingView: FC<Props> = (props: Props) => {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(scrollRef);
-  const isChildInView = useInView(innerRef);
-
-  //auto scroll
-  // useEffect(() => {
-  //   if (isInView) setCurrentPage(id);
-  // }, [id, isInView, setCurrentPage]);
-
-  // useEffect(() => {
-  //   if (mobileView) {
-  //     setShowLoop(true);
-  //   }
-  // }, [mobileView, setShowLoop]);
 
   useEffect(() => {
     setIsInView(isInView);
@@ -78,9 +53,8 @@ const LandingView: FC<Props> = (props: Props) => {
     if (showLoop && loopRef.current && introRef.current) {
       loopRef.current.play();
       introRef.current.pause();
-    } else {
-      // console.log("wtf");
     }
+
     if (showLoop && loopRefMobile.current && introRefMobile.current) {
       loopRefMobile.current.play();
       introRefMobile.current.pause();

@@ -14,6 +14,8 @@ const LogoIcon = dynamic(() => import("./@icons/LogoIcon"));
 const MenuIcon = dynamic(() => import("./@icons/MenuIcon"));
 const CloseIcon = dynamic(() => import("./@icons/CloseIcon"));
 const ExpIcon = dynamic(() => import("./@icons/ExpIcon"));
+const EaIcon = dynamic(() => import("./@icons/EaIcon"));
+const AitIcon = dynamic(() => import("./@icons/AitIcon"));
 const CrackVector = dynamic(() => import("./@icons/CrackVector"));
 const FlowerVector = dynamic(() => import("./@icons/FlowerVector"));
 const PaddleVector = dynamic(() => import("./@icons/PaddleVector"));
