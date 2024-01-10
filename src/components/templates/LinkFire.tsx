@@ -16,7 +16,7 @@ const LinkFire: FC<Props> = ({ showLoop, setAssets }) => {
         {...slideUpAnimation}
         className="md:mt-0 md:mx-10 pb-40 lg:mx-[10%] xl:mx-[20%]"
       >
-        <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-5 pb-10 items-center">
+        <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-5 pb-32 items-center">
           <div className="col-span-2 lg:hidden w-full h-full overflow-hidden rounded-xl flex justify-center self-center">
             <MobileLink
               setAssets={setAssets}
