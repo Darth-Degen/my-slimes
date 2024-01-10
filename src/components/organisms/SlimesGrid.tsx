@@ -34,9 +34,9 @@ const SlimesGrid: FC<Props> = ({
   setSelectedAssetType,
   setIsDark,
 }) => {
-  console.log("slimes ", slimes.length, slimes);
+  // console.log("slimes ", slimes.length, slimes);
   return (
-    <div className="relative  min-h-[600px]">
+    <div className="relative min-h-[600px] 2xl:min-h-[800px]">
       {slimes && slimes.length > 0 ? (
         // {false ? (
         <div
