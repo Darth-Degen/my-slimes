@@ -36,7 +36,7 @@ const FriendsView: FC<Props> = (props: Props) => {
             <motion.video
               key="vids"
               ref={videoRef}
-              className={`sticky top-[8%] h-screen w-screen`}
+              className={`sticky top-[8%] h-screen w-screen scale-[.7]`}
               autoPlay
               playsInline
               muted
