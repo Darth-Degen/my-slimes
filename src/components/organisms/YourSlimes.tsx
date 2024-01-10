@@ -155,45 +155,22 @@ const YourSlimes: FC<Props> = () => {
   const metaplex = new Metaplex(connection);
 
   const fetchAllSlimes = useCallback(async () => {
-    // setLoading(true);
-    const jsonArr: any[] = [];
-    let currentIndex = 0;
+    if (slimes.length > 0) return;
 
     await Promise.all(
       collection.map(async (token, index) => {
+        if (!token?.mintAddress) return;
         const mintAddress = new PublicKey(token.mintAddress);
+
         try {
           const nft = await metaplex.nfts().findByMint({ mintAddress });
           const uri = nft?.uri;
-          // const response = await axios.get(uri);
-
-          // // push mintAddress, id, and color to the json object
-          // const responseData = {
-          //   mintAddress: token.mintAddress,
-          //   id: token.id,
-          //   color: token.color,
-          //   ...response.data,
-          // };
-          // setSlimes((prev) => [...prev, responseData]);
-          // jsonArr.push(responseData);
-          // console.log("responseData", responseData);
-          // Check if the current index matches the expected index
 
           await axios.get(uri).then((r) => {
             // push mintAddress, id, and color to the json object
             r.data.mintAddress = token.mintAddress;
             r.data.id = token.id;
             r.data.color = token.color;
-            jsonArr.push(r.data);
-
-            // if (index === collection.length - 1) {
-            //   // Last item, push the remaining items to setSlimes
-            //   setSlimes((prev) => [...prev, ...jsonArr]);
-            // } else if (jsonArr.length % 5 === 0) {
-            //   // Every 5th entry, push to setSlimes
-            //   setSlimes((prev) => [...prev, ...jsonArr]);
-            //   jsonArr.length = 0; // Clear the array after pushing
-            // }
 
             setSlimes((prev) => [...prev, r.data]);
           });
@@ -202,8 +179,6 @@ const YourSlimes: FC<Props> = () => {
         }
       })
     );
-    // setLoading(false);
-    return jsonArr;
   }, []);
 
   useEffect(() => {

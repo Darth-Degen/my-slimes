@@ -276,6 +276,64 @@ export const collection: Collection[] = [
     topValue: 0,
     mintAddress:"bevDnB96DULZBdtQAkHMqR1X1hAkrXSHiRkXEhNDdLa"
   },
+  {
+    id:34,
+    name: "Gomez",
+    tag: "gomez",
+    color: "#182324",
+    topValue: 0,
+    mintAddress : "GFoXPYCqEdSuPXahQaCu91ZWX85FdDrSJxF69kgxMz4E"
+  },
+  {
+    id:35,
+    name: "Camila",
+    tag: "camila",
+    color: "#2D3A43",
+    topValue: 0,
+    mintAddress : "BtF8citw7D2THyT9oRVSNfVGDybRE2U4RLbouh4onw7d"
+  },
+  {
+    id:36,
+    name: "Lotto",
+    tag: "lotto",
+    color: "#E4B856",
+    topValue: 0,
+    mintAddress : "DNLigFquSxPmzN26SkFBYCJS6nZSdo3HGNuu4t8jBnBu"
+  },
+  {
+    id:37,
+    name: "Tuco",
+    tag: "tuco",
+    color: "#5C463F",
+    topValue: 0,
+    mintAddress : "DhMW1FGjepmw2XjjX1rr3uWUyoRiBMwf7YyG78v4BWMU"
+  },
+  {
+    id:38,
+    name: "Andres",
+    tag: "andres",
+    color: "#33383C",
+    topValue: 0,
+    mintAddress : "EFJ6MnHcX9B4XpZVgHPGezvMMgx11U7wC4p2yg4QrxCd"
+  },
+  {
+    id:39,
+    name: "Mateo",
+    tag: "mateo",
+    color: "#A17A2D",
+    topValue: 0,
+    mintAddress : "3sTfT7KtrevA7gxcowo4Fsa7uuXwCCaKg6uxPVt4UwN8"
+  },
+  {
+    id:40,
+    name: "Sancho",
+    tag: "sancho",
+    color: "#5680BA",
+    topValue: 0,
+    mintAddress : "5JffUW8Lh1Zk8WryjSiMD1rHh3uzsoAsCQiK8yAJQGqK"
+  },
+];
+
   // {
   //   id:,
   //   name: "",
@@ -284,4 +342,3 @@ export const collection: Collection[] = [
   //   topValue: 0,
   //   mintAddress : ""
   // },
-];
