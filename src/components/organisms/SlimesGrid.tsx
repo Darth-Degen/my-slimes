@@ -2,10 +2,19 @@ import { Metaplex } from "@metaplex-foundation/js";
 import { Connection, PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import Image from "next/image";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Collection } from "src/types";
 import LoadAnimation from "../atoms/LoadAnimation";
-import { collection } from "src/constants";
+import { collection, enterAnimation } from "src/constants";
+import { motion } from "framer-motion";
+import ReactLoading from "react-loading";
 
 interface Props {
   slimes: Collection[];
@@ -20,97 +29,69 @@ interface Props {
 
 const SlimesGrid: FC<Props> = ({
   slimes,
-  setSlimes,
   selectedNft,
   setSelectedNft,
   setSelectedAssetType,
   setIsDark,
 }) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  // const endpoint =
-  //   "https://devnet.helius-rpc.com/?api-key=fd98bcfd-5344-4cc0-8ac1-db7ba9603613";
-  const endpoint =
-    "https://cold-sparkling-darkness.solana-mainnet.discover.quiknode.pro/";
-  const connection = new Connection(endpoint);
-  const metaplex = new Metaplex(connection);
-
-  useEffect(() => {
-    const fetchAllSlimes = async () => {
-      setLoading(true);
-      const jsonArr: any[] = [];
-      await Promise.all(
-        collection.map(async (token) => {
-          const mintAddress = new PublicKey(token.mintAddress);
-          try {
-            const nft = await metaplex.nfts().findByMint({ mintAddress });
-            const uri = nft?.uri;
-            await axios.get(uri).then((r) => {
-              // push mintAddress, id, and color to the json object
-              r.data.mintAddress = token.mintAddress;
-              r.data.id = token.id;
-              r.data.color = token.color;
-              jsonArr.push(r.data);
-            });
-          } catch (e: any) {
-            console.error(e.message);
-          }
-        })
-      );
-      setLoading(false);
-      return jsonArr;
-    };
-    fetchAllSlimes().then((slimes) => {
-      setSlimes(slimes);
-    });
-  }, []);
-
+  console.log("slimes ", slimes.length, slimes);
   return (
-    <div
-      className="w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
-      xl:grid-cols-5 gap-6 py-10 px-10 sm:px-[37px] xl:px-0 mb-40"
-    >
-      {slimes &&
-        slimes
-          .sort((a, b) => a.id - b.id)
-          .map((slime) => {
-            return (
-              <div
-                className="col-span-1 flex flex-col items-center"
-                key={slime.id}
-              >
+    <div className="relative  min-h-[600px]">
+      {slimes && slimes.length > 0 ? (
+        // {false ? (
+        <div
+          className="relative w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
+        xl:grid-cols-5 gap-6 py-10 px-10 sm:px-[37px] xl:px-0 mb-40"
+        >
+          {slimes
+            .sort((a, b) => a.id - b.id)
+            .map((slime) => {
+              return (
                 <div
-                  className={`${
-                    selectedNft?.name === slime.name
-                      ? "border-slimes-black"
-                      : "border-transparent"
-                  } relative border-2 rounded-xl overflow-hidden `}
+                  className="col-span-1 flex flex-col items-center"
+                  key={slime?.id}
                 >
-                  <Image
-                    src={
-                      slime.image ||
-                      `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
-                    }
-                    width={250}
-                    height={250}
-                    alt={slime.name}
-                    onClick={() => {
-                      setSelectedNft(slime);
-                      setIsDark(false);
-                      setSelectedAssetType("full-res");
-                      scroll({ top: 0, behavior: "smooth" });
-                    }}
-                    className="
+                  <motion.div
+                    className={`${
+                      selectedNft?.name === slime?.name
+                        ? "border-slimes-black"
+                        : "border-transparent"
+                    } relative border-2 rounded-xl overflow-hidden `}
+                    {...enterAnimation}
+                  >
+                    <Image
+                      src={
+                        slime?.image ||
+                        `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
+                      }
+                      width={250}
+                      height={250}
+                      alt={slime?.name}
+                      onClick={() => {
+                        setSelectedNft(slime);
+                        setIsDark(false);
+                        setSelectedAssetType("full-res");
+                        scroll({ top: 0, behavior: "smooth" });
+                      }}
+                      className="
                   cursor-pointer transition-all duration-500 ease-in-out lg:hover:scale-125"
-                  />
+                    />
+                  </motion.div>
+                  <p className="text-slimes-black font-secondary">
+                    {slime?.name}
+                  </p>
+                  <p className="text-slimes-black font-bold text-sm">{`No. ${
+                    slime?.id + 1 < 10 ? "00" : "0"
+                  }${slime?.id + 1}`}</p>
                 </div>
-                <p className="text-slimes-black font-secondary">{slime.name}</p>
-                <p className="text-slimes-black font-bold text-sm">{`No. ${
-                  slime.id + 1 < 10 ? "00" : "0"
-                }${slime.id + 1}`}</p>
-              </div>
-            );
-          })}
-      {/* {loading && <LoadAnimation />} */}
+              );
+            })}
+        </div>
+      ) : (
+        <div className="w-full flex justify-center pt-20">
+          <ReactLoading type={"bubbles"} color={collection[0].color} />
+        </div>
+      )}
     </div>
   );
 };
