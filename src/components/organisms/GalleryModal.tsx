@@ -31,7 +31,8 @@ const GalleryModal: FC<Props> = (props: Props) => {
   //fetches id from context
   const { galleryModalId } = useContext(ViewContext);
 
-  const formatId = (id: number): string => `${id < 10 ? "00" : "0"}${id}`;
+  const formatId = (id: number): string =>
+    `${id + 1 < 10 ? "00" : "0"}${id + 1}`;
 
   return (
     <ModalV2
