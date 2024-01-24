@@ -340,14 +340,14 @@ export const collection: Collection[] = [
     topValue: 0,
     mintAddress : "GZZ4ZkJ5icsY9pyPW92bCeC8sSRFkaQqiwn6hXznHWDU"
   },
-  // {
-  //   id:42,
-  //   name: "Xavier",
-  //   tag: "xavier",
-  //   color: "#717E86",
-  //   topValue: 0,
-  //   mintAddress : ""
-  // },
+  {
+    id:42,
+    name: "Xavier",
+    tag: "xavier",
+    color: "#717E86",
+    topValue: 0,
+    mintAddress : "EFDFUYhQw2mghcs58nqnnJFG7DcbG4Sxy2Vz7991WxNT"
+  },
 ];
 
   // {
