@@ -350,8 +350,8 @@ export const collection: Collection[] = [
   },
   {
     id:43,
-    name: "Chamacho",
-    tag: "chamacho",
+    name: "Chamaco",
+    tag: "chamaco",
     color: "#FF2198",
     topValue: 0,
     mintAddress : "36NjK16PZ5CVBGAhyHNapW8Qztgi97KryYHKZXNaPfjf"
