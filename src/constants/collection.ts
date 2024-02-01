@@ -348,6 +348,14 @@ export const collection: Collection[] = [
     topValue: 0,
     mintAddress : "EFDFUYhQw2mghcs58nqnnJFG7DcbG4Sxy2Vz7991WxNT"
   },
+  {
+    id:43,
+    name: "Chamacho",
+    tag: "chamacho",
+    color: "#FF2198",
+    topValue: 0,
+    mintAddress : "36NjK16PZ5CVBGAhyHNapW8Qztgi97KryYHKZXNaPfjf"
+  },
 ];
 
   // {
