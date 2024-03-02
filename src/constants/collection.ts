@@ -356,6 +356,14 @@ export const collection: Collection[] = [
     topValue: 0,
     mintAddress : "36NjK16PZ5CVBGAhyHNapW8Qztgi97KryYHKZXNaPfjf"
   },
+  {
+    id:44,
+    name: "Itztli",
+    tag: "itztli",
+    color: "#FF4601",
+    topValue: 0,
+    mintAddress : "kSwQFLjpSzPJ8exqW1PCh8PxDGBpYJKYYuhXo2SKhRq"
+  },
 ];
 
   // {
