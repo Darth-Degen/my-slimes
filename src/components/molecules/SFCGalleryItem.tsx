@@ -1,4 +1,4 @@
-import { useScroll, motion, Variant } from "framer-motion";
+import { motion, Variant } from "framer-motion";
 import { FC, useContext, useRef, useState } from "react";
 import { ViewContext } from "@constants";
 import { useWindowSize } from "@hooks";
@@ -33,7 +33,7 @@ const SFCGalleryItem: FC<GiProps> = (props: GiProps) => {
   const { setSFCModalId } = useContext(ViewContext);
   const [winWidth, winHeight] = useWindowSize();
   const childRef = useRef<HTMLDivElement>(null);
-  const src = `${process.env.cloudflareStorage}/images/sfc/${item.src}`;
+  const src = `${process.env.cloudflareStorage}/images/sfc/low-res/${item.src}`;
 
   const width = (type: DimensionType): string | number => {
     if (winWidth > 3000) return "w-[280px]";

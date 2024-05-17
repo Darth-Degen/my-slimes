@@ -4,7 +4,7 @@ export const sfc: SFC[] = [
   {
     id: 0,
     twitter: ["https://twitter.com/TrevElViz"],
-    src: "slime-time.webp",
+    src: "1-slime-time.jpg",
     name: "Slime Time",
     description:
       "Saturday Morning Cartoons smashed through the Trev Nostalgia machine, sprinkled with Slime's lore and blasted through web3 technology into your wallet.",
@@ -16,7 +16,7 @@ export const sfc: SFC[] = [
   {
     id: 1,
     twitter: ["https://twitter.com/nev_in_color"],
-    src: "floating.webp",
+    src: "2-floating.jpg",
     name: "Floating",
     description:
       "A collaborative piece between SCUM and nev.in.color. Mixed Media. FIlm photography and digital illustration.",
@@ -31,7 +31,7 @@ export const sfc: SFC[] = [
       "https://twitter.com/AethurGallery",
       "https://twitter.com/0xdxadkid",
     ],
-    src: "under-the-tule-tree.webp",
+    src: "3-under-the-tule-tree.jpg",
     name: "Under the Tule Tree",
     description:
       "A collaboration between Aethur and 0xdxadkid for the Slimes Family Collection. Under the Tule Tree; Scum's slime swings from the Arbol de Tule tree, surrounding the centerpiece are characters and Iconic imagery from the worlds of both Aethur and 0xdxadkid.",
@@ -43,7 +43,7 @@ export const sfc: SFC[] = [
   {
     id: 3,
     twitter: ["https://twitter.com/SCUMSOL"],
-    src: "xolotl.webp",
+    src: "6-xolotl.jpg",
     name: "Xolotl",
     description:
       "3rd piece in the Slimes Family Collection. This is the Salamandre De Fuego - or the Fire Salamander. Representative of the Ancient axolotl depictions.",
@@ -55,7 +55,7 @@ export const sfc: SFC[] = [
   {
     id: 4,
     twitter: ["https://twitter.com/digitalcarbine"],
-    src: "mictlan.webp",
+    src: "4-mictlan.jpg",
     name: "Mictlan",
     description:
       "An incredible piece by the ETH artist Carbine. Depicting Carbine’s take on a character from the Slimes universe. Reminiscent of Mictlan, the Aztec god of the underworld.",
@@ -67,7 +67,7 @@ export const sfc: SFC[] = [
   {
     id: 5,
     twitter: ["https://twitter.com/lateduke"],
-    src: "mirada-dorada.gif",
+    src: "5-mirada_dorada.gif",
     name: "Mirada Dorada",
     description:
       "Mirada Dorada 'Golden Gaze' is an original piece by the accomplished artist Duke +1. Duke took inspiration from the Slimes universe created by Scum. Duke then took further steps to deepen his understanding and appreciation of indigenous Mexican culture, resulting in this piece that feels both timeless and new.",
@@ -79,7 +79,7 @@ export const sfc: SFC[] = [
   {
     id: 6,
     twitter: ["https://twitter.com/skullfaceph"],
-    src: "interdimensional.webp",
+    src: "7-interdimensional.jpg",
     name: "Interdimensional",
     description:
       "Interdimensional is brought to you by Skullface, a well established artist/designer across Web 2 & 3 brands. In this piece, you will find our beloved Axolotl depicted through 2 lenses, part Alebrije (Mexican spirit guide), part traditional Axolotl.",
@@ -103,7 +103,7 @@ export const sfc: SFC[] = [
   {
     id: 8,
     twitter: ["https://twitter.com/le_shackgraphic"],
-    src: "the-ninefold-path.webp",
+    src: "10-ninefold.jpg",
     name: "The Ninefold Path",
     description:
       "With each determined stride towards the portal, one question remains hanging in the air: From whom are they fleeing, and what awaits them on the other side?",
@@ -115,7 +115,7 @@ export const sfc: SFC[] = [
   {
     id: 9,
     twitter: ["https://twitter.com/calltoddy"],
-    src: "brawler.png",
+    src: "9-bear-market.jpg",
     name: "SlIMES: BEAR MARKET BRAWL",
     description:
       "A short comic created by @calltoddy - he adapted a storyboard for a short video into this incredible piece that now lives forever on the blockchain. Scum faces off against the Bear Market, hoping to bring back the bull by any means necessary.",
@@ -139,7 +139,7 @@ export const sfc: SFC[] = [
   {
     id: 11,
     twitter: ["https://twitter.com/septadenata"],
-    src: "borgias-echo.webp",
+    src: "12-borgias-echo.jpg",
     name: "Borgia's Echo",
     description:
       "Within Codex Borgia's ancient hue, Axolotl's plight takes center view, Jaguar guards with cosmic might, Transcending time, preserving the light.",

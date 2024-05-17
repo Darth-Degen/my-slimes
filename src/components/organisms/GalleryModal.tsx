@@ -53,7 +53,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
             src={mainImage}
             alt={`Slime ${imageId}`}
             fill
-            className="rounded-3xl"
+            className="rounded-3xl object-cover"
           />
         </motion.div>
         {/* info */}

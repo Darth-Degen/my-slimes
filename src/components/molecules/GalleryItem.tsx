@@ -54,7 +54,7 @@ const GalleryItem: FC<GiProps> = (props: GiProps) => {
   });
   const isSelfInView = useInView(childRef);
 
-  const src = `${process.env.cloudflareStorage}/images/wallpapers/image/${item.tag}.png`;
+  const src = `${process.env.cloudflareStorage}/images/slimes/low-res/${item.tag}.jpg`;
 
   const translateY = useTransform(
     scrollYProgress,
