@@ -116,7 +116,9 @@ const YourSlimes: FC<Props> = () => {
       .toLowerCase()}`;
     switch (selectedAssetType) {
       case "full-res":
-        return `${process.env.cloudflareStorage}/images/wallpapers/image/${imageName}.png`;
+        // return `${process.env.cloudflareStorage}/images/wallpapers/image/${imageName}.png`;
+
+        return `${process.env.cloudflareStorage}/images/slimes/high-res/${imageName}.png`;
       case "desktop":
         return `${process.env.cloudflareStorage}/images/wallpapers/desktop/${imageName}.png`;
       case "mobile":

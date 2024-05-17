@@ -1,17 +1,6 @@
-import { Metaplex } from "@metaplex-foundation/js";
-import { Connection, PublicKey } from "@solana/web3.js";
-import axios from "axios";
 import Image from "next/image";
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { Collection } from "src/types";
-import LoadAnimation from "../atoms/LoadAnimation";
 import { collection, enterAnimation } from "src/constants";
 import { motion } from "framer-motion";
 import ReactLoading from "react-loading";
@@ -61,7 +50,11 @@ const SlimesGrid: FC<Props> = ({
                   >
                     <Image
                       src={
-                        slime?.image ||
+                        `${
+                          process.env.cloudflareStorage
+                        }/images/slimes/low-res/${slime?.name
+                          .toLocaleLowerCase()
+                          .replace(" ", "-")}.jpg` ||
                         `${process.env.cloudflareStorage}/images/exp/logo-dark.svg`
                       }
                       width={250}
