@@ -96,7 +96,7 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
             className="w-fit flex flex-col items-center cursor-pointer"
             onClick={() => {
               window.open(
-                "https://twitter.com/expstudio_",
+                "https://expstud.io/",
                 "_blank",
                 "noopener noreferrer"
               );
@@ -111,11 +111,7 @@ const SlimesHubFooter: FC<Props> = ({ color }) => {
         </div>
       </div>
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 lg:hidden">
-        <a
-          href="https://twitter.com/expstudio_"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://expstud.io/" target="_blank" rel="noreferrer">
           <p className="text-center text-xs text-white uppercase">
             Powered by EXP
           </p>

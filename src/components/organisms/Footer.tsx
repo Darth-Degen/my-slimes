@@ -120,7 +120,7 @@ const Footer: FC<Props> = (props: Props) => {
         <div className="flex xl:w-1/4 justify-end ">
           <a
             className="relative cursor-pointer whitespace-nowrap"
-            href="https://twitter.com/expstudio_"
+            href="https://expstud.io/"
             target="_blank"
             rel="noreferrer"
           >
