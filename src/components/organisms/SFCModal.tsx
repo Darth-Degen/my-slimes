@@ -13,7 +13,7 @@ const SFCModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = sfc[imageId];
-  const mainImage = `${process.env.cloudflareStorage}/images/sfc/${item.src}`;
+  const mainImage = `${process.env.cloudflareStorage}/images/sfc/low-res/${item.src}`;
   //fetches id from context
   const { sfcModalId } = useContext(ViewContext);
 

@@ -27,7 +27,7 @@ const GalleryModal: FC<Props> = (props: Props) => {
   const { imageId, setImageId } = props;
 
   const item = collections[imageId];
-  const mainImage = `${process.env.cloudflareStorage}/images/wallpapers/image/${item.tag}.png`;
+  const mainImage = `${process.env.cloudflareStorage}/images/slimes/low-res/${item.tag}.jpg`;
   //fetches id from context
   const { galleryModalId } = useContext(ViewContext);
 
